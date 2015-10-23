@@ -11,6 +11,7 @@ using System.Web.Http;
 using BMS.Models.Accounting.Transaction;
 using BMS.Models;
 using System.Web.Http.OData.Query;
+using BMS.Models.Accounting.Configuration.Accounts;
 
 
 
@@ -20,15 +21,17 @@ namespace BMS.Controllers.Accounting.Transaction
     {
         private UsersContext db = new UsersContext();
         // GET api/ledgersheet
-        public HttpResponseMessage LedgerSheetGet(ODataQueryOptions Options)
+        public IEnumerable<AccCOA> Get(ODataQueryOptions Options)
         {
-            var result = Options.ApplyTo(db.VoucherLists.AsQueryable().Include(v => v.AccCOA).Include(v => v.AccCOA.AccType)) as IEnumerable<VoucherList>;
+            //var result = Options.ApplyTo(db.VoucherLists.AsQueryable().Include(v => v.AccCOA).Include(v => v.AccCOA.AccType)) as IEnumerable<VoucherList>;
 
-            return Request.CreateResponse(HttpStatusCode.OK, result);
+            //return Request.CreateResponse(HttpStatusCode.OK, result);
+
+            return Options.ApplyTo(db.AccCOAs.Where(c => c.HasChild == false).Include(a=>a.AccType) as IQueryable) as IEnumerable<AccCOA>;
         }
 
         // GET api/ledgersheet/5
-        public string LedgerSheetGet(int id)
+        public string Get(int id)
         {
             return "value";
         }

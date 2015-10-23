@@ -67,7 +67,7 @@ namespace BMS.Controllers
             {
 
                 var result = (from s in db.AccCOAs
-                              where parentsIDs.Contains(s.ParentCOAID)
+                              where parentsIDs.Contains((long)s.ParentCOAID)
                               select s);
                
 

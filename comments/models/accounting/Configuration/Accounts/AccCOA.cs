@@ -18,7 +18,7 @@ namespace BMS.Models.Accounting.Configuration.Accounts
         [StringLength(50)]
         public string COAName { get; set; }
 
-        public long ParentCOAID { get; set; }
+        public long? ParentCOAID { get; set; }
 
         public long? AccTypeID { get; set; }
 
@@ -59,5 +59,9 @@ namespace BMS.Models.Accounting.Configuration.Accounts
         public string DeletePC { get; set; }
 
         public virtual AccType AccType { get; set; }
+
+
+        //[ForeignKey("ParentCOAID")]
+        //public AccCOA ParentCOA { get; set; }
     }
 }
