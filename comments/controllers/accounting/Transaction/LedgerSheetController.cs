@@ -1,31 +1,30 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+using BMS.Models.Accounting.Transaction;
+using BMS.Models;
 using System.Web.Http.OData.Query;
+
+
 
 namespace BMS.Controllers.Accounting.Transaction
 {
     public class LedgerSheetController : ApiController
     {
+        private UsersContext db = new UsersContext();
         // GET api/ledgersheet
         public HttpResponseMessage LedgerSheetGet(ODataQueryOptions Options)
         {
-            ArrayList al = new ArrayList();
+            var result = Options.ApplyTo(db.VoucherLists.AsQueryable().Include(v => v.AccCOA).Include(v => v.AccCOA.AccType)) as IEnumerable<VoucherList>;
 
-            
-            al.Add(45);
-            al.Add(78);
-            al.Add(33);
-            al.Add(56);
-            al.Add(12);
-            al.Add(23);
-            al.Add(9);
-
-            return Request.CreateResponse(HttpStatusCode.OK, al);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // GET api/ledgersheet/5

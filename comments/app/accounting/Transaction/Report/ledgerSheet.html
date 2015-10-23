@@ -102,6 +102,8 @@
                                 <thead>
                                     <tr>
                                         <th>Code</th>
+                                        <th>VoucherNo</th>
+                                        <th>TranDate</th>
                                         <th>Remarks</th>
                                         <th class="noPrint">Edit</th>
                                     </tr>
@@ -109,8 +111,10 @@
                                 </thead>
                                 <tbody>
                                     <tr dir-paginate="ledgerSheet in vm.ledgerSheets|filter:searchText| itemsPerPage: 5">
-                                        <td>{{ledgerSheet.LedgerSheetCode  | uppercase}}</td>
-                                        <td>{{ledgerSheet.Remarks}}</td>
+                                        <td>{{voucherList.voucherListCode  | uppercase}}</td>
+                                        <td>{{voucherList.VoucherNo}}</td>
+                                        <td>{{voucherList.TranDate}}</td>
+                                        <td>{{voucherList.Remarks}}</td>
                                         <td class="noPrint">
                                             <button type="button" ng-click="vm.Get(ledgerSheet.LedgerSheetID)" class="btn btn-default ">
                                                 View
