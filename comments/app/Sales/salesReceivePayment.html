@@ -1,0 +1,367 @@
+﻿<div class="row">
+    <div class="col-lg-4 breadcrumb-panel">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><a href="#">Data</a></li>
+        </ol>
+
+    </div>
+
+    <div class="col-lg-3 title-panel "><h4>SalesReceivePayment</h4></div>
+
+    <div class="col-lg-3 search-panel">
+        <div class="input-group">
+            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 button-panel">
+        <!-- /input-group -->
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                <span class="glyphicon glyphicon-stats"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </label>
+        </div>
+    </div>
+</div>
+<form name="salesReceivePaymentForm" novalidate>
+    <div class="row">
+        <div class="col-lg-12 action-botton">
+            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                New
+            </button>
+            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(salesReceivePaymentForm.$valid)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                Save
+            </button>
+            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(salesReceivePaymentForm.$valid)">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                Update
+            </button>
+            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                Print
+            </button>
+            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                Delete
+            </button>
+            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Cancel
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-12 panel panel-default">
+            <div class="panel-body">
+                <div class="entry-form" ng-show="vm.FromView">
+                    <div class="col-lg-6 animated fadeInRight">
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePaymentForm.cmbCustomer.$invalid
+                                        && salesReceivePaymentForm.cmbCustomer.$dirty}">
+
+                            <label for="cmbCustomer">
+                                Customer
+                            </label>
+                            <select class="form-control"
+                                    id="cmbCustomer"
+                                    name="cmbCustomer"
+                                    ng-model="vm.cmbCustomer"
+                                    ng-options="Customer.Name for Customer in vm.collaborators track by Customer.CollaboratorID "
+                                    ng-change="vm.salesReceivePayment.CustomerID=vm.cmbCustomer.CollaboratorID"></select>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePaymentForm.cmbPaymentMethod.$invalid
+                                        && salesReceivePaymentForm.cmbPaymentMethod.$dirty}">
+
+                            <label for="cmbPaymentMethod">
+                                Payment Methods
+                            </label>
+                            <select class="form-control"
+                                    id="cmbPaymentMethod"
+                                    name="cmbPaymentMethod"
+                                    ng-model="vm.cmbPaymentMethod"
+                                    ng-options="PaymentMethod.PaymentMethodName for PaymentMethod in vm.paymentMethods track by PaymentMethod.PaymentMethodID "
+                                    ng-change="vm.salesReceivePayment.PaymentMethodID=vm.cmbPaymentMethod.PaymentMethodID"></select>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePaymentForm.cmbDepositTo.$invalid
+                                        && salesReceivePaymentForm.cmbDepositTo.$dirty}">
+
+                            <label for="cmbDepositTo">
+                                Deposit To
+                            </label>
+                            <select class="form-control"
+                                    id="cmbDepositTo"
+                                    name="cmbDepositTo"
+                                    ng-model="vm.cmbDepositTo"
+                                    ng-options="DepositHead.COAName for DepositHead in vm.cmbPaymentMethod.AccCOAID track by DepositHead.COAID "
+                                    ng-change="vm.salesReceivePayment.DepositTo=vm.cmbDepositTo.COAID"></select>
+                        </div>
+
+
+
+
+                        <div class="form-group" ng-show="vm.cmbPaymentMethod"
+                             ng-class="{'has-error':salesReceivePaymentForm.txtChequeNO.$invalid
+                                         && salesReceivePaymentForm.txtChequeNO.$dirty}">
+
+                            <label for="txtChequeNO">
+                                {{vm.cmbPaymentMethod.RefText}}
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtChequeNO"
+                                   name="txtChequeNO"
+                                   ng-model="vm.salesReceivePayment.ChequeNO"
+                                   placeholder="Enter {{vm.cmbPaymentMethod.RefText}}"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtMemo">
+                                Memo
+                            </label>
+                            <textarea class="form-control"
+                                      id="txtMemo"
+                                      name="txtMemo"
+                                      ng-model="vm.salesReceivePayment.Memo"
+                                      rows=" 3"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePayment.txtReferenceNo.$invalid
+                                         && salesReceivePayment.txtReferenceNo.$dirty}">
+
+                            <label for="txtReferenceNo">
+                                Reference No
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtReferenceNo"
+                                   name="txtReferenceNo"
+                                   ng-model="vm.salesReceivePayment.ReferenceNo"
+                                   placeholder="Enter ReferenceNo"
+                                   required>
+                        </div>
+                        <div class="form-group">
+
+                            <label for="txtTranDate">
+                                Data:
+                            </label>
+                            <div class="form-group">
+                                <p class="input-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="txtDate"
+                                           name="txtDate"
+                                           ng-model="vm.salesReceivePayment.Date"
+                                           datepicker-popup="MMM dd, yyyy "
+                                           is-open="vm.dtopened"
+                                           required>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default"
+                                                ng-click="vm.dtopen($event)">
+                                            <i class="glyphicon glyphicon-calendar" />
+                                        </button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePaymentForm.cmbProject.$invalid
+                                             && salesReceivePaymentForm.cmbProject.$dirty}">
+
+                            <label for="cmbProject">
+                                Project
+                            </label>
+                            <select class="form-control"
+                                    id="cmbProject"
+                                    name="cmbProject"
+                                    ng-model="vm.cmbProject"
+                                    ng-options="Project.ProjectName for Project in vm.Projects track by Project.ProjectID "
+                                    ng-change="vm.salesReceivePayment.ProjectID=vm.cmbProject.ProjectID"></select>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePaymentForm.txtPaymentTotal.$invalid
+                                         && salesReceivePaymentForm.txtPaymentTotal.$dirty}">
+
+                            <label for="txtPaymentTotal">
+                                Payment Total
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtPaymentTotal"
+                                   name="txtPaymentTotal"
+                                   ng-model="vm.salesReceivePayment.PaymentTotal"
+                                   placeholder="Enter PaymentTotal"
+                                   required>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePaymentForm.txtCreditAmount.$invalid
+                                         && salesReceivePaymentForm.txtCreditAmount.$dirty}">
+
+                            <label for="txtCreditAmount">
+                                CreditAmount
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtCreditAmount"
+                                   name="txtCreditAmount"
+                                   ng-model="vm.salesReceivePayment.CreditAmount"
+                                   placeholder="Enter CreditAmount"
+                                   required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="view-form" ng-show="vm.DetailsView">
+                    <div class="col-lg-6 animated fadeInRight">
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePaymentForm.cmbCustomer.$invalid
+                                        && salesReceivePaymentForm.cmbCustomer.$dirty}">
+
+                            <label for="cmbCustomer">
+                                Customer
+                            </label>
+                            <select class="form-control"
+                                    id="cmbCustomer"
+                                    name="cmbCustomer"
+                                    ng-model="vm.cmbCustomer"
+                                    ng-options="Customer.Name for Customer in vm.collaborators track by Customer.CollaboratorID "
+                                    ng-change="vm.salesReceivePayment.CustomerID=vm.cmbCustomer.CollaboratorID"></select>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePaymentForm.cmbPaymentMethod.$invalid
+                                        && salesReceivePaymentForm.cmbPaymentMethod.$dirty}">
+
+                            <label for="cmbPaymentMethod">
+                                Payment Methods
+                            </label>
+                            <select class="form-control"
+                                    id="cmbPaymentMethod"
+                                    name="cmbPaymentMethod"
+                                    ng-model="vm.cmbPaymentMethod"
+                                    ng-options="PaymentMethod.PaymentMethodName for PaymentMethod in vm.paymentMethods track by PaymentMethod.PaymentMethodID "
+                                    ng-change="vm.salesReceivePayment.PaymentMethodID=vm.cmbPaymentMethod.PaymentMethodID"></select>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePaymentForm.txtPaymentTotal.$invalid
+                                         && salesReceivePaymentForm.txtPaymentTotal.$dirty}">
+
+                            <label for="txtPaymentTotal">
+                                Payment Total
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtPaymentTotal"
+                                   name="txtPaymentTotal"
+                                   ng-model="vm.salesReceivePayment.PaymentTotal"
+                                   placeholder="Enter PaymentTotal"
+                                   required>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePaymentForm.cmbProject.$invalid
+                                             && salesReceivePaymentForm.cmbProject.$dirty}">
+
+                            <label for="cmbProject">
+                                Project
+                            </label>
+                            <select class="form-control"
+                                    id="cmbProject"
+                                    name="cmbProject"
+                                    ng-model="vm.cmbProject"
+                                    ng-options="Project.ProjectName for Project in vm.Projects track by Project.ProjectID "
+                                    ng-change="vm.salesReceivePayment.ProjectID=vm.cmbProject.ProjectID"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtMemo">
+                                Memo
+                            </label>
+                            <textarea class="form-control"
+                                      id="txtMemo"
+                                      name="txtMemo"
+                                      ng-model="vm.salesReceivePayment.Memo"
+                                      rows=" 3"></textarea>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{'has-error':salesReceivePaymentForm.txtCreditAmount.$invalid
+                                         && salesReceivePaymentForm.txtCreditAmount.$dirty}">
+
+                            <label for="txtCreditAmount">
+                                CreditAmount
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtCreditAmount"
+                                   name="txtCreditAmount"
+                                   ng-model="vm.salesReceivePayment.CreditAmount"
+                                   placeholder="Enter CreditAmount"
+                                   required>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12 list-form " ng-show="vm.ListView">
+                    <div class="col-lg-12 animated fadeInRight">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="printThisElement">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Remarks</th>
+                                        <th class="noPrint">Edit</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="salesReceivePayment in vm.salesReceivePayments|filter:searchText| itemsPerPage: 5">
+                                        <td>{{salesReceivePayment.SalesReceivePaymentCode  | uppercase}}</td>
+                                        <td>{{salesReceivePayment.Remarks}}</td>
+                                        <td class="noPrint">
+                                            <button type="button" ng-click="vm.Get(salesReceivePayment.SalesReceivePaymentID)" class="btn btn-default ">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

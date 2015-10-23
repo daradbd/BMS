@@ -1,0 +1,451 @@
+﻿<div class="row">
+    <div class="col-lg-4 breadcrumb-panel">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><a href="#">Data</a></li>
+        </ol>
+
+    </div>
+
+    <div class="col-lg-3 title-panel "><h4>PurchaseOrder</h4></div>
+
+    <div class="col-lg-3 search-panel">
+        <div class="input-group">
+            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 button-panel">
+        <!-- /input-group -->
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                <span class="glyphicon glyphicon-stats"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </label>
+        </div>
+    </div>
+</div>
+<form name="purchaseOrderForm" novalidate>
+    <div class="row">
+        <div class="col-lg-12 action-botton">
+            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                New
+            </button>
+            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(purchaseOrderForm.$valid)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                Save
+            </button>
+            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(purchaseOrderForm.$valid)">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                Update
+            </button>
+            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                Print
+            </button>
+            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                Delete
+            </button>
+            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Cancel
+            </button>
+            <div class="btn-group" ng-show="vm.ActionButton">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <!--<li><a href="" ng-click="vm.ProductionOrder(vm.purchaseOrder.PurchaseOrderID)"><span class="glyphicon glyphicon-align-right" aria-hidden="true"> Production Order</a></li>-->
+                    <li><a href="" ng-click="vm.PurchaseReceived(vm.purchaseOrder.PurchaseOrderID)">Purchase Received</a></li>
+                    <li><a href="" ng-click="vm.PurchaseBill(vm.purchaseOrder.PurchaseOrderID)">Purchase Bill</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-12 panel panel-default">
+            <div class="panel-body">
+                <div class="entry-form" ng-show="vm.FromView">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6 animated fadeInRight">
+                            <div class="form-group"
+                                 ng-class="{'has-error':purchaseOrderForm.cmbSupplier.$invalid
+                                             && purchaseOrderForm.cmbSupplier.$dirty}">
+
+                                <label for="cmbSupplier">
+                                    Supplier
+                                </label>
+                                <select class="form-control"
+                                        id="cmbSupplier"
+                                        name="cmbSupplier"
+                                        ng-model="vm.cmbSupplier"
+                                        ng-options="Supplier.Name for Supplier in vm.Suppliers track by Supplier.CollaboratorID "
+                                        ng-change="vm.purchaseOrder.SupplierID=vm.cmbSupplier.CollaboratorID"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtRemarks">
+                                    Address:
+                                </label>
+
+                                {{vm.cmbSupplier.Street}},{{vm.cmbSupplier.POBox}},{{vm.cmbSupplier.City.CityName}},{{vm.cmbSupplier.Country.CountryName}}
+
+                            </div>
+                            <div class="form-group">
+                                <label for=" inputReferenceNo">
+                                    ReferenceNo
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtSubject"
+                                       name="txtSubject"
+                                       ng-model="vm.purchaseOrder.ReferenceNo"
+                                       placeholder="Enter Reference NO"
+                                       required>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':purchaseOrderForm.txtSubject.$invalid
+                                         && purchaseOrderForm.txtSubject.$dirty}">
+
+                                <label for="txtTitle">
+                                    Subject:
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtSubject"
+                                       name="txtSubject"
+                                       ng-model="vm.purchaseOrder.Subject"
+                                       placeholder="Enter Subject"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+
+                                <label for="txtTranDate">
+                                    Data:
+                                </label>
+                                <div class="form-group">
+                                    <p class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtDate"
+                                               name="txtDate"
+                                               ng-model="vm.purchaseOrder.Date"
+                                               datepicker-popup="MMM dd, yyyy "
+                                               is-open="vm.dtopened"
+                                               required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default"
+                                                    ng-click="vm.dtopen($event)">
+                                                <i class="glyphicon glyphicon-calendar" />
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':purchaseOrderForm.cmbProject.$invalid
+                                             && purchaseOrderForm.cmbProject.$dirty}">
+
+                                <label for="cmbProject">
+                                    Project
+                                </label>
+                                <select class="form-control"
+                                        id="cmbProject"
+                                        name="cmbProject"
+                                        ng-model="vm.cmbProject"
+                                        ng-options="Project.ProjectName for Project in vm.Projects track by Project.ProjectID "
+                                        ng-change="vm.purchaseOrder.ProjectID=vm.cmbProject.ProjectID"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <tabset>
+                            <tab heading="Product-Info" active="true">
+                                <div class="col-lg-12">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <button type="button" ng-click="vm.addItem()" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                            <th>Product</th>
+                                            <th>Description</th>
+                                            <!--<th>ScheduleDate</th>-->
+                                            <th>MOU</th>
+                                            <th>Quantity</th>
+                                            <!--<th>Tax</th>
+                                            <th>Discount</th>-->
+                                            <th>UnitPrice</th>
+                                            <th>Total</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr ng:repeat="item in vm.PurchaseOrderDescription.PurchaseOrderDesc" class="animated fadeInRight">
+
+                                            <td>
+                                                <select class="form-control" ng-model="item.cmbProductID"
+                                                        ng-init="item.cmbProductID={ProductID:item.ProductID}"
+                                                        ng-options="product.ProductName for product in vm.products track by product.ProductID"
+                                                        ng-change="vm.updateItem(item)"></select>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" ng:model="item.Description" value="" ng:required ng:validate="number" size="6">
+                                            </td>
+                                            <!--<td>
+                                                <p class="input-group">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           ng-model="item.ScheduleDate"
+                                                           datepicker-popup
+                                                           is-open="item.sopened"
+                                                           required>
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default"
+                                                                ng-click="vm.sopen(item,$event)">
+                                                            <i class="glyphicon glyphicon-calendar" />
+                                                        </button>
+                                                    </span>
+                                                </p>
+                                            </td>-->
+                                            <td>
+                                                <select class="form-control"
+                                                        id="cmbUnitOfMeasure"
+                                                        name="cmbUnitOfMeasure"
+                                                        ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.MOUID}"
+                                                        ng-model="item.cmbUnitOfMeasure"
+                                                        ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
+                                                        ng-change="item.MOUID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+
+                                            </td>
+                                            <td>
+                                                <input class="form-control" ng:model="item.Quantity" value="0" ng:required ng:validate="number" size="6">
+                                            </td>
+                                            <!--<td>
+                                                <input class="form-control" ng:model="item.Taxes" value="0.00" ng:required ng:validate="number" size="6">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" ng:model="item.Discount" value="0.00" ng:required ng:validate="number" size="6">
+                                            </td>-->
+                                            <td>
+                                                <input class="form-control" ng:model="item.UnitPrice" value="0.00" ng:required ng:validate="number" size="6">
+                                            </td>
+                                            <td>
+                                                {{item.UnitPrice*item.Quantity}}
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{vm.QuotationSubTotal()|currency}}
+                                               
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <button type="button" ng-click="vm.PushItem()" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </div>
+
+                            </tab>
+                            <tab heading="Message">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtMessage">
+                                            Dear Sir,
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtMessage"
+                                                  name="txtMessage"
+                                                  ng-model="vm.purchaseOrder.Message"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab heading="Terms & Condition">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtTerms">
+                                            Terms
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTerms"
+                                                  name="txtTerms"
+                                                  ng-model="vm.purchaseOrder.Terms"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtTermsOfPayment">
+                                            Terms of Payment
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTermsOfPayment"
+                                                  name="txtTermsOfPayment"
+                                                  ng-model="vm.purchaseOrder.TermsOfPayment"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+
+                <div class="view-form" ng-show="vm.DetailsView">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6 animated fadeInRight">
+                            <div class="form-group">
+                                <label for=" inputEmployee">
+                                    Supplier
+                                </label>
+                                <pre>{{vm.purchaseOrder.Collaborator.Name}}</pre>
+                            </div>
+                            <div class="form-group">
+                                <label for=" inputReferenceNo">
+                                    ReferenceNo
+                                </label>
+                                <pre>{{vm.purchaseOrder.ReferenceNo}}</pre>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for=" inputProject">
+                                    Project Name
+                                </label>
+                                <pre>{{vm.purchaseOrder.ProjectSetup.ProjectName}}</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <tabset>
+                            <tab heading="Product-Info" active="true">
+                                <div class="col-lg-12">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Description</th>
+                                            <th>ScheduleDate</th>
+                                            <th>Quantity</th>
+                                            <th>Tax</th>
+                                            <th>Discount</th>
+                                            <th>UnitPrice</th>
+                                            <th>Total</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr ng:repeat="item in vm.PurchaseOrderDescription.PurchaseOrderDesc" class="animated fadeInRight">
+
+                                            <td>
+                                                {{item.Product.ProductName}}
+                                            </td>
+                                            <td>
+                                                {{item.Description}}
+                                            </td>
+                                            <td>
+                                                {{item.ScheduleDate| date:"dd/MM/yyyy"}}
+
+                                            </td>
+                                            <td>
+                                                {{item.Quantity}}
+                                            </td>
+                                            <td>
+                                                {{item.Taxes}}
+                                            </td>
+                                            <td>
+                                                {{item.Discount}}
+                                            </td>
+                                            <td>
+                                                {{item.UnitPrice}}
+                                            </td>
+                                            <td>
+                                                {{item.UnitPrice*item.Quantity}}
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{vm.QuotationSubTotal()|currency}}</td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 list-form " ng-show="vm.ListView">
+                    <div class="col-lg-12 animated fadeInRight">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="printThisElement">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Supplier</th>
+                                        <th>QuotationCode</th>
+                                        <th class="noPrint">Edit</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="purchaseOrder in vm.purchaseOrders|filter:searchText| itemsPerPage: 5">
+                                        <td>{{purchaseOrder.PurchaseOrderCode  | uppercase}}</td>
+                                        <td>
+                                                {{purchaseOrder.Collaborator.Name}}
+                                        </td>
+                                        <td>
+                                                {{purchaseOrder.RequestForQuotationCode}}
+                                        </td>
+                                        <td>
+                                                {{purchaseOrder.ProcesStatus.ProcesStatusName}}
+                                        </td>
+                                        <td class="noPrint">
+                                            <button type="button" ng-click="vm.Get(purchaseOrder.PurchaseOrderID)" class="btn btn-default ">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

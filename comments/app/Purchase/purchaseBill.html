@@ -1,0 +1,336 @@
+﻿<div class="row">
+    <div class="col-lg-4 breadcrumb-panel">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><a href="#">Data</a></li>
+        </ol>
+
+    </div>
+
+    <div class="col-lg-3 title-panel "><h4>PurchaseBill</h4></div>
+
+    <div class="col-lg-3 search-panel">
+        <div class="input-group">
+            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 button-panel">
+        <!-- /input-group -->
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                <span class="glyphicon glyphicon-stats"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </label>
+        </div>
+    </div>
+</div>
+<form name="purchaseBillForm" novalidate>
+    <div class="row">
+        <div class="col-lg-12 action-botton">
+            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                New
+            </button>
+            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(purchaseBillForm.$valid)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                Save
+            </button>
+            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(purchaseBillForm.$valid)">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                Update
+            </button>
+            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                Print
+            </button>
+            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                Delete
+            </button>
+            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Cancel
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-12 panel panel-default">
+            <div class="panel-body">
+                <div class="entry-form" ng-show="vm.FromView">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6 animated fadeInRight">
+                            <div class="form-group"
+                                 ng-class="{'has-error':purchaseBillForm.cmbSupplier.$invalid
+                                                 && purchaseBillForm.cmbSupplier.$dirty}">
+
+                                <label for="cmbSupplier">
+                                    Supplier
+                                </label>
+                                <select class="form-control"
+                                        id="cmbSupplier"
+                                        name="cmbSupplier"
+                                        ng-model="vm.cmbSupplier"
+                                        ng-options="Supplier.Name for Supplier in vm.Suppliers track by Supplier.CollaboratorID "
+                                        ng-change="vm.purchaseBill.SupplierID=vm.cmbSupplier.CollaboratorID"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtRemarks">
+                                    Address:
+                                </label>
+
+                                {{vm.cmbSupplier.Street}},{{vm.cmbSupplier.POBox}},{{vm.cmbSupplier.City.CityName}},{{vm.cmbSupplier.Country.CountryName}}
+
+                            </div>
+                            <div class="form-group">
+                                <label for=" inputReferenceNo">
+                                    ReferenceNo
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtSubject"
+                                       name="txtSubject"
+                                       ng-model="vm.purchaseBill.ReferenceNo"
+                                       placeholder="Enter Reference NO"
+                                       required>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':purchaseBillForm.txtSubject.$invalid
+                                         && purchaseBillForm.txtSubject.$dirty}">
+
+                                <label for="txtTitle">
+                                    Subject:
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtSubject"
+                                       name="txtSubject"
+                                       ng-model="vm.purchaseBill.Subject"
+                                       placeholder="Enter Subject"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+
+                                <label for="txtTranDate">
+                                    Data:
+                                </label>
+                                <div class="form-group">
+                                    <p class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtDate"
+                                               name="txtDate"
+                                               ng-model="vm.purchaseBill.Date"
+                                               datepicker-popup="MMM dd, yyyy "
+                                               is-open="vm.dtopened"
+                                               required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default"
+                                                    ng-click="vm.dtopen($event)">
+                                                <i class="glyphicon glyphicon-calendar" />
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':purchaseBillForm.cmbProject.$invalid
+                                             && purchaseBillForm.cmbProject.$dirty}">
+
+                                <label for="cmbProject">
+                                    Project
+                                </label>
+                                <select class="form-control"
+                                        id="cmbProject"
+                                        name="cmbProject"
+                                        ng-model="vm.cmbProject"
+                                        ng-options="Project.ProjectName for Project in vm.Projects track by Project.ProjectID "
+                                        ng-change="vm.purchaseBill.ProjectID=vm.cmbProject.ProjectID"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <tabset>
+                            <tab heading="Product-Info" active="true">
+                                <div class="col-lg-12">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <button type="button" ng-click="vm.addItem()" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                            <th>Product</th>
+                                            <th>Description</th>
+                                            <th>MOU</th>
+                                            <th>Quantity</th>
+                                            <!--<th>Tax</th>
+                                            <th>Discount</th>-->
+                                            <th>UnitPrice</th>
+                                            <th>Total</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr ng:repeat="item in vm.PurchaseBillDescription.PurchaseBillDesc" class="animated fadeInRight">
+
+                                            <td>
+                                                <select class="form-control" ng-model="item.cmbProductID"
+                                                        ng-init="item.cmbProductID={ProductID:item.ProductID}"
+                                                        ng-options="product.ProductName for product in vm.products track by product.ProductID"
+                                                        ng-change="vm.updateItem(item)"></select>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" ng:model="item.Description" value="" ng:required ng:validate="number" size="6">
+                                            </td>
+                                            <td>
+                                                <select class="form-control"
+                                                        id="cmbUnitOfMeasure"
+                                                        name="cmbUnitOfMeasure"
+                                                        ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.MOUID}"
+                                                        ng-model="item.cmbUnitOfMeasure"
+                                                        ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
+                                                        ng-change="item.MOUID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+
+                                            </td>
+                                            <td>
+                                                <input class="form-control" ng:model="item.Quantity" value="0" ng:required ng:validate="number" size="6">
+                                            </td>
+                                            <!--<td>
+                                                <input class="form-control" ng:model="item.Taxes" value="0.00" ng:required ng:validate="number" size="6">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" ng:model="item.Discount" value="0.00" ng:required ng:validate="number" size="6">
+                                            </td>-->
+                                            <td>
+                                                <input class="form-control" ng:model="item.UnitPrice" value="0.00" ng:required ng:validate="number" size="6">
+                                            </td>
+                                            <td>
+                                                {{item.UnitPrice*item.Quantity}}
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                {{vm.BillSubTotal()|currency}}
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <button type="button" ng-click="vm.PushItem()" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </div>
+
+                            </tab>
+                            <tab heading="Message">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtMessage">
+                                            Dear Sir,
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtMessage"
+                                                  name="txtMessage"
+                                                  ng-model="vm.purchaseBill.Message"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab heading="Terms & Condition">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtTerms">
+                                            Terms
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTerms"
+                                                  name="txtTerms"
+                                                  ng-model="vm.purchaseBill.Terms"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtTermsOfPayment">
+                                            Terms of Payment
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTermsOfPayment"
+                                                  name="txtTermsOfPayment"
+                                                  ng-model="vm.purchaseBill.TermsOfPayment"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                    
+                </div>
+
+                <div class="view-form" ng-show="vm.DetailsView">
+                    <div class="col-lg-6 animated fadeInRight">
+
+
+                    </div>
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12 list-form " ng-show="vm.ListView">
+                    <div class="col-lg-12 animated fadeInRight">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="printThisElement">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Remarks</th>
+                                        <th class="noPrint">Edit</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="purchaseBill in vm.purchaseBills|filter:searchText| itemsPerPage: 5">
+                                        <td>{{purchaseBill.PurchaseBillCode  | uppercase}}</td>
+                                        <td>{{purchaseBill.Remarks}}</td>
+                                        <td class="noPrint">
+                                            <button type="button" ng-click="vm.Get(purchaseBill.PurchaseBillID)" class="btn btn-default ">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

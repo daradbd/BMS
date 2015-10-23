@@ -1,0 +1,263 @@
+﻿<div class="row">
+    <div class="col-lg-4 breadcrumb-panel">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><a href="#">Data</a></li>
+        </ol>
+
+    </div>
+
+    <div class="col-lg-3 title-panel "><h4>voucherList</h4></div>
+
+    <div class="col-lg-3 search-panel">
+        <div class="input-group">
+            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 button-panel">
+        <!-- /input-group -->
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                <span class="glyphicon glyphicon-stats"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </label>
+        </div>
+    </div>
+</div>
+<form name="voucherListForm" novalidate>
+    <div class="row">
+        <div class="col-lg-12 action-botton">
+            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                New
+            </button>
+            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(voucherListForm.$valid)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                Save
+            </button>
+            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(voucherListForm.$valid)">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                Update
+            </button>
+            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                Print
+            </button>
+            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                Delete
+            </button>
+            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Cancel
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-12 panel panel-default">
+            <div class="panel-body">
+                <div class="entry-form" ng-show="vm.FromView">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6 animated fadeInRight">
+                            <div class="form-group"
+                                 ng-class="{'has-error':voucherListForm.txtVoucherNo.$invalid
+                                         && voucherListForm.txtVoucherNo.$dirty}">
+
+                                <label for="txtVoucherNO">
+                                    Voucher No
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtVoucherNo"
+                                       name="txtVoucherNo"
+                                       ng-model="vm.voucherList.VoucherNo"
+                                       placeholder="Enter VoucherNo"
+                                       required>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':voucherListForm.txtReferenceNo.$invalid
+                                         && voucherListForm.txtReferenceNo.$dirty}">
+
+                                <label for="txtReferenceNo">
+                                    Voucher No
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtReferenceNo"
+                                       name="txtReferenceNo"
+                                       ng-model="vm.voucherList.ReferenceNo"
+                                       placeholder="Enter ReferenceNo"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtRemarks">
+                                    Remarks
+                                </label>
+                                <textarea class="form-control"
+                                          id="txtRemarks"
+                                          name="txtRemarks"
+                                          ng-model="vm.voucherList.Remarks"
+                                          rows=" 3"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+
+                                <label for="txtTranDate">
+                                    DataTitle
+                                </label>
+                                <div class="form-group">
+                                    <p class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtTranDate"
+                                               name="txtTranDate"
+                                               ng-model="vm.voucherList.TranDate"
+                                               datepicker-popup="MMM dd, yyyy "
+                                               is-open="vm.sopened"
+                                               required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default"
+                                                    ng-click="vm.sopen($event)">
+                                                <i class="glyphicon glyphicon-calendar" />
+                                            </button>
+                                        </span>
+                                        </p>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':vm.DrCRisNotEqual }">
+
+                                <label for="txtTotalDebit">
+                                    Total Debit
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtTotalDebit"
+                                       name="txtTotalDebit"
+                                       ng-model="vm.TotalDebit"
+                                       required>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':vm.DrCRisNotEqual }">
+
+                                <label for="Credit">
+                                    Total Credit
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="Credit"
+                                       name="Credit"
+                                       ng-model="vm.Credit"
+                                       required>
+                            </div>
+                            <span ng-show="vm.DrCRisNotEqual">Dr and CR is Not Equal</span></div>
+                    </div>
+                    <div class="col-lg-12">
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Account</th>
+                                <th>Dr/Cr</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                            <tr ng:repeat="item in vm.voucher.voucherL" class="animated fadeInRight">
+
+                                <td>
+                                    <select class="form-control"
+                                            ng-init="item.cmbCOAID={COAID:item.COAID}"
+                                            ng-model="item.cmbCOAID"
+                                            ng-options="ACOAID.COAName for ACOAID in vm.accCOAs track by ACOAID.COAID"
+                                            ng-change="item.COAID=item.cmbCOAID.COAID"></select>
+                                </td>
+
+                                <td>
+                                    <button type="button" class="btn btn-primary" ng-model="item.DrCr"
+                                            btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+                                        {{item.DrCr ? "Dr" : "Cr"}}
+                                    </button>
+                                </td>
+                                <td><input class="form-control" ng:model="item.Amount" value="0.00" ng:required ng:validate="number" size="6"></td>
+
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                        <button type="button" ng-click="vm.addItem()" class="btn btn-default">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="view-form" ng-show="vm.DetailsView">
+                    <div class="col-lg-6 animated fadeInRight">
+
+
+                    </div>
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12 list-form " ng-show="vm.ListView">
+                    <div class="col-lg-12 animated fadeInRight">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="printThisElement">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>VoucherNo</th>
+                                        <th>TranDate</th>
+                                        <th>Remarks</th>
+                                        <th class="noPrint">Edit</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="voucherList in vm.voucherLists|filter:searchText| itemsPerPage: 5">
+                                        <td>{{voucherList.voucherListCode  | uppercase}}</td>
+                                        <td>{{voucherList.VoucherNo}}</td>
+                                        <td>{{voucherList.TranDate}}</td>
+                                        <td>{{voucherList.Remarks}}</td>
+                                        <td class="noPrint">
+                                            <button type="button" ng-click="vm.Get(voucherList.VoucherNo)" class="btn btn-default ">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Resource</Title>
+      <Author>RANA</Author>
+      <Description>
+      </Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>resource</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Object Editable="true">
+          <ID>ObjectName</ID>
+          <ToolTip>ObjectName</ToolTip>
+          <Default>ObjectName</Default>
+          <Function>
+          </Function>
+          <Type>
+          </Type>
+        </Object>
+        <Object Editable="true">
+          <ID>nameResource</ID>
+          <ToolTip>nameResource</ToolTip>
+          <Default>nameResource</Default>
+          <Function>
+          </Function>
+          <Type>
+          </Type>
+        </Object>
+        <Literal Editable="true">
+          <ID>name</ID>
+          <ToolTip>name</ToolTip>
+          <Default>name</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="javascript" Delimiter="#"><![CDATA[(function () {
+    "use strict";
+
+    /**
+     *  @Module Name (Service)
+     *  @Factory Name (Resource)
+     *  @dependence ($resource)
+     *  @author  name: Md. Rejwanul Reaz
+     *  @project name: BMS
+     *  @resource name: #name#
+     *  @date: 9/4/2015
+     */
+
+    angular
+        .module("common.services")
+        .factory("#name#Resource",
+        ["$resource",
+        #name#Resource]);
+
+    function languageResource($resource) {
+
+        return $resource("/api/#ObjectName#/:ID", { 'ID': '@_ID' }, {
+                    update: {
+                        method: 'PUT' // this method issues a PUT request
+                    }
+                }
+            );
+        }
+}());]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

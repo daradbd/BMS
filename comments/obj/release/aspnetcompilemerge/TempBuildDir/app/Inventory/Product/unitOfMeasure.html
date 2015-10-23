@@ -1,0 +1,212 @@
+﻿<div class="row">
+    <div class="col-lg-4 breadcrumb-panel">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><a href="#">Data</a></li>
+        </ol>
+
+    </div>
+
+    <div class="col-lg-3 title-panel "><h4>UnitOfMeasure</h4></div>
+
+    <div class="col-lg-3 search-panel">
+        <div class="input-group">
+            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 button-panel">
+        <!-- /input-group -->
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                <span class="glyphicon glyphicon-stats"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </label>
+        </div>
+    </div>
+</div>
+<form name="unitOfMeasureForm" novalidate>
+    <div class="row">
+        <div class="col-lg-12 action-botton">
+            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                New
+            </button>
+            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(unitOfMeasureForm.$valid)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                Save
+            </button>
+            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(unitOfMeasureForm.$valid)">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                Update
+            </button>
+            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                Print
+            </button>
+            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                Delete
+            </button>
+            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Cancel
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-12 panel panel-default">
+            <div class="panel-body">
+                <div class="entry-form" ng-show="vm.FromView">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6 animated fadeInRight">
+                            <div class="form-group"
+                                 ng-class="{'has-error':unitOfMeasureForm.txtUnitOfMeasureCode.$invalid
+                                         && unitOfMeasureForm.txtUnitOfMeasureCode.$dirty}">
+
+                                <label for="txtUnitOfMeasureCode">
+                                    UnitOfMeasureCode
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtUnitOfMeasureCode"
+                                       name="txtUnitOfMeasureCode"
+                                       ng-model="vm.unitOfMeasure.UnitOfMeasureCode"
+                                       placeholder="Enter UnitOfMeasureCode"
+                                       required>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':unitOfMeasureForm.txtUnitOfMeasureName.$invalid
+                                         && unitOfMeasureForm.txtUnitOfMeasureName.$dirty}">
+
+                                <label for="txtUnitOfMeasureName">
+                                    UnitOfMeasureName
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtUnitOfMeasureName"
+                                       name="txtUnitOfMeasureName"
+                                       ng-model="vm.unitOfMeasure.UnitOfMeasureName"
+                                       placeholder="Enter UnitOfMeasureName"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group"
+                                 ng-class="{'has-error':unitOfMeasureForm.cmbParentUOM.$invalid
+                && cityForm.cmbParentUOM.$dirty}">
+
+                                <label for="cmbParentUOM">
+                                    ParentUOM
+                                </label>
+                                <select class="form-control"
+                                        id="cmbParentUOM"
+                                        name="cmbParentUOM"
+                                        ng-model="vm.cmbParentUOM"
+                                        ng-options="ParentUOM.UnitOfMeasureName for ParentUOM in vm.ParentUOMs track by ParentUOM.UnitOfMeasureID "
+                                        ng-change="vm.unitOfMeasure.ParentUOMID=vm.cmbunitOfMeasure.UnitOfMeasureID"></select>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':unitOfMeasureForm.txtConversionValue.$invalid
+                                         && unitOfMeasureForm.txtConversionValue.$dirty}">
+
+                                <label for="txtConversionValue">
+                                    ConversionValue
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtConversionValue"
+                                       name="txtConversionValue"
+                                       ng-model="vm.unitOfMeasure.ConversionValue"
+                                       placeholder="Enter ConversionValue"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="view-form" ng-show="vm.DetailsView">
+                    <div class="col-lg-6 animated fadeInRight">
+                        <div class="form-group">
+                            <label for=" inputUnitOfMeasureCode">
+                                UnitOfMeasureCode
+                            </label>
+                            <pre>{{vm.unitOfMeasure.UnitOfMeasureCode}}</pre>
+                        </div>
+                        <div class="form-group">
+                            <label for=" inputUnitOfMeasureName">
+                                UnitOfMeasureName
+                            </label>
+                            <pre>{{vm.unitOfMeasure.UnitOfMeasureName}}</pre>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for=" inputParentUOMID">
+                                ParentUOMID
+                            </label>
+                            <pre>{{vm.unitOfMeasure.ParentUOMID}}</pre>
+                        </div>
+                        <div class="form-group">
+                            <label for=" inputConversionValue">
+                                Conversion Value
+                            </label>
+                            <pre>{{vm.unitOfMeasure.ConversionValue}}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 list-form " ng-show="vm.ListView">
+                    <div class="col-lg-12 animated fadeInRight">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="printThisElement">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>UnitOfMeasureName</th>
+                                        <th>Remarks</th>
+                                        <th class="noPrint">Edit</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="unitOfMeasure in vm.unitOfMeasures|filter:searchText| itemsPerPage: 5">
+                                        <td>{{unitOfMeasure.UnitOfMeasureCode  | uppercase}}</td>
+                                        <td>{{unitOfMeasure.UnitOfMeasureName}}</td>
+                                        <td>{{unitOfMeasure.Remarks}}</td>
+                                        <td class="noPrint">
+                                            <button type="button" ng-click="vm.Get(unitOfMeasure.UnitOfMeasureID)" class="btn btn-default ">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

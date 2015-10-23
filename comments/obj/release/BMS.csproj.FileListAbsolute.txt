@@ -1,0 +1,306 @@
+E:\project\ERP\Comments\bin\BMS.dll.config
+E:\project\ERP\Comments\bin\BMS.dll
+E:\project\ERP\Comments\bin\BMS.pdb
+E:\project\ERP\Comments\bin\Antlr3.Runtime.dll
+E:\project\ERP\Comments\bin\DotNetOpenAuth.AspNet.dll
+E:\project\ERP\Comments\bin\DotNetOpenAuth.Core.dll
+E:\project\ERP\Comments\bin\DotNetOpenAuth.OAuth.Consumer.dll
+E:\project\ERP\Comments\bin\DotNetOpenAuth.OAuth.dll
+E:\project\ERP\Comments\bin\DotNetOpenAuth.OpenId.dll
+E:\project\ERP\Comments\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+E:\project\ERP\Comments\bin\EntityFramework.dll
+E:\project\ERP\Comments\bin\Microsoft.Data.Edm.dll
+E:\project\ERP\Comments\bin\Microsoft.Data.OData.Contrib.dll
+E:\project\ERP\Comments\bin\Microsoft.Data.OData.dll
+E:\project\ERP\Comments\bin\Microsoft.Web.Helpers.dll
+E:\project\ERP\Comments\bin\Microsoft.Web.Infrastructure.dll
+E:\project\ERP\Comments\bin\Microsoft.Web.WebPages.OAuth.dll
+E:\project\ERP\Comments\bin\Newtonsoft.Json.dll
+E:\project\ERP\Comments\bin\Ninject.dll
+E:\project\ERP\Comments\bin\NuGet.Core.dll
+E:\project\ERP\Comments\bin\System.Net.Http.dll
+E:\project\ERP\Comments\bin\System.Net.Http.Formatting.dll
+E:\project\ERP\Comments\bin\System.Net.Http.WebRequest.dll
+E:\project\ERP\Comments\bin\System.Spatial.dll
+E:\project\ERP\Comments\bin\System.Web.Helpers.dll
+E:\project\ERP\Comments\bin\System.Web.Http.dll
+E:\project\ERP\Comments\bin\System.Web.Http.OData.dll
+E:\project\ERP\Comments\bin\System.Web.Http.WebHost.dll
+E:\project\ERP\Comments\bin\System.Web.Mvc.dll
+E:\project\ERP\Comments\bin\System.Web.Optimization.dll
+E:\project\ERP\Comments\bin\System.Web.Razor.dll
+E:\project\ERP\Comments\bin\System.Web.WebPages.Administration.dll
+E:\project\ERP\Comments\bin\System.Web.WebPages.Deployment.dll
+E:\project\ERP\Comments\bin\System.Web.WebPages.dll
+E:\project\ERP\Comments\bin\System.Web.WebPages.Razor.dll
+E:\project\ERP\Comments\bin\WebApiContrib.IoC.Ninject.dll
+E:\project\ERP\Comments\bin\WebGrease.dll
+E:\project\ERP\Comments\bin\WebMatrix.Data.dll
+E:\project\ERP\Comments\bin\WebMatrix.WebData.dll
+E:\project\ERP\Comments\bin\Org.Mentalis.Security.Cryptography.dll
+E:\project\ERP\Comments\bin\Mono.Math.dll
+E:\project\ERP\Comments\bin\Microsoft.Data.Edm.xml
+E:\project\ERP\Comments\bin\Microsoft.Data.OData.xml
+E:\project\ERP\Comments\bin\Newtonsoft.Json.xml
+E:\project\ERP\Comments\bin\Ninject.pdb
+E:\project\ERP\Comments\bin\Ninject.xml
+E:\project\ERP\Comments\bin\System.Spatial.xml
+E:\project\ERP\Comments\bin\EntityFramework.xml
+E:\project\ERP\Comments\bin\System.Net.Http.xml
+E:\project\ERP\Comments\bin\System.Net.Http.Formatting.xml
+E:\project\ERP\Comments\bin\System.Net.Http.WebRequest.xml
+E:\project\ERP\Comments\bin\System.Web.Helpers.xml
+E:\project\ERP\Comments\bin\System.Web.Http.xml
+E:\project\ERP\Comments\bin\System.Web.Http.WebHost.xml
+E:\project\ERP\Comments\bin\System.Web.Mvc.xml
+E:\project\ERP\Comments\bin\System.Web.Razor.xml
+E:\project\ERP\Comments\bin\System.Web.WebPages.xml
+E:\project\ERP\Comments\bin\System.Web.WebPages.Deployment.xml
+E:\project\ERP\Comments\bin\System.Web.WebPages.Razor.xml
+E:\project\ERP\Comments\bin\WebMatrix.Data.xml
+E:\project\ERP\Comments\bin\Microsoft.Web.WebPages.OAuth.xml
+E:\project\ERP\Comments\bin\WebMatrix.WebData.xml
+E:\project\ERP\Comments\bin\DotNetOpenAuth.AspNet.xml
+E:\project\ERP\Comments\bin\DotNetOpenAuth.Core.xml
+E:\project\ERP\Comments\bin\DotNetOpenAuth.OAuth.Consumer.xml
+E:\project\ERP\Comments\bin\DotNetOpenAuth.OAuth.xml
+E:\project\ERP\Comments\bin\DotNetOpenAuth.OpenId.xml
+E:\project\ERP\Comments\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+E:\project\ERP\Comments\bin\Org.Mentalis.Security.Cryptography.xml
+E:\project\ERP\Comments\bin\Mono.Math.xml
+E:\project\ERP\Comments\obj\Release\BMS.Migrations.Initial.resources
+E:\project\ERP\Comments\obj\Release\BMS.csproj.GenerateResource.Cache
+E:\project\ERP\Comments\obj\Release\BMS.dll
+E:\project\ERP\Comments\obj\Release\BMS.pdb
+E:\project\ERP\Comments\obj\Release\BMS.csprojResolveAssemblyReference.cache
+D:\ERPPROJECT\ERP\Comments\bin\BMS.dll.config
+D:\ERPPROJECT\ERP\Comments\bin\BMS.dll
+D:\ERPPROJECT\ERP\Comments\bin\BMS.pdb
+D:\ERPPROJECT\ERP\Comments\bin\Antlr3.Runtime.dll
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.AspNet.dll
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.Core.dll
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.OAuth.Consumer.dll
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.OAuth.dll
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.OpenId.dll
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+D:\ERPPROJECT\ERP\Comments\bin\EntityFramework.dll
+D:\ERPPROJECT\ERP\Comments\bin\Microsoft.Data.Edm.dll
+D:\ERPPROJECT\ERP\Comments\bin\Microsoft.Data.OData.Contrib.dll
+D:\ERPPROJECT\ERP\Comments\bin\Microsoft.Data.OData.dll
+D:\ERPPROJECT\ERP\Comments\bin\Microsoft.Web.Helpers.dll
+D:\ERPPROJECT\ERP\Comments\bin\Microsoft.Web.Infrastructure.dll
+D:\ERPPROJECT\ERP\Comments\bin\Microsoft.Web.WebPages.OAuth.dll
+D:\ERPPROJECT\ERP\Comments\bin\Newtonsoft.Json.dll
+D:\ERPPROJECT\ERP\Comments\bin\Ninject.dll
+D:\ERPPROJECT\ERP\Comments\bin\NuGet.Core.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Net.Http.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Net.Http.Formatting.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Net.Http.WebRequest.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Spatial.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Helpers.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Http.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Http.OData.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Http.WebHost.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Mvc.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Optimization.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Razor.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.WebPages.Administration.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.WebPages.Deployment.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.WebPages.dll
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.WebPages.Razor.dll
+D:\ERPPROJECT\ERP\Comments\bin\WebApiContrib.IoC.Ninject.dll
+D:\ERPPROJECT\ERP\Comments\bin\WebGrease.dll
+D:\ERPPROJECT\ERP\Comments\bin\WebMatrix.Data.dll
+D:\ERPPROJECT\ERP\Comments\bin\WebMatrix.WebData.dll
+D:\ERPPROJECT\ERP\Comments\bin\Org.Mentalis.Security.Cryptography.dll
+D:\ERPPROJECT\ERP\Comments\bin\Mono.Math.dll
+D:\ERPPROJECT\ERP\Comments\bin\Microsoft.Data.Edm.xml
+D:\ERPPROJECT\ERP\Comments\bin\Microsoft.Data.OData.xml
+D:\ERPPROJECT\ERP\Comments\bin\Newtonsoft.Json.xml
+D:\ERPPROJECT\ERP\Comments\bin\Ninject.pdb
+D:\ERPPROJECT\ERP\Comments\bin\Ninject.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Spatial.xml
+D:\ERPPROJECT\ERP\Comments\bin\EntityFramework.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Net.Http.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Net.Http.Formatting.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Net.Http.WebRequest.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Helpers.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Http.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Http.WebHost.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Mvc.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.Razor.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.WebPages.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.WebPages.Deployment.xml
+D:\ERPPROJECT\ERP\Comments\bin\System.Web.WebPages.Razor.xml
+D:\ERPPROJECT\ERP\Comments\bin\WebMatrix.Data.xml
+D:\ERPPROJECT\ERP\Comments\bin\Microsoft.Web.WebPages.OAuth.xml
+D:\ERPPROJECT\ERP\Comments\bin\WebMatrix.WebData.xml
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.AspNet.xml
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.Core.xml
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.OAuth.Consumer.xml
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.OAuth.xml
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.OpenId.xml
+D:\ERPPROJECT\ERP\Comments\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+D:\ERPPROJECT\ERP\Comments\bin\Org.Mentalis.Security.Cryptography.xml
+D:\ERPPROJECT\ERP\Comments\bin\Mono.Math.xml
+D:\ERPPROJECT\ERP\Comments\obj\Release\BMS.csprojResolveAssemblyReference.cache
+D:\ERPPROJECT\ERP\Comments\obj\Release\BMS.Migrations.Initial.resources
+D:\ERPPROJECT\ERP\Comments\obj\Release\BMS.csproj.GenerateResource.Cache
+D:\ERPPROJECT\ERP\Comments\obj\Release\BMS.dll
+D:\ERPPROJECT\ERP\Comments\obj\Release\BMS.pdb
+G:\Dropbox\Project\dot net\ERP\Comments\bin\BMS.dll.config
+G:\Dropbox\Project\dot net\ERP\Comments\bin\BMS.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\BMS.pdb
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Antlr3.Runtime.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.AspNet.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.Core.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OAuth.Consumer.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OAuth.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OpenId.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\EntityFramework.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Data.Edm.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Data.OData.Contrib.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Data.OData.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Web.Helpers.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Web.Infrastructure.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Web.WebPages.OAuth.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Newtonsoft.Json.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Ninject.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\NuGet.Core.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.Formatting.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.WebRequest.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Spatial.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Helpers.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Http.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Http.OData.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Http.WebHost.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Mvc.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Optimization.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Razor.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.Administration.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.Deployment.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.Razor.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\WebApiContrib.IoC.Ninject.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\WebGrease.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\WebMatrix.Data.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\WebMatrix.WebData.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Org.Mentalis.Security.Cryptography.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Mono.Math.dll
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Data.Edm.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Data.OData.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Newtonsoft.Json.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Ninject.pdb
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Ninject.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Spatial.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\EntityFramework.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.Formatting.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.WebRequest.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Helpers.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Http.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Http.WebHost.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Mvc.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Razor.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.Deployment.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.Razor.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\WebMatrix.Data.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Web.WebPages.OAuth.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\WebMatrix.WebData.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.AspNet.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.Core.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OAuth.Consumer.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OAuth.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OpenId.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Org.Mentalis.Security.Cryptography.xml
+G:\Dropbox\Project\dot net\ERP\Comments\bin\Mono.Math.xml
+G:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.csprojResolveAssemblyReference.cache
+G:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.Migrations.Initial.resources
+G:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.Migrations.Recreate_bd.resources
+G:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.Migrations.solved1.resources
+G:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.Migrations.solvequation.resources
+G:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.csproj.GenerateResource.Cache
+G:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.dll
+G:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.pdb
+D:\Dropbox\Project\dot net\ERP\Comments\bin\BMS.dll.config
+D:\Dropbox\Project\dot net\ERP\Comments\bin\BMS.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\BMS.pdb
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Antlr3.Runtime.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.AspNet.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.Core.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OAuth.Consumer.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OAuth.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OpenId.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\EntityFramework.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Data.Edm.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Data.OData.Contrib.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Data.OData.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Web.Helpers.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Web.Infrastructure.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Web.WebPages.OAuth.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Newtonsoft.Json.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Ninject.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\NuGet.Core.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.Formatting.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.WebRequest.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Spatial.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Helpers.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Http.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Http.OData.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Http.WebHost.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Mvc.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Optimization.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Razor.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.Administration.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.Deployment.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.Razor.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\WebApiContrib.IoC.Ninject.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\WebGrease.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\WebMatrix.Data.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\WebMatrix.WebData.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Org.Mentalis.Security.Cryptography.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Mono.Math.dll
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Data.Edm.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Data.OData.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Newtonsoft.Json.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Ninject.pdb
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Ninject.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Spatial.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\EntityFramework.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.Formatting.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Net.Http.WebRequest.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Helpers.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Http.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Http.WebHost.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Mvc.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.Razor.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.Deployment.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\System.Web.WebPages.Razor.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\WebMatrix.Data.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Microsoft.Web.WebPages.OAuth.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\WebMatrix.WebData.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.AspNet.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.Core.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OAuth.Consumer.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OAuth.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OpenId.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Org.Mentalis.Security.Cryptography.xml
+D:\Dropbox\Project\dot net\ERP\Comments\bin\Mono.Math.xml
+D:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.csprojResolveAssemblyReference.cache
+D:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.Migrations.Initial.resources
+D:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.Migrations.Recreate_bd.resources
+D:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.Migrations.solved1.resources
+D:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.Migrations.solvequation.resources
+D:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.csproj.GenerateResource.Cache
+D:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.dll
+D:\Dropbox\Project\dot net\ERP\Comments\obj\Release\BMS.pdb

@@ -1,0 +1,917 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1897F02E-3FB5-401C-AC46-5A89EBDB460C}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BMS</RootNamespace>
+    <AssemblyName>BMS</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.0.1\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.5.0.1\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData.Contrib">
+      <HintPath>..\packages\Microsoft.Data.OData.Contrib.5.0.1.50813\lib\net40\Microsoft.Data.OData.Contrib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Helpers">
+      <HintPath>..\packages\microsoft-web-helpers.2.0.20505.3\lib\net40\Microsoft.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGet.Core, Version=1.6.30117.9648, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\NuGet.Core.1.6.2\lib\net40\NuGet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Spatial, Version=5.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Spatial.5.0.1\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http.OData">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.0.1.0-alpha-120814\lib\net40\System.Web.Http.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Administration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Administration.2.0.20505.0\lib\net40\System.Web.WebPages.Administration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebApiContrib.IoC.Ninject">
+      <HintPath>..\packages\WebApiContrib.IoC.Ninject.0.7.1\lib\net40\WebApiContrib.IoC.Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.2.0.20710.0\lib\net40\Microsoft.Web.WebPages.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.2.0.20710.0\lib\net40\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.0.3.12153\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Accounts\AccCOAConfigController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Accounts\AccCOAController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Accounts\AccCOAMappingController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Accounts\AccTypeController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Accounts\VoucherTypeController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Banks\BankAccountController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Banks\BankAccountOwnerTypeController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Banks\BankAccountTypeController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Banks\BankBranchController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Banks\BankController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Others\TaxController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Periods\FiscalYearController.cs" />
+    <Compile Include="Controllers\Accounting\Transaction\GLedgerController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Accounts\PaymentMethodController.cs" />
+    <Compile Include="Controllers\Accounting\Transaction\LedgerSheetController.cs" />
+    <Compile Include="Controllers\Accounting\Transaction\TrialBalanceController.cs" />
+    <Compile Include="Controllers\Accounting\Transaction\VoucherListController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\ControlCOA.cs" />
+    <Compile Include="Controllers\ControlVoucher.cs" />
+    <Compile Include="Controllers\Expenses\EmployeeExpensesDescriptionController.cs" />
+    <Compile Include="Controllers\Expenses\EmployeesExpensesController.cs" />
+    <Compile Include="Controllers\Expenses\EmployeesExpensesPaymentController.cs" />
+    <Compile Include="Controllers\Expenses\ExpensesTypeController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HR\CollaboratorController.cs" />
+    <Compile Include="Controllers\HR\CustomerTypeController.cs" />
+    <Compile Include="Controllers\HR\DepartmentController.cs" />
+    <Compile Include="Controllers\HR\DesignationController.cs" />
+    <Compile Include="Controllers\HR\EmployeeTypeController.cs" />
+    <Compile Include="Controllers\HR\Holiday\GeneralHolidayController.cs" />
+    <Compile Include="Controllers\HR\Holiday\HolidayTypeController.cs" />
+    <Compile Include="Controllers\HR\Holiday\WeeklyHolidayController.cs" />
+    <Compile Include="Controllers\HR\Leave\EmployeeLeaveApplicationController.cs" />
+    <Compile Include="Controllers\HR\Leave\EmployeeLeaveGroupController.cs" />
+    <Compile Include="Controllers\HR\Leave\EmployeeLeaveTypeController.cs" />
+    <Compile Include="Controllers\HR\SupplierTypeController.cs" />
+    <Compile Include="Controllers\Inventory\ProductCategoryController.cs" />
+    <Compile Include="Controllers\Inventory\ProductController.cs" />
+    <Compile Include="Controllers\Inventory\ProductReceiveDeliveryController.cs" />
+    <Compile Include="Controllers\Inventory\UnitOfMeasureController.cs" />
+    <Compile Include="Controllers\Production\BillofMaterialCategoryController.cs" />
+    <Compile Include="Controllers\Production\BillofMaterialController.cs" />
+    <Compile Include="Controllers\Production\BillofMaterialDescriptionController.cs" />
+    <Compile Include="Controllers\Production\ProductionOrderCategoryController.cs" />
+    <Compile Include="Controllers\Production\ProductionOrderController.cs" />
+    <Compile Include="Controllers\Production\ProductionOrderDescriptionController.cs" />
+    <Compile Include="Controllers\Production\ProductionTypeController.cs" />
+    <Compile Include="Controllers\Project\ProjectSetupController.cs" />
+    <Compile Include="Controllers\Project\ProjectSideController.cs" />
+    <Compile Include="Controllers\Purchase\MaintainPurchaseQuotationController.cs" />
+    <Compile Include="Controllers\Purchase\MaintainPurchaseQuotationDescriptionController.cs" />
+    <Compile Include="Controllers\Purchase\MoneyRequisitionController.cs" />
+    <Compile Include="Controllers\Purchase\MoneyRequisitionRequestController.cs" />
+    <Compile Include="Controllers\Purchase\PurchaseBillController.cs" />
+    <Compile Include="Controllers\Purchase\PurchaseBillDescriptionController.cs" />
+    <Compile Include="Controllers\Purchase\PurchaseBillPaymentController.cs" />
+    <Compile Include="Controllers\Purchase\PurchaseDeliveryReceiveController.cs" />
+    <Compile Include="Controllers\Purchase\PurchaseDeliveryReceiveDescriptionController.cs" />
+    <Compile Include="Controllers\Purchase\PurchaseOrderCategoryController.cs" />
+    <Compile Include="Controllers\Purchase\PurchaseOrderController.cs" />
+    <Compile Include="Controllers\Purchase\PurchaseOrderDescriptionController.cs" />
+    <Compile Include="Controllers\Purchase\PurchaseRequisitionController.cs" />
+    <Compile Include="Controllers\Purchase\PurchaseRequisitionDescriptionController.cs" />
+    <Compile Include="Controllers\Purchase\RequestForQuotationController.cs" />
+    <Compile Include="Controllers\Purchase\RequestForQuotationDescriptionController.cs" />
+    <Compile Include="Controllers\Purchase\RequisitionDeliveryController.cs" />
+    <Compile Include="Controllers\Purchase\RequisitionDeliveryDescriptionController.cs" />
+    <Compile Include="Controllers\Sales\SalesBillCategoryController.cs" />
+    <Compile Include="Controllers\Sales\SalesBillController.cs" />
+    <Compile Include="Controllers\Sales\SalesBillDescriptionController.cs" />
+    <Compile Include="Controllers\Sales\SalesDeliveryCategoryController.cs" />
+    <Compile Include="Controllers\Sales\SalesDeliveryController.cs" />
+    <Compile Include="Controllers\Sales\SalesDeliveryDescriptionController.cs" />
+    <Compile Include="Controllers\Sales\SalesOrderCategoryController.cs" />
+    <Compile Include="Controllers\Sales\SalesOrderController.cs" />
+    <Compile Include="Controllers\Sales\SalesOrderDescriptionController.cs" />
+    <Compile Include="Controllers\Sales\SalesQuotationCategoryController.cs" />
+    <Compile Include="Controllers\Sales\SalesQuotationController.cs" />
+    <Compile Include="Controllers\Sales\SalesQuotationDescriptionController.cs" />
+    <Compile Include="Controllers\Sales\SalesReceivePaymentController.cs" />
+    <Compile Include="Controllers\Sales\SalesSectionController.cs" />
+    <Compile Include="Controllers\Setting\Common\CityController.cs" />
+    <Compile Include="Controllers\Setting\Common\CountryController.cs" />
+    <Compile Include="Controllers\Setting\Common\CurrencyController.cs" />
+    <Compile Include="Controllers\Setting\Common\LanguageController.cs" />
+    <Compile Include="Controllers\Setting\Common\ProcesStatusController.cs" />
+    <Compile Include="Controllers\Setting\Companys\CompanyBranchCategoryController.cs" />
+    <Compile Include="Controllers\Setting\Companys\CompanyBranchController.cs" />
+    <Compile Include="Controllers\Setting\Companys\CompanyBranchTypeController.cs" />
+    <Compile Include="Controllers\Setting\Companys\CompanyCategoryController.cs" />
+    <Compile Include="Controllers\Setting\Companys\CompanyController.cs" />
+    <Compile Include="Controllers\Setting\Companys\CompanyTypeController.cs" />
+    <Compile Include="Controllers\Setting\Security\FormGroupPermissionController.cs" />
+    <Compile Include="Controllers\Setting\Security\FormListController.cs" />
+    <Compile Include="Controllers\Setting\Security\FormUserPermissionController.cs" />
+    <Compile Include="Controllers\Setting\Security\WorkFlowConfigController.cs" />
+    <Compile Include="Controllers\Setting\Security\WorkFlowController.cs" />
+    <Compile Include="Controllers\Setting\Security\WorkFlowRecordController.cs" />
+    <Compile Include="Controllers\UDF.cs" />
+    <Compile Include="Controllers\UserAuthorizeController.cs" />
+    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Filters\ValidateAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506101912102_Initial.cs" />
+    <Compile Include="Migrations\201506101912102_Initial.Designer.cs">
+      <DependentUpon>201506101912102_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508211604328_Recreate_bd.cs" />
+    <Compile Include="Migrations\201508211604328_Recreate_bd.Designer.cs">
+      <DependentUpon>201508211604328_Recreate_bd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508221311047_solved1.cs" />
+    <Compile Include="Migrations\201508221311047_solved1.Designer.cs">
+      <DependentUpon>201508221311047_solved1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508230908332_solvequation.cs" />
+    <Compile Include="Migrations\201508230908332_solvequation.Designer.cs">
+      <DependentUpon>201508230908332_solvequation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Accounting\Configuration\Accounts\AccCOA.cs" />
+    <Compile Include="Models\Accounting\Configuration\Accounts\AccCOAConfig.cs" />
+    <Compile Include="Models\Accounting\Configuration\Accounts\AccCOAMapping.cs" />
+    <Compile Include="Models\Accounting\Configuration\Accounts\AccType.cs" />
+    <Compile Include="Models\Accounting\Configuration\Accounts\VoucherType.cs" />
+    <Compile Include="Models\Accounting\Configuration\Banks\BankAccountOwnerType.cs" />
+    <Compile Include="Models\Accounting\Configuration\Others\Tax.cs" />
+    <Compile Include="Models\Accounting\Transaction\GLedger.cs" />
+    <Compile Include="Models\Accounting\Configuration\Accounts\PaymentMethod.cs" />
+    <Compile Include="Models\Accounting\Transaction\VoucherList.cs" />
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Expenses\EmployeeExpensesDescription.cs" />
+    <Compile Include="Models\Expenses\EmployeesExpenses.cs" />
+    <Compile Include="Models\Expenses\EmployeesExpensesPayment.cs" />
+    <Compile Include="Models\Expenses\ExpensesType.cs" />
+    <Compile Include="Models\HR\Collaborator.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\DictionaryCommentRepository.cs" />
+    <Compile Include="Models\HR\CustomerType.cs" />
+    <Compile Include="Models\HR\Departments.cs" />
+    <Compile Include="Models\HR\Designation.cs" />
+    <Compile Include="Models\HR\EmployeeType.cs" />
+    <Compile Include="Models\HR\Holiday\GeneralHoliday.cs" />
+    <Compile Include="Models\HR\Holiday\HolidayType.cs" />
+    <Compile Include="Models\HR\Holiday\WeeklyHoliday.cs" />
+    <Compile Include="Models\HR\Leave\EmployeeLeaveGroup.cs" />
+    <Compile Include="Models\HR\Leave\EmployeeLeaveType.cs" />
+    <Compile Include="Models\HR\Leave\EmployeeLeaveApplication.cs" />
+    <Compile Include="Models\HR\SupplierType.cs" />
+    <Compile Include="Models\ICommentRepository.cs" />
+    <Compile Include="Models\InitialData.cs" />
+    <Compile Include="Models\Inventory\Product.cs" />
+    <Compile Include="Models\Inventory\ProductCategory.cs" />
+    <Compile Include="Models\Inventory\ProductReceiveDelivery.cs" />
+    <Compile Include="Models\Inventory\ProductReceiveDeliveryDescription.cs" />
+    <Compile Include="Models\Inventory\UnitOfMeasure.cs" />
+    <Compile Include="Models\LoginUser.cs" />
+    <Compile Include="Models\Production\BillofMaterial.cs" />
+    <Compile Include="Models\Production\BillofMaterialCategory.cs" />
+    <Compile Include="Models\Production\BillofMaterialDescription.cs" />
+    <Compile Include="Models\Production\ProductionOrder.cs" />
+    <Compile Include="Models\Production\ProductionOrderCategory.cs" />
+    <Compile Include="Models\Production\ProductionOrderDescription.cs" />
+    <Compile Include="Models\Production\ProductionType.cs" />
+    <Compile Include="Models\Project\ProjectSetup.cs" />
+    <Compile Include="Models\Project\ProjectSide.cs" />
+    <Compile Include="Models\Purchase\MaintainPurchaseQuotation.cs" />
+    <Compile Include="Models\Purchase\MaintainPurchaseQuotationDescription.cs" />
+    <Compile Include="Models\Purchase\MoneyRequisition.cs" />
+    <Compile Include="Models\Purchase\MoneyRequisitionRequest.cs" />
+    <Compile Include="Models\Purchase\PurchaseBill.cs" />
+    <Compile Include="Models\Purchase\PurchaseBillDescription.cs" />
+    <Compile Include="Models\Purchase\PurchaseBillPayment.cs" />
+    <Compile Include="Models\Purchase\PurchaseOrderCategory.cs" />
+    <Compile Include="Models\Purchase\PurchaseDeliveryReceive.cs" />
+    <Compile Include="Models\Purchase\PurchaseDeliveryReceiveDescription.cs" />
+    <Compile Include="Models\Purchase\PurchaseOrder.cs" />
+    <Compile Include="Models\Purchase\PurchaseOrderDescription.cs" />
+    <Compile Include="Models\Purchase\PurchaseRequisition.cs" />
+    <Compile Include="Models\Purchase\PurchaseRequisitionDescription.cs" />
+    <Compile Include="Models\Purchase\RequestForQuotation.cs" />
+    <Compile Include="Models\Purchase\RequestForQuotationDescription.cs" />
+    <Compile Include="Models\Purchase\RequisitionDelivery.cs" />
+    <Compile Include="Models\Purchase\RequisitionDeliveryDescription.cs" />
+    <Compile Include="Models\Sales\SalesBillCategory.cs" />
+    <Compile Include="Models\Sales\SalesDelivery.cs" />
+    <Compile Include="Models\Sales\SalesDeliveryCategory.cs" />
+    <Compile Include="Models\Sales\SalesDeliveryDescription.cs" />
+    <Compile Include="Models\Sales\SalesBill.cs" />
+    <Compile Include="Models\Sales\SalesOrder.cs" />
+    <Compile Include="Models\Sales\SalesBillDescription.cs" />
+    <Compile Include="Models\Sales\SalesOrderCategory.cs" />
+    <Compile Include="Models\Sales\SalesOrderDescription.cs" />
+    <Compile Include="Models\Sales\SalesQuotation.cs" />
+    <Compile Include="Models\Sales\SalesQuotationCategory.cs" />
+    <Compile Include="Models\Sales\SalesQuotationDescription.cs" />
+    <Compile Include="Models\Sales\SalesReceivePayment.cs" />
+    <Compile Include="Models\Sales\SalesSection.cs" />
+    <Compile Include="Models\Setting\Common\City.cs" />
+    <Compile Include="Models\Setting\Common\Countrys.cs" />
+    <Compile Include="Models\Setting\Common\Currency.cs" />
+    <Compile Include="Models\Setting\Common\Language.cs" />
+    <Compile Include="Models\Setting\Common\ProcesStatus.cs" />
+    <Compile Include="Models\Setting\Companys\Company.cs" />
+    <Compile Include="Models\Setting\Companys\CompanyBranch.cs" />
+    <Compile Include="Models\Setting\Companys\CompanyBranchCategory.cs" />
+    <Compile Include="Models\Setting\Companys\CompanyCategory.cs" />
+    <Compile Include="Models\Setting\Companys\CompanyBranchType.cs" />
+    <Compile Include="Models\Setting\Companys\CompanyType.cs" />
+    <Compile Include="Models\Accounting\Configuration\Banks\BankAccount.cs" />
+    <Compile Include="Models\Accounting\Configuration\Banks\BankAccountType.cs" />
+    <Compile Include="Models\Accounting\Configuration\Banks\BankBranch.cs" />
+    <Compile Include="Models\Accounting\Configuration\Banks\Bank.cs" />
+    <Compile Include="Models\Accounting\Configuration\Periods\FiscalYear.cs" />
+    <Compile Include="Models\Setting\Security\FormGroupPermission.cs" />
+    <Compile Include="Models\Setting\Security\FormList.cs" />
+    <Compile Include="Models\Setting\Security\FormUserPermission.cs" />
+    <Compile Include="Models\Setting\Security\WorkFlow.cs" />
+    <Compile Include="Models\Setting\Security\WorkFlowConfig.cs" />
+    <Compile Include="Models\Setting\Security\WorkFlowRecord.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app\Accounting\Configuration\Accounts\accCOA.html" />
+    <Content Include="app\Accounting\Configuration\Accounts\accCOAConfig.html" />
+    <Content Include="app\Accounting\Configuration\Accounts\accCOAConfigCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Accounts\accCOACtrl.js" />
+    <Content Include="app\Accounting\Configuration\Accounts\accCOAMapping.html" />
+    <Content Include="app\Accounting\Configuration\Accounts\AccCOAMappingCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Accounts\accType.html" />
+    <Content Include="app\Accounting\Configuration\Accounts\accTypeCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Accounts\paymentMethod.html" />
+    <Content Include="app\Accounting\Configuration\Accounts\paymentMethodCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Accounts\voucherType.html" />
+    <Content Include="app\Accounting\Configuration\Accounts\voucherTypeCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Banks\bank.html" />
+    <Content Include="app\Accounting\Configuration\Banks\bankAccount.html" />
+    <Content Include="app\Accounting\Configuration\Banks\bankAccountCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Banks\bankAccountOwnerType.html" />
+    <Content Include="app\Accounting\Configuration\Banks\bankAccountOwnerTypeCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Banks\bankAccountType.html" />
+    <Content Include="app\Accounting\Configuration\Banks\bankAccountTypeCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Banks\bankBranch.html" />
+    <Content Include="app\Accounting\Configuration\Banks\bankBranchCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Banks\bankCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Periods\fiscalYear.html" />
+    <Content Include="app\Accounting\Configuration\Periods\fiscalYearCtrl.js" />
+    <Content Include="app\Accounting\Transaction\gLedger.html" />
+    <Content Include="app\Accounting\Transaction\gLedgerCtrl.js" />
+    <Content Include="app\Accounting\Transaction\Report\ledgerSheet.html" />
+    <Content Include="app\Accounting\Transaction\Report\ledgerSheet.js" />
+    <Content Include="app\Accounting\Transaction\Report\trialBalance.html" />
+    <Content Include="app\Accounting\Transaction\Report\trialBalanceCtrl.js" />
+    <Content Include="app\Accounting\Transaction\voucherList.html" />
+    <Content Include="app\Accounting\Transaction\voucherListCtrl.js" />
+    <Content Include="app\app.js" />
+    <Content Include="app\Authentication\UserAuthentication\companyManagement.UserAuthentication.js" />
+    <Content Include="app\Authentication\UserAuthentication\userAuthentication.js" />
+    <Content Include="app\Authentication\UserAuthentication\userAuthenticationService.js" />
+    <Content Include="app\Expenses\employeeExpensesDescription.html" />
+    <Content Include="app\Expenses\employeeExpensesDescriptionCtrl.js" />
+    <Content Include="app\Expenses\employeesExpenses.html" />
+    <Content Include="app\Expenses\employeesExpensesCtrl.js" />
+    <Content Include="app\Expenses\employeesExpensesPayment.html" />
+    <Content Include="app\Expenses\employeesExpensesPaymentCtrl.js" />
+    <Content Include="app\Expenses\expensesType.html" />
+    <Content Include="app\Expenses\expensesTypeCtrl.js" />
+    <Content Include="app\HR\Leave\employeeLeaveApplication.html" />
+    <Content Include="app\HR\Leave\employeeLeaveApplicationCtrl.js" />
+    <Content Include="app\HR\Leave\employeeLeaveGroup.html" />
+    <Content Include="app\HR\Leave\employeeLeaveGroupCtrl.js" />
+    <Content Include="app\HR\Leave\employeeLeaveType.html" />
+    <Content Include="app\HR\Leave\employeeLeaveTypeCtrl.js" />
+    <Content Include="app\HR\supplierCtrl.js" />
+    <Content Include="app\HR\supplier.html" />
+    <Content Include="app\HR\customerCtrl.js" />
+    <Content Include="app\HR\customer.html" />
+    <Content Include="app\HR\employeeCtrl.js" />
+    <Content Include="app\HR\employee.html" />
+    <Content Include="app\HR\collaborator.html" />
+    <Content Include="app\HR\collaboratorCtrl.js" />
+    <Content Include="app\HR\customerType.html" />
+    <Content Include="app\HR\customerTypeCtrl.js" />
+    <Content Include="app\HR\department.html" />
+    <Content Include="app\HR\departmentCtrl.js" />
+    <Content Include="app\HR\designation.html" />
+    <Content Include="app\HR\designationCtrl.js" />
+    <Content Include="app\HR\employeeType.html" />
+    <Content Include="app\HR\employeeTypeCtrl.js" />
+    <Content Include="app\HR\supplierType.html" />
+    <Content Include="app\HR\supplierTypeCtrl.js" />
+    <Content Include="app\Inventory\Product\product.html" />
+    <Content Include="app\Inventory\Product\productCategory.html" />
+    <Content Include="app\Inventory\Product\productCategoryCtrl.js" />
+    <Content Include="app\Inventory\Product\productCtrl.js" />
+    <Content Include="app\Inventory\Product\productReceiveDelivery.html" />
+    <Content Include="app\Inventory\Product\productReceiveDeliveryCtrl.js" />
+    <Content Include="app\Inventory\Product\unitOfMeasure.html" />
+    <Content Include="app\Inventory\Product\unitOfMeasureCtrl.js" />
+    <Content Include="app\Production\billofMaterial.html" />
+    <Content Include="app\Production\billofMaterialCategory.html" />
+    <Content Include="app\Production\billofMaterialCategoryCtrl.js" />
+    <Content Include="app\Production\billofMaterialCtrl.js" />
+    <Content Include="app\Production\billofMaterialDescription.html" />
+    <Content Include="app\Production\billofMaterialDescriptionCtrl.js" />
+    <Content Include="app\Production\materialRequirementsPlanning.html" />
+    <Content Include="app\Production\materialRequirementsPlanningCtrl.js" />
+    <Content Include="app\Production\productionOrderCategory.html" />
+    <Content Include="app\Production\productionOrderCategoryCtrl.js" />
+    <Content Include="app\Production\productionOrderDeliveryCtrl.js" />
+    <Content Include="app\Production\productionOrderDelivery.html" />
+    <Content Include="app\Production\productionOrder.html" />
+    <Content Include="app\Production\productionOrderCtrl.js" />
+    <Content Include="app\Production\productionType.html" />
+    <Content Include="app\Production\productionTypeCtrl.js" />
+    <Content Include="app\Purchase\maintainPurchaseQuotation.html" />
+    <Content Include="app\Purchase\maintainPurchaseQuotationCtrl.js" />
+    <Content Include="app\Purchase\moneyRequisition.html" />
+    <Content Include="app\Purchase\moneyRequisitionCtrl.js" />
+    <Content Include="app\Purchase\moneyRequisitionRequest.html" />
+    <Content Include="app\Purchase\moneyRequisitionRequestCtrl.js" />
+    <Content Include="app\Purchase\purchaseBill.html" />
+    <Content Include="app\Purchase\purchaseBillCtrl.js" />
+    <Content Include="app\Purchase\purchaseBillPayment.html" />
+    <Content Include="app\Purchase\purchaseBillPaymentCtrl.js" />
+    <Content Include="app\Purchase\purchaseDeliveryReceive.html" />
+    <Content Include="app\Purchase\purchaseDeliveryReceiveCtrl.js" />
+    <Content Include="app\Purchase\purchaseOrder.html" />
+    <Content Include="app\Purchase\purchaseOrderCategory.html" />
+    <Content Include="app\Purchase\purchaseOrderCategoryCtrl.js" />
+    <Content Include="app\Purchase\purchaseOrderCtrl.js" />
+    <Content Include="app\Purchase\purchaseRequisition.html" />
+    <Content Include="app\Purchase\purchaseRequisitionCtrl.js" />
+    <Content Include="app\Purchase\requestForQuotation.html" />
+    <Content Include="app\Purchase\requestForQuotationCtrl.js" />
+    <Content Include="app\Purchase\requisitionDelivery.html" />
+    <Content Include="app\Purchase\requisitionDeliveryCtrl.js" />
+    <Content Include="app\Sales\salesBill.html" />
+    <Content Include="app\Sales\salesBillCategory.html" />
+    <Content Include="app\Sales\salesBillCategoryCtrl.js" />
+    <Content Include="app\Sales\salesBillCtrl.js" />
+    <Content Include="app\Sales\salesDelivery.html" />
+    <Content Include="app\Sales\salesDeliveryCategory.html" />
+    <Content Include="app\Sales\salesDeliveryCategoryCtrl.js" />
+    <Content Include="app\Sales\salesDeliveryCtrl.js" />
+    <Content Include="app\Sales\salesOrder.html" />
+    <Content Include="app\Sales\salesOrderCategory.html" />
+    <Content Include="app\Sales\salesOrderCategoryCtrl.js" />
+    <Content Include="app\Sales\salesOrderCtrl.js" />
+    <Content Include="app\Sales\salesQuotation.html" />
+    <Content Include="app\Sales\salesQuotationCategory.html" />
+    <Content Include="app\Sales\salesQuotationCategoryCtrl.js" />
+    <Content Include="app\Sales\salesQuotationCtrl.js" />
+    <Content Include="app\Sales\salesReceivePayment.html" />
+    <Content Include="app\Sales\salesReceivePaymentCtrl.js" />
+    <Content Include="app\setting\common\city\city.html" />
+    <Content Include="app\setting\common\city\cityCtrl.js" />
+    <Content Include="app\setting\common\country\country.html" />
+    <Content Include="app\setting\common\country\countryCtrl.js" />
+    <Content Include="app\setting\common\currency\currency.html" />
+    <Content Include="app\setting\common\currency\currencyCtrl.js" />
+    <Content Include="app\setting\common\language\language.html" />
+    <Content Include="app\setting\common\language\languageCtrl.js" />
+    <Content Include="app\setting\common\template\dirPagination.tpl.html" />
+    <Content Include="app\setting\company\companyBranchCategory\companyBranchCategory.html" />
+    <Content Include="app\setting\company\companyBranchCategory\companyBranchCategoryCtrl.js" />
+    <Content Include="app\setting\company\companyBranchType\companyBranchType.html" />
+    <Content Include="app\setting\company\companyBranchType\companyBranchTypeCtrl.js" />
+    <Content Include="app\setting\company\companyBranch\companyBranch.html" />
+    <Content Include="app\setting\company\companyBranch\companyBranchCtrl.js" />
+    <Content Include="app\setting\company\companyCategory\companyCategory.html" />
+    <Content Include="app\setting\company\companyCategory\companyCategoryCtrl.js" />
+    <Content Include="app\setting\company\companyListCtrl.js" />
+    <Content Include="app\setting\company\companyName\company.html" />
+    <Content Include="app\setting\company\companyName\company.js" />
+    <Content Include="app\setting\company\companyType\companyType.html" />
+    <Content Include="app\setting\company\companyType\companyTypeCtrl.js" />
+    <Content Include="app\TestModule\commentListCtrl.js" />
+    <Content Include="app\TestModule\Comments.html" />
+    <Content Include="common\directive\dirContextMenu.js" />
+    <Content Include="common\directive\dirPagination.js" />
+    <Content Include="common\directive\dirPrint.js" />
+    <Content Include="common\directive\dirTreeview.js" />
+    <Content Include="common\factory\Excel.js" />
+    <Content Include="common\filter\angular-filter.js" />
+    <Content Include="common\filter\ngGroup.js" />
+    <Content Include="common\services\accCOAConfigResource.js" />
+    <Content Include="common\services\accCOAMappingResource.js" />
+    <Content Include="common\services\accCOAResource.js" />
+    <Content Include="common\services\accTypeResource.js" />
+    <Content Include="common\services\bankAccountOwnerTypeResource.js" />
+    <Content Include="common\services\bankAccountResource.js" />
+    <Content Include="common\services\bankAccountTypeResource.js" />
+    <Content Include="common\services\bankBranchResource.js" />
+    <Content Include="common\services\bankResource.js" />
+    <Content Include="common\services\billofMaterialCategoryResource.js" />
+    <Content Include="common\services\billofMaterialDescriptionResource.js" />
+    <Content Include="common\services\billofMaterialResource.js" />
+    <Content Include="common\services\CityResource.js" />
+    <Content Include="common\services\collaboratorResource.js" />
+    <Content Include="common\services\commentResource.js" />
+    <Content Include="common\services\common.services.js" />
+    <Content Include="common\services\companyBranchCategoryResource.js" />
+    <Content Include="common\services\companyBranchResource.js" />
+    <Content Include="common\services\companyBranchType.js" />
+    <Content Include="common\services\companyCategoryResource.js" />
+    <Content Include="common\services\companyResource.js" />
+    <Content Include="common\services\CompanyTypeResource.js" />
+    <Content Include="common\services\CountryResource.js" />
+    <Content Include="common\services\CurrencyResource.js" />
+    <Content Include="common\services\customerTypeResource.js" />
+    <Content Include="common\services\departmentResource.js" />
+    <Content Include="common\services\designationResource.js" />
+    <Content Include="common\services\employeeExpensesDescriptionResource.js" />
+    <Content Include="common\services\employeeLeaveApplicationResource.js" />
+    <Content Include="common\services\employeeLeaveGroupResource.js" />
+    <Content Include="common\services\employeeLeaveTypeResource.js" />
+    <Content Include="common\services\employeesExpensesPaymentResource.js" />
+    <Content Include="common\services\employeesExpensesResource.js" />
+    <Content Include="common\services\employeeTypeResource.js" />
+    <Content Include="common\services\expensesTypeResource.js" />
+    <Content Include="common\services\fiscalYearResource.js" />
+    <Content Include="common\services\formGroupPermissionResource.js" />
+    <Content Include="common\services\formListResource.js" />
+    <Content Include="common\services\formUserPermissionResource.js" />
+    <Content Include="common\services\gLedgerResource.js" />
+    <Content Include="common\services\holidayTypeResource.js" />
+    <Content Include="common\services\languageResource.js" />
+    <Content Include="common\services\ledgerSheetResource.js" />
+    <Content Include="common\services\maintainPurchaseQuotationResource.js" />
+    <Content Include="common\services\maintainPurchaseQuotationDescriptionResource.js" />
+    <Content Include="common\services\moneyRequisitionRequestResource.js" />
+    <Content Include="common\services\moneyRequisitionResource.js" />
+    <Content Include="common\services\paymentMethodResource.js" />
+    <Content Include="common\services\productCategoryResource.js" />
+    <Content Include="common\services\productionOrderCategoryResource.js" />
+    <Content Include="common\services\productionOrderDescriptionResource.js" />
+    <Content Include="common\services\productionOrderResource.js" />
+    <Content Include="common\services\productionTypeResource.js" />
+    <Content Include="common\services\productReceiveDeliveryDescriptionResource.js" />
+    <Content Include="common\services\ProductReceiveDeliveryResource.js" />
+    <Content Include="common\services\productResource.js" />
+    <Content Include="common\services\projectSetupResource.js" />
+    <Content Include="common\services\projectSideResource.js" />
+    <Content Include="common\services\purchaseBillDescriptionResource.js" />
+    <Content Include="common\services\purchaseBillPaymentResource.js" />
+    <Content Include="common\services\purchaseBillResource.js" />
+    <Content Include="common\services\purchaseDeliveryReceiveDescriptionResource.js" />
+    <Content Include="common\services\PurchaseDeliveryReceiveResource.js" />
+    <Content Include="common\services\purchaseOrderCategoryResource.js" />
+    <Content Include="common\services\purchaseOrderDescriptionResource.js" />
+    <Content Include="common\services\purchaseOrderResource.js" />
+    <Content Include="common\services\purchaseRequisitionDescriptionResource.js" />
+    <Content Include="common\services\purchaseRequisitionResource.js" />
+    <Content Include="common\services\requestForQuotationDescriptionResource.js" />
+    <Content Include="common\services\requestForQuotationResource.js" />
+    <Content Include="common\services\requisitionDeliveryDescriptionResource.js" />
+    <Content Include="common\services\requisitionDeliveryResource.js" />
+    <Content Include="common\services\salesBillCategoryResource.js" />
+    <Content Include="common\services\salesBillDescriptionResource.js" />
+    <Content Include="common\services\salesBillResource.js" />
+    <Content Include="common\services\salesDeliveryCategoryResource.js" />
+    <Content Include="common\services\salesDeliveryDescriptionResource.js" />
+    <Content Include="common\services\salesDeliveryResource.js" />
+    <Content Include="common\services\salesOrderCategoryResource.js" />
+    <Content Include="common\services\salesOrderDescriptionResource.js" />
+    <Content Include="common\services\salesOrderResource.js" />
+    <Content Include="common\services\salesQuotationCategoryResource.js" />
+    <Content Include="common\services\salesQuotationDescriptionResource.js" />
+    <Content Include="common\services\salesQuotationResource.js" />
+    <Content Include="common\services\salesReceivePaymentResource.js" />
+    <Content Include="common\services\supplierTypeResource.js" />
+    <Content Include="common\services\taxResource.js" />
+    <Content Include="common\services\trialBalanceResource.js" />
+    <Content Include="common\services\unitOfMeasureResource.js" />
+    <Content Include="common\services\userAuthorizeResource.js" />
+    <Content Include="common\services\voucherListResource.js" />
+    <Content Include="common\services\voucherTypeResource.js" />
+    <Content Include="common\services\workFlowConfigResource.js" />
+    <Content Include="common\services\workFlowRecordResource.js" />
+    <Content Include="common\services\WorkFlowResource.js" />
+    <Content Include="Content\css\animate.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\ContextMenu.css" />
+    <Content Include="Content\css\printStyle.css" />
+    <Content Include="Content\css\responsive.css" />
+    <Content Include="Content\css\sidebar.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\metisMenu.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\css\toastr.css" />
+    <Content Include="Content\css\treeview.css" />
+    <Content Include="Content\Demo.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\file.png" />
+    <Content Include="Content\Images\folder-closed.png" />
+    <Content Include="Content\Images\folder.png" />
+    <Content Include="Content\Images\login-bd.jpg" />
+    <Content Include="Content\Images\pinlayer1.png" />
+    <Content Include="Content\Images\pinlayer2.png" />
+    <Content Include="Content\js\angularjs\angular-animate.js" />
+    <Content Include="Content\js\angularjs\angular-resource.js" />
+    <Content Include="Content\js\angularjs\angular-ui-router.js" />
+    <Content Include="Content\js\angularjs\angular.js" />
+    <Content Include="Content\js\angularjs\toastr.js" />
+    <Content Include="Content\js\angularjs\ui-bootstrap-tpls-0.11.0.js" />
+    <Content Include="Content\js\angularjs\ui-utils.js" />
+    <Content Include="Content\js\jquery\bootstrap.js" />
+    <Content Include="Content\js\jquery\jquery.js" />
+    <Content Include="Content\js\jquery\login.js" />
+    <Content Include="Content\js\jquery\main.js" />
+    <Content Include="Content\js\jquery\metisMenu.js" />
+    <Content Include="Content\js\jquery\smart-table.js" />
+    <Content Include="Content\js\jquery\ToExcel.js" />
+    <Content Include="Content\js\jquery\TweenLite.js" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\css\bootstrap.css.map" />
+    <None Include="Properties\PublishProfiles\darad.pubxml" />
+    <None Include="Properties\PublishProfiles\localhost.pubxml" />
+    <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\demo1\get.js" />
+    <Content Include="Scripts\demo2\delete.js" />
+    <Content Include="Scripts\demo2\get.js" />
+    <Content Include="Scripts\demo2\post.js" />
+    <Content Include="Scripts\demo3\get-queryable.js" />
+    <Content Include="Scripts\demo3\get-querystring.js" />
+    <Content Include="Scripts\demo4\delete.js" />
+    <Content Include="Scripts\demo4\get.js" />
+    <Content Include="Scripts\demo4\post.js" />
+    <Content Include="Scripts\demo5\get-formsauth.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\orderedList0.png" />
+    <Content Include="Images\orderedList1.png" />
+    <Content Include="Images\orderedList2.png" />
+    <Content Include="Images\orderedList3.png" />
+    <Content Include="Images\orderedList4.png" />
+    <Content Include="Images\orderedList5.png" />
+    <Content Include="Images\orderedList6.png" />
+    <Content Include="Images\orderedList7.png" />
+    <Content Include="Images\orderedList8.png" />
+    <Content Include="Images\orderedList9.png" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201506101912102_Initial.resx">
+      <DependentUpon>201506101912102_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508211604328_Recreate_bd.resx">
+      <DependentUpon>201508211604328_Recreate_bd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508221311047_solved1.resx">
+      <DependentUpon>201508221311047_solved1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508230908332_solvequation.resx">
+      <DependentUpon>201508230908332_solvequation.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:64712/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

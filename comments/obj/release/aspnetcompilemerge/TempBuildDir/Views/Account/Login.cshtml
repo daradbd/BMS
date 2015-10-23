@@ -1,0 +1,42 @@
+﻿@model BMS.Models.LoginModel
+
+@{
+    ViewBag.Title = "Log in";
+}
+@section Styles {
+    @Styles.Render("~/login/css")
+}
+
+
+<div class="login-form animated flipInX">
+    <h2>Login To Your Account</h2>
+    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+
+
+        @Html.TextBoxFor(m => m.UserName, new {@class="text-label",@placeholder="User Name" })
+        @Html.ValidationMessageFor(m => m.UserName)
+
+
+        @Html.PasswordFor(m => m.Password, new {@class="text-label",@placeholder="Password" })
+        @Html.ValidationMessageFor(m => m.Password)
+
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.RememberMe)
+                Remember Me
+            </label>
+        </div>
+        <input type="submit" class="animated infinite pulse" value="Log in" />
+
+    }
+</div>
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+    }

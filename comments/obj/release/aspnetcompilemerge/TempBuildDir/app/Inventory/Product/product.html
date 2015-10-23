@@ -1,0 +1,282 @@
+﻿<div class="row">
+    <div class="col-lg-4 breadcrumb-panel">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><a href="#">Data</a></li>
+        </ol>
+
+    </div>
+
+    <div class="col-lg-3 title-panel "><h4>Product</h4></div>
+
+    <div class="col-lg-3 search-panel">
+        <div class="input-group">
+            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 button-panel">
+        <!-- /input-group -->
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                <span class="glyphicon glyphicon-stats"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </label>
+        </div>
+    </div>
+</div>
+<form name="productForm" novalidate>
+    <div class="row">
+        <div class="col-lg-12 action-botton">
+            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                New
+            </button>
+            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(productForm.$valid)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                Save
+            </button>
+            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(productForm.$valid)">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                Update
+            </button>
+            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                Print
+            </button>
+            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                Delete
+            </button>
+            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Cancel
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-12 panel panel-default">
+            <div class="panel-body">
+                <div class="entry-form" ng-show="vm.FromView">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6 animated fadeInRight">
+                            <div class="form-group"
+                                 ng-class="{'has-error':productForm.txtProductCode.$invalid
+                                         && productForm.txtProductCode.$dirty}">
+
+                                <label for="txtProductCode">
+                                    ProductCode
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtProductCode"
+                                       name="txtProductCode"
+                                       ng-model="vm.product.ProductCode"
+                                       placeholder="Enter ProductCode"
+                                       required>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':productForm.txtProductName.$invalid
+                                         && productForm.txtProductName.$dirty}">
+
+                                <label for="txtProductName">
+                                    ProductName
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtProductName"
+                                       name="txtProductName"
+                                       ng-model="vm.product.ProductName"
+                                       placeholder="Enter ProductName"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group"
+                                 ng-class="{'has-error':productForm.cmbProductCategory.$invalid
+                && cityForm.cmbProductCategory.$dirty}">
+
+                                <label for="cmbProductCategory">
+                                    Product Category
+                                </label>
+                                <select class="form-control"
+                                        id="cmbProductCategory"
+                                        name="cmbProductCategory"
+                                        ng-model="vm.cmbProductCategory"
+                                        ng-options="ProductCategory.ProductCategoryName for ProductCategory in vm.ProductCategorys track by ProductCategory.ProductCategoryID "
+                                        ng-change="vm.product.ProductCategoryID=vm.cmbProductCategory.ProductCategoryID"></select>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':productForm.cmbUnitOfMeasure.$invalid
+                && cityForm.cmbUnitOfMeasure.$dirty}">
+
+                                <label for="cmbUnitOfMeasure">
+                                    Unit Of Measure
+                                </label>
+                                <select class="form-control"
+                                        id="cmbUnitOfMeasure"
+                                        name="cmbUnitOfMeasure"
+                                        ng-model="vm.cmbUnitOfMeasure"
+                                        ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
+                                        ng-change="vm.product.MOUID=vm.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <tabset>
+                            <tab heading="Address" active="true">
+                                <div class="col-lg-6">
+                                    <div class="form-group"
+                                         ng-class="{'has-error':productForm.txtSalePrice.$invalid
+                                         && productForm.txtSalePrice.$dirty}">
+
+                                        <label for="txtSalePrice">
+                                            SalePrice
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtSalePrice"
+                                               name="txtSalePrice"
+                                               ng-model="vm.product.SalePrice"
+                                               placeholder="Enter SalePrice"
+                                               required>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':productForm.txtCostPrice.$invalid
+                                         && productForm.txtCostPrice.$dirty}">
+
+                                        <label for="txtCostPrice">
+                                            CostPrice
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtCostPrice"
+                                               name="txtCostPrice"
+                                               ng-model="vm.product.CostPrice"
+                                               placeholder="Enter CostPrice"
+                                               required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtDescription">
+                                            Description
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtDescription"
+                                                  name="txtDescription"
+                                                  ng-model="vm.product.Description"
+                                                  rows=" 3"></textarea>
+                                    </div>
+                                 </div>
+                                <div class="col-lg-6">
+
+                                </div>
+                             </tab>
+                        </tabset>
+                    </div>
+                </div>
+                <div class="view-form" ng-show="vm.DetailsView">
+                    <div class="col-lg-12">
+
+
+                        <div class="col-lg-6 animated fadeInRight">
+                            <div class="form-group">
+                                <label for=" inputProductCode">
+                                    ProductCode
+                                </label>
+                                <pre>{{vm.product.ProductCode}}</pre>
+                            </div>
+                            <div class="form-group">
+                                <label for=" inputProductName">
+                                    ProductName
+                                </label>
+                                <pre>{{vm.product.ProductName}}</pre>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <tabset>
+                            <tab heading="Address" active="true">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for=" inputSalePrice">
+                                            SalePrice
+                                        </label>
+                                        <pre>{{vm.product.SalePrice}}</pre>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=" inputCostPrice">
+                                            CostPrice
+                                        </label>
+                                        <pre>{{vm.product.CostPrice}}</pre>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=" inputDescription">
+                                            Description
+                                        </label>
+                                        <pre>{{vm.product.Description}}</pre>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                    </div>
+                <div class="col-lg-12 list-form " ng-show="vm.ListView">
+                    <div class="col-lg-12 animated fadeInRight">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="printThisElement">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>ProductName</th>
+                                        <th>SalePrice</th>
+                                        <th class="noPrint">Edit</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="product in vm.products|filter:searchText| itemsPerPage: 5">
+                                        <td>{{product.ProductCode  | uppercase}}</td>
+                                        <td>{{product.ProductName}}</td>
+                                        <td>{{product.SalePrice}}</td>
+                                        <td class="noPrint">
+                                            <button type="button" ng-click="vm.Get(product.ProductID)" class="btn btn-default ">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

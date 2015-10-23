@@ -1,0 +1,190 @@
+﻿<div class="row">
+    <div class="col-lg-4 breadcrumb-panel">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><a href="#">Data</a></li>
+        </ol>
+
+    </div>
+
+    <div class="col-lg-3 title-panel "><h4>BankAccountOwnerType</h4></div>
+
+    <div class="col-lg-3 search-panel">
+        <div class="input-group">
+            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 button-panel">
+        <!-- /input-group -->
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                <span class="glyphicon glyphicon-stats"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </label>
+        </div>
+    </div>
+</div>
+<form name="bankAccountOwnerTypeForm" novalidate>
+    <div class="row">
+        <div class="col-lg-12 action-botton">
+            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                New
+            </button>
+            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(bankAccountOwnerTypeForm.$valid)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                Save
+            </button>
+            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(bankAccountOwnerTypeForm.$valid)">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                Update
+            </button>
+            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                Print
+            </button>
+            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                Delete
+            </button>
+            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Cancel
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-12 panel panel-default">
+            <div class="panel-body">
+                <div class="entry-form" ng-show="vm.FromView">
+                    <div class="col-lg-6 animated fadeInRight">
+                        <div class="form-group"
+                             ng-class="{'has-error':bankAccountOwnerTypeForm.txtBankAccountOwnerTypeCode.$invalid
+                                         && bankAccountOwnerTypeForm.txtBankAccountOwnerTypeCode.$dirty}">
+
+                            <label for="txtBankAccountOwnerTypeCode">
+                                BankAccountOwnerTypeCode
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtBankAccountOwnerTypeCode"
+                                   name="txtBankAccountOwnerTypeCode"
+                                   ng-model="vm.bankAccountOwnerType.BankAccountOwnerTypeCode"
+                                   placeholder="Enter BankAccountOwnerTypeCode"
+                                   required>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{'has-error':bankAccountOwnerTypeForm.txtBankAccountOwnerTypeName.$invalid
+                                         && bankAccountOwnerTypeForm.txtBankAccountOwnerTypeName.$dirty}">
+
+                            <label for="txtBankAccountOwnerTypeName">
+                                BankAccountOwnerTypeName
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtBankAccountOwnerTypeName"
+                                   name="txtBankAccountOwnerTypeName"
+                                   ng-model="vm.bankAccountOwnerType.BankAccountOwnerTypeName"
+                                   placeholder="Enter BankAccountOwnerTypeName"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtRemarks">
+                                Remarks
+                            </label>
+                            <textarea class="form-control"
+                                      id="txtRemarks"
+                                      name="txtRemarks"
+                                      ng-model="vm.bankAccountOwnerType.Remarks"
+                                      rows=" 3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+
+                <div class="view-form" ng-show="vm.DetailsView">
+                    <div class="col-lg-6 animated fadeInRight">
+                        <div class="form-group">
+
+                            <label for="txtBankAccountOwnerTypeCode">
+                                BankAccountOwnerTypeCode
+                            </label>
+                            <pre>{{vm.bankAccountOwnerType.BankAccountOwnerTypeCode}}</pre>
+                        </div>
+                        <div class="form-group">
+
+                            <label for="txtBankAccountOwnerTypeName">
+                                BankAccountOwnerTypeName
+                            </label>
+                            <pre>{{vm.bankAccountOwnerType.BankAccountOwnerTypeName}}</pre>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtRemarks">
+                                Remarks
+                            </label>
+                            <pre>{{vm.bankAccountOwnerType.Remarks}}</pre>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12 list-form " ng-show="vm.ListView">
+                    <div class="col-lg-12 animated fadeInRight">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="printThisElement">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>BankAccountOwnerTypeName</th>
+                                        <th>Remarks</th>
+                                        <th class="noPrint">Edit</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="bankAccountOwnerType in vm.bankAccountOwnerTypes|filter:searchText| itemsPerPage: 5">
+                                        <td>{{bankAccountOwnerType.BankAccountOwnerTypeCode  | uppercase}}</td>
+                                        <td>{{bankAccountOwnerType.BankAccountOwnerTypeName}}</td>
+                                        <td>{{bankAccountOwnerType.Remarks}}</td>
+                                        <td class="noPrint">
+                                            <button type="button" ng-click="vm.Get(bankAccountOwnerType.BankAccountOwnerTypeID)" class="btn btn-default ">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

@@ -1,0 +1,483 @@
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll.config
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Comments.Tests.pdb
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\BMS.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Net.Http.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Http.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Razor.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\EntityFramework.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Optimization.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Ninject.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\WebApiContrib.IoC.Ninject.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Http.OData.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Helpers.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\WebGrease.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.Contrib.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Spatial.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Antlr3.Runtime.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Mono.Math.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\BMS.pdb
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Net.Http.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Http.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.Razor.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\EntityFramework.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Ninject.pdb
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Ninject.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\System.Spatial.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\bin\Debug\Mono.Math.xml
+H:\rana personal file\Project\C#\ERP\Comments.Tests\obj\Debug\BMS.Tests.csprojResolveAssemblyReference.cache
+H:\rana personal file\Project\C#\ERP\Comments.Tests\obj\Debug\Comments.Tests.dll
+H:\rana personal file\Project\C#\ERP\Comments.Tests\obj\Debug\Comments.Tests.pdb
+E:\project\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll.config
+E:\project\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Comments.Tests.pdb
+E:\project\ERP\Comments.Tests\bin\Debug\BMS.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Net.Http.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Http.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Razor.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+E:\project\ERP\Comments.Tests\bin\Debug\EntityFramework.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Optimization.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Ninject.dll
+E:\project\ERP\Comments.Tests\bin\Debug\WebApiContrib.IoC.Ninject.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.dll
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Http.OData.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Helpers.dll
+E:\project\ERP\Comments.Tests\bin\Debug\WebGrease.dll
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.dll
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.dll
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.dll
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.dll
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.Contrib.dll
+E:\project\ERP\Comments.Tests\bin\Debug\System.Spatial.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Antlr3.Runtime.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.dll
+E:\project\ERP\Comments.Tests\bin\Debug\Mono.Math.dll
+E:\project\ERP\Comments.Tests\bin\Debug\BMS.pdb
+E:\project\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Net.Http.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Http.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.Razor.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+E:\project\ERP\Comments.Tests\bin\Debug\EntityFramework.xml
+E:\project\ERP\Comments.Tests\bin\Debug\Ninject.pdb
+E:\project\ERP\Comments.Tests\bin\Debug\Ninject.xml
+E:\project\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.xml
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.xml
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.xml
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.xml
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.xml
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.xml
+E:\project\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.xml
+E:\project\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.xml
+E:\project\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.xml
+E:\project\ERP\Comments.Tests\bin\Debug\System.Spatial.xml
+E:\project\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.xml
+E:\project\ERP\Comments.Tests\bin\Debug\Mono.Math.xml
+E:\project\ERP\Comments.Tests\obj\Debug\BMS.Tests.csprojResolveAssemblyReference.cache
+E:\project\ERP\Comments.Tests\obj\Debug\Comments.Tests.dll
+E:\project\ERP\Comments.Tests\obj\Debug\Comments.Tests.pdb
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll.config
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Comments.Tests.pdb
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\BMS.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Net.Http.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Http.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Razor.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\EntityFramework.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Optimization.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Http.OData.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Ninject.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\WebApiContrib.IoC.Ninject.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Helpers.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\WebGrease.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.Contrib.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Spatial.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Antlr3.Runtime.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Mono.Math.dll
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\BMS.pdb
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Net.Http.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Http.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.Razor.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\EntityFramework.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Ninject.pdb
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Ninject.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\System.Spatial.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.xml
+D:\ERPPROJECT\ERP\Comments.Tests\bin\Debug\Mono.Math.xml
+D:\ERPPROJECT\ERP\Comments.Tests\obj\Debug\BMS.Tests.csprojResolveAssemblyReference.cache
+D:\ERPPROJECT\ERP\Comments.Tests\obj\Debug\Comments.Tests.dll
+D:\ERPPROJECT\ERP\Comments.Tests\obj\Debug\Comments.Tests.pdb
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll.config
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Comments.Tests.pdb
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\BMS.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Http.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Razor.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\EntityFramework.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Optimization.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Http.OData.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Ninject.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\WebApiContrib.IoC.Ninject.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Helpers.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\WebGrease.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.Contrib.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Spatial.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Antlr3.Runtime.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Mono.Math.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\BMS.pdb
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Http.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Razor.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\EntityFramework.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Ninject.pdb
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Ninject.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Spatial.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Mono.Math.xml
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\obj\Debug\BMS.Tests.csprojResolveAssemblyReference.cache
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\obj\Debug\Comments.Tests.dll
+G:\Dropbox\Project\dot net\ERP\Comments.Tests\obj\Debug\Comments.Tests.pdb
+E:\ERP\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll.config
+E:\ERP\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Comments.Tests.pdb
+E:\ERP\ERP\Comments.Tests\bin\Debug\BMS.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Net.Http.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Http.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Razor.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\EntityFramework.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Optimization.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Http.OData.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Ninject.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\WebApiContrib.IoC.Ninject.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Helpers.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\WebGrease.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.Contrib.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Spatial.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Antlr3.Runtime.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\Mono.Math.dll
+E:\ERP\ERP\Comments.Tests\bin\Debug\BMS.pdb
+E:\ERP\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Net.Http.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Http.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.Razor.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\EntityFramework.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\Ninject.pdb
+E:\ERP\ERP\Comments.Tests\bin\Debug\Ninject.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\System.Spatial.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.xml
+E:\ERP\ERP\Comments.Tests\bin\Debug\Mono.Math.xml
+E:\ERP\ERP\Comments.Tests\obj\Debug\BMS.Tests.csprojResolveAssemblyReference.cache
+E:\ERP\ERP\Comments.Tests\obj\Debug\Comments.Tests.dll
+E:\ERP\ERP\Comments.Tests\obj\Debug\Comments.Tests.pdb
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll.config
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Comments.Tests.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Comments.Tests.pdb
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\BMS.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Http.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Razor.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\EntityFramework.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Optimization.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Http.OData.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Ninject.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\WebApiContrib.IoC.Ninject.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Web.Helpers.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\WebGrease.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.Contrib.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Spatial.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Antlr3.Runtime.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Mono.Math.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\BMS.pdb
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Newtonsoft.Json.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.Formatting.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Helpers.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Http.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Http.WebHost.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Mvc.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.Razor.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\EntityFramework.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Ninject.pdb
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Ninject.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Data.Edm.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Microsoft.Data.OData.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\System.Spatial.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\bin\Debug\Mono.Math.xml
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\obj\Debug\BMS.Tests.csprojResolveAssemblyReference.cache
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\obj\Debug\Comments.Tests.dll
+D:\Dropbox\Project\dot net\ERP\Comments.Tests\obj\Debug\Comments.Tests.pdb
+D:\github\Test\Comments.Tests\bin\Debug\Comments.Tests.dll.config
+D:\github\Test\Comments.Tests\bin\Debug\Comments.Tests.dll
+D:\github\Test\Comments.Tests\bin\Debug\Comments.Tests.pdb
+D:\github\Test\Comments.Tests\bin\Debug\BMS.dll
+D:\github\Test\Comments.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\github\Test\Comments.Tests\bin\Debug\Newtonsoft.Json.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Net.Http.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Net.Http.Formatting.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Helpers.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Http.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Http.WebHost.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Mvc.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Razor.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.WebPages.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+D:\github\Test\Comments.Tests\bin\Debug\EntityFramework.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Optimization.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Http.OData.dll
+D:\github\Test\Comments.Tests\bin\Debug\Ninject.dll
+D:\github\Test\Comments.Tests\bin\Debug\WebApiContrib.IoC.Ninject.dll
+D:\github\Test\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.dll
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.dll
+D:\github\Test\Comments.Tests\bin\Debug\Microsoft.Web.Helpers.dll
+D:\github\Test\Comments.Tests\bin\Debug\WebGrease.dll
+D:\github\Test\Comments.Tests\bin\Debug\Microsoft.Data.Edm.dll
+D:\github\Test\Comments.Tests\bin\Debug\Microsoft.Data.OData.dll
+D:\github\Test\Comments.Tests\bin\Debug\Microsoft.Data.OData.Contrib.dll
+D:\github\Test\Comments.Tests\bin\Debug\System.Spatial.dll
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.dll
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.dll
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.dll
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.dll
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.dll
+D:\github\Test\Comments.Tests\bin\Debug\Antlr3.Runtime.dll
+D:\github\Test\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.dll
+D:\github\Test\Comments.Tests\bin\Debug\Mono.Math.dll
+D:\github\Test\Comments.Tests\bin\Debug\BMS.pdb
+D:\github\Test\Comments.Tests\bin\Debug\Newtonsoft.Json.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Net.Http.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Net.Http.Formatting.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Net.Http.WebRequest.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Helpers.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Http.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Http.WebHost.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Mvc.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.Razor.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.WebPages.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+D:\github\Test\Comments.Tests\bin\Debug\EntityFramework.xml
+D:\github\Test\Comments.Tests\bin\Debug\Ninject.pdb
+D:\github\Test\Comments.Tests\bin\Debug\Ninject.xml
+D:\github\Test\Comments.Tests\bin\Debug\Microsoft.Web.WebPages.OAuth.xml
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.AspNet.xml
+D:\github\Test\Comments.Tests\bin\Debug\Microsoft.Data.Edm.xml
+D:\github\Test\Comments.Tests\bin\Debug\Microsoft.Data.OData.xml
+D:\github\Test\Comments.Tests\bin\Debug\System.Spatial.xml
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.Core.xml
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.Consumer.xml
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.OAuth.xml
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.xml
+D:\github\Test\Comments.Tests\bin\Debug\DotNetOpenAuth.OpenId.xml
+D:\github\Test\Comments.Tests\bin\Debug\Org.Mentalis.Security.Cryptography.xml
+D:\github\Test\Comments.Tests\bin\Debug\Mono.Math.xml
+D:\github\Test\Comments.Tests\obj\Debug\BMS.Tests.csprojResolveAssemblyReference.cache
+D:\github\Test\Comments.Tests\obj\Debug\Comments.Tests.dll
+D:\github\Test\Comments.Tests\obj\Debug\Comments.Tests.pdb

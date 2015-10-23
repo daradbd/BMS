@@ -1,0 +1,571 @@
+﻿<div class="row">
+    <div class="col-lg-4 breadcrumb-panel">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><a href="#">Data</a></li>
+        </ol>
+
+    </div>
+
+    <div class="col-lg-3 title-panel "><h4>Company</h4></div>
+
+    <div class="col-lg-3 search-panel">
+        <div class="input-group">
+            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 button-panel">
+        <!-- /input-group -->
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                <span class="glyphicon glyphicon-stats"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </label>
+        </div>
+    </div>
+</div>
+<form name="companyForm" novalidate>
+    <div class="row">
+        <div class="col-lg-12 action-botton">
+            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                New
+            </button>
+            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(companyForm.$valid)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                Save
+            </button>
+            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(companyForm.$valid)">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                Update
+            </button>
+            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                Print
+            </button>
+            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                Delete
+            </button>
+            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Cancel
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-12 panel panel-default">
+            <div class="panel-body">
+                <div class="entry-form" ng-show="vm.FromView">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6 animated fadeInRight">
+                            <div class="form-group"
+                                 ng-class="{'has-error':companyForm.txtCompanyCode.$invalid
+                                             && companyForm.txtCompanyCode.$dirty}">
+
+                                <label for="txtCompanyCode">
+                                    CompanyCode
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtCompanyCode"
+                                       name="txtCompanyCode"
+                                       ng-model="vm.company.CompanyCode"
+                                       placeholder="Enter CompanyCode"
+                                       required>
+                            </div>
+
+                            <div class="form-group"
+                                 ng-class="{'has-error':companyForm.txtCompanyName.$invalid
+                                             && companyForm.txtCompanyName.$dirty}">
+
+                                <label for="txtCompanyName">
+                                    Company Name
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtCompanyName"
+                                       name="txtCompanyName"
+                                       ng-model="vm.company.CompanyName"
+                                       placeholder="Enter CompanyName"
+                                       required>
+                            </div>
+
+
+                           
+                            
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group"
+                                 ng-class="{'has-error':companyForm.txtCompanyShortName.$invalid
+                                             && companyForm.txtCompanyShortName.$dirty}">
+
+                                <label for="txtCompanyShortName">
+                                    Company ShortName
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtCompanyShortName"
+                                       name="txtCompanyShortName"
+                                       ng-model="vm.company.CompanyShortName"
+                                       placeholder="Enter Company Short Name"
+                                       required>
+                            </div>
+                            <div class="form-group">
+
+                                <label for="cmbCompanyCategory">
+                                   Company Category
+                                </label>
+                                <select class="form-control"
+                                        id="cmbCompanyCategory"
+                                        name="cmbCompanyCategory"
+                                        ng-model="vm.cmbCompanyCategory"
+                                        ng-options="CompanyCategory.CompanyCategoryName for CompanyCategory in vm.CompanyCategorys track by CompanyCategory.CompanyCategoryID "
+                                        ng-change="vm.company.CompanyCategoryID=vm.cmbCompanyCategory.CompanyCategoryID"></select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <tabset>
+                            <tab heading="Address" active="true">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="txtStreet">
+                                            Street
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtStreet"
+                                                  name="txtStreet"
+                                                  ng-model="vm.company.Street"
+                                                  rows=" 3"></textarea>
+                                    </div>
+
+                                    <div class="form-group"
+                                         ng-class="{'has-error':companyForm.txtPOBox.$invalid
+                                             && companyForm.txtPOBox.$dirty}">
+
+                                        <label for="txtPOBox">
+                                            POBox
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtPOBox"
+                                               name="txtPOBox"
+                                               ng-model="vm.company.POBox"
+                                               placeholder="Enter POBox"
+                                               required>
+                                        <label for="txtPostalCode">
+                                            Postal Code
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtPostalCode"
+                                               name="txtPostalCode"
+                                               ng-model="vm.company.PostalCode"
+                                               placeholder="Enter PostalCode"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="form-group">
+
+                                        <label for="cmbCountry">
+                                            Country
+                                        </label>
+                                        <select class="form-control"
+                                                ng-model="vm.cmbcountrys"
+                                                ng-options="country.CountryName for country in vm.countrys track by country.CountryID "
+                                                ng-change="vm.selectCity(vm.cmbcountrys.CountryID)"></select>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="cmbCity">
+                                            City
+                                        </label>
+                                        <select class="form-control"
+                                                ng-model="vm.cmbCitys"
+                                                ng-options="city.CityName for city in vm.citys track by city.CityID "></select>
+                                    </div>
+                                </div>
+
+                            </tab>
+                            <tab heading="Info">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="cmbCompanyType">
+                                            Company Type
+                                        </label>
+                                        <select class="form-control"
+                                                ng-model="vm.cmbCompanyTypes"
+                                                ng-options="companyType.CompanyTypeName for companyType in vm.CompanyTypes track by companyType.CompanyTypeID "
+                                                ng-change="vm.company.CompanyTypeID=vm.cmbCompanyTypes.CompanyTypeID"></select>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="cmbLanguage">
+                                            Language
+                                        </label>
+                                        <select class="form-control"
+                                                ng-model="vm.cmbLanguages"
+                                                ng-options="language.LanguageName for language in vm.Languages track by language.LanguageID "></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="cmbCurrency">
+                                            Currency
+                                        </label>
+                                        <select class="form-control"
+                                                ng-model="vm.cmbCurrencys"
+                                                ng-options="currency.CurrencyName for currency in vm.Currencys track by currency.CurrencyID "></select>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab heading="Others">
+                                <div class="col-lg-6">
+                                    <div class="form-group"
+                                         ng-class="{'has-error':companyForm.txtTradeLicenseNo.$invalid
+                                         && companyForm.txtTradeLicenseNo.$dirty}">
+
+                                        <label for="txtTradeLicenseNo">
+                                            TradeLicense No
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtTradeLicenseNo"
+                                               name="txtTradeLicenseNo"
+                                               ng-model="vm.company.TradeLicenseNo"
+                                               placeholder="Enter TradeLicenseNo"
+                                               required>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':companyForm.txtEmailID.$invalid
+                                         && companyForm.txtEmailID.$dirty}">
+
+                                        <label for="txtEmailID">
+                                            EmailID
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtEmailID"
+                                               name="txtEmailID"
+                                               ng-model="vm.company.EmailID"
+                                               placeholder="Enter EmailID"
+                                               required>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':companyForm.txtPhone.$invalid
+                                         && companyForm.txtPhone.$dirty}">
+
+                                        <label for="txtPhone">
+                                            Phone
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtPhone"
+                                               name="txtPhone"
+                                               ng-model="vm.company.Phone"
+                                               placeholder="Enter Phone"
+                                               required>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':companyForm.txtFaxNo.$invalid
+                                         && companyForm.txtFaxNo.$dirty}">
+
+                                        <label for="txtFaxNo">
+                                            FaxNo
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtFaxNo"
+                                               name="txtFaxNo"
+                                               ng-model="vm.company.FaxNo"
+                                               placeholder="Enter FaxNo"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group"
+                                         ng-class="{'has-error':companyForm.txtTINNO.$invalid
+                                         && companyForm.txtTINNO.$dirty}">
+
+                                        <label for="txtTINNO">
+                                            TINNO
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtTINNO"
+                                               name="txtTINNO"
+                                               ng-model="vm.company.TINNO"
+                                               placeholder="Enter TINNO"
+                                               required>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':companyForm.txtFBPage.$invalid
+                                         && companyForm.txtFBPage.$dirty}">
+
+                                        <label for="txtFBPage">
+                                            FBPage
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtFBPage"
+                                               name="txtFBPage"
+                                               ng-model="vm.company.FBPage"
+                                               placeholder="Enter FBPage"
+                                               required>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':companyForm.txtMobile.$invalid
+                                         && companyForm.txtMobile.$dirty}">
+
+                                        <label for="txtMobile">
+                                            Mobile
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtMobile"
+                                               name="txtMobile"
+                                               ng-model="vm.company.Mobile"
+                                               placeholder="Enter Mobile"
+                                               required>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':companyForm.txtWebsite.$invalid
+                                         && companyForm.txtWebsite.$dirty}">
+
+                                        <label for="txtWebsite">
+                                            Website
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtWebsite"
+                                               name="txtWebsite"
+                                               ng-model="vm.company.Website"
+                                               placeholder="Enter Website"
+                                               required>
+                                    </div>
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+                </div>
+
+            <div class="view-form" ng-show="vm.DetailsView">
+                <div class="col-lg-12">
+                    <div class="col-lg-6 animated fadeInRight">
+                        <div class="form-group">
+                            <label for=" inputCompanyCode">
+                                CompanyCode
+                            </label>
+                            <pre>{{vm.company.CompanyCode}}</pre>
+                        </div>
+                        <div class="form-group">
+                            <label for=" inputCompanyName">
+                                Company Name
+                            </label>
+                            <pre>{{vm.company.CompanyName}}</pre>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for=" inputCompanyShortName">
+                                ShortName
+                            </label>
+                            <pre>{{vm.company.CompanyShortName}}</pre>
+                        </div>
+                        <div class="form-group">
+                            <label for=" inputCompanyCategory">
+                                CompanyCategory
+                            </label>
+                            <pre>{{vm.company.CompanyCategory.CompanyCategoryName}}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <tabset>
+                        <tab heading="Address" active="true">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for=" inputStreet">
+                                        Street
+                                    </label>
+                                    <pre>{{vm.company.Street}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for=" inputPOBox">
+                                        POBox
+                                    </label>
+                                    <pre>{{vm.company.POBox}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for=" inputPostalCode">
+                                        PostalCode
+                                    </label>
+                                    <pre>{{vm.company.PostalCode}}</pre>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for=" inputCountry">
+                                        Country
+                                    </label>
+                                    <pre>{{vm.company.Country.CountryName}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for=" inputCity">
+                                        City
+                                    </label>
+                                    <pre>{{vm.company.City.CityName}}</pre>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading="Info">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for=" inputCompanyType">
+                                        CompanyType
+                                    </label>
+                                    <pre>{{vm.company.CompanyType.CompanyTypeName}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for=" inputLanguage">
+                                        Language
+                                    </label>
+                                    <pre>{{vm.company.Language.LanguageName}}</pre>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for=" inputCurrency">
+                                        Currency
+                                    </label>
+                                    <pre>{{vm.company.Currency.CurrencyName}}</pre>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading="Other">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for=" inputTradeLicenseNo">
+                                        TradeLicenseNo
+                                    </label>
+                                    <pre>{{vm.company.TradeLicenseNo}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for=" inputEmailID">
+                                        EmailID
+                                    </label>
+                                    <pre>{{vm.company.EmailID}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for=" inputPhone">
+                                        Phone
+                                    </label>
+                                    <pre>{{vm.company.Phone}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for=" inputFaxNo">
+                                        FaxNo
+                                    </label>
+                                    <pre>{{vm.company.FaxNo}}</pre>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for=" inputTINNO">
+                                        TINNO
+                                    </label>
+                                    <pre>{{vm.company.TINNO}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for=" inputFBPage">
+                                        FBPage
+                                    </label>
+                                    <pre>{{vm.company.FBPage}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for=" inputMobile">
+                                        Mobile
+                                    </label>
+                                    <pre>{{vm.company.Mobile}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for=" inputWebsite">
+                                        Website
+                                    </label>
+                                    <pre>{{vm.company.Website}}</pre>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                 </div>
+             </div>
+
+                            <div class="col-lg-12 list-form " ng-show="vm.ListView">
+                                <div class="col-lg-12 animated fadeInRight">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="printThisElement">
+                                            <thead>
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>CompanyName</th>
+                                                    <th>CompanyShortName</th>
+                                                    <th class="noPrint">Edit</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <tr dir-paginate="company in vm.companys|filter:searchText| itemsPerPage: 5">
+                                                    <td>{{company.CompanyCode  | uppercase}}</td>
+                                                    <td>{{company.CompanyName}}</td>
+                                                    <td>{{company.CompanyShortName}}</td>
+                                                    <td class="noPrint">
+                                                        <button type="button" ng-click="vm.Get(company.CompanyID)" class="btn btn-default ">
+                                                            View
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+            </div>
+    </div>
+</form>
+
+

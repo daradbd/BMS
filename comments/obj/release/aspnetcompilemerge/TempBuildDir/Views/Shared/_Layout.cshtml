@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>@ViewBag.Title - RealLifeSolution</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+
+    @RenderSection("Styles", required: false)
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
+    
+ 
+    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+
+
+
+</head>
+<body ng-app="companyManagement">
+    @Html.Partial("_LoginPartial")
+
+
+
+    @RenderBody()
+
+
+
+
+    @RenderSection("bscripts", required: false)
+
+</body>
+</html>

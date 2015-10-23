@@ -1,0 +1,352 @@
+﻿<div class="row">
+    <div class="col-lg-4 breadcrumb-panel">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><a href="#">Data</a></li>
+        </ol>
+
+    </div>
+
+    <div class="col-lg-3 title-panel "><h4>BankBranch</h4></div>
+
+    <div class="col-lg-3 search-panel">
+        <div class="input-group">
+            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 button-panel">
+        <!-- /input-group -->
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                <span class="glyphicon glyphicon-stats"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </label>
+        </div>
+    </div>
+</div>
+<form name="bankBranchForm" novalidate>
+    <div class="row">
+        <div class="col-lg-12 action-botton">
+            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                New
+            </button>
+            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(bankBranchForm.$valid)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                Save
+            </button>
+            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(bankBranchForm.$valid)">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                Update
+            </button>
+            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                Print
+            </button>
+            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                Delete
+            </button>
+            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Cancel
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-12 panel panel-default">
+            <div class="panel-body">
+                <div class="entry-form" ng-show="vm.FromView">
+                    <div class="col-lg-12">
+                    <div class="col-lg-6 animated fadeinright">
+                        <div class="form-group"
+                             ng-class="{'has-error':bankBranchForm.txtBankBranchCode.$invalid
+                                         && bankBranchForm.txtBankBranchCode.$dirty}">
+
+                            <label for="txtBankBranchCode">
+                                BankBranch Code
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtBankBranchCode"
+                                   name="txtBankBranchCode"
+                                   ng-model="vm.bankBranch.BankBranchCode"
+                                   placeholder="Enter BankBranchCode"
+                                   required>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{'has-error':bankBranchForm.txtBankBranchName.$invalid
+                                         && bankBranchForm.txtBankBranchName.$dirty}">
+
+                            <label for="txtBankBranchName">
+                                BankBranchName
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtBankBranchName"
+                                   name="txtBankBranchName"
+                                   ng-model="vm.bankBranch.BankBranchName"
+                                   placeholder="Enter BankBranchName"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group"
+                             ng-class="{'has-error':bankBranchForm.cmbBank.$invalid
+                                         && bankBranchForm.cmbBank.$dirty}">
+
+                            <label for="cmbBank">
+                                Bank
+                            </label>
+                            <select class="form-control"
+                                    id="cmbBank"
+                                    name="cmbBank"
+                                    ng-model="vm.cmbBanks"
+                                    ng-options="Bank.BankName for Bank in vm.banks track by Bank.BankID "
+                                    ng-change="vm.bankBranch.BankID=vm.cmbBanks.BankID"></select>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{'has-error':bankBranchForm.txtSwiftCode.$invalid
+                                         && bankBranchForm.txtSwiftCode.$dirty}">
+
+                            <label for="txtSwiftCode">
+                                SwiftCode
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtSwiftCode"
+                                   name="txtSwiftCode"
+                                   ng-model="vm.bankBranch.SwiftCode"
+                                   placeholder="Enter SwiftCode"
+                                   required>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <tabset>
+                            <tab heading="Address" active="true">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="txtStreet">
+                                            Street
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtStreet"
+                                                  name="txtStreet"
+                                                  ng-model="vm.bankBranch.Street"
+                                                  rows=" 3"></textarea>
+                                    </div>
+
+                                    <div class="form-group"
+                                         ng-class="{'has-error':bankBranchForm.txtPOBox.$invalid
+                                             && bankBranchForm.txtPOBox.$dirty}">
+
+                                        <label for="txtPOBox">
+                                            PO Box
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtPOBox"
+                                               name="txtPOBox"
+                                               ng-model="vm.bankBranch.POBox"
+                                               placeholder="Enter POBox"
+                                               required>
+                                        <label for="txtPostalCode">
+                                            Postal Code
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtPostalCode"
+                                               name="txtPostalCode"
+                                               ng-model="vm.bankBranch.PostalCode"
+                                               placeholder="Enter PostalCode"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="form-group">
+
+                                        <label for="cmbCountry">
+                                            Country
+                                        </label>
+                                        <select class="form-control"
+                                                ng-model="vm.cmbcountrys"
+                                                ng-options="country.CountryName for country in vm.countrys track by country.CountryID "
+                                                ng-change="vm.selectCity(vm.cmbcountrys.CountryID)"></select>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="cmbCity">
+                                            City
+                                        </label>
+                                        <select class="form-control"
+                                                ng-model="vm.cmbCitys"
+                                                ng-options="city.CityName for city in vm.citys track by city.CityID "></select>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':bankBranchForm.txtEmailID.$invalid
+                                         && bankBranchForm.txtEmailID.$dirty}">
+
+                                        <label for="txtEmailID">
+                                            EmailID
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtEmailID"
+                                               name="txtEmailID"
+                                               ng-model="vm.bankBranch.EmailID"
+                                               placeholder="Enter EmailID"
+                                               required>
+                                    </div>
+                                </div>
+
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+                <div class="view-form" ng-show="vm.DetailsView">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6 animated fadeinright">
+                            <div class="form-group">
+
+                                <label for="txtBankBranchCode">
+                                    BankBranch Code
+                                </label>
+                                <pre>{{vm.bankBranch.BankBranchCode}}</pre>
+                            </div>
+                            <div class="form-group">
+
+                                <label for="txtBankBranchName">
+                                    BankBranchName
+                                </label>
+                                <pre>{{vm.bankBranch.BankBranchName}}</pre>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+
+                                <label for="cmbBank">
+                                    Bank
+                                </label>
+                                <pre>{{vm.bankBranch.Bank.BankName}}</pre>
+                            </div>
+                            <div class="form-group">
+
+                                <label for="txtSwiftCode">
+                                    SwiftCode
+                                </label>
+                                <pre>{{vm.bankBranch.SwiftCode}}</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <tabset>
+                            <tab heading="Address" active="true">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="txtStreet">
+                                            Street
+                                        </label>
+                                        <pre>{{vm.bankBranch.Street}}</pre>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label for="txtPOBox">
+                                            PO Box
+                                        </label>
+                                        <pre>{{vm.bankBranch.POBox}}</pre>
+                                        <label for="txtPostalCode">
+                                            Postal Code
+                                        </label>
+                                        <pre>{{vm.bankBranch.PostalCode}}</pre>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="form-group">
+
+                                        <label for="cmbCountry">
+                                            Country
+                                        </label>
+                                        <pre>{{vm.bankBranch.Country.CountryName}}</pre>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="cmbCity">
+                                            City
+                                        </label>
+                                        <pre>{{vm.bankBranch.City.CityName}}</pre>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="txtEmailID">
+                                            EmailID
+                                        </label>
+                                        <pre>{{vm.bankBranch.EmailID}}</pre>
+                                    </div>
+                                </div>
+
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 list-form " ng-show="vm.ListView">
+                    <div class="col-lg-12 animated fadeInRight">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="printThisElement">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>SwiftCode</th>
+                                        <th>BankBranchName</th>
+                                        <th>Remarks</th>
+                                        <th class="noPrint">Edit</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="bankBranch in vm.bankBranchs|filter:searchText| itemsPerPage: 5">
+                                        <td>{{bankBranch.BankBranchCode  | uppercase}}</td>
+                                        <td>{{bankBranch.SwiftCode}}</td>
+                                        <td>{{bankBranch.BankBranchName}}</td>
+                                        <td>{{bankBranch.Remarks}}</td>
+                                        <td class="noPrint">
+                                            <button type="button" ng-click="vm.Get(bankBranch.BankBranchID)" class="btn btn-default ">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

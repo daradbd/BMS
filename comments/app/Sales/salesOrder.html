@@ -1,0 +1,894 @@
+﻿<div class="row">
+    <div class="col-lg-4 breadcrumb-panel">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><a href="#">Data</a></li>
+        </ol>
+
+    </div>
+
+    <div class="col-lg-3 title-panel "><h4>SalesOrder</h4></div>
+
+    <div class="col-lg-3 search-panel">
+        <div class="input-group">
+            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 button-panel">
+        <!-- /input-group -->
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                <span class="glyphicon glyphicon-stats"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </label>
+        </div>
+    </div>
+</div>
+<form name="salesOrderForm" novalidate>
+    <div class="row">
+        <div class="col-lg-12 action-botton">
+            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                New
+            </button>
+            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(salesOrderForm.$valid)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                Save
+            </button>
+            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(salesOrderForm.$valid)">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                Update
+            </button>
+            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                Print
+            </button>
+            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                Delete
+            </button>
+            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Cancel
+            </button>
+
+            <!--<button type="button" ng-click="vm.ProductionOrder(vm.salesOrder.SalesOrderID)" class="btn btn-success ">
+                <span class="glyphicon glyphicon-align-right" aria-hidden="true"></span>
+                Production Order
+            </button>-->
+            <!--<button type="button" ng-click="vm.CreateOrder()" class="btn btn-default ">
+                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                Create Order
+            </button>-->
+            <div class="btn-group" ng-show="vm.ActionButton">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="" ng-click="vm.ProductionOrder(vm.salesOrder.SalesOrderID)"><span class="glyphicon glyphicon-align-right" aria-hidden="true"> Production Order</a></li>
+                    <li><a href="" ng-click="vm.SalesDeliver(vm.salesOrder.SalesOrderID)">Sales Delivery</a></li>
+                    <li><a href="" ng-click="vm.SalesBill(vm.salesOrder.SalesOrderID)">Sales Bill</a></li>
+                </ul>
+            </div>
+            <button ng-show="vm.ImportToExcelButton" class="btn btn-link" onclick="tableToExcel('testTable', 'W3C Example Table')">
+                <span class="glyphicon glyphicon-share"></span> Export to Excel
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-12 panel panel-default">
+            <div class="panel-body">
+                <div class="entry-form" ng-show="vm.FromView">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6 animated fadeInRight">
+                            <div class="form-group"
+                                 ng-class="{'has-error':salesOrderForm.cmbCustomer.$invalid
+                                        && salesOrderForm.cmbCustomer.$dirty}">
+
+                                <label for="cmbCustomer">
+                                    Customer
+                                </label>
+                                <select class="form-control"
+                                        id="cmbCustomer"
+                                        name="cmbCustomer"
+                                        ng-model="vm.cmbCustomer"
+                                        ng-options="Customer.Name for Customer in vm.collaborators track by Customer.CollaboratorID "
+                                        ng-change="vm.salesOrder.CustomerID=vm.cmbCustomer.CollaboratorID"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtRemarks">
+                                    Address:
+                                </label>
+
+                                {{vm.cmbCustomer.Street}},{{vm.cmbCustomer.POBox}},{{vm.cmbCustomer.City.CityName}},{{vm.cmbCustomer.Country.CountryName}}
+
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':salesOrderForm.txtSubject.$invalid
+                                         && salesOrderForm.txtSubject.$dirty}">
+
+                                <label for="txtTitle">
+                                    Subject:
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtSubject"
+                                       name="txtSubject"
+                                       ng-model="vm.salesOrder.Subject"
+                                       placeholder="Enter Subject"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group"
+                                 ng-class="{'has-error':salesOrderForm.cmbSalesOrderCategory.$invalid
+                                        && salesOrderForm.cmbSalesOrderCategory.$dirty}">
+
+                                <label for="cmbSalesOrderCategory">
+                                    SalesOrderCategory
+                                </label>
+                                <select class="form-control"
+                                        id="cmbSalesOrderCategory"
+                                        name="cmbSalesOrderCategory"
+                                        ng-model="vm.cmbSalesOrderCategory"
+                                        ng-options="SalesOrderCategory.SalesOrderCategoryName for SalesOrderCategory in vm.salesOrderCategorys track by SalesOrderCategory.SalesOrderCategoryID "
+                                        ng-change="vm.salesOrder.SalesOrderCategoryID=vm.cmbSalesOrderCategory.SalesOrderCategoryID"></select>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':salesOrderForm.txtReferenceNo.$invalid
+                                         && salesOrderForm.txtReferenceNo.$dirty}">
+
+                                <label for="txtReferenceNo">
+                                    Reference No
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtReferenceNo"
+                                       name="txtReferenceNo"
+                                       ng-model="vm.salesOrder.ReferenceNo"
+                                       placeholder="Enter ReferenceNo"
+                                       required>
+                            </div>
+                            <div class="form-group">
+
+                                <label for="txtTranDate">
+                                    Data:
+                                </label>
+                                <div class="form-group">
+                                    <p class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtDate"
+                                               name="txtDate"
+                                               ng-model="vm.salesOrder.Date"
+                                               datepicker-popup="MMM dd, yyyy "
+                                               is-open="vm.dtopened"
+                                               required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default"
+                                                    ng-click="vm.dtopen($event)">
+                                                <i class="glyphicon glyphicon-calendar" />
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary"
+                                    ng-init="vm.HasProjectSide=false"
+                                    ng-model="vm.HasProjectSide"
+                                    btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+                                {{vm.HasProjectSide ? "Has Side" : "No Side"}}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <tabset>
+                            <tab heading="Product-Info" active="true">
+                                <div class="col-lg-12">
+                                    <div class=" panel panel-primary" ng:repeat="(key, value) in vm.SalesOrderDescription.salesOrderDesc | groupBy:'SalesSectionID'">
+                                        <div class="panel-heading">
+                                            <button type="button" ng-click="vm.PushItem((vm.MaxIndex=(vm.SalesOrderDescription.salesOrderDesc | max: 'SalesSectionID').SalesSectionID)+1,'')" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                            <input class="form-control" ng-change="vm.UpdateSectionName(key,value[0].SalesSectionName)" ng:model="value[0].SalesSectionName">
+                                        </div>
+                                        <div class="panel-body">
+                                            <table class="table table-hover">
+                                                <tr>
+                                                    <button type="button" ng-click="vm.PushItem(key,value[0].SalesSectionName)" class="btn btn-default">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
+                                                    <th>Product</th>
+                                                    <th>Description</th>
+                                                    <!--<th>ScheduleDate</th>-->
+                                                    <th>MOU</th>
+                                                    <th>Quantity</th>
+                                                    <th>Tax</th>
+                                                    <th>Discount</th>
+                                                    <th>UnitPrice</th>
+                                                    <th>Total</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr ng:repeat="item in value" class="animated fadeInRight">
+
+                                                    <td>
+                                                        <select class="form-control" ng-model="item.cmbProductID"
+                                                                ng-init="item.cmbProductID={ProductID:item.ProductID}"
+                                                                ng-options="product.ProductName for product in vm.products track by product.ProductID"
+                                                                ng-change="vm.updateItem(item)"></select>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" ng:model="item.Description" value="" ng:required ng:validate="number" size="6">
+                                                    </td>
+                                                    <!--<td>
+                                                        <p class="input-group">
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   ng-model="item.ScheduleDate"
+                                                                   datepicker-popup
+                                                                   is-open="item.sopened"
+                                                                   required>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-default"
+                                                                        ng-click="vm.ssopen(item,$event)">
+                                                                    <i class="glyphicon glyphicon-calendar" />
+                                                                </button>
+                                                            </span>
+                                                        </p>
+                                                    </td>-->
+                                                    <td>
+                                                        <select class="form-control"
+                                                                id="cmbUnitOfMeasure"
+                                                                name="cmbUnitOfMeasure"
+                                                                ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.MOUID}"
+                                                                ng-model="item.cmbUnitOfMeasure"
+                                                                ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
+                                                                ng-change="item.MOUID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" ng:model="item.Quantity" value="0" ng:required ng:validate="number" size="6">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" ng:model="item.Taxes" value="0.00" ng:required ng:validate="number" size="6">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" ng:model="item.Discount" value="0.00" ng:required ng:validate="number" size="6">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" ng:model="item.UnitPrice" value="0.00" ng:required ng:validate="number" size="6">
+                                                    </td>
+                                                    <td>
+                                                        {{item.UnitPrice*item.Quantity}}
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>{{vm.QuotationSubTotal()|currency}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" ng-click="vm.PushItem()" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+
+                                </div>
+                            </tab>
+                            <tab heading="Project-Info">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="txtProjectCode">
+                                            ProjectCode
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtProjectCode"
+                                               name="txtProjectCode"
+                                               ng-model="vm.projectSetup.ProjectCode"
+                                               placeholder="Enter ProjectCode"
+                                               required>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':salesOrderForm.txtProjectName.$invalid
+                                         && salesOrderForm.txtProjectName.$dirty}">
+
+                                        <label for="txtProjectName">
+                                            ProjectName
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtProjectName"
+                                               name="txtProjectName"
+                                               ng-model="vm.projectSetup.ProjectName"
+                                               placeholder="Enter ProjectName"
+                                               required>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':salesOrderForm.cmbProjectManager.$invalid
+                && cityForm.cmbProjectManager.$dirty}">
+
+                                        <label for="cmbProjectManager">
+                                            Project Manager
+                                        </label>
+                                        <select class="form-control"
+                                                id="cmbProjectManager"
+                                                name="cmbProjectManager"
+                                                ng-model="vm.cmbProjectManager"
+                                                ng-options="ProjectManager.Name for ProjectManager in vm.ProjectManagers track by ProjectManager.CollaboratorID "
+                                                ng-change="vm.projectCode.ProjectManagerID=vm.cmbProjectManager.CollaboratorID"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="txtStartDate">
+                                            Start Date
+                                        </label>
+                                        <div class="form-group">
+                                            <p class="input-group">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="txtStartDate"
+                                                       name="txtStartDate"
+                                                       ng-model="vm.projectSetup.StartDate"
+                                                       datepicker-popup="MMM dd, yyyy "
+                                                       is-open="vm.sopened"
+                                                       required>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default"
+                                                            ng-click="vm.sopen($event)">
+                                                        <i class="glyphicon glyphicon-calendar" />
+                                                    </button>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="txtEndDate">
+                                            End Date
+                                        </label>
+                                        <div class="form-group">
+                                            <p class="input-group">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="txtEndDate"
+                                                       name="txtEndDate"
+                                                       ng-model="vm.projectSetup.EndDate"
+                                                       datepicker-popup="MMM dd, yyyy "
+                                                       is-open="vm.eopened"
+                                                       required>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default"
+                                                            ng-click="vm.eopen($event)">
+                                                        <i class="glyphicon glyphicon-calendar" />
+                                                    </button>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtPRemarks">
+                                            Remarks
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtPRemarks"
+                                                  name="txtPRemarks"
+                                                  ng-model="vm.projectSetup.Remarks"
+                                                  rows=" 3"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab heading="Project-Side-Info" ng-hide="vm.HasProjectSide ? false:true">
+                                <div class="col-lg-12">
+                                    <tabset>
+                                        <tab heading="Address">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="txtStreet">
+                                                        Street
+                                                    </label>
+                                                    <textarea class="form-control"
+                                                              id="txtStreet"
+                                                              name="txtStreet"
+                                                              ng-model="vm.projectSide.Street"
+                                                              rows=" 3"></textarea>
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <label for="txtPOBox">
+                                                        PO Box
+                                                    </label>
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="txtPOBox"
+                                                           name="txtPOBox"
+                                                           ng-model="vm.projectSide.POBox"
+                                                           placeholder="Enter POBox">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+
+                                                <div class="form-group">
+
+                                                    <label for="cmbCountry">
+                                                        Country
+                                                    </label>
+                                                    <select class="form-control"
+                                                            ng-model="vm.cmbcountrys"
+                                                            ng-options="country.CountryName for country in vm.countrys track by country.CountryID "
+                                                            ng-change="vm.selectCity(vm.cmbcountrys.CountryID)"></select>
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <label for="cmbCity">
+                                                        City
+                                                    </label>
+                                                    <select class="form-control"
+                                                            ng-model="vm.cmbCitys"
+                                                            ng-options="city.CityName for city in vm.citys track by city.CityID "></select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="txtPostalCode">
+                                                        Postal Code
+                                                    </label>
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="txtPostalCode"
+                                                           name="txtPostalCode"
+                                                           ng-model="vm.projectSide.PostalCode"
+                                                           placeholder="Enter PostalCode">
+                                                </div>
+                                            </div>
+                                        </tab>
+                                        <tab heading="Others">
+                                            <div class="col-lg-6">
+
+                                                <div class="form-group">
+
+                                                    <label for="cmbLanguage">
+                                                        Language
+                                                    </label>
+                                                    <select class="form-control"
+                                                            ng-model="vm.cmbLanguages"
+                                                            ng-options="language.LanguageName for language in vm.Languages track by language.LanguageID "></select>
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <label for="txtPhone">
+                                                        Phone
+                                                    </label>
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="txtPhone"
+                                                           name="txtPhone"
+                                                           ng-model="vm.projectSide.Phone"
+                                                           placeholder="Enter Phone">
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <label for="txtMobile">
+                                                        Mobile
+                                                    </label>
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="txtMobile"
+                                                           name="txtMobile"
+                                                           ng-model="vm.projectSide.Mobile"
+                                                           placeholder="Enter Mobile">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+
+                                                    <label for="cmbCurrency">
+                                                        Currency
+                                                    </label>
+                                                    <select class="form-control"
+                                                            ng-model="vm.cmbCurrencys"
+                                                            ng-options="currency.CurrencyName for currency in vm.Currencys track by currency.CurrencyID "></select>
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <label for="txtEmailID">
+                                                        EmailID
+                                                    </label>
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="txtEmailID"
+                                                           name="txtEmailID"
+                                                           ng-model="vm.projectSide.EmailID"
+                                                           placeholder="Enter EmailID">
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <label for="txtFaxNo">
+                                                        FaxNo
+                                                    </label>
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="txtFaxNo"
+                                                           name="txtFaxNo"
+                                                           ng-model="vm.projectSide.FaxNo"
+                                                           placeholder="Enter FaxNo">
+                                                </div>
+                                            </div>
+                                        </tab>
+                                    </tabset>
+                                </div>
+                            </tab>
+                            <tab heading="Message">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtMessage">
+                                            Dear Sir,
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtMessage"
+                                                  name="txtMessage"
+                                                  ng-model="vm.salesOrder.Message"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab heading="Terms & Condition">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtTerms">
+                                            Terms
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTerms"
+                                                  name="txtTerms"
+                                                  ng-model="vm.salesOrder.Terms"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtTermsOfPayment">
+                                            Terms of Payment
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTermsOfPayment"
+                                                  name="txtTermsOfPayment"
+                                                  ng-model="vm.salesOrder.TermsOfPayment"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+
+                <div class="view-form" ng-show="vm.DetailsView">
+                    <table id="testTable" width="642">
+                        <tbody>
+                            <tr>
+                                <td colspan="4" width="693">Dated &nbsp;&nbsp; :{{vm.salesOrder.Date}}</td>
+                                <td width="69">&nbsp;</td>
+                                <td width="80">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" width="693">Reference Quotation&nbsp;&nbsp; :{{vm.salesOrder.SalesOrderCode}} </td>
+                                <td width="69">&nbsp;</td>
+                                <td width="80">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>To</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">{{vm.salesOrder.Collaborator.Name}}</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">German House</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Road 90, House 10/C, Gulshan 2</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Dhaka 1212 / Bangladesh</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">SUBJECT :&nbsp; {{vm.salesOrder.Subject}}</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Project Address : Rajshahi City&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Dear Sir.</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" width="842">{{vm.salesOrder.Message}}</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr style="padding:5px;">
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black;">SL</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">DESCRIPTION</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">UNIT</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">QTY&nbsp;</tdstyle>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">RATE</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black;">AMOUNT</td>
+                            </tr>
+
+                            <tr>
+                        <tbody ng:repeat="(key, value) in vm.SalesOrderDescription.salesOrderDesc | groupBy:'SalesSectionID'">
+
+                            <tr>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black;" width="555">{{value[0].SalesSectionName}}</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black;">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                            </tr>
+                            <tr>
+                            <tr ng:repeat="item in value">
+                                <td width="25px" style="vertical-align: middle; border: 0.5px solid black;">#{{$index+1}}</td>
+                                <td style="width: 550px; border: 0.5px solid black;">
+                                    <b>{{item.Product.ProductName}} :</b>
+                                    {{item.Description}}
+                                </td>
+                                <td style="vertical-align: middle; border: 0.5px solid black;">
+                                    {{item.Quantity}}
+                                </td>
+                                <td style="vertical-align: middle; width: 50px; border: 0.5px solid black;">
+                                    {{item.Quantity}}
+                                </td>
+                                <td style="vertical-align: middle; width: 50px; border: 0.5px solid black;">
+                                    {{item.UnitPrice}}
+                                </td>
+                                <td style="vertical-align: middle; background-color: #A9A9A9; width: 75px; border: 0.5px solid black;">
+                                    {{vm.SubTotal(item)}}
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 0.5px solid black;">&nbsp;</td>
+                                <td style="border: 0.5px solid black;" width="400px">&nbsp;</tdstyle>
+                                <td style="border: 0.5px solid black;" colspan="3" width="172">{{value[0].SalesSectionName}}  TOTAL:</td>
+                                <td style="border: 0.5px solid black;">{{vm.SectionSubTotal(key)|currency}}</tdstyle>
+                            </tr>
+                        </tbody>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="4">In word: Nineteen Lac Seventy Two Thousand Two Hundred &amp; Eighty Four&nbsp; Only</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Terms</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{vm.salesOrder.Terms}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Terms Of Payment</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{vm.salesOrder.TermsOfPayment}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">EXECLUDED VAT &amp; TAX</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Thanking You</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Very Truly Yours,&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">For ARTISTIC&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Mohd. Nasir Uddin</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">CEO</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">ARTISTIC</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Cell : 01727421628</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">E-Mail : nasir@artistic-interior.net</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-lg-12 list-form " ng-show="vm.ListView">
+                    <div class="col-lg-12 animated fadeInRight">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="printThisElement">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Customer</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                        
+                                        <th class="noPrint">Edit</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="salesOrder in vm.salesOrders|orderBy:'-SalesOrderID'|filter:searchText| itemsPerPage: 5">
+                                        <td>{{salesOrder.SalesOrderCode  | uppercase}}</td>
+                                        <td>{{salesOrder.Collaborator.Name}}</td>
+                                        <td>{{salesOrder.Date | date:"dd-MMM-yyyy"}}</td>
+                                        <td>{{salesOrder.Date | date:"h:mm a"}}</td>
+                                        <td>{{salesOrder.ProcesStatus.ProcesStatusName}}</td>
+
+                                        <td class="noPrint">
+                                            <button type="button" ng-click="vm.Get(salesOrder.SalesOrderID)" class="btn btn-default ">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
