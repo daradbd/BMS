@@ -457,7 +457,7 @@
     <Content Include="app\Accounting\Transaction\gLedger.html" />
     <Content Include="app\Accounting\Transaction\gLedgerCtrl.js" />
     <Content Include="app\Accounting\Transaction\Report\ledgerSheet.html" />
-    <Content Include="app\Accounting\Transaction\Report\ledgerSheet.js" />
+    <Content Include="app\Accounting\Transaction\Report\ledgerSheetCtrl.js" />
     <Content Include="app\Accounting\Transaction\Report\trialBalance.html" />
     <Content Include="app\Accounting\Transaction\Report\trialBalanceCtrl.js" />
     <Content Include="app\Accounting\Transaction\voucherList.html" />

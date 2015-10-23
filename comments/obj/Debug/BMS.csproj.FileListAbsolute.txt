@@ -527,7 +527,6 @@ D:\github\Test\Comments\bin\DotNetOpenAuth.OpenId.xml
 D:\github\Test\Comments\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
 D:\github\Test\Comments\bin\Org.Mentalis.Security.Cryptography.xml
 D:\github\Test\Comments\bin\Mono.Math.xml
-D:\github\Test\Comments\obj\Debug\BMS.csprojResolveAssemblyReference.cache
 D:\github\Test\Comments\obj\Debug\BMS.Migrations.Initial.resources
 D:\github\Test\Comments\obj\Debug\BMS.Migrations.Recreate_bd.resources
 D:\github\Test\Comments\obj\Debug\BMS.Migrations.solved1.resources

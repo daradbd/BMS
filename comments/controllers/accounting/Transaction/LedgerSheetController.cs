@@ -1,18 +1,31 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.OData.Query;
 
 namespace BMS.Controllers.Accounting.Transaction
 {
     public class LedgerSheetController : ApiController
     {
         // GET api/ledgersheet
-        public IEnumerable<string> LedgerSheetGet()
+        public HttpResponseMessage LedgerSheetGet(ODataQueryOptions Options)
         {
-            return new string[] { "value1", "value2" };
+            ArrayList al = new ArrayList();
+
+            
+            al.Add(45);
+            al.Add(78);
+            al.Add(33);
+            al.Add(56);
+            al.Add(12);
+            al.Add(23);
+            al.Add(9);
+
+            return Request.CreateResponse(HttpStatusCode.OK, al);
         }
 
         // GET api/ledgersheet/5
