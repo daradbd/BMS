@@ -337,7 +337,7 @@
                     ProductID: value.ProductID,
                     Description: value.Description,
                     Quantity: value.Quantity,
-                    MOUID: value.MOUID,
+                    UOMID: value.UOMID,
                     BillQuantity: value.BillQuantity,
                     UnitPrice: value.UnitPrice,
                     Taxes: value.Taxes,

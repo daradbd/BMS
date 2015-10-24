@@ -221,7 +221,7 @@
                                                     <th>Product</th>
                                                     <th>Description</th>
                                                     <!--<th>ScheduleDate</th>-->
-                                                    <th>MOU</th>
+                                                    <th>UOM</th>
                                                     <th>Quantity</th>
                                                     <th>Tax</th>
                                                     <th>Discount</th>
@@ -260,10 +260,10 @@
                                                         <select class="form-control"
                                                                 id="cmbUnitOfMeasure"
                                                                 name="cmbUnitOfMeasure"
-                                                                ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.MOUID}"
+                                                                ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.UOMID}"
                                                                 ng-model="item.cmbUnitOfMeasure"
                                                                 ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
-                                                                ng-change="item.MOUID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+                                                                ng-change="item.UOMID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
 
                                                     </td>
                                                     <td>
@@ -712,7 +712,7 @@
                                     {{item.Description}}
                                 </td>
                                 <td style="vertical-align: middle; border: 0.5px solid black;">
-                                    {{item.Quantity}}
+                                    {{item.UOM.UnitOfMeasureName}}
                                 </td>
                                 <td style="vertical-align: middle; width: 50px; border: 0.5px solid black;">
                                     {{item.Quantity}}

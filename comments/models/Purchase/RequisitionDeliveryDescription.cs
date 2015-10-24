@@ -24,7 +24,7 @@
 
         public float? Quantity { get; set; }
 
-        public long? MOUID { get; set; }
+        public long? UOMID { get; set; }
 
         public DateTime ScheduleDate { get; set; }
 
@@ -61,5 +61,8 @@
         public string DeletePC { get; set; }
 
         public Product Product { get; set; }
+
+        [ForeignKey("UOMID")]
+        public UnitOfMeasure UOM { get; set; }
     }
 }

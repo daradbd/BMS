@@ -170,7 +170,7 @@
                     ProductID: value.ProductID,
                     Description: value.Description,
                     Quantity: value.Quantity,
-                    MOUID: value.MOUID,
+                    UOMID: value.UOMID,
                     RDQuantity: value.RDQuantity,
                     //Taxes: value.Taxes,
                     //ScheduleDate: value.ScheduleDate,

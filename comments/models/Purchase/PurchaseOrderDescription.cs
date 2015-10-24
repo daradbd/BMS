@@ -26,7 +26,7 @@
 
         public float? Quantity { get; set; }
 
-        public long? MOUID { get; set; }
+        public long? UOMID { get; set; }
 
         public float? ReceivedQuantity { get; set; }
 
@@ -74,7 +74,7 @@
 
         public Product Product { get; set; }
 
-        [ForeignKey("MOUID")]
+        [ForeignKey("UOMID")]
         public UnitOfMeasure UOM { get; set; }
     }
 }

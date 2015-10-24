@@ -222,7 +222,7 @@
                 vm.salesQuotation.Date = Util.offsetTime(vm.salesQuotation.Date);
                 salesQuotationResource.save(vm.salesQuotation,
                     function (data, responseHeaders) {
-                        GetList();
+                       // GetList();
                         vm.salesQuotation = data;
                         vm.SaveQuotation();
                         toastr.success("Save Successful");
@@ -280,7 +280,7 @@
                         ProductID: value.ProductID,
                         Description: value.Description,
                         Quantity: value.Quantity,
-                        MOUID:value.MOUID,
+                        UOMID: value.UOMID,
                         UnitPrice: value.UnitPrice,
                         Taxes: value.Taxes,
                         SalesSectionID: value.SalesSectionID,

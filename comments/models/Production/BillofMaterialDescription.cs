@@ -26,6 +26,7 @@
         public string SalesSectionName { get; set; }
 
         public long? ProductID { get; set; }
+
         public long? ProductQuantity { get; set; }
 
         public long? ProductionTypeID { get; set; }
@@ -35,11 +36,16 @@
         public decimal RawMaterialQuantity { get; set; }
 
         public decimal RawMaterialUniteRate { get; set; }
+
         public decimal OtherCost { get; set; }
+
         public decimal TotalCost { get; set; }
 
         public bool isFactory { get; set; }
+
         public long? SalesQuotationID { get; set; }
+
+        public long? UOMID { get; set; }
 
         public long? ProjectID { get; set; }
 
@@ -60,6 +66,7 @@
         public long? ProcesStatusID { get; set; }
 
         public bool? IsBOM { get; set; }
+
         public int? StatusID { get; set; }
 
         public bool? IsDeleted { get; set; }
@@ -94,6 +101,9 @@
 
         [ForeignKey("RawMaterialsID")]
         public virtual  Product RawMaterial { get; set; }
+
+        [ForeignKey("UOMID")]
+        public virtual UnitOfMeasure UOM { get; set; }
 
 
     }
