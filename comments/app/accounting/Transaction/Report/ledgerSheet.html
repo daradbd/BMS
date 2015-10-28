@@ -86,12 +86,107 @@
                 </div>
 
                 <div class="view-form" ng-show="vm.DetailsView">
-                    <div class="col-lg-6 animated fadeInRight">
+                    <div class="col-lg-12 animated fadeInRight">
 
+                        <div class="col-lg-12">
+                            <div class="form-group"
+                                 ng-class="{'has-error':ledgerSheetForm.cmbAccCOA.$invalid
+                && ledgerSheetForm.cmbAccCOA.$dirty}">
 
+                                <label for="cmbAccCOA">
+                                    Account
+                                </label>
+                                <select class="form-control"
+                                        id="cmbAccCOA"
+                                        name="cmbAccCOA"
+                                        ng-model="vm.cmbAccCOA"
+                                        ng-options="ledgers.COAName for ledgers in vm.ledgerList track by ledgers.COAID "
+                                        ng-change="vm.Get(vm.cmbAccCOA)"></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+
+                                    <label for="txtTranDate">
+                                        From Date
+                                    </label>
+                                    <div class="form-group">
+                                        <p class="input-group">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtFromDate"
+                                                   name="txtFromDate"
+                                                   ng-model="vm.FromDate"
+                                                   datepicker-popup="MMM dd,yyyy"
+                                                   is-open="vm.fdopened"
+                                                   datepicker-options="dateOptions"
+                                                   required>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default"
+                                                        ng-click="vm.fdtpopen($event)">
+                                                    <i class="glyphicon glyphicon-calendar" />
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+
+                                    <label for="txtTranDate">
+                                        To Date
+                                    </label>
+                                    <div class="form-group">
+                                        <p class="input-group">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtToDate"
+                                                   name="txtToDate"
+                                                   ng-model="vm.ToDate"
+                                                   datepicker-popup="MMM dd,yyyy"
+                                                   is-open="vm.tdopened"
+                                                   required>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default"
+                                                        ng-click="vm.tdtpopen($event,vm.tdopened)">
+                                                    <i class="glyphicon glyphicon-calendar" />
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="printThisElement">
+                                <thead>
+                                    <tr>
+                                        <th>COAID</th>
+                                        <th>TranDate</th>
+                                        <th>Account</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                        <th>Balance</th>
+
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="ledgerSheet in vm.ledgerSheets| filter: vm.dateFilter( )">
+                                        <td>{{ledgerSheet.COAID  | uppercase}}</td>
+                                        <td>{{ledgerSheet.TranDate| date: "dd-MMM-yyyy"}}</td>
+                                        <td>{{ledgerSheet.Account}}</td>
+                                        <td>{{ledgerSheet.Debit| currency:"":2}}</td>
+                                        <td>{{ledgerSheet.Credit| currency:"":2}}</td>
+                                        <td>{{ledgerSheet.balance| currency:"":2}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="col-lg-6">
-
                     </div>
                 </div>
 
@@ -110,12 +205,12 @@
 
                                 </thead>
                                 <tbody>
-                                    <tr dir-paginate="ledgerSheet in vm.ledgerSheets|filter:searchText| itemsPerPage: 5">
-                                        <td>{{ledgerSheet.COACode  | uppercase}}</td>
-                                        <td>{{ledgerSheet.COAName}}</td>
-                                        <td>{{ledgerSheet.AccType.AccTypeName}}</td>
+                                    <tr dir-paginate="ledgers in vm.ledgerList|filter:searchText| itemsPerPage: 5">
+                                        <td>{{ledgers.COACode  | uppercase}}</td>
+                                        <td>{{ledgers.COAName}}</td>
+                                        <td>{{ledgers.AccType.AccTypeName}}</td>
                                         <td class="noPrint">
-                                            <button type="button" ng-click="vm.Get(ledgerSheet.LedgerSheetID)" class="btn btn-default ">
+                                            <button type="button" ng-click="vm.Get(ledgers)" class="btn btn-default ">
                                                 View
                                             </button>
                                         </td>

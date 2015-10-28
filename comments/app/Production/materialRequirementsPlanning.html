@@ -193,25 +193,32 @@
                                                                     ng-change="item.ProductionTypeID = item.cmbProductionTypes.ProductionTypeID"></select>
                                                         </td>
                                                         <td>
-                                                            <input class="form-control" ng:model="item.T" value="0" ng:required ng:validate="number" size="6">
+                                                            <input class="form-control" ng:model="item.Height" value="0" ng:required ng:validate="number" size="6">
                                                         </td>
                                                         <td>
                                                             X
                                                         </td>
                                                         <td>
-                                                            <input class="form-control" ng:model="item.L" value="0" ng:required ng:validate="number" size="6">
+                                                            <input class="form-control" ng:model="item.Length" value="0" ng:required ng:validate="number" size="6">
                                                         </td>
                                                         <td>
                                                             X
                                                         </td>
                                                         <td>
-                                                            <input class="form-control" ng:model="item.W" value="0" ng:required ng:validate="number" size="6">
+                                                            <input class="form-control" ng:model="item.Width" value="0" ng:required ng:validate="number" size="6">
                                                         </td>
                                                         <td>
                                                             <input class="form-control" ng:model="item.Qty" value="0" ng:required ng:validate="number" size="6">
                                                         </td>
                                                         <td>
-                                                            <input class="form-control" ng:model="item.Unit" value="0" ng:required ng:validate="number" size="6">
+                                                            <select class="form-control"
+                                                                    id="cmbUnitOfMeasure"
+                                                                    name="cmbUnitOfMeasure"
+                                                                    ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.UOMID}"
+                                                                    ng-model="item.cmbUnitOfMeasure"
+                                                                    ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
+                                                                    ng-change="item.UOMID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+
                                                         </td>
                                                         <td>
                                                             <input class="form-control" ng:model="item.TotalMaterial" value="0" ng:required ng:validate="number" size="6">

@@ -27,6 +27,13 @@
 
         public long? ProductID { get; set; }
 
+        public int? Height  { get; set; }
+
+        public int? Length { get; set; }
+
+        public int? Width { get; set; }
+
+
         public long? ProductQuantity { get; set; }
 
         public long? ProductionTypeID { get; set; }
@@ -34,6 +41,10 @@
         public long RawMaterialsID { get; set; }
 
         public decimal RawMaterialQuantity { get; set; }
+
+        public float? Wastage { get; set; }
+
+        public decimal? MaterialIncludingWastage { get; set; }
 
         public decimal RawMaterialUniteRate { get; set; }
 

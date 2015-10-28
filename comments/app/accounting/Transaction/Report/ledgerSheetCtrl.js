@@ -13,10 +13,12 @@
 
     angular
         .module("companyManagement")
-        .controller("ledgerSheetCtrl", ["ledgerSheetResource", ledgerSheetCtrl]);
-    function ledgerSheetCtrl(ledgerSheetResource) {
+        .controller("ledgerSheetCtrl", ["$filter", "Util", "ledgerSheetResource", ledgerSheetCtrl]);
+    function ledgerSheetCtrl($filter,Util, ledgerSheetResource) {
         var vm = this;
         vm.ledgerSheets = [];
+        vm.ledgerList = [];
+        vm.ledgerSheetts = [];
 
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -29,8 +31,9 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
-
-
+        //vm.fromdate = new Date();
+        var todate=new Date();
+        vm.ToDate = $filter('date')(todate, "yyyy-MM-dd");
 
         vm.ViewMode = function (activeMode) {
             GetList();
@@ -94,12 +97,48 @@
         }
 
 
+        vm.fdtpopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.fdopened =!vm.fdopened;
+
+        }
+
+        vm.tdtpopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.tdopened =!vm.tdopened;
+
+        }
+
+        vm.dateFilter = function () {
+
+            return function (item) {
+                var result=false
+                var DataDate = $filter('date')(item['TranDate'], "yyyy-MM-dd"); //new Date(item['TranDate']);
+                var FromDate = $filter('date')(vm.FromDate, "yyyy-MM-dd"); //new Date(vm.FromDate);
+                var ToDate = $filter('date')(vm.ToDate, "yyyy-MM-dd");//new Date(vm.ToDate);
+                if (DataDate <= ToDate && DataDate >= FromDate)
+                {
+                    result= true;
+                }
+                else {
+                    result = false
+                }
+               
+                
+                return result;
+            }
+        }
+
         GetList();
 
         //Get All Data List
         function GetList() {
             ledgerSheetResource.query(function (data) {
-                vm.ledgerSheets = data;
+                vm.ledgerList = data;
                 toastr.success("Data Load Successful", "Form Load");
 
             });
@@ -122,16 +161,31 @@
 
 
         }
-
+        
         //Get Single Record
-        vm.Get = function (id) {
-            ledgerSheetResource.get({ 'ID': id }, function (ledgerSheet) {
-                vm.ledgerSheet = ledgerSheet;
+        vm.Get = function (ledgers) {
+            vm.ledgerSheets = null;
+            var param = { 'ID': ledgers.COAID};
+            ledgerSheetResource.query(param, function (data) {
+                vm.ledgerSheets = data;
+                vm.cmbAccCOA = ledgers;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+                console.log(JSON.stringify(vm.ledgerSheets));
             });
         }
 
+       
+        // function Get3 () {
+        //    var param = { 'ID': 1, 'Name': 'RANA','ReportType':2 };
+        //    ledgerSheetResource.query(param, function (data) {
+        //        vm.ledgerSheetts = data;
+        //        vm.ViewMode(3);
+        //        toastr.success("Data Load Successful", "Form Load");
+        //        console.log(JSON.stringify(vm.ledgerSheetts));
+        //    });
+        //}
+      
 
         //Data Update
         vm.Update = function (isValid) {

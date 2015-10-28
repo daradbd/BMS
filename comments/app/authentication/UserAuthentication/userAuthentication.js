@@ -19,7 +19,7 @@
         //$window.location.href = "/Account/Login/";
        // checkLogin();
         vm.userAuthentications = [];
-        vm.CompanyName = "RLSolution";
+        vm.CompanyName = "Artistic";
         vm.UserName = "Darad";
         
         function checkLogin() {

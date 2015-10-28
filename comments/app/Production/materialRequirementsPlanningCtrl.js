@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("materialRequirementsPlanningCtrl", ["billofMaterialDescriptionResource", "salesQuotationDescriptionResource", "productResource", "productionTypeResource", "billofMaterialResource", materialRequirementsPlanningCtrl]);
-    function materialRequirementsPlanningCtrl(billofMaterialDescriptionResource, salesQuotationDescriptionResource, productResource, productionTypeResource, billofMaterialResource) {
+        .controller("materialRequirementsPlanningCtrl", ["unitOfMeasureResource", "billofMaterialDescriptionResource", "salesQuotationDescriptionResource", "productResource", "productionTypeResource", "billofMaterialResource", materialRequirementsPlanningCtrl]);
+    function materialRequirementsPlanningCtrl(unitOfMeasureResource,billofMaterialDescriptionResource, salesQuotationDescriptionResource, productResource, productionTypeResource, billofMaterialResource) {
         var vm = this;
         vm.billofMaterials = [];
         // vm.SalesQuotationDescription = { salesQuotationDesc: [{}] };
@@ -119,6 +119,18 @@
         var DispayButton = function () {
 
         }
+
+
+
+        GetUnitOfMeasures();
+        function GetUnitOfMeasures() {
+            unitOfMeasureResource.query(function (data) {
+                vm.UnitOfMeasures = data;
+
+            });
+        }
+
+
         GetProductionTypeList();
 
 
@@ -190,12 +202,16 @@
                     BillofMaterialDescriptionID: value.BillofMaterialDescriptionID,
                     BillofMaterialID: vm.billofMaterial.BillofMaterialID,
                     CustomerID: vm.billofMaterial.CustomerID,
+                    UOMID: value.UOMID,
                     ProductQuantity: value.ProductQuantity,
                     SalesSectionID: value.SalesSectionID,
                     SalesSectionName:value.SalesSectionName,
                     ProductID: value.ProductID,
                     ProductionTypeID: value.ProductionTypeID,
                     RawMaterialsID: value.RawMaterialsID,
+                    Height: Height,
+                    Length:Length,
+                    Width:Width,
                     RawMaterialQuantity: value.RawMaterialQuantity,
                     RawMaterialUniteRate: value.RawMaterialUniteRate,
                     OtherCost: value.OtherCost,
