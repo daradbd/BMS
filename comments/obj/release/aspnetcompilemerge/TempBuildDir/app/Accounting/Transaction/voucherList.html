@@ -99,7 +99,7 @@
                                          && voucherListForm.txtReferenceNo.$dirty}">
 
                                 <label for="txtReferenceNo">
-                                    Voucher No
+                                    Reference No
                                 </label>
                                 <input type="text"
                                        class="form-control"
@@ -133,7 +133,7 @@
                                                id="txtTranDate"
                                                name="txtTranDate"
                                                ng-model="vm.voucherList.TranDate"
-                                               datepicker-popup="MMM dd, yyyy "
+                                               uib-datepicker-popup="MMM dd, yyyy"
                                                is-open="vm.sopened"
                                                required>
                                         <span class="input-group-btn">
@@ -155,7 +155,7 @@
                                        class="form-control"
                                        id="txtTotalDebit"
                                        name="txtTotalDebit"
-                                       ng-model="vm.TotalDebit=vm.TotalDrCr()"
+                                       ng-model="vm.TotalDebit"
                                        required>
                             </div>
                             <div class="form-group"
@@ -184,7 +184,9 @@
                             <tr ng:repeat="item in vm.voucher.voucherL" class="animated fadeInRight">
 
                                 <td>
-                                    <select class="form-control" ng-model="item.cmbCOAID"
+                                    <select class="form-control"
+                                            ng-init="item.cmbCOAID={COAID:item.COAID}"
+                                            ng-model="item.cmbCOAID"
                                             ng-options="ACOAID.COAName for ACOAID in vm.accCOAs track by ACOAID.COAID"
                                             ng-change="item.COAID=item.cmbCOAID.COAID"></select>
                                 </td>
@@ -243,7 +245,7 @@
                                         <td>{{voucherList.TranDate}}</td>
                                         <td>{{voucherList.Remarks}}</td>
                                         <td class="noPrint">
-                                            <button type="button" ng-click="vm.Get(voucherList.voucherListID)" class="btn btn-default ">
+                                            <button type="button" ng-click="vm.Get(voucherList.VoucherNo)" class="btn btn-default ">
                                                 View
                                             </button>
                                         </td>

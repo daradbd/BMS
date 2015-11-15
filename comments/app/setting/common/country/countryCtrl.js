@@ -10,7 +10,7 @@
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = true;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -22,13 +22,13 @@
 
 
         vm.ViewMode = function (activeMode) {
-            GetList();
+           // GetList();
             if (activeMode == 1)//Form View Mode
             {
                 vm.country = null;
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false;
+                vm.DetailsView = true;
                 vm.EditView = true;
 
                 vm.SaveButton = true;
@@ -38,9 +38,10 @@
             }
             if (activeMode == 2) //List View Mode
             {
+                GetList();
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -53,8 +54,8 @@
             if (activeMode == 3)//Details View Mode
             {
                 vm.FromView = false;
-                vm.ListView = false;
-                vm.DetailsView = true
+                vm.ListView = true;
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -67,7 +68,7 @@
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = true;
                 vm.EditView = true;
 
 
@@ -94,6 +95,7 @@
         function GetList() {
             countryResource.query(function (data) {
                 vm.countrys = data;
+                vm.Get(vm.countrys[0].CountryID);
                 toastr.success("Country Load Successful", "Form Load");
 
             });
@@ -125,7 +127,7 @@
                 //vm.ListView = false;
                 //vm.DetailsView = true;
                 vm.ViewMode(3);
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
             });
         }
 

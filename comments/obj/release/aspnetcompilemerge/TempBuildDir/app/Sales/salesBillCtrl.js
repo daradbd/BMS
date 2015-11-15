@@ -13,18 +13,19 @@
 
     angular
         .module("companyManagement")
-        .controller("salesBillCtrl", ["currencyResource", "languageResource", "countryResource", "cityResource", "projectSideResource", "projectSetupResource", "salesQuotationDescriptionResource", "$rootScope", "$state", "salesOrderDescriptionResource", "productResource", "collaboratorResource", "salesOrderResource", "salesBillDescriptionResource", "salesBillResource", salesBillCtrl]);
-    function salesBillCtrl(currencyResource, languageResource, countryResource, cityResource, projectSideResource, projectSetupResource, salesQuotationDescriptionResource, $rootScope, $state, salesOrderDescriptionResource, productResource, collaboratorResource,salesOrderResource,salesBillDescriptionResource, salesBillResource) {
+        .controller("salesBillCtrl", ["salesBillCategoryResource","unitOfMeasureResource", "currencyResource", "languageResource", "countryResource", "cityResource", "projectSideResource", "projectSetupResource", "salesQuotationDescriptionResource", "$rootScope", "$state", "salesOrderDescriptionResource", "productResource", "collaboratorResource", "salesOrderResource", "salesBillDescriptionResource", "salesBillResource", salesBillCtrl]);
+    function salesBillCtrl(salesBillCategoryResource,unitOfMeasureResource, currencyResource, languageResource, countryResource, cityResource, projectSideResource, projectSetupResource, salesQuotationDescriptionResource, $rootScope, $state, salesOrderDescriptionResource, productResource, collaboratorResource, salesOrderResource, salesBillDescriptionResource, salesBillResource) {
 
         var vm = this;
         vm.salesBills = [];
         vm.salesOrders = []
+        vm.salesBillCategorys = [];
         vm.collaborators = [];
         vm.products = [];
         vm.companyBranch = [];
         vm.salesBill = {};
 
-        vm.SalesBillDescription = { salesBillDesc: [{ SalesSectionID: 1, SalesSectionName: '', ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
+        vm.SalesBillDescription = { salesBillDesc: [{ SalesSectionID: 1, SalesSectionName: '', ProductID: 0, Description: "", MOUID: 0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
 
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -53,14 +54,22 @@
             });
         }
 
+        vm.dtopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.dtopened = !vm.dtopened;
+
+        }
+
         vm.addItem = function (SalesSectionID, SalesSectionName) {
 
-            vm.SalesBillDescription.salesBillDesc.unshift({ SalesSectionID: SalesSectionID, SalesSectionName: SalesSectionName, ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
+            vm.SalesBillDescription.salesBillDesc.unshift({ SalesSectionID: SalesSectionID, SalesSectionName: SalesSectionName, ProductID: 0, Description: "", MOUID: 0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
 
         }
         vm.PushItem = function (SalesSectionID, SalesSectionName) {
 
-            vm.SalesBillDescription.salesBillDesc.push({ SalesSectionID: SalesSectionID, SalesSectionName: SalesSectionName, ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
+            vm.SalesBillDescription.salesBillDesc.push({ SalesSectionID: SalesSectionID, SalesSectionName: SalesSectionName, ProductID: 0, Description: "", MOUID: 0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
 
         }
         vm.removeItem = function (item)
@@ -112,6 +121,7 @@
             angular.forEach(vm.SalesBillDescription.salesBillDesc, function (item, key) {
                 total += (item.Quantity * (item.UnitPrice - item.Discount));
             });
+            vm.salesBill.GrandTotal = total;
             return total;
         }
 
@@ -159,6 +169,16 @@
                 toastr.success("Load country", "Country Load");
             });
         }
+
+
+        GetSalesBillCategoryList();
+        function GetSalesBillCategoryList() {
+            salesBillCategoryResource.query(function (data) {
+                vm.salesBillCategorys = data;
+                //toastr.success("Load country", "Country Load");
+            });
+        }
+
 
         GetProjectManagerList();
         //Get All Data List
@@ -263,6 +283,15 @@
             });
         }
 
+        GetUnitOfMeasures();
+        function GetUnitOfMeasures() {
+            unitOfMeasureResource.query(function (data) {
+                vm.UnitOfMeasures = data;
+
+            });
+        }
+
+
         GetList();
 
         //Get All Data List
@@ -279,8 +308,9 @@
             if (isValid) {
                 salesBillResource.save(vm.salesBill,
                     function (data, responseHeaders) {
+                        vm.salesBill = data;
                         vm.SaveBill();
-                        GetList();
+                       // GetList();
                         vm.salesBill = null;
                         toastr.success("Save Successful");
                     });
@@ -303,10 +333,12 @@
                 var salesBillInfo = {
                     SalesBillDescriptionID: value.SalesBillDescriptionID,
                     SalesOrderID: vm.salesBill.SalesOrderID,
+                    SalesBillID: vm.salesBill.SalesBillID,
                     CustomerID: vm.salesBill.CustomerID,
                     ProductID: value.ProductID,
                     Description: value.Description,
                     Quantity: value.Quantity,
+                    UOMID: value.UOMID,
                     BillQuantity: value.BillQuantity,
                     UnitPrice: value.UnitPrice,
                     Taxes: value.Taxes,
@@ -328,11 +360,25 @@
         vm.Get = function (id) {
             salesBillResource.get({ 'ID': id }, function (salesBill) {
                 vm.salesBill = salesBill;
+                vm.cmbCustomer = vm.salesBill.Collaborator;
+                vm.cmbSalesBillCategory = { SalesBillCategoryID: vm.salesBill.SalesBillCategoryID };
+
+                vm.GetSalesBillDescription(id);
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
             });
         }
 
+        vm.GetSalesBillDescription = function (salesBillID) {
+
+            salesBillDescriptionResource.query({ '$filter': 'SalesBillID eq ' + salesBillID }, function (data) {
+
+                // vm.SalesOrderDescription.salesOrderDesc = data;
+                vm.SalesBillDescription.salesBillDesc = data;
+                toastr.success("Data function Load Successful", "Form Load");
+
+            })
+        }
 
 
         //Get Single Record
@@ -341,12 +387,16 @@
             salesOrderResource.get({ 'ID': id }, function (salesOrder) {
 
                 vm.salesOrder = salesOrder;
+                //vm.cmbCustomer = { CollaboratorID: vm.salesBill.CustomerID }
+                vm.cmbCustomer = vm.salesOrder.Collaborator;
+
+                vm.cmbSalesBillCategory = { SalesBillCategoryID: vm.salesBill.SalesBillCategoryID };
                 vm.salesBill.CustomerID = vm.salesOrder.CustomerID;
                 vm.salesBill.SalesOrderID = vm.salesOrder.SalesOrderID;
                 vm.salesBill.ProjectID = vm.salesOrder.ProjectID;
                 vm.salesBill.SalesOrderCode = vm.salesOrder.SalesOrderCode;
                // vm.GetProjectSetup(vm.salesOrder.ProjectID);
-                vm.cmbCustomer = { CollaboratorID: vm.salesBill.CustomerID }
+               
                 vm.GetSalesOrderDescription(vm.salesOrder.SalesOrderID);
                 vm.ViewMode(1);
                 toastr.success("Data Load Successful", "Form Load");
@@ -370,7 +420,7 @@
         vm.Update = function (isValid) {
             if (isValid) {
 
-                salesBillResource.update({ 'ID': vm.salesBill.salesBillID }, vm.salesBill);
+                salesBillResource.update({ 'ID': vm.salesBill.SalesBillID }, vm.salesBill);
                 vm.salesBills = null;
                 vm.ViewMode(3);
                 GetList();
@@ -385,7 +435,7 @@
         //Data Delete
         vm.Delete = function () {
 
-            vm.salesBill.$delete({ 'ID': vm.salesBill.salesBillID });
+            vm.salesBill.$delete({ 'ID': vm.salesBill.SalesBillID });
             toastr.error("Data Delete Successfully!");
             GetList();
             vm.ViewMode(1);

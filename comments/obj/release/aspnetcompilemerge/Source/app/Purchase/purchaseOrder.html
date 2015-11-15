@@ -104,19 +104,95 @@
                                         ng-change="vm.purchaseOrder.SupplierID=vm.cmbSupplier.CollaboratorID"></select>
                             </div>
                             <div class="form-group">
+                                <label for="txtRemarks">
+                                    Address:
+                                </label>
+
+                                {{vm.cmbSupplier.Street}},{{vm.cmbSupplier.POBox}},{{vm.cmbSupplier.City.CityName}},{{vm.cmbSupplier.Country.CountryName}}
+
+                            </div>
+                            <div class="form-group">
                                 <label for=" inputReferenceNo">
                                     ReferenceNo
                                 </label>
-                                <pre>{{vm.purchaseOrder.ReferenceNo}}</pre>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtSubject"
+                                       name="txtSubject"
+                                       ng-model="vm.purchaseOrder.ReferenceNo"
+                                       placeholder="Enter Reference NO"
+                                       required>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':purchaseOrderForm.txtSubject.$invalid
+                                         && purchaseOrderForm.txtSubject.$dirty}">
+
+                                <label for="txtTitle">
+                                    Subject:
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtSubject"
+                                       name="txtSubject"
+                                       ng-model="vm.purchaseOrder.Subject"
+                                       placeholder="Enter Subject"
+                                       required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for=" inputProject">
-                                    Project Name
+
+                                <label for="txtTranDate">
+                                    Data:
                                 </label>
-                                <pre>{{vm.purchaseOrder.ProjectSetup.ProjectName}}</pre>
+                                <div class="form-group">
+                                    <p class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtDate"
+                                               name="txtDate"
+                                               ng-model="vm.purchaseOrder.Date"
+                                               datepicker-popup="MMM dd, yyyy "
+                                               is-open="vm.dtopened"
+                                               required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default"
+                                                    ng-click="vm.dtopen($event)">
+                                                <i class="glyphicon glyphicon-calendar" />
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
                             </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':purchaseOrderForm.cmbProject.$invalid
+                                             && purchaseOrderForm.cmbProject.$dirty}">
+
+                                <label for="cmbProject">
+                                    Project
+                                </label>
+                                <select class="form-control"
+                                        id="cmbProject"
+                                        name="cmbProject"
+                                        ng-model="vm.cmbProject"
+                                        ng-options="Project.ProjectName for Project in vm.Projects track by Project.ProjectID "
+                                        ng-change="vm.purchaseOrder.ProjectID=vm.cmbProject.ProjectID"></select>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':purchaseOrderForm.cmbPurchaseOrderCategory.$invalid
+                                             && purchaseOrderForm.cmbPurchaseOrderCategory.$dirty}">
+
+                                <label for="cmbPurchaseOrderCategory">
+                                    PurchaseOrderCategory
+                                </label>
+                                <select class="form-control"
+                                        id="cmbPurchaseOrderCategory"
+                                        name="cmbPurchaseOrderCategory"
+                                        ng-model="vm.cmbPurchaseOrderCategory"
+                                        ng-options="purchaseOrderCategory.PurchaseOrderCategoryName for purchaseOrderCategory in vm.purchaseOrderCategorys  track by purchaseOrderCategory.PurchaseOrderCategoryID "
+                                        ng-change="vm.purchaseOrder.PurchaseOrderCategoryID=vm.cmbPurchaseOrderCategory.PurchaseOrderCategoryID"></select>
+                            </div>
+
                         </div>
                     </div>
                     <div class="col-lg-12">
@@ -130,10 +206,11 @@
                                             </button>
                                             <th>Product</th>
                                             <th>Description</th>
-                                            <th>ScheduleDate</th>
+                                            <!--<th>ScheduleDate</th>-->
+                                            <th>UOM</th>
                                             <th>Quantity</th>
-                                            <th>Tax</th>
-                                            <th>Discount</th>
+                                            <!--<th>Tax</th>
+                                            <th>Discount</th>-->
                                             <th>UnitPrice</th>
                                             <th>Total</th>
                                             <th></th>
@@ -149,7 +226,7 @@
                                             <td>
                                                 <input class="form-control" ng:model="item.Description" value="" ng:required ng:validate="number" size="6">
                                             </td>
-                                            <td>
+                                            <!--<td>
                                                 <p class="input-group">
                                                     <input type="text"
                                                            class="form-control"
@@ -164,16 +241,26 @@
                                                         </button>
                                                     </span>
                                                 </p>
+                                            </td>-->
+                                            <td>
+                                                <select class="form-control"
+                                                        id="cmbUnitOfMeasure"
+                                                        name="cmbUnitOfMeasure"
+                                                        ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.MOUID}"
+                                                        ng-model="item.cmbUnitOfMeasure"
+                                                        ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
+                                                        ng-change="item.UOMID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+
                                             </td>
                                             <td>
                                                 <input class="form-control" ng:model="item.Quantity" value="0" ng:required ng:validate="number" size="6">
                                             </td>
-                                            <td>
+                                            <!--<td>
                                                 <input class="form-control" ng:model="item.Taxes" value="0.00" ng:required ng:validate="number" size="6">
                                             </td>
                                             <td>
                                                 <input class="form-control" ng:model="item.Discount" value="0.00" ng:required ng:validate="number" size="6">
-                                            </td>
+                                            </td>-->
                                             <td>
                                                 <input class="form-control" ng:model="item.UnitPrice" value="0.00" ng:required ng:validate="number" size="6">
                                             </td>
@@ -201,6 +288,44 @@
                                     </button>
                                 </div>
 
+                            </tab>
+                            <tab heading="Message">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtMessage">
+                                            Dear Sir,
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtMessage"
+                                                  name="txtMessage"
+                                                  ng-model="vm.purchaseOrder.Message"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab heading="Terms & Condition">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtTerms">
+                                            Terms
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTerms"
+                                                  name="txtTerms"
+                                                  ng-model="vm.purchaseOrder.Terms"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtTermsOfPayment">
+                                            Terms of Payment
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTermsOfPayment"
+                                                  name="txtTermsOfPayment"
+                                                  ng-model="vm.purchaseOrder.TermsOfPayment"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
                             </tab>
                         </tabset>
                     </div>
@@ -256,7 +381,7 @@
                                                 {{item.Description}}
                                             </td>
                                             <td>
-                                                {{item.ScheduleDate| date:"dd/MM/yyyy"}}"
+                                                {{item.ScheduleDate| date:"dd/MM/yyyy"}}
 
                                             </td>
                                             <td>

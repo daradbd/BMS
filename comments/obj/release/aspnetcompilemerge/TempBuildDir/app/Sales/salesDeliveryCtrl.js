@@ -13,14 +13,14 @@
 
     angular
         .module("companyManagement")
-        .controller("salesDeliveryCtrl", ["salesDeliveryDescriptionResource", "salesOrderDescriptionResource", "$rootScope", "salesOrderResource", "salesDeliveryResource", salesDeliveryCtrl]);
+        .controller("salesDeliveryCtrl", ["unitOfMeasureResource", "salesDeliveryDescriptionResource", "salesOrderDescriptionResource", "$rootScope", "salesOrderResource", "salesDeliveryResource", salesDeliveryCtrl]);
 
-    function salesDeliveryCtrl(salesDeliveryDescriptionResource, salesOrderDescriptionResource, $rootScope, salesOrderResource, salesDeliveryResource) {
+    function salesDeliveryCtrl(unitOfMeasureResource, salesDeliveryDescriptionResource, salesOrderDescriptionResource, $rootScope, salesOrderResource, salesDeliveryResource) {
         var vm = this;
         vm.salesDeliverys = [];
         vm.salesDelivery = {};
 
-        vm.SalesDeliveryDescription = { salesDeliveryDesc: [{ ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
+        vm.SalesDeliveryDescription = { salesDeliveryDesc: [{ ProductID: 0, Description: "", MOUID: 0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
         
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -95,6 +95,14 @@
             }
         }
 
+        vm.dtopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.dtopened = !vm.dtopened;
+
+        }
+
         var DispayButton = function () {
 
         }
@@ -106,6 +114,15 @@
         vm.CheckMax = function (item)
         {
             item.RDQuantity = (item.Quantity - item.DeliveredQuantity) < item.RDQuantity ? (item.Quantity - item.DeliveredQuantity) : item.RDQuantity;
+        }
+
+
+        GetUnitOfMeasures();
+        function GetUnitOfMeasures() {
+            unitOfMeasureResource.query(function (data) {
+                vm.UnitOfMeasures = data;
+
+            });
         }
 
         GetList();
@@ -153,6 +170,7 @@
                     ProductID: value.ProductID,
                     Description: value.Description,
                     Quantity: value.Quantity,
+                    UOMID: value.UOMID,
                     RDQuantity: value.RDQuantity,
                     //Taxes: value.Taxes,
                     //ScheduleDate: value.ScheduleDate,

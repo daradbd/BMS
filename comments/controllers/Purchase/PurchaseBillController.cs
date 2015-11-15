@@ -68,6 +68,14 @@ namespace BMS.Controllers.Purchase
         {
             if (ModelState.IsValid)
             {
+                ControlVoucher controlvoucher = new ControlVoucher();
+
+                var PurchaseOrder = db.PurchaseOrders.Where(o => o.PurchaseOrderID == purchasebill.PurchaseOrderID).SingleOrDefault();
+                long PurchaseCOAID =(long) PurchaseOrder.PurchaseOrderCategory.COAID;
+
+                long SupplierCOAID = (long)db.Collaborators.Where(c => c.CollaboratorID == PurchaseOrder.SupplierID).Select(c => c.SupplierCOAID).FirstOrDefault();
+
+                purchasebill.VoucherNO = controlvoucher.CreateVoucher(PurchaseCOAID, SupplierCOAID, (decimal)purchasebill.GrandTotal, (long)1, (DateTime)purchasebill.Date);
                 db.PurchaseBills.Add(purchasebill);
                 db.SaveChanges();
 

@@ -120,7 +120,36 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
+                        <div class="form-group"
+                             ng-class="{'has-error':paymentMethodForm.cmbAccountingHead.$invalid
+                && cityForm.cmbAccountingHead.$dirty}">
 
+                            <label for="cmbAccountingHead">
+                                AccountingHead
+                            </label>
+                            <select class="form-control"
+                                    id="cmbAccountingHead"
+                                    name="cmbAccountingHead"
+                                    ng-model="vm.cmbAccountingHead"
+                                    ng-options="AccountingHead.AccCOAConfigName for AccountingHead in vm.accCOAConfigs track by AccountingHead.AccCOAConfigID "
+                                    ng-change="vm.paymentMethod.AccountingHeadID=vm.cmbAccountingHead.AccCOAConfigID"></select>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{'has-error':paymentMethodForm.txtRefText.$invalid
+                                         && paymentMethodForm.txtRefText.$dirty}">
+
+                            <label for="txtRefText">
+                                RefText
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtRefText"
+                                   name="txtRefText"
+                                   ng-model="vm.paymentMethod.RefText"
+                                   placeholder="Enter RefText"
+                                   required>
+                        </div>
                     </div>
                 </div>
 

@@ -13,10 +13,13 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseBillPaymentCtrl", ["purchaseBillPaymentResource", purchaseBillPaymentCtrl]);
-    function purchaseBillPaymentCtrl(purchaseBillPaymentResource) {
+        .controller("purchaseBillPaymentCtrl", ["paymentMethodResource", "projectSetupResource", "collaboratorResource", "purchaseBillPaymentResource", purchaseBillPaymentCtrl]);
+    function purchaseBillPaymentCtrl(paymentMethodResource, projectSetupResource, collaboratorResource, purchaseBillPaymentResource) {
         var vm = this;
         vm.purchaseBillPayments = [];
+        vm.paymentMethods = [];
+        vm.collaborators = [];
+        vm.Projects = [];
 
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -89,8 +92,48 @@
             }
         }
 
+        vm.dtopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.dtopened = !vm.dtopened;
+
+        }
+
         var DispayButton = function () {
 
+        }
+
+
+
+        GetProjectList();
+        //Get All Data List
+        function GetProjectList() {
+            projectSetupResource.query(function (data) {
+                vm.Projects = data;
+                toastr.success("Data Load Successful", "Form Load");
+
+            });
+        }
+
+        GetSupplierList();
+
+        //Get All Data List
+        function GetSupplierList() {
+            collaboratorResource.query({ '$filter': 'IsSupplier eq true' }, function (data) {
+                vm.collaborators = data;
+                toastr.success("Data function Load Successful", "Form Load");
+
+            });
+        }
+
+        GetPaymentMethod();
+        function GetPaymentMethod() {
+            paymentMethodResource.query(function (data) {
+                vm.paymentMethods = data;
+                toastr.success("Data Load Successful", "Form Load");
+
+            });
         }
 
 
@@ -127,11 +170,23 @@
         vm.Get = function (id) {
             purchaseBillPaymentResource.get({ 'ID': id }, function (purchaseBillPayment) {
                 vm.purchaseBillPayment = purchaseBillPayment;
+                vm.cmbSupplier = vm.purchaseBillPayment.Collaborator;
+                vm.cmbProject = { ProjectID: vm.purchaseBillPayment.ProjectID };
+                vm.GetPaymentMethod(vm.purchaseBillPayment.PaymentMethodID);
+                vm.cmbCreditTo = { COAID: vm.purchaseBillPayment.CreditTo };
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
             });
         }
 
+        vm.GetPaymentMethod = function (id) {
+            paymentMethodResource.get({ 'ID': id }, function (paymentMethod) {
+                vm.paymentMethod = paymentMethod;
+                vm.cmbPaymentMethod = vm.paymentMethod;
+                //vm.ViewMode(3);
+                //toastr.success("Data Load Successful", "Form Load");
+            });
+        }
 
         //Data Update
         vm.Update = function (isValid) {

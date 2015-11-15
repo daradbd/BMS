@@ -10,6 +10,7 @@
                              'angularTreeview',
                              'io.dennis.contextmenu',
                              'angular.filter',
+                             'bgDirectives',
                              "ui.router", ]);
     
     app.factory('Util', function () {
@@ -255,6 +256,45 @@
                         templateUrl: "app/Accounting/Transaction/voucherList.html",
                         controller: "voucherListCtrl as vm"
                     })
+
+                    //trialBalance
+                    .state("trialBalance", {
+                        url: "/trialBalance",
+                        templateUrl: "app/Accounting/Transaction/Report/trialBalance.html",
+                        controller: "trialBalanceCtrl as vm"
+                    })
+                    //ledgerSheet
+                    .state("ledgerSheet", {
+                        url: "/ledgerSheet",
+                        templateUrl: "app/Accounting/Transaction/Report/ledgerSheet.html",
+                        controller: "ledgerSheetCtrl as vm"
+                    })
+
+                     //salesQuotationCategory
+                    .state("salesQuotationCategory", {
+                        url: "/salesQuotationCategory",
+                        templateUrl: "app/Sales/salesQuotationCategory.html",
+                        controller: "salesQuotationCategoryCtrl as vm"
+                    })
+                    //salesOrderCategory
+                    .state("salesOrderCategory", {
+                        url: "/salesOrderCategory",
+                        templateUrl: "app/Sales/salesOrderCategory.html",
+                        controller: "salesOrderCategoryCtrl as vm"
+                    })
+                    //salesDeliveryCategory
+                    .state("salesDeliveryCategory", {
+                        url: "/salesDeliveryCategory",
+                        templateUrl: "app/Sales/salesDeliveryCategory.html",
+                        controller: "salesDeliveryCategoryCtrl as vm"
+                    })
+                    //salesBillCategory
+                    .state("salesBillCategory", {
+                        url: "/salesBillCategory",
+                        templateUrl: "app/Sales/salesBillCategory.html",
+                        controller: "salesBillCategoryCtrl as vm"
+                    })
+
                     //salesQuotation
                     .state("salesQuotation", {
                         url: "/salesQuotation",
@@ -296,6 +336,12 @@
                         url: "/purchaseRequisition",
                         templateUrl: "app/Purchase/purchaseRequisition.html",
                         controller: "purchaseRequisitionCtrl as vm"
+                    })
+                    //purchaseOrderCategory
+                    .state("purchaseOrderCategory", {
+                        url: "/purchaseOrderCategory",
+                        templateUrl: "app/Purchase/purchaseOrderCategory.html",
+                        controller: "purchaseOrderCategoryCtrl as vm"
                     })
                     //requisitionDelivery
                     .state("requisitionDelivery", {
@@ -370,17 +416,40 @@
                         templateUrl: "app/Expenses/employeesExpensesPayment.html",
                         controller: "employeesExpensesPaymentCtrl as vm"
                     })
+
+                     //materialRequirementsPlanning
+                    .state("productCosting", {
+                        url: "/productCosting",
+                        templateUrl: "app/Production/productCosting.html",
+                        controller: "productCostingCtrl as vm"
+                    })
+
+
                      //materialRequirementsPlanning
                     .state("materialRequirementsPlanning", {
                         url: "/materialRequirementsPlanning",
                         templateUrl: "app/Production/materialRequirementsPlanning.html",
                         controller: "materialRequirementsPlanningCtrl as vm"
                     })
+
+                    //billofMaterial
+                    .state("billofMaterialCategory", {
+                        url: "/billofMaterialCategory",
+                        templateUrl: "app/Production/billofMaterialCategory.html",
+                        controller: "billofMaterialCategoryCtrl as vm"
+                    })
                     //billofMaterial
                     .state("billofMaterial", {
                         url: "/billofMaterial",
                         templateUrl: "app/Production/billofMaterial.html",
                         controller: "billofMaterialCtrl as vm"
+                    })
+
+                    //productionOrderCategory
+                    .state("productionOrderCategory", {
+                        url: "/productionOrderCategory",
+                        templateUrl: "app/Production/productionOrderCategory.html",
+                        controller: "productionOrderCategoryCtrl as vm"
                     })
                     //productionOrder
                     .state("productionOrder", {

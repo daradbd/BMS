@@ -34,10 +34,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/18/2015 02:30:56</publishTime>
     </File>
     <File Include="app/Accounting/Configuration/Accounts/paymentMethod.html">
-      <publishTime>07/28/2015 07:25:36</publishTime>
+      <publishTime>10/18/2015 21:37:29</publishTime>
     </File>
     <File Include="app/Accounting/Configuration/Accounts/paymentMethodCtrl.js">
-      <publishTime>07/27/2015 16:40:06</publishTime>
+      <publishTime>10/18/2015 21:25:49</publishTime>
     </File>
     <File Include="app/Accounting/Configuration/Accounts/voucherType.html">
       <publishTime>06/11/2015 09:23:18</publishTime>
@@ -90,20 +90,32 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="app/Accounting/Transaction/gLedgerCtrl.js">
       <publishTime>04/19/2015 17:25:40</publishTime>
     </File>
+    <File Include="app/Accounting/Transaction/Report/ledgerSheet.html">
+      <publishTime>10/29/2015 23:18:44</publishTime>
+    </File>
+    <File Include="app/Accounting/Transaction/Report/ledgerSheetCtrl.js">
+      <publishTime>10/29/2015 23:08:35</publishTime>
+    </File>
+    <File Include="app/Accounting/Transaction/Report/trialBalance.html">
+      <publishTime>11/03/2015 01:26:58</publishTime>
+    </File>
+    <File Include="app/Accounting/Transaction/Report/trialBalanceCtrl.js">
+      <publishTime>10/20/2015 00:15:07</publishTime>
+    </File>
     <File Include="app/Accounting/Transaction/voucherList.html">
-      <publishTime>06/11/2015 13:19:24</publishTime>
+      <publishTime>10/28/2015 23:35:01</publishTime>
     </File>
     <File Include="app/Accounting/Transaction/voucherListCtrl.js">
-      <publishTime>06/22/2015 08:57:16</publishTime>
+      <publishTime>10/20/2015 19:51:24</publishTime>
     </File>
     <File Include="app/app.js">
-      <publishTime>09/05/2015 08:17:44</publishTime>
+      <publishTime>11/11/2015 03:36:11</publishTime>
     </File>
     <File Include="app/Authentication/UserAuthentication/companyManagement.UserAuthentication.js">
       <publishTime>06/05/2015 21:22:52</publishTime>
     </File>
     <File Include="app/Authentication/UserAuthentication/userAuthentication.js">
-      <publishTime>06/05/2015 21:51:14</publishTime>
+      <publishTime>11/11/2015 04:06:16</publishTime>
     </File>
     <File Include="app/Authentication/UserAuthentication/userAuthenticationService.js">
       <publishTime>06/06/2015 07:07:14</publishTime>
@@ -145,7 +157,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/21/2015 10:44:40</publishTime>
     </File>
     <File Include="app/HR/customerType.html">
-      <publishTime>06/29/2015 21:59:04</publishTime>
+      <publishTime>10/14/2015 00:10:33</publishTime>
     </File>
     <File Include="app/HR/customerTypeCtrl.js">
       <publishTime>06/26/2015 21:09:00</publishTime>
@@ -196,10 +208,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/15/2015 01:21:34</publishTime>
     </File>
     <File Include="app/HR/supplierCtrl.js">
-      <publishTime>09/15/2015 01:11:54</publishTime>
+      <publishTime>10/13/2015 23:33:21</publishTime>
     </File>
     <File Include="app/HR/supplierType.html">
-      <publishTime>06/29/2015 22:07:26</publishTime>
+      <publishTime>10/14/2015 00:09:15</publishTime>
     </File>
     <File Include="app/HR/supplierTypeCtrl.js">
       <publishTime>08/03/2015 10:11:38</publishTime>
@@ -214,7 +226,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/31/2015 16:27:44</publishTime>
     </File>
     <File Include="app/Inventory/Product/productCtrl.js">
-      <publishTime>04/23/2015 14:00:32</publishTime>
+      <publishTime>09/21/2015 03:07:08</publishTime>
     </File>
     <File Include="app/Inventory/Product/productReceiveDelivery.html">
       <publishTime>08/25/2015 20:08:40</publishTime>
@@ -229,10 +241,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2015 04:51:34</publishTime>
     </File>
     <File Include="app/Production/billofMaterial.html">
-      <publishTime>08/23/2015 18:36:58</publishTime>
+      <publishTime>11/06/2015 17:17:03</publishTime>
+    </File>
+    <File Include="app/Production/billofMaterialCategory.html">
+      <publishTime>10/16/2015 15:15:16</publishTime>
+    </File>
+    <File Include="app/Production/billofMaterialCategoryCtrl.js">
+      <publishTime>10/16/2015 15:07:24</publishTime>
     </File>
     <File Include="app/Production/billofMaterialCtrl.js">
-      <publishTime>08/23/2015 18:20:06</publishTime>
+      <publishTime>11/06/2015 19:14:14</publishTime>
     </File>
     <File Include="app/Production/billofMaterialDescription.html">
       <publishTime>07/07/2015 07:59:58</publishTime>
@@ -241,16 +259,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/07/2015 07:45:38</publishTime>
     </File>
     <File Include="app/Production/materialRequirementsPlanning.html">
-      <publishTime>08/24/2015 17:55:32</publishTime>
+      <publishTime>11/06/2015 16:04:57</publishTime>
     </File>
     <File Include="app/Production/materialRequirementsPlanningCtrl.js">
-      <publishTime>08/23/2015 13:12:12</publishTime>
+      <publishTime>11/06/2015 16:09:33</publishTime>
+    </File>
+    <File Include="app/Production/productCosting.html">
+      <publishTime>11/10/2015 02:05:04</publishTime>
+    </File>
+    <File Include="app/Production/productCostingCtrl.js">
+      <publishTime>11/10/2015 02:22:33</publishTime>
     </File>
     <File Include="app/Production/productionOrder.html">
-      <publishTime>08/25/2015 04:00:04</publishTime>
+      <publishTime>09/21/2015 06:05:51</publishTime>
+    </File>
+    <File Include="app/Production/productionOrderCategory.html">
+      <publishTime>10/16/2015 15:30:08</publishTime>
+    </File>
+    <File Include="app/Production/productionOrderCategoryCtrl.js">
+      <publishTime>10/16/2015 15:17:33</publishTime>
     </File>
     <File Include="app/Production/productionOrderCtrl.js">
-      <publishTime>08/25/2015 06:56:40</publishTime>
+      <publishTime>09/21/2015 06:15:41</publishTime>
     </File>
     <File Include="app/Production/productionOrderDelivery.html">
       <publishTime>08/25/2015 19:22:36</publishTime>
@@ -283,16 +313,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2015 19:32:24</publishTime>
     </File>
     <File Include="app/Purchase/purchaseBill.html">
-      <publishTime>09/13/2015 13:35:24</publishTime>
+      <publishTime>11/02/2015 23:19:32</publishTime>
     </File>
     <File Include="app/Purchase/purchaseBillCtrl.js">
-      <publishTime>09/13/2015 14:43:05</publishTime>
+      <publishTime>11/03/2015 01:17:07</publishTime>
     </File>
     <File Include="app/Purchase/purchaseBillPayment.html">
-      <publishTime>07/07/2015 13:27:34</publishTime>
+      <publishTime>10/19/2015 12:41:59</publishTime>
     </File>
     <File Include="app/Purchase/purchaseBillPaymentCtrl.js">
-      <publishTime>07/07/2015 13:26:50</publishTime>
+      <publishTime>10/19/2015 12:43:58</publishTime>
     </File>
     <File Include="app/Purchase/purchaseDeliveryReceive.html">
       <publishTime>07/30/2015 20:59:22</publishTime>
@@ -301,22 +331,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/30/2015 20:59:22</publishTime>
     </File>
     <File Include="app/Purchase/purchaseOrder.html">
-      <publishTime>09/07/2015 23:21:32</publishTime>
+      <publishTime>11/02/2015 22:17:13</publishTime>
+    </File>
+    <File Include="app/Purchase/purchaseOrderCategory.html">
+      <publishTime>10/30/2015 15:13:25</publishTime>
+    </File>
+    <File Include="app/Purchase/purchaseOrderCategoryCtrl.js">
+      <publishTime>10/30/2015 17:15:32</publishTime>
     </File>
     <File Include="app/Purchase/purchaseOrderCtrl.js">
-      <publishTime>09/13/2015 12:31:18</publishTime>
+      <publishTime>11/02/2015 22:12:10</publishTime>
     </File>
     <File Include="app/Purchase/purchaseRequisition.html">
-      <publishTime>06/05/2015 05:35:18</publishTime>
+      <publishTime>10/13/2015 14:57:34</publishTime>
     </File>
     <File Include="app/Purchase/purchaseRequisitionCtrl.js">
-      <publishTime>08/02/2015 16:03:46</publishTime>
+      <publishTime>10/03/2015 11:03:28</publishTime>
     </File>
     <File Include="app/Purchase/requestForQuotation.html">
-      <publishTime>06/04/2015 04:50:50</publishTime>
+      <publishTime>10/17/2015 17:28:20</publishTime>
     </File>
     <File Include="app/Purchase/requestForQuotationCtrl.js">
-      <publishTime>06/12/2015 04:59:04</publishTime>
+      <publishTime>10/17/2015 18:02:26</publishTime>
     </File>
     <File Include="app/Purchase/requisitionDelivery.html">
       <publishTime>07/30/2015 21:38:16</publishTime>
@@ -325,46 +361,70 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/30/2015 21:38:16</publishTime>
     </File>
     <File Include="app/Sales/salesBill.html">
-      <publishTime>09/11/2015 05:25:54</publishTime>
+      <publishTime>10/25/2015 02:51:09</publishTime>
+    </File>
+    <File Include="app/Sales/salesBillCategory.html">
+      <publishTime>10/16/2015 12:43:52</publishTime>
+    </File>
+    <File Include="app/Sales/salesBillCategoryCtrl.js">
+      <publishTime>10/15/2015 16:09:59</publishTime>
     </File>
     <File Include="app/Sales/salesBillCtrl.js">
-      <publishTime>09/11/2015 04:44:14</publishTime>
+      <publishTime>10/30/2015 21:08:05</publishTime>
     </File>
     <File Include="app/Sales/salesDelivery.html">
-      <publishTime>09/11/2015 00:45:11</publishTime>
+      <publishTime>10/25/2015 01:55:56</publishTime>
+    </File>
+    <File Include="app/Sales/salesDeliveryCategory.html">
+      <publishTime>10/16/2015 12:48:53</publishTime>
+    </File>
+    <File Include="app/Sales/salesDeliveryCategoryCtrl.js">
+      <publishTime>10/16/2015 12:50:26</publishTime>
     </File>
     <File Include="app/Sales/salesDeliveryCtrl.js">
-      <publishTime>09/11/2015 03:03:01</publishTime>
+      <publishTime>10/25/2015 01:56:32</publishTime>
     </File>
     <File Include="app/Sales/salesOrder.html">
-      <publishTime>08/27/2015 07:53:54</publishTime>
+      <publishTime>10/25/2015 01:51:06</publishTime>
+    </File>
+    <File Include="app/Sales/salesOrderCategory.html">
+      <publishTime>10/15/2015 15:31:08</publishTime>
+    </File>
+    <File Include="app/Sales/salesOrderCategoryCtrl.js">
+      <publishTime>10/15/2015 15:22:36</publishTime>
     </File>
     <File Include="app/Sales/salesOrderCtrl.js">
-      <publishTime>09/08/2015 22:55:18</publishTime>
+      <publishTime>10/25/2015 01:51:06</publishTime>
     </File>
     <File Include="app/Sales/salesQuotation.html">
-      <publishTime>08/24/2015 17:13:46</publishTime>
+      <publishTime>10/25/2015 01:48:14</publishTime>
+    </File>
+    <File Include="app/Sales/salesQuotationCategory.html">
+      <publishTime>10/15/2015 15:04:43</publishTime>
+    </File>
+    <File Include="app/Sales/salesQuotationCategoryCtrl.js">
+      <publishTime>10/15/2015 14:19:38</publishTime>
     </File>
     <File Include="app/Sales/salesQuotationCtrl.js">
-      <publishTime>08/24/2015 08:54:42</publishTime>
+      <publishTime>10/25/2015 01:46:55</publishTime>
     </File>
     <File Include="app/Sales/salesReceivePayment.html">
-      <publishTime>07/07/2015 19:27:58</publishTime>
+      <publishTime>10/19/2015 00:58:07</publishTime>
     </File>
     <File Include="app/Sales/salesReceivePaymentCtrl.js">
-      <publishTime>07/07/2015 19:16:06</publishTime>
+      <publishTime>10/19/2015 01:57:17</publishTime>
     </File>
     <File Include="app/setting/common/city/city.html">
-      <publishTime>06/07/2015 04:42:22</publishTime>
+      <publishTime>11/03/2015 23:37:11</publishTime>
     </File>
     <File Include="app/setting/common/city/cityCtrl.js">
       <publishTime>08/16/2015 19:33:38</publishTime>
     </File>
     <File Include="app/setting/common/country/country.html">
-      <publishTime>04/06/2015 22:17:54</publishTime>
+      <publishTime>11/10/2015 15:48:15</publishTime>
     </File>
     <File Include="app/setting/common/country/countryCtrl.js">
-      <publishTime>08/16/2015 19:32:00</publishTime>
+      <publishTime>11/05/2015 18:16:11</publishTime>
     </File>
     <File Include="app/setting/common/currency/currency.html">
       <publishTime>04/06/2015 21:48:44</publishTime>
@@ -377,6 +437,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="app/setting/common/language/languageCtrl.js">
       <publishTime>08/16/2015 19:31:50</publishTime>
+    </File>
+    <File Include="app/setting/common/menu/menu.html">
+      <publishTime>11/11/2015 04:11:20</publishTime>
+    </File>
+    <File Include="app/setting/common/menu/menuCtrl.js">
+      <publishTime>11/11/2015 04:04:31</publishTime>
     </File>
     <File Include="app/setting/common/template/dirPagination.tpl.html">
       <publishTime>04/05/2015 07:16:58</publishTime>
@@ -421,22 +487,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/07/2015 20:10:44</publishTime>
     </File>
     <File Include="app/TestModule/commentListCtrl.js">
-      <publishTime>06/05/2015 22:00:12</publishTime>
+      <publishTime>11/10/2015 03:36:08</publishTime>
     </File>
     <File Include="app/TestModule/Comments.html">
-      <publishTime>03/30/2015 05:04:40</publishTime>
+      <publishTime>11/08/2015 05:11:26</publishTime>
+    </File>
+    <File Include="app/TestModule/TestTemplate.html">
+      <publishTime>10/31/2015 13:33:15</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>03/09/2015 08:43:00</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/16/2015 10:34:01</publishTime>
+      <publishTime>11/11/2015 04:12:53</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/16/2015 10:34:01</publishTime>
+      <publishTime>11/11/2015 04:12:53</publishTime>
     </File>
     <File Include="bin/BMS.dll">
-      <publishTime>09/16/2015 10:33:41</publishTime>
+      <publishTime>11/11/2015 04:12:49</publishTime>
     </File>
     <File Include="bin/DotNetOpenAuth.AspNet.dll">
       <publishTime>03/09/2015 08:41:44</publishTime>
@@ -552,11 +621,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="common/directive/dirContextMenu.js">
       <publishTime>08/27/2015 07:38:04</publishTime>
     </File>
+    <File Include="common/directive/dirModal.js">
+      <publishTime>10/31/2015 01:26:00</publishTime>
+    </File>
     <File Include="common/directive/dirPagination.js">
       <publishTime>04/05/2015 07:18:10</publishTime>
     </File>
     <File Include="common/directive/dirPrint.js">
       <publishTime>04/05/2015 17:21:06</publishTime>
+    </File>
+    <File Include="common/directive/dirSplitter.js">
+      <publishTime>11/10/2015 20:34:37</publishTime>
+    </File>
+    <File Include="common/directive/dirStpaModal.js">
+      <publishTime>10/31/2015 14:16:10</publishTime>
     </File>
     <File Include="common/directive/dirTreeview.js">
       <publishTime>06/21/2015 21:04:34</publishTime>
@@ -596,6 +674,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="common/services/bankResource.js">
       <publishTime>04/13/2015 18:21:14</publishTime>
+    </File>
+    <File Include="common/services/billofMaterialCategoryResource.js">
+      <publishTime>10/16/2015 15:06:19</publishTime>
     </File>
     <File Include="common/services/billofMaterialDescriptionResource.js">
       <publishTime>07/07/2015 07:11:18</publishTime>
@@ -693,6 +774,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="common/services/languageResource.js">
       <publishTime>04/09/2015 07:54:28</publishTime>
     </File>
+    <File Include="common/services/ledgerSheetResource.js">
+      <publishTime>10/21/2015 21:44:35</publishTime>
+    </File>
     <File Include="common/services/maintainPurchaseQuotationDescriptionResource.js">
       <publishTime>05/03/2015 18:14:24</publishTime>
     </File>
@@ -710,6 +794,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="common/services/productCategoryResource.js">
       <publishTime>04/18/2015 03:15:10</publishTime>
+    </File>
+    <File Include="common/services/productCostingDescriptionResource.js">
+      <publishTime>11/04/2015 01:12:33</publishTime>
+    </File>
+    <File Include="common/services/productCostingResource.js">
+      <publishTime>11/04/2015 01:18:24</publishTime>
+    </File>
+    <File Include="common/services/productionOrderCategoryResource.js">
+      <publishTime>10/16/2015 15:05:40</publishTime>
     </File>
     <File Include="common/services/productionOrderDescriptionResource.js">
       <publishTime>08/15/2015 06:13:50</publishTime>
@@ -750,6 +843,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="common/services/PurchaseDeliveryReceiveResource.js">
       <publishTime>07/30/2015 21:00:58</publishTime>
     </File>
+    <File Include="common/services/purchaseOrderCategoryResource.js">
+      <publishTime>10/15/2015 16:44:10</publishTime>
+    </File>
     <File Include="common/services/purchaseOrderDescriptionResource.js">
       <publishTime>05/03/2015 18:14:48</publishTime>
     </File>
@@ -774,11 +870,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="common/services/requisitionDeliveryResource.js">
       <publishTime>07/30/2015 21:38:16</publishTime>
     </File>
+    <File Include="common/services/salesBillCategoryResource.js">
+      <publishTime>10/15/2015 15:40:49</publishTime>
+    </File>
     <File Include="common/services/salesBillDescriptionResource.js">
       <publishTime>08/25/2015 07:51:54</publishTime>
     </File>
     <File Include="common/services/salesBillResource.js">
       <publishTime>08/25/2015 07:52:58</publishTime>
+    </File>
+    <File Include="common/services/salesDeliveryCategoryResource.js">
+      <publishTime>10/16/2015 11:41:38</publishTime>
     </File>
     <File Include="common/services/salesDeliveryDescriptionResource.js">
       <publishTime>07/30/2015 21:15:04</publishTime>
@@ -786,11 +888,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="common/services/salesDeliveryResource.js">
       <publishTime>07/30/2015 20:17:54</publishTime>
     </File>
+    <File Include="common/services/salesOrderCategoryResource.js">
+      <publishTime>10/15/2015 15:18:36</publishTime>
+    </File>
     <File Include="common/services/salesOrderDescriptionResource.js">
       <publishTime>05/03/2015 18:16:06</publishTime>
     </File>
     <File Include="common/services/salesOrderResource.js">
       <publishTime>04/29/2015 04:47:16</publishTime>
+    </File>
+    <File Include="common/services/salesQuotationCategoryResource.js">
+      <publishTime>10/15/2015 15:43:20</publishTime>
     </File>
     <File Include="common/services/salesQuotationDescriptionResource.js">
       <publishTime>05/03/2015 18:16:30</publishTime>
@@ -806,6 +914,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="common/services/taxResource.js">
       <publishTime>05/17/2015 05:59:02</publishTime>
+    </File>
+    <File Include="common/services/trialBalanceResource.js">
+      <publishTime>10/20/2015 00:17:21</publishTime>
     </File>
     <File Include="common/services/unitOfMeasureResource.js">
       <publishTime>04/23/2015 04:47:50</publishTime>
@@ -849,6 +960,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/css/font-awesome.min.css">
       <publishTime>03/22/2015 03:34:04</publishTime>
     </File>
+    <File Include="Content/css/jqxsummer.css">
+      <publishTime>11/05/2015 01:44:48</publishTime>
+    </File>
     <File Include="Content/css/metisMenu.css">
       <publishTime>03/30/2015 04:47:00</publishTime>
     </File>
@@ -862,7 +976,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/24/2015 20:18:38</publishTime>
     </File>
     <File Include="Content/css/style.css">
-      <publishTime>08/25/2015 18:47:50</publishTime>
+      <publishTime>11/10/2015 16:45:21</publishTime>
     </File>
     <File Include="Content/css/toastr.css">
       <publishTime>04/03/2015 04:15:08</publishTime>
@@ -940,7 +1054,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/03/2015 04:04:52</publishTime>
     </File>
     <File Include="Content/js/angularjs/ui-bootstrap-tpls-0.11.0.js">
-      <publishTime>04/03/2015 08:25:04</publishTime>
+      <publishTime>11/08/2015 04:18:07</publishTime>
     </File>
     <File Include="Content/js/angularjs/ui-utils.js">
       <publishTime>04/03/2015 08:25:06</publishTime>
@@ -956,6 +1070,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/js/jquery/jquery.min.js">
       <publishTime>03/11/2015 18:34:08</publishTime>
+    </File>
+    <File Include="Content/js/jquery/jqxbuttons.js">
+      <publishTime>11/05/2015 01:52:45</publishTime>
+    </File>
+    <File Include="Content/js/jquery/jqxcore.js">
+      <publishTime>11/05/2015 01:53:30</publishTime>
+    </File>
+    <File Include="Content/js/jquery/jqxsplitter.js">
+      <publishTime>11/05/2015 06:58:10</publishTime>
     </File>
     <File Include="Content/js/jquery/login.js">
       <publishTime>06/10/2015 13:53:48</publishTime>
@@ -1216,7 +1339,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/05/2014 09:34:22</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/16/2015 10:33:52</publishTime>
+      <publishTime>11/11/2015 04:12:51</publishTime>
     </File>
     <File Include="Scripts/demo1/get.js">
       <publishTime>06/05/2014 09:34:22</publishTime>
@@ -1324,13 +1447,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/05/2014 09:34:22</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>09/15/2015 01:24:13</publishTime>
+      <publishTime>11/11/2015 03:19:53</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>06/05/2014 09:34:22</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>08/01/2015 19:26:30</publishTime>
+      <publishTime>11/10/2015 18:47:19</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>06/07/2015 12:16:10</publishTime>
@@ -1342,7 +1465,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/05/2014 09:34:22</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/16/2015 10:33:44</publishTime>
+      <publishTime>11/11/2015 01:53:55</publishTime>
     </File>
   </ItemGroup>
 </Project>

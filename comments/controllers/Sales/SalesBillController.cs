@@ -16,6 +16,7 @@ namespace BMS.Controllers.Sales
     public class SalesBillController : ApiController
     {
         private UsersContext db = new UsersContext();
+        LoginUser loginUser = new LoginUser();
 
         // GET api/SalesBill
         public IEnumerable<SalesBill> GetSalesBills()
@@ -72,6 +73,12 @@ namespace BMS.Controllers.Sales
             if (ModelState.IsValid)
             {
                 string CustomCode = "SB-" + DateTime.Now.ToString("yyyyMMdd");
+                ControlVoucher controlvoucher = new ControlVoucher();
+
+                long SalesCOAID =(long)db.AccCOAMappings.Where(a => a.AccCOAConfigID == 18 && a.CompanyID == loginUser.CompanyID).Select(a=>a.AccCOAID).FirstOrDefault();
+
+                long CustomerCOAID = (long)db.Collaborators.Where(c => c.CollaboratorID == salesbill.CustomerID).Select(c => c.CustomerCOAID).FirstOrDefault();
+                salesbill.VoucherNO = controlvoucher.CreateVoucher(CustomerCOAID, SalesCOAID, (decimal)salesbill.GrandTotal, (long)1, (DateTime)salesbill.Date);
 
                 int? MaxCode = Convert.ToInt32((db.SalesBills.Where(r => r.SalesBillCode.StartsWith(CustomCode)).Select(r => r.SalesBillCode.Substring(CustomCode.Length, 4)).ToList()).Max());
                 string SBCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');

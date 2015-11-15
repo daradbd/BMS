@@ -120,7 +120,7 @@ namespace BMS.Controllers.HR
                     }
 
                     int? MaxCode = Convert.ToInt32((db.Collaborators.Where(r => r.CollaboratorCode.StartsWith(CollaboratorCode)).Select(r => r.CollaboratorCode.Substring(CollaboratorCode.Length, 4)).ToList()).Max());
-                    string CBCode = CollaboratorCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
+                    string CBCode = CollaboratorCode + ((MaxCode + 1).ToString()).PadLeft(4, '0'); 
                     collaborator.CollaboratorCode = CBCode;
 
                     WebSecurity.CreateUserAndAccount(collaborator.EmailID, "123456");

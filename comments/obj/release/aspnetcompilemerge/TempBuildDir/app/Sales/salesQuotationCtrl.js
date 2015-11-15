@@ -13,15 +13,15 @@
 
     angular
         .module("companyManagement")
-        .controller("salesQuotationCtrl", ["billofMaterialResource", "salesOrderResource", "salesQuotationDescriptionResource", "productResource", "collaboratorResource", "salesQuotationResource", salesQuotationCtrl]);
-    function salesQuotationCtrl(billofMaterialResource, salesOrderResource, salesQuotationDescriptionResource, productResource, collaboratorResource, salesQuotationResource) {
+        .controller("salesQuotationCtrl", ["unitOfMeasureResource", "Util", "billofMaterialResource", "salesOrderResource", "salesQuotationDescriptionResource", "productResource", "collaboratorResource", "salesQuotationResource", salesQuotationCtrl]);
+    function salesQuotationCtrl(unitOfMeasureResource, Util,billofMaterialResource, salesOrderResource, salesQuotationDescriptionResource, productResource, collaboratorResource, salesQuotationResource) {
         var vm = this;
         vm.salesQuotations = [];
         
         vm.collaborators = [];
         vm.products = [];
        
-        vm.SalesQuotationDescription = { salesQuotationDesc: [{ SalesSectionID: 1, SalesSectionName: '' ,ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
+        vm.SalesQuotationDescription = { salesQuotationDesc: [{ SalesSectionID: 1, SalesSectionName: '' ,ProductID: 0, Description: "",MOUID:0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
        // vm.MaxIndex2 =$filter('max')(vm.SalesQuotationDescription.salesQuotationDesc, 'SalesSection.SNID');
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -39,11 +39,11 @@
 
         vm.addItem = function (SalesSectionID, SalesSectionName) {
             
-            vm.SalesQuotationDescription.salesQuotationDesc.unshift({ SalesSectionID: SalesSectionID,SalesSectionName: SalesSectionName, ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
+            vm.SalesQuotationDescription.salesQuotationDesc.unshift({ SalesSectionID: SalesSectionID,SalesSectionName: SalesSectionName, ProductID: 0, Description: "",MOUID:0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
         }
         vm.PushItem = function (SalesSectionID, SalesSectionName) {
             
-            vm.SalesQuotationDescription.salesQuotationDesc.push({ SalesSectionID: SalesSectionID,  SalesSectionName: SalesSectionName, ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
+            vm.SalesQuotationDescription.salesQuotationDesc.push({ SalesSectionID: SalesSectionID,  SalesSectionName: SalesSectionName, ProductID: 0, Description: "",MOUID:0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
         }
         vm.removeItem = function (item) {
             vm.SalesQuotationDescription.salesQuotationDesc.splice(vm.SalesQuotationDescription.salesQuotationDesc.indexOf(item), 1);
@@ -66,7 +66,13 @@
             item.sopened = !item.sopened;
 
         }
+        vm.dtopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
 
+            vm.dtopened = !vm.dtopened;
+
+        }
         vm.QuotationSubTotal = function () {
             var total=0.00;
             angular.forEach(vm.SalesQuotationDescription.salesQuotationDesc, function (item, key) {
@@ -170,6 +176,14 @@
 
         }
 
+        GetUnitOfMeasures();
+        function GetUnitOfMeasures() {
+            unitOfMeasureResource.query(function (data) {
+                vm.UnitOfMeasures = data;
+
+            });
+        }
+
         GetProductList();
         //Get All Data List
         function GetProductList() {
@@ -205,9 +219,10 @@
         vm.Save = function (isValid) {
             if (isValid) {
                 vm.salesQuotation.ProcesStatusID = 12;
+                vm.salesQuotation.Date = Util.offsetTime(vm.salesQuotation.Date);
                 salesQuotationResource.save(vm.salesQuotation,
                     function (data, responseHeaders) {
-                        GetList();
+                       // GetList();
                         vm.salesQuotation = data;
                         vm.SaveQuotation();
                         toastr.success("Save Successful");
@@ -265,6 +280,7 @@
                         ProductID: value.ProductID,
                         Description: value.Description,
                         Quantity: value.Quantity,
+                        UOMID: value.UOMID,
                         UnitPrice: value.UnitPrice,
                         Taxes: value.Taxes,
                         SalesSectionID: value.SalesSectionID,
@@ -311,7 +327,7 @@
                 
                 vm.salesQuotation = salesQuotation;
 
-                vm.cmbCustomer = { CollaboratorID: vm.salesQuotation.CustomerID }
+                vm.cmbCustomer = vm.salesQuotation.Collaborator; //{ CollaboratorID: vm.salesQuotation.CustomerID }
                 vm.GetSalesQuotationDescription(vm.salesQuotation.SalesQuotationID);
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
@@ -327,6 +343,7 @@
         }
         //Data Update
         vm.Update = function (isValid) {
+            vm.salesQuotation.Date = Util.offsetTime(vm.salesQuotation.Date);
             if (isValid) {
                 salesQuotationResource.update({ 'ID': vm.salesQuotation.SalesQuotationID }, vm.salesQuotation);
                 vm.SaveQuotation();

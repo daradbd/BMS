@@ -73,6 +73,17 @@
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                 Accept Requisition
             </button>
+            <div class="btn-group" ng-show="vm.ActionButton">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-show="vm.AcceptRequisitionButton"><a href="" ng-click="vm.AcceptRequisition()"><span class="glyphicon glyphicon-align-right" aria-hidden="true">Accept Requisition</a></li>
+                    <li ng-show="!vm.AcceptRequisitionButton"><a href="" ng-click="vm.RequestQuotation()">Requiest for Quotation</a></li>
+                    <li ng-show="!vm.AcceptRequisitionButton"><a href="" ng-click="vm.PurchaseOrder(1)">Purchase Order</a></li>
+                </ul>
+            </div>
+
         </div>
     </div>
 

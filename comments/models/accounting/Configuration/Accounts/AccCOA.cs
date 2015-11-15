@@ -24,7 +24,7 @@ namespace BMS.Models.Accounting.Configuration.Accounts
 
         public bool? BalanceType { get; set; }
 
-        public bool? HasChild { get; set; }
+        public bool HasChild { get; set; }
 
         public long? CompanyBranchID { get; set; }
 

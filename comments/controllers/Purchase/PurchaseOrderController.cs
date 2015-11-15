@@ -20,7 +20,7 @@ namespace BMS.Controllers.Purchase
         // GET api/PurchaseOrder
         public IEnumerable<PurchaseOrder> GetPurchaseOrders()
         {
-            return db.PurchaseOrders.Include(r => r.Collaborator).Include(r => r.ProcesStatus).Include(r => r.ProjectSetup).AsEnumerable();
+            return db.PurchaseOrders.Include(r => r.Collaborator).Include(r => r.ProcesStatus).Include(r => r.ProjectSetup).Include(r=>r.PurchaseOrderCategory).AsEnumerable();
         }
 
         // GET api/PurchaseOrder/5

@@ -16,6 +16,8 @@ namespace BMS.Controllers
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
             //object id = Membership.FindUsersByName(Membership.GetUser().UserName.ToString());
+            ViewBag.BgColor = "#006442";
+
             ViewBag.UserName = Membership.GetUser().UserName.ToString().ToUpper();
             return View();
 

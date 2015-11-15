@@ -248,6 +248,8 @@
     <Compile Include="Controllers\Production\BillofMaterialCategoryController.cs" />
     <Compile Include="Controllers\Production\BillofMaterialController.cs" />
     <Compile Include="Controllers\Production\BillofMaterialDescriptionController.cs" />
+    <Compile Include="Controllers\Production\ProductCostingController.cs" />
+    <Compile Include="Controllers\Production\ProductCostingDescriptionController.cs" />
     <Compile Include="Controllers\Production\ProductionOrderCategoryController.cs" />
     <Compile Include="Controllers\Production\ProductionOrderController.cs" />
     <Compile Include="Controllers\Production\ProductionOrderDescriptionController.cs" />
@@ -310,21 +312,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201506101912102_Initial.cs" />
-    <Compile Include="Migrations\201506101912102_Initial.Designer.cs">
-      <DependentUpon>201506101912102_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508211604328_Recreate_bd.cs" />
-    <Compile Include="Migrations\201508211604328_Recreate_bd.Designer.cs">
-      <DependentUpon>201508211604328_Recreate_bd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508221311047_solved1.cs" />
-    <Compile Include="Migrations\201508221311047_solved1.Designer.cs">
-      <DependentUpon>201508221311047_solved1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508230908332_solvequation.cs" />
-    <Compile Include="Migrations\201508230908332_solvequation.Designer.cs">
-      <DependentUpon>201508230908332_solvequation.cs</DependentUpon>
+    <Compile Include="Migrations\201511061536186_Initial.cs" />
+    <Compile Include="Migrations\201511061536186_Initial.Designer.cs">
+      <DependentUpon>201511061536186_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting\Configuration\Accounts\AccCOA.cs" />
@@ -367,6 +357,8 @@
     <Compile Include="Models\Production\BillofMaterial.cs" />
     <Compile Include="Models\Production\BillofMaterialCategory.cs" />
     <Compile Include="Models\Production\BillofMaterialDescription.cs" />
+    <Compile Include="Models\Production\ProductCosting.cs" />
+    <Compile Include="Models\Production\ProductCostingDescription.cs" />
     <Compile Include="Models\Production\ProductionOrder.cs" />
     <Compile Include="Models\Production\ProductionOrderCategory.cs" />
     <Compile Include="Models\Production\ProductionOrderDescription.cs" />
@@ -391,6 +383,7 @@
     <Compile Include="Models\Purchase\RequestForQuotationDescription.cs" />
     <Compile Include="Models\Purchase\RequisitionDelivery.cs" />
     <Compile Include="Models\Purchase\RequisitionDeliveryDescription.cs" />
+    <Compile Include="Models\Resources\UploadFile.cs" />
     <Compile Include="Models\Sales\SalesBillCategory.cs" />
     <Compile Include="Models\Sales\SalesDelivery.cs" />
     <Compile Include="Models\Sales\SalesDeliveryCategory.cs" />
@@ -514,6 +507,8 @@
     <Content Include="app\Production\billofMaterialDescriptionCtrl.js" />
     <Content Include="app\Production\materialRequirementsPlanning.html" />
     <Content Include="app\Production\materialRequirementsPlanningCtrl.js" />
+    <Content Include="app\Production\productCosting.html" />
+    <Content Include="app\Production\productCostingCtrl.js" />
     <Content Include="app\Production\productionOrderCategory.html" />
     <Content Include="app\Production\productionOrderCategoryCtrl.js" />
     <Content Include="app\Production\productionOrderDeliveryCtrl.js" />
@@ -570,6 +565,8 @@
     <Content Include="app\setting\common\currency\currencyCtrl.js" />
     <Content Include="app\setting\common\language\language.html" />
     <Content Include="app\setting\common\language\languageCtrl.js" />
+    <Content Include="app\setting\common\menu\menu.html" />
+    <Content Include="app\setting\common\menu\menuCtrl.js" />
     <Content Include="app\setting\common\template\dirPagination.tpl.html" />
     <Content Include="app\setting\company\companyBranchCategory\companyBranchCategory.html" />
     <Content Include="app\setting\company\companyBranchCategory\companyBranchCategoryCtrl.js" />
@@ -586,9 +583,13 @@
     <Content Include="app\setting\company\companyType\companyTypeCtrl.js" />
     <Content Include="app\TestModule\commentListCtrl.js" />
     <Content Include="app\TestModule\Comments.html" />
+    <Content Include="app\TestModule\TestTemplate.html" />
     <Content Include="common\directive\dirContextMenu.js" />
+    <Content Include="common\directive\dirModal.js" />
     <Content Include="common\directive\dirPagination.js" />
     <Content Include="common\directive\dirPrint.js" />
+    <Content Include="common\directive\dirSplitter.js" />
+    <Content Include="common\directive\dirStpaModal.js" />
     <Content Include="common\directive\dirTreeview.js" />
     <Content Include="common\factory\Excel.js" />
     <Content Include="common\filter\angular-filter.js" />
@@ -642,6 +643,8 @@
     <Content Include="common\services\moneyRequisitionResource.js" />
     <Content Include="common\services\paymentMethodResource.js" />
     <Content Include="common\services\productCategoryResource.js" />
+    <Content Include="common\services\productCostingDescriptionResource.js" />
+    <Content Include="common\services\productCostingResource.js" />
     <Content Include="common\services\productionOrderCategoryResource.js" />
     <Content Include="common\services\productionOrderDescriptionResource.js" />
     <Content Include="common\services\productionOrderResource.js" />
@@ -691,6 +694,7 @@
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\ContextMenu.css" />
+    <Content Include="Content\css\jqxsummer.css" />
     <Content Include="Content\css\printStyle.css" />
     <Content Include="Content\css\responsive.css" />
     <Content Include="Content\css\sidebar.css" />
@@ -717,6 +721,9 @@
     <Content Include="Content\js\angularjs\ui-utils.js" />
     <Content Include="Content\js\jquery\bootstrap.js" />
     <Content Include="Content\js\jquery\jquery.js" />
+    <Content Include="Content\js\jquery\jqxbuttons.js" />
+    <Content Include="Content\js\jquery\jqxcore.js" />
+    <Content Include="Content\js\jquery\jqxsplitter.js" />
     <Content Include="Content\js\jquery\login.js" />
     <Content Include="Content\js\jquery\main.js" />
     <Content Include="Content\js\jquery\metisMenu.js" />
@@ -866,17 +873,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201506101912102_Initial.resx">
-      <DependentUpon>201506101912102_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508211604328_Recreate_bd.resx">
-      <DependentUpon>201508211604328_Recreate_bd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508221311047_solved1.resx">
-      <DependentUpon>201508221311047_solved1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508230908332_solvequation.resx">
-      <DependentUpon>201508230908332_solvequation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511061536186_Initial.resx">
+      <DependentUpon>201511061536186_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

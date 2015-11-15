@@ -10,6 +10,7 @@
                              'angularTreeview',
                              'io.dennis.contextmenu',
                              'angular.filter',
+                             'bgDirectives',
                              "ui.router", ]);
     
     app.factory('Util', function () {
@@ -415,6 +416,15 @@
                         templateUrl: "app/Expenses/employeesExpensesPayment.html",
                         controller: "employeesExpensesPaymentCtrl as vm"
                     })
+
+                     //materialRequirementsPlanning
+                    .state("productCosting", {
+                        url: "/productCosting",
+                        templateUrl: "app/Production/productCosting.html",
+                        controller: "productCostingCtrl as vm"
+                    })
+
+
                      //materialRequirementsPlanning
                     .state("materialRequirementsPlanning", {
                         url: "/materialRequirementsPlanning",

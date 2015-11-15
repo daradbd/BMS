@@ -176,6 +176,7 @@
                                                     <tr>
 
                                                         <th style="display:none;">Product</th>
+                                                        <th>MOU</th>
                                                         <th>Quantity</th>
                                                         <th>Offer Date</th>
                                                         <th>Schedule Date</th>
@@ -187,6 +188,16 @@
                                                                     ng-init="item.cmbProductID={ProductID:item.ProductID}"
                                                                     ng-options="product.ProductName for product in vm.products track by product.ProductID"
                                                                     ng-change="vm.updateItem(item)"></select>
+                                                        </td>
+                                                        <td>
+                                                            <select class="form-control"
+                                                                    id="cmbUnitOfMeasure"
+                                                                    name="cmbUnitOfMeasure"
+                                                                    ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.MOUID}"
+                                                                    ng-model="item.cmbUnitOfMeasure"
+                                                                    ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
+                                                                    ng-change="item.MOUID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+
                                                         </td>
 
                                                         <td><input class="form-control" ng:model="item.POrderQuantity" ng:required ng:validate="number" size="6"></td>

@@ -13,10 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("billofMaterialCtrl", ["billofMaterialDescriptionResource", "salesQuotationDescriptionResource", "productResource", "productionTypeResource", "billofMaterialResource", billofMaterialCtrl]);
-    function billofMaterialCtrl(billofMaterialDescriptionResource,salesQuotationDescriptionResource, productResource, productionTypeResource, billofMaterialResource) {
+        .controller("billofMaterialCtrl", ["productCostingResource","billofMaterialDescriptionResource", "salesQuotationDescriptionResource", "productResource", "productionTypeResource", "billofMaterialResource", billofMaterialCtrl]);
+    function billofMaterialCtrl(productCostingResource,billofMaterialDescriptionResource, salesQuotationDescriptionResource, productResource, productionTypeResource, billofMaterialResource) {
         var vm = this;
         vm.billofMaterials = [];
+        vm.productCosting = {};
        // vm.SalesQuotationDescription = { salesQuotationDesc: [{}] };
         vm.SalesQuotationDescription = { salesQuotationDesc: [] };
 
@@ -56,7 +57,7 @@
             return ((parseFloat(item.RawMaterialUniteRate == null ? 0 : item.RawMaterialUniteRate) + parseFloat(item.OtherCost == null ? 0 : item.OtherCost)) * parseFloat(item.RawMaterialQuantity == null ? 0 : item.RawMaterialQuantity));
 
         }
-        vm.billofMaterialDescription = { billofMaterialDesc: [{ SalesSectionID: item.SalesSectionID, ProductID: 0, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: 0, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false }] };
+        vm.billofMaterialDescription = { billofMaterialDesc: [{ SalesSectionID: 0, ProductID: 0, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: 0, Height: 0, Length: 0, Width: 0, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false }] };
 
         vm.ViewMode = function (activeMode) {
             GetList();
@@ -256,6 +257,7 @@
             if (isValid) {
                 billofMaterialResource.update({ 'ID': vm.billofMaterial.BillofMaterialID }, vm.billofMaterial);
                 vm.SaveBillofMaterialDescription();
+                RequestProductCost(vm.billofMaterial.SalesQuotationID);
                 vm.billofMaterials = null;
                 vm.ViewMode(3);
                 GetList();
@@ -264,6 +266,16 @@
             else {
                 toastr.error("Form is not valid");
             }
+        }
+
+        function RequestProductCost(SalesQuotationID) {
+            vm.productCosting.SalesQuotationID = SalesQuotationID;
+            productCostingResource.save(vm.productCosting,
+                    function (data, responseHeaders) {
+                       // GetList();
+                        vm.productCosting = null;
+                        toastr.success("Save Successful");
+    });
         }
 
         //Data Delete

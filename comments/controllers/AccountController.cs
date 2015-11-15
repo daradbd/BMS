@@ -37,6 +37,7 @@ namespace BMS.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
+                //WebSecurity.ChangePassword(model.UserName, model.Password, "0");
                 //UDF.LoginUserID = WebSecurity.GetUserId(model.UserName);
                 return RedirectToLocal(returnUrl);
             }

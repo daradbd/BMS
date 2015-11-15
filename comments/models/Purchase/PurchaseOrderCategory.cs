@@ -18,6 +18,8 @@
         [StringLength(250)]
         public string PurchaseOrderCategoryName { get; set; }
 
+        public long? COAID { get; set; }
+
         public long? CompanyID { get; set; }
 
         [StringLength(250)]

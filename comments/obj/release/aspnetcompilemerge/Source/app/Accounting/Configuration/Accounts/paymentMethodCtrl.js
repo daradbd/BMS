@@ -13,10 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("paymentMethodCtrl", ["paymentMethodResource", paymentMethodCtrl]);
-    function paymentMethodCtrl(paymentMethodResource) {
+        .controller("paymentMethodCtrl", ["accCOAConfigResource", "paymentMethodResource", paymentMethodCtrl]);
+    function paymentMethodCtrl(accCOAConfigResource,paymentMethodResource) {
         var vm = this;
         vm.paymentMethods = [];
+        vm.accCOAConfigs = [];
 
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -93,7 +94,16 @@
 
         }
 
+        GetaccCOAConfigList();
 
+        //Get All Data List
+        function GetaccCOAConfigList() {
+            accCOAConfigResource.query(function (data) {
+                vm.accCOAConfigs = data;
+               // toastr.success("Data Load Successful", "Form Load");
+
+            });
+        }
         GetList();
 
         //Get All Data List

@@ -96,6 +96,7 @@
         public virtual ProcesStatus ProcesStatus { get; set; }
 
         public virtual ProjectSetup ProjectSetup { get; set; }
+        public virtual PurchaseOrderCategory PurchaseOrderCategory { get; set; }
 
 
     }

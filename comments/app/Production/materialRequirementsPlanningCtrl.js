@@ -32,11 +32,11 @@
         vm.UpdateButton = false;
         vm.DeleteButton = false;
         vm.addItem = function (item) {
-            vm.billofMaterialDescription.billofMaterialDesc.unshift({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: item.Quantity, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false });
+            vm.billofMaterialDescription.billofMaterialDesc.unshift({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: item.Quantity, Height: 0, Length: 0, Width: 0, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false });
         }
         vm.PushItem = function (item) {
 
-            vm.billofMaterialDescription.billofMaterialDesc.push({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: item.Quantity, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false });
+            vm.billofMaterialDescription.billofMaterialDesc.push({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: item.Quantity, Height: 0, Length: 0, Width: 0, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false });
         }
         vm.removeItem = function (item) {
             vm.billofMaterialDescription.billofMaterialDesc.splice(vm.billofMaterialDescription.billofMaterialDesc.indexOf(item), 1);
@@ -56,13 +56,13 @@
             return ((item.RawMaterialUniteRate + item.OtherCost) * item.RawMaterialQuantity);
 
         }
-        vm.billofMaterialDescription = { billofMaterialDesc: [{ SalesSectionID: item.SalesSectionID, ProductID: 0, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: 0, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false }] };
+        vm.billofMaterialDescription = { billofMaterialDesc: [{ SalesSectionID: 0, ProductID: 0, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: 0,Height:0,Length:0,Width:0, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false }] };
 
         vm.ViewMode = function (activeMode) {
-            GetList();
+          //  GetList();
             if (activeMode == 1)//Form View Mode
             {
-                vm.billofMaterial = null;
+               // vm.billofMaterial = null;
 
                 vm.FromView = true;
                 vm.ListView = false;
@@ -209,11 +209,14 @@
                     ProductID: value.ProductID,
                     ProductionTypeID: value.ProductionTypeID,
                     RawMaterialsID: value.RawMaterialsID,
-                    Height: Height,
-                    Length:Length,
-                    Width:Width,
+                    Height: value.Height,
+                    Length: value.Length,
+                    Width: value.Width,
                     RawMaterialQuantity: value.RawMaterialQuantity,
+
+                    MaterialIncludingWastage:value.MaterialIncludingWastage,
                     RawMaterialUniteRate: value.RawMaterialUniteRate,
+                    Wastage:value.Wastage,
                     OtherCost: value.OtherCost,
                     isFactory: value.isFactory,
                     SalesQuotationID: vm.billofMaterial.SalesQuotationID,
@@ -234,6 +237,7 @@
                 vm.billofMaterial = billofMaterial;
                 vm.GetSalesQuotationDescription(vm.billofMaterial.SalesQuotationID);
                 vm.GetBillofMaterialDescription(vm.billofMaterial.BillofMaterialID);
+                vm.CheckDetails();
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
             });

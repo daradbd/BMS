@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseRequisitionCtrl", ["requestForQuotationResource", "purchaseRequisitionDescriptionResource", "productResource", "projectSetupResource", "collaboratorResource", "purchaseRequisitionResource", purchaseRequisitionCtrl]);
-    function purchaseRequisitionCtrl(requestForQuotationResource, purchaseRequisitionDescriptionResource, productResource, projectSetupResource, collaboratorResource, purchaseRequisitionResource) {
+        .controller("purchaseRequisitionCtrl", ["unitOfMeasureResource", "companyBranchResource", "requestForQuotationResource", "purchaseRequisitionDescriptionResource", "productResource", "projectSetupResource", "collaboratorResource", "purchaseRequisitionResource", purchaseRequisitionCtrl]);
+    function purchaseRequisitionCtrl(unitOfMeasureResource, companyBranchResource, requestForQuotationResource, purchaseRequisitionDescriptionResource, productResource, projectSetupResource, collaboratorResource, purchaseRequisitionResource) {
         var vm = this;
         vm.purchaseRequisitions = [];
        // vm.requestForQuotation = [];
@@ -58,6 +58,14 @@
 
         }
 
+
+        vm.dtopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.dtopened = !vm.dtopened;
+
+        }
         vm.ViewMode = function (activeMode) {
             GetList();
             if (activeMode == 1)//Form View Mode
@@ -139,6 +147,25 @@
         vm.PRequisitionDeliver = function (RequisitionID) {
             $rootScope.RequisitionID = RequisitionID;
             $state.go('productReceiveDelivery');
+        }
+
+        GetUnitOfMeasures();
+        function GetUnitOfMeasures() {
+            unitOfMeasureResource.query(function (data) {
+                vm.UnitOfMeasures = data;
+
+            });
+        }
+
+        GetWorkStationList();
+
+        //Get All Data List
+        function GetWorkStationList() {
+            companyBranchResource.query(function (data) {
+                vm.companyBranchs = data;
+                toastr.success("Data Load Successful", "Form Load");
+
+            });
         }
 
         GetEmployeeList();
@@ -239,6 +266,7 @@
                     PurchaseRequisitionID: vm.purchaseRequisition.PurchaseRequisitionID,
                     ProductID: value.ProductID,
                     Description: value.Description,
+                    MOUID: value.MOUID,
                     Quantity: value.Quantity,
                     ScheduleDate: value.ScheduleDate,
                 };
@@ -265,6 +293,7 @@
                 vm.purchaseRequisition = purchaseRequisition;
                 vm.cmbEmployee = { CollaboratorID: vm.purchaseRequisition.EmployeeID };
                 vm.cmbProject = { ProjectID: vm.purchaseRequisition.ProjectID };
+                vm.cmbWorkPlantID = vm.purchaseRequisition.WorkPlant;
                 vm.GetRequisitionDescription(id);
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");

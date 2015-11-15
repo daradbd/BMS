@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("materialRequirementsPlanningCtrl", ["billofMaterialDescriptionResource", "salesQuotationDescriptionResource", "productResource", "productionTypeResource", "billofMaterialResource", materialRequirementsPlanningCtrl]);
-    function materialRequirementsPlanningCtrl(billofMaterialDescriptionResource, salesQuotationDescriptionResource, productResource, productionTypeResource, billofMaterialResource) {
+        .controller("materialRequirementsPlanningCtrl", ["unitOfMeasureResource", "billofMaterialDescriptionResource", "salesQuotationDescriptionResource", "productResource", "productionTypeResource", "billofMaterialResource", materialRequirementsPlanningCtrl]);
+    function materialRequirementsPlanningCtrl(unitOfMeasureResource,billofMaterialDescriptionResource, salesQuotationDescriptionResource, productResource, productionTypeResource, billofMaterialResource) {
         var vm = this;
         vm.billofMaterials = [];
         // vm.SalesQuotationDescription = { salesQuotationDesc: [{}] };
@@ -32,11 +32,11 @@
         vm.UpdateButton = false;
         vm.DeleteButton = false;
         vm.addItem = function (item) {
-            vm.billofMaterialDescription.billofMaterialDesc.unshift({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: item.Quantity, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false });
+            vm.billofMaterialDescription.billofMaterialDesc.unshift({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: item.Quantity, Height: 0, Length: 0, Width: 0, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false });
         }
         vm.PushItem = function (item) {
 
-            vm.billofMaterialDescription.billofMaterialDesc.push({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: item.Quantity, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false });
+            vm.billofMaterialDescription.billofMaterialDesc.push({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: item.Quantity, Height: 0, Length: 0, Width: 0, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false });
         }
         vm.removeItem = function (item) {
             vm.billofMaterialDescription.billofMaterialDesc.splice(vm.billofMaterialDescription.billofMaterialDesc.indexOf(item), 1);
@@ -56,7 +56,7 @@
             return ((item.RawMaterialUniteRate + item.OtherCost) * item.RawMaterialQuantity);
 
         }
-        vm.billofMaterialDescription = { billofMaterialDesc: [{ SalesSectionID: item.SalesSectionID, ProductID: 0, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: 0, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false }] };
+        vm.billofMaterialDescription = { billofMaterialDesc: [{ SalesSectionID: 0, ProductID: 0, ProductionTypeID: 0, RawMaterialsID: 0, ProductQuantity: 0,Height:0,Length:0,Width:0, RawMaterialQuantity: 0, RawMaterialUniteRate: 0, OtherCost: 0, TotalCost: 0, isFactory: false }] };
 
         vm.ViewMode = function (activeMode) {
             GetList();
@@ -119,6 +119,18 @@
         var DispayButton = function () {
 
         }
+
+
+
+        GetUnitOfMeasures();
+        function GetUnitOfMeasures() {
+            unitOfMeasureResource.query(function (data) {
+                vm.UnitOfMeasures = data;
+
+            });
+        }
+
+
         GetProductionTypeList();
 
 
@@ -190,14 +202,21 @@
                     BillofMaterialDescriptionID: value.BillofMaterialDescriptionID,
                     BillofMaterialID: vm.billofMaterial.BillofMaterialID,
                     CustomerID: vm.billofMaterial.CustomerID,
+                    UOMID: value.UOMID,
                     ProductQuantity: value.ProductQuantity,
                     SalesSectionID: value.SalesSectionID,
                     SalesSectionName:value.SalesSectionName,
                     ProductID: value.ProductID,
                     ProductionTypeID: value.ProductionTypeID,
                     RawMaterialsID: value.RawMaterialsID,
+                    Height: value.Height,
+                    Length: value.Length,
+                    Width: value.Width,
                     RawMaterialQuantity: value.RawMaterialQuantity,
+
+                    MaterialIncludingWastage:value.MaterialIncludingWastage,
                     RawMaterialUniteRate: value.RawMaterialUniteRate,
+                    Wastage:value.Wastage,
                     OtherCost: value.OtherCost,
                     isFactory: value.isFactory,
                     SalesQuotationID: vm.billofMaterial.SalesQuotationID,

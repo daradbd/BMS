@@ -13,13 +13,14 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseOrderCtrl", ["maintainPurchaseQuotationDescriptionResource", "projectSetupResource", "purchaseOrderDescriptionResource", "productResource", "collaboratorResource", "$rootScope", "$state", "purchaseOrderResource", purchaseOrderCtrl]);
-    function purchaseOrderCtrl(maintainPurchaseQuotationDescriptionResource, projectSetupResource, purchaseOrderDescriptionResource, productResource, collaboratorResource, $rootScope, $state, purchaseOrderResource)
+        .controller("purchaseOrderCtrl", ["purchaseOrderCategoryResource", "unitOfMeasureResource", "maintainPurchaseQuotationDescriptionResource", "projectSetupResource", "purchaseOrderDescriptionResource", "productResource", "collaboratorResource", "$rootScope", "$state", "purchaseOrderResource", purchaseOrderCtrl]);
+    function purchaseOrderCtrl(purchaseOrderCategoryResource,unitOfMeasureResource, maintainPurchaseQuotationDescriptionResource, projectSetupResource, purchaseOrderDescriptionResource, productResource, collaboratorResource, $rootScope, $state, purchaseOrderResource)
     {
         var vm = this;
         vm.purchaseOrders = [];
         vm.Suppliers = [];
         vm.products = [];
+        vm.purchaseOrderCategorys  = [];
 
         vm.PurchaseOrderDescription = { PurchaseOrderDesc: [{ ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
 
@@ -134,6 +135,24 @@
 
         }
 
+        vm.dtopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.dtopened = !vm.dtopened;
+
+        }
+
+
+        GetpurchaseOrderCategoryList();
+        //Get All Data List
+        function GetpurchaseOrderCategoryList() {
+            purchaseOrderCategoryResource.query(function (data) {
+                vm.purchaseOrderCategorys = data;
+               
+
+            });
+        }
 
         vm.PurchaseReceived = function (PurchaseOrderID)
         {
@@ -147,7 +166,13 @@
             $state.go('purchaseBill');
         }
 
+        GetUnitOfMeasures();
+        function GetUnitOfMeasures() {
+            unitOfMeasureResource.query(function (data) {
+                vm.UnitOfMeasures = data;
 
+            });
+        }
 
         GetProductList();
         //Get All Data List
@@ -222,11 +247,12 @@
                     SupplierID: vm.purchaseOrder.SupplierID,
                     ProductID: value.ProductID,
                     Description: value.Description,
+                    UOMID: value.UOMID,
                     Quantity: value.Quantity,
                     UnitPrice: value.UnitPrice,
-                    Taxes: value.Taxes,
-                    ScheduleDate: value.ScheduleDate,
-                    Discount: value.Discount,
+                   // Taxes: value.Taxes,
+                    //ScheduleDate: value.ScheduleDate,
+                    //Discount: value.Discount,
                 };
                 //alert(angular.toJson(VoucherInfo));
                 //alert(value.COAID);
@@ -250,9 +276,10 @@
             purchaseOrderResource.get({ 'ID': id }, function (purchaseOrder) {
                 vm.purchaseOrder = purchaseOrder;
 
-                vm.cmbSupplier = { CollaboratorID: vm.purchaseOrder.SupplierID };
+                //vm.cmbSupplier = { CollaboratorID: vm.purchaseOrder.SupplierID };
+                vm.cmbSupplier = vm.purchaseOrder.Collaborator;
                 vm.cmbProject = { ProjectID: vm.purchaseOrder.ProjectID };
-
+                vm.cmbPurchaseOrderCategory = { PurchaseOrderCategoryID: vm.purchaseOrder.PurchaseOrderCategoryID };
                 if (vm.purchaseOrder.ProcesStatusID == 10) {
                     vm.GetMaintainPurchaseQuotationDescription(vm.purchaseOrder.MaintainPurchaseQuotationID);
                 }

@@ -33,6 +33,7 @@
         public long? UOMID { get; set; }
 
         public decimal? CostPrice { get; set; }
+        public decimal? FinalMRP { get; set; }
 
         public decimal? UnitPrice { get; set; }
 

@@ -19,10 +19,12 @@
     {
         var vm = this;
         vm.purchaseBills = [];
+        vm.purchaseBill = {};
         vm.purchaseOrder = {};
         vm.purchaseOrders = [];
         vm.Suppliers = [];
         vm.products = [];
+        vm.GrandTotal = 0.00;
 
         vm.PurchaseBillDescription = { PurchaseBillDesc: [{ ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
 
@@ -56,7 +58,7 @@
             GetList();
             if (activeMode == 1)//Form View Mode
             {
-                vm.purchaseBill = null;
+               // vm.purchaseBill = null;
                 vm.FromView = true;
                 vm.ListView = false;
                 vm.DetailsView = false;
@@ -148,6 +150,7 @@
             {
                 total += (item.Quantity * item.UnitPrice);
             });
+            vm.GrandTotal = total;
             return total;
         }
 
@@ -217,6 +220,9 @@
         {
             if (isValid)
             {
+
+                vm.purchaseBill.GrandTotal = vm.GrandTotal;
+               // vm.purchaseBill = vm.cmbSupplier.CollaboratorID;
                 purchaseBillResource.save(vm.purchaseBill,
                     function (data, responseHeaders)
                     {
@@ -298,7 +304,8 @@
                 vm.cmbProject = { ProjectID: vm.purchaseOrder.ProjectID };
                 vm.cmbSupplier = vm.purchaseOrder.Collaborator;
                 vm.cmbProject = vm.purchaseOrder.ProjectSetup;
-                //vm.purchaseBill =
+                vm.purchaseBill.PurchaseRequisationID = vm.purchaseOrder.PurchaseRequisationID,
+                vm.purchaseBill.PurchaseOrderID = vm.purchaseOrder.PurchaseOrderID,
                 //    vm.purchaseBill =
                 //    vm.purchaseBill =
                 //    vm.purchaseBill=

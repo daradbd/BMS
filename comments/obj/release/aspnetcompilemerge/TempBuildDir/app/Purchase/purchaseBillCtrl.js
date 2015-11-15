@@ -14,15 +14,17 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseBillCtrl", ["projectSetupResource", "purchaseOrderDescriptionResource","purchaseBillDescriptionResource", "productResource", "collaboratorResource", "purchaseOrderResource", "purchaseBillResource","$rootScope", purchaseBillCtrl]);
-    function purchaseBillCtrl(projectSetupResource, purchaseOrderDescriptionResource,purchaseBillDescriptionResource, productResource, collaboratorResource, purchaseOrderResource,purchaseBillResource,$rootScope)
+        .controller("purchaseBillCtrl", ["unitOfMeasureResource", "projectSetupResource", "purchaseOrderDescriptionResource", "purchaseBillDescriptionResource", "productResource", "collaboratorResource", "purchaseOrderResource", "purchaseBillResource", "$rootScope", purchaseBillCtrl]);
+    function purchaseBillCtrl(unitOfMeasureResource,projectSetupResource, purchaseOrderDescriptionResource, purchaseBillDescriptionResource, productResource, collaboratorResource, purchaseOrderResource, purchaseBillResource, $rootScope)
     {
         var vm = this;
         vm.purchaseBills = [];
+        vm.purchaseBill = {};
         vm.purchaseOrder = {};
         vm.purchaseOrders = [];
         vm.Suppliers = [];
         vm.products = [];
+        vm.GrandTotal = 0.00;
 
         vm.PurchaseBillDescription = { PurchaseBillDesc: [{ ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
 
@@ -56,7 +58,7 @@
             GetList();
             if (activeMode == 1)//Form View Mode
             {
-                vm.purchaseBill = null;
+               // vm.purchaseBill = null;
                 vm.FromView = true;
                 vm.ListView = false;
                 vm.DetailsView = false;
@@ -115,6 +117,15 @@
             $rootScope.POrderID = 0;
         }
 
+        vm.dtopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.dtopened = !vm.dtopened;
+
+        }
+
+
         vm.updateItem = function (item)
         {
             item.Description = item.cmbProductID.ProductName;
@@ -139,6 +150,7 @@
             {
                 total += (item.Quantity * item.UnitPrice);
             });
+            vm.GrandTotal = total;
             return total;
         }
 
@@ -147,6 +159,13 @@
 
         }
 
+        GetUnitOfMeasures();
+        function GetUnitOfMeasures() {
+            unitOfMeasureResource.query(function (data) {
+                vm.UnitOfMeasures = data;
+
+            });
+        }
         GetProductList();
         //Get All Data List
         function GetProductList()
@@ -201,10 +220,14 @@
         {
             if (isValid)
             {
+
+                vm.purchaseBill.GrandTotal = vm.GrandTotal;
+               // vm.purchaseBill = vm.cmbSupplier.CollaboratorID;
                 purchaseBillResource.save(vm.purchaseBill,
                     function (data, responseHeaders)
                     {
-                        GetList();
+                        vm.SavePurchaseBill();
+                       // GetList();
                         vm.purchaseBill = null;
                         toastr.success("Save Successful");
                     });
@@ -233,11 +256,12 @@
                     SupplierID: vm.purchaseBill.SupplierID,
                     ProductID: value.ProductID,
                     Description: value.Description,
+                    MOUID: value.MOUID,
                     Quantity: value.Quantity,
                     UnitPrice: value.UnitPrice,
-                    Taxes: value.Taxes,
-                    ScheduleDate: value.ScheduleDate,
-                    Discount: value.Discount,
+                   // Taxes: value.Taxes,
+                    //ScheduleDate: value.ScheduleDate,
+                    //Discount: value.Discount,
                 };
                 //alert(angular.toJson(VoucherInfo));
                 //alert(value.COAID);
@@ -261,6 +285,9 @@
             purchaseBillResource.get({ 'ID': id }, function (purchaseBill)
             {
                 vm.purchaseBill = purchaseBill;
+                vm.cmbSupplier = vm.purchaseBill.Collaborator;
+                vm.cmbProject = vm.purchaseBill.ProjectSetup;
+                vm.GetPurchaseBillDescription(vm.purchaseBill.PurchaseBillID);
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
             });
@@ -273,17 +300,31 @@
             purchaseOrderResource.get({ 'ID': id }, function (purchaseOrder)
             {
                 vm.purchaseOrder = purchaseOrder;
-                vm.cmbSupplier = { CollaboratorID: vm.purchaseOrder.SupplierID };
+               // vm.cmbSupplier = { CollaboratorID: vm.purchaseOrder.SupplierID };
                 vm.cmbProject = { ProjectID: vm.purchaseOrder.ProjectID };
-                vm.purchaseBill =
-                    vm.purchaseBill =
-                    vm.purchaseBill =
-                    vm.purchaseBill=
+                vm.cmbSupplier = vm.purchaseOrder.Collaborator;
+                vm.cmbProject = vm.purchaseOrder.ProjectSetup;
+                vm.purchaseBill.PurchaseRequisationID = vm.purchaseOrder.PurchaseRequisationID,
+                vm.purchaseBill.PurchaseOrderID = vm.purchaseOrder.PurchaseOrderID,
+                //    vm.purchaseBill =
+                //    vm.purchaseBill =
+                //    vm.purchaseBill=
                 vm.GetPurchaseOrderDescription(vm.purchaseOrder.PurchaseOrderID);
                 vm.ViewMode(1);
 
 
             });
+        }
+
+
+        vm.GetPurchaseBillDescription = function (purchaseBillID)
+        {
+
+            purchaseBillDescriptionResource.query({ '$filter': 'PurchaseBillID eq ' + purchaseBillID }, function (data)
+            {
+                vm.PurchaseBillDescription.PurchaseBillDesc = data;
+                toastr.success("Data function Load Successful", "Form Load");
+            })
         }
 
         vm.GetPurchaseOrderDescription = function (purchaseOrderID)
@@ -295,12 +336,14 @@
                 toastr.success("Data function Load Successful", "Form Load");
             })
         }
+
         //Data Update
         vm.Update = function (isValid)
         {
             if (isValid)
             {
-                purchaseBillResource.update({ 'ID': vm.purchaseBill.purchaseBillID }, vm.purchaseBill);
+                purchaseBillResource.update({ 'ID': vm.purchaseBill.PurchaseBillID }, vm.purchaseBill);
+                vm.SavePurchaseBill();
                 vm.purchaseBills = null;
                 vm.ViewMode(3);
                 GetList();
@@ -315,7 +358,7 @@
         //Data Delete
         vm.Delete = function ()
         {
-            vm.purchaseBill.$delete({ 'ID': vm.purchaseBill.purchaseBillID });
+            vm.purchaseBill.$delete({ 'ID': vm.purchaseBill.PurchaseBillID });
             toastr.error("Data Delete Successfully!");
             GetList();
             vm.ViewMode(1);

@@ -13,9 +13,10 @@
 
     angular
         .module("companyManagement")
-        .controller("salesReceivePaymentCtrl", ["projectSetupResource", "collaboratorResource", "salesReceivePaymentResource", salesReceivePaymentCtrl]);
-    function salesReceivePaymentCtrl(projectSetupResource, collaboratorResource, salesReceivePaymentResource) {
+        .controller("salesReceivePaymentCtrl", ["paymentMethodResource", "projectSetupResource", "collaboratorResource", "salesReceivePaymentResource", salesReceivePaymentCtrl]);
+    function salesReceivePaymentCtrl(paymentMethodResource,projectSetupResource, collaboratorResource, salesReceivePaymentResource) {
         var vm = this;
+        vm.paymentMethods = [];
         vm.salesReceivePayments = [];
         vm.collaborators = [];
         vm.Projects = [];
@@ -90,6 +91,14 @@
                 vm.DeleteButton = true;
             }
         }
+        vm.dtopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.dtopened = !vm.dtopened;
+
+        }
+
 
         GetCustomerList();
         //Get All Data List
@@ -115,6 +124,15 @@
 
         }
 
+
+        GetPaymentMethod();
+        function GetPaymentMethod() {
+            paymentMethodResource.query(function (data) {
+                vm.paymentMethods = data;
+                toastr.success("Data Load Successful", "Form Load");
+
+            });
+        }
 
         GetList();
 
@@ -149,8 +167,25 @@
         vm.Get = function (id) {
             salesReceivePaymentResource.get({ 'ID': id }, function (salesReceivePayment) {
                 vm.salesReceivePayment = salesReceivePayment;
+                //vm.cmbPaymentMethod = vm.salesReceivePayment.PaymentMethod;
+               // vm.cmbPaymentMethod = { PaymentMethodID: vm.salesReceivePayment.PaymentMethodID };
+                //vm.cmbCustomer = { CollaboratorID: vm.salesReceivePayment.CustomerID };
+                vm.cmbCustomer = vm.salesReceivePayment.Collaborator;
+                vm.cmbProject = { ProjectID: vm.salesReceivePayment.ProjectID };
+                vm.GetPaymentMethod(vm.salesReceivePayment.PaymentMethodID);
+                vm.cmbDepositTo = { COAID: vm.salesReceivePayment.DepositTo };
+
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            });
+        }
+
+        vm.GetPaymentMethod = function (id) {
+            paymentMethodResource.get({ 'ID': id }, function (paymentMethod) {
+                vm.paymentMethod = paymentMethod;
+                vm.cmbPaymentMethod = vm.paymentMethod;
+                //vm.ViewMode(3);
+                //toastr.success("Data Load Successful", "Form Load");
             });
         }
 

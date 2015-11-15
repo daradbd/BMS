@@ -121,6 +121,7 @@
             angular.forEach(vm.SalesBillDescription.salesBillDesc, function (item, key) {
                 total += (item.Quantity * (item.UnitPrice - item.Discount));
             });
+            vm.salesBill.GrandTotal = total;
             return total;
         }
 
@@ -386,7 +387,8 @@
             salesOrderResource.get({ 'ID': id }, function (salesOrder) {
 
                 vm.salesOrder = salesOrder;
-                vm.cmbCustomer = { CollaboratorID: vm.salesBill.CustomerID }
+                //vm.cmbCustomer = { CollaboratorID: vm.salesBill.CustomerID }
+                vm.cmbCustomer = vm.salesOrder.Collaborator;
 
                 vm.cmbSalesBillCategory = { SalesBillCategoryID: vm.salesBill.SalesBillCategoryID };
                 vm.salesBill.CustomerID = vm.salesOrder.CustomerID;

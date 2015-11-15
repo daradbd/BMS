@@ -178,6 +178,21 @@
                                         ng-options="Project.ProjectName for Project in vm.Projects track by Project.ProjectID "
                                         ng-change="vm.purchaseOrder.ProjectID=vm.cmbProject.ProjectID"></select>
                             </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':purchaseOrderForm.cmbPurchaseOrderCategory.$invalid
+                                             && purchaseOrderForm.cmbPurchaseOrderCategory.$dirty}">
+
+                                <label for="cmbPurchaseOrderCategory">
+                                    PurchaseOrderCategory
+                                </label>
+                                <select class="form-control"
+                                        id="cmbPurchaseOrderCategory"
+                                        name="cmbPurchaseOrderCategory"
+                                        ng-model="vm.cmbPurchaseOrderCategory"
+                                        ng-options="purchaseOrderCategory.PurchaseOrderCategoryName for purchaseOrderCategory in vm.purchaseOrderCategorys  track by purchaseOrderCategory.PurchaseOrderCategoryID "
+                                        ng-change="vm.purchaseOrder.PurchaseOrderCategoryID=vm.cmbPurchaseOrderCategory.PurchaseOrderCategoryID"></select>
+                            </div>
+
                         </div>
                     </div>
                     <div class="col-lg-12">
@@ -192,7 +207,7 @@
                                             <th>Product</th>
                                             <th>Description</th>
                                             <!--<th>ScheduleDate</th>-->
-                                            <th>MOU</th>
+                                            <th>UOM</th>
                                             <th>Quantity</th>
                                             <!--<th>Tax</th>
                                             <th>Discount</th>-->
@@ -234,7 +249,7 @@
                                                         ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.MOUID}"
                                                         ng-model="item.cmbUnitOfMeasure"
                                                         ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
-                                                        ng-change="item.MOUID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+                                                        ng-change="item.UOMID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
 
                                             </td>
                                             <td>

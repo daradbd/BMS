@@ -37,6 +37,7 @@ namespace BMS
              "~/Content/css/treeview.css",
             "~/Content/css/animate.css",
             "~/Content/css/responsive.css",
+            "~/Content/css/jqxsummer.css",
             "~/Content/css/printStyle.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
@@ -59,6 +60,11 @@ namespace BMS
                         "~/Content/js/angularjs/angular.js",
                         "~/Content/js/jquery/jquery.js",
                         "~/Content/js/jquery/bootstrap.js",
+
+                        "~/Content/js/jquery/jqxcore.js",
+                        "~/Content/js/jquery/jqxbuttons.js",
+                        "~/Content/js/jquery/jqxsplitter.js",
+
                         "~/Content/js/jquery/metisMenu.js",
                         "~/Content/js/angularjs/angular-resource.js",
                         "~/Content/js/angularjs/ui-utils.js",
@@ -82,6 +88,7 @@ namespace BMS
                        "~/app/setting/common/city/cityCtrl.js",
                        "~/app/setting/common/currency/currencyCtrl.js",
                        "~/app/setting/common/language/languageCtrl.js",
+                       "~/app/setting/common/menu/menuCtrl.js",
                        "~/app/setting/company/companyBranchType/companyBranchTypeCtrl.js",
                        "~/app/setting/company/companyName/company.js",
                        "~/app/setting/company/companyBranch/companyBranchCtrl.js",
@@ -152,6 +159,8 @@ namespace BMS
                        "~/app/Production/productionOrderCtrl.js",
                        "~/app/Production/productionOrderDeliveryCtrl.js",
 
+
+                       "~/app/Production/productCostingCtrl.js",
                        "~/app/Production/materialRequirementsPlanningCtrl.js",
                        "~/app/Production/billofMaterialCategoryCtrl.js",
                        "~/app/Production/billofMaterialCtrl.js",
@@ -168,6 +177,7 @@ namespace BMS
                 "~/common/directive/dirPagination.js",
                 "~/common/directive/dirTreeview.js",
                 "~/common/directive/dirContextMenu.js",
+                "~/common/directive/dirSplitter.js",
                 "~/common/directive/dirPrint.js"));
 
 
@@ -280,6 +290,8 @@ namespace BMS
                         "~/common/services/productionOrderCategoryResource.js",
                         "~/common/services/productionOrderResource.js",
                         "~/common/services/productionOrderDescriptionResource.js",
+                        "~/common/services/productCostingResource.js",
+                        "~/common/services/productCostingDescriptionResource.js",
 
 
                         "~/common/services/purchaseBillPaymentResource.js",

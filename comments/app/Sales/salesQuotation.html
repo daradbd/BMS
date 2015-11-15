@@ -192,7 +192,7 @@
                                                     <th>Quantity</th>
                                                     <th>Tax</th>
                                                     <th>Discount</th>
-                                                    <th>UnitCostPrice</th>
+                                                    <th>MRP</th>
                                                     <th>UnitPrice</th>
                                                     <th>Total</th>
                                                     <th></th>
@@ -234,7 +234,7 @@
                                                         <input class="form-control" ng:model="item.Discount" value="0.00" ng:required ng:validate="number" size="6">
                                                     </td>
                                                     <td>
-                                                        <pre>{{item.CostPrice}}</pre>
+                                                        <pre>{{item.FinalMRP}}</pre>
                                                     </td>
                                                     <td>
                                                         <input class="form-control" ng:model="item.UnitPrice" value="0.00" ng:required ng:validate="number" size="6">

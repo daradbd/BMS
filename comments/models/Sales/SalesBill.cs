@@ -47,6 +47,8 @@
         [StringLength(150)]
         public string ReferenceNo { get; set; }
 
+        public long? VoucherNO { get; set; }
+
         public long? WareHouseID { get; set; }
         [StringLength(550)]
         public string Message { get; set; }

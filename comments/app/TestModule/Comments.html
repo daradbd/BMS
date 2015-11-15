@@ -41,7 +41,8 @@
         <button type="button" class="btn btn-default "><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Update</button>
         <button type="button" class="btn btn-default "><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
         <button type="button" class="btn btn-default "><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
-        <button type="button" class="btn btn-default "><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+        <button type="button" class="btn btn-default " ng-click="vm.open()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+       
     </div>
 </div>
 
@@ -64,6 +65,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <button class="btn btn-default" ng-click="open('lg')">Large modal</button>
                         <tr ng-repeat="comment in vm.comments" class="repeated-item">
                             <td>
                                 <img ng-src="{{comment.GravatarUrl}}" style="width:50px;margin:2px">

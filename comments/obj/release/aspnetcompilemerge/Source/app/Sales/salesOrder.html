@@ -69,6 +69,7 @@
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 Cancel
             </button>
+
             <!--<button type="button" ng-click="vm.ProductionOrder(vm.salesOrder.SalesOrderID)" class="btn btn-success ">
                 <span class="glyphicon glyphicon-align-right" aria-hidden="true"></span>
                 Production Order
@@ -87,6 +88,9 @@
                     <li><a href="" ng-click="vm.SalesBill(vm.salesOrder.SalesOrderID)">Sales Bill</a></li>
                 </ul>
             </div>
+            <button ng-show="vm.ImportToExcelButton" class="btn btn-link" onclick="tableToExcel('testTable', 'W3C Example Table')">
+                <span class="glyphicon glyphicon-share"></span> Export to Excel
+            </button>
         </div>
     </div>
 
@@ -111,8 +115,84 @@
                                         ng-options="Customer.Name for Customer in vm.collaborators track by Customer.CollaboratorID "
                                         ng-change="vm.salesOrder.CustomerID=vm.cmbCustomer.CollaboratorID"></select>
                             </div>
+                            <div class="form-group">
+                                <label for="txtRemarks">
+                                    Address:
+                                </label>
+
+                                {{vm.cmbCustomer.Street}},{{vm.cmbCustomer.POBox}},{{vm.cmbCustomer.City.CityName}},{{vm.cmbCustomer.Country.CountryName}}
+
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':salesOrderForm.txtSubject.$invalid
+                                         && salesOrderForm.txtSubject.$dirty}">
+
+                                <label for="txtTitle">
+                                    Subject:
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtSubject"
+                                       name="txtSubject"
+                                       ng-model="vm.salesOrder.Subject"
+                                       placeholder="Enter Subject"
+                                       required>
+                            </div>
                         </div>
                         <div class="col-lg-6">
+                            <div class="form-group"
+                                 ng-class="{'has-error':salesOrderForm.cmbSalesOrderCategory.$invalid
+                                        && salesOrderForm.cmbSalesOrderCategory.$dirty}">
+
+                                <label for="cmbSalesOrderCategory">
+                                    SalesOrderCategory
+                                </label>
+                                <select class="form-control"
+                                        id="cmbSalesOrderCategory"
+                                        name="cmbSalesOrderCategory"
+                                        ng-model="vm.cmbSalesOrderCategory"
+                                        ng-options="SalesOrderCategory.SalesOrderCategoryName for SalesOrderCategory in vm.salesOrderCategorys track by SalesOrderCategory.SalesOrderCategoryID "
+                                        ng-change="vm.salesOrder.SalesOrderCategoryID=vm.cmbSalesOrderCategory.SalesOrderCategoryID"></select>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':salesOrderForm.txtReferenceNo.$invalid
+                                         && salesOrderForm.txtReferenceNo.$dirty}">
+
+                                <label for="txtReferenceNo">
+                                    Reference No
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtReferenceNo"
+                                       name="txtReferenceNo"
+                                       ng-model="vm.salesOrder.ReferenceNo"
+                                       placeholder="Enter ReferenceNo"
+                                       required>
+                            </div>
+                            <div class="form-group">
+
+                                <label for="txtTranDate">
+                                    Data:
+                                </label>
+                                <div class="form-group">
+                                    <p class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtDate"
+                                               name="txtDate"
+                                               ng-model="vm.salesOrder.Date"
+                                               datepicker-popup="MMM dd, yyyy "
+                                               is-open="vm.dtopened"
+                                               required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default"
+                                                    ng-click="vm.dtopen($event)">
+                                                <i class="glyphicon glyphicon-calendar" />
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
                             <button type="button" class="btn btn-primary"
                                     ng-init="vm.HasProjectSide=false"
                                     ng-model="vm.HasProjectSide"
@@ -141,6 +221,7 @@
                                                     <th>Product</th>
                                                     <th>Description</th>
                                                     <!--<th>ScheduleDate</th>-->
+                                                    <th>UOM</th>
                                                     <th>Quantity</th>
                                                     <th>Tax</th>
                                                     <th>Discount</th>
@@ -175,6 +256,16 @@
                                                             </span>
                                                         </p>
                                                     </td>-->
+                                                    <td>
+                                                        <select class="form-control"
+                                                                id="cmbUnitOfMeasure"
+                                                                name="cmbUnitOfMeasure"
+                                                                ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.UOMID}"
+                                                                ng-model="item.cmbUnitOfMeasure"
+                                                                ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
+                                                                ng-change="item.UOMID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+
+                                                    </td>
                                                     <td>
                                                         <input class="form-control" ng:model="item.Quantity" value="0" ng:required ng:validate="number" size="6">
                                                     </td>
@@ -459,197 +550,305 @@
                                     </tabset>
                                 </div>
                             </tab>
+                            <tab heading="Message">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtMessage">
+                                            Dear Sir,
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtMessage"
+                                                  name="txtMessage"
+                                                  ng-model="vm.salesOrder.Message"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab heading="Terms & Condition">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtTerms">
+                                            Terms
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTerms"
+                                                  name="txtTerms"
+                                                  ng-model="vm.salesOrder.Terms"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtTermsOfPayment">
+                                            Terms of Payment
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTermsOfPayment"
+                                                  name="txtTermsOfPayment"
+                                                  ng-model="vm.salesOrder.TermsOfPayment"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
                         </tabset>
                     </div>
                 </div>
 
                 <div class="view-form" ng-show="vm.DetailsView">
-                    <div class="col-lg-12">
-                        <div class="col-lg-6 animated fadeInRight">
-                            <div class="form-group">
+                    <table id="testTable" width="642">
+                        <tbody>
+                            <tr>
+                                <td colspan="4" width="693">Dated &nbsp;&nbsp; :{{vm.salesOrder.Date}}</td>
+                                <td width="69">&nbsp;</td>
+                                <td width="80">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" width="693">Reference Quotation&nbsp;&nbsp; :{{vm.salesOrder.SalesOrderCode}} </td>
+                                <td width="69">&nbsp;</td>
+                                <td width="80">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>To</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">{{vm.salesOrder.Collaborator.Name}}</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">German House</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Road 90, House 10/C, Gulshan 2</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Dhaka 1212 / Bangladesh</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">SUBJECT :&nbsp; {{vm.salesOrder.Subject}}</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Project Address : Rajshahi City&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Dear Sir.</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" width="842">{{vm.salesOrder.Message}}</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr style="padding:5px;">
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black;">SL</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">DESCRIPTION</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">UNIT</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">QTY&nbsp;</tdstyle>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">RATE</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black;">AMOUNT</td>
+                            </tr>
 
-                                <label for="cmbCollaborator">
-                                    Customer
-                                </label>
-                                <pre>{{vm.salesOrder.Collaborator.Name}}</pre>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
+                            <tr>
+                        <tbody ng:repeat="(key, value) in vm.SalesOrderDescription.salesOrderDesc | groupBy:'SalesSectionID'">
 
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <tabset>
-                            <tab heading="Product-Info" active="true">
-                                <div class="col-lg-12">
-                                    <div class=" panel panel-primary" ng:repeat="(key, value) in vm.SalesOrderDescription.salesOrderDesc | groupBy:'SalesSectionID'">
-                                        <div class="panel-heading">
-                                            <button type="button" ng-click="vm.PushItem((vm.MaxIndex=(vm.SalesOrderDescription.salesOrderDesc | max: 'SalesSectionID').SalesSectionID)+1,'')" class="btn btn-default">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                            </button>
-                                            <pre>{{value[0].SalesSectionName}}</pre>
-                                        </div>
-                                        <div class="panel-body">
-                                            <table class="table table-hover">
-                                                <tr>
-                                                    <th>SL</th>
-                                                    <th>Description</th>
-                                                    <!--<th>ScheduleDate</th>-->
-                                                    <th>Quantity</th>
-                                                    <th>Tax</th>
-                                                    <th>Discount</th>
-                                                    <th>UnitPrice</th>
-                                                    <th>Total</th>
-                                                    <th></th>
-                                                </tr>
-                                                <tr ng:repeat="item in value" class="animated fadeInRight">
-                                                    <td style="vertical-align:middle">#{{$index+1}}</td>
-                                                    <td>
-                                                        <b>{{item.Product.ProductName}} :</b>
-                                                        <p>{{item.Description}}</p>
-                                                    </td>
-                                                    <!--<td>
-            <pre>{{item.ScheduleDate}}</pre>
-        </td>-->
-                                                    <td style="vertical-align:middle">
-                                                        {{item.Quantity}}
-                                                    </td>
-                                                    <td style="vertical-align:middle">
-                                                        {{ item.Taxes}}
-                                                    </td>
-                                                    <td style="vertical-align:middle">
-                                                        {{item.Discount}}
-                                                    </td>
-                                                    <td style="vertical-align:middle">
-                                                        {{item.UnitPrice}}
-                                                    </td>
-                                                    <td style="vertical-align:middle">
-                                                        {{item.UnitPrice*item.Quantity}}
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-
-
-                                                    <td colspan="7" class="text-right">{{value[0].SalesSectionName}} Total Amount:{{vm.SectionSubTotal(key)|currency}}</td>
-
-                                                </tr>
-                                            </table>
-                                            </div>
-                                        </div>
-                                    <div class="text-right">
-                                        Total Amount: {{vm.QuotationSubTotal()}}
-                                    </div>
-                                        </div>
-</tab>
-                            <tab heading="Project-Info">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-
-                                        <label for="txtProjectCode">
-                                            ProjectCode
-                                        </label>
-                                        <input type="text"
-                                               class="form-control"
-                                               id="txtProjectCode"
-                                               name="txtProjectCode"
-                                               ng-model="vm.projectSetup.ProjectCode"
-                                               placeholder="Enter ProjectCode"
-                                               required>
-                                    </div>
-                                    <div class="form-group"
-                                         ng-class="{'has-error':salesOrderForm.txtProjectName.$invalid
-                                         && salesOrderForm.txtProjectName.$dirty}">
-
-                                        <label for="txtProjectName">
-                                            ProjectName
-                                        </label>
-                                        <input type="text"
-                                               class="form-control"
-                                               id="txtProjectName"
-                                               name="txtProjectName"
-                                               ng-model="vm.projectSetup.ProjectName"
-                                               placeholder="Enter ProjectName"
-                                               required>
-                                    </div>
-                                    <div class="form-group"
-                                         ng-class="{'has-error':salesOrderForm.cmbProjectManager.$invalid
-                && cityForm.cmbProjectManager.$dirty}">
-
-                                        <label for="cmbProjectManager">
-                                            Project Manager
-                                        </label>
-                                        <select class="form-control"
-                                                id="cmbProjectManager"
-                                                name="cmbProjectManager"
-                                                ng-model="vm.cmbProjectManager"
-                                                ng-options="ProjectManager.Name for ProjectManager in vm.ProjectManagers track by ProjectManager.CollaboratorID "
-                                                ng-change="vm.projectCode.ProjectManagerID=vm.cmbProjectManager.CollaboratorID"></select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-
-                                        <label for="txtStartDate">
-                                            Start Date
-                                        </label>
-                                        <div class="form-group">
-                                            <p class="input-group">
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="txtStartDate"
-                                                       name="txtStartDate"
-                                                       ng-model="vm.projectSetup.StartDate"
-                                                       datepicker-popup="MMM dd, yyyy "
-                                                       is-open="vm.sopened"
-                                                       required>
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-default"
-                                                            ng-click="vm.sopen($event)">
-                                                        <i class="glyphicon glyphicon-calendar" />
-                                                    </button>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-
-                                        <label for="txtEndDate">
-                                            End Date
-                                        </label>
-                                        <div class="form-group">
-                                            <p class="input-group">
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="txtEndDate"
-                                                       name="txtEndDate"
-                                                       ng-model="vm.projectSetup.EndDate"
-                                                       datepicker-popup="MMM dd, yyyy "
-                                                       is-open="vm.eopened"
-                                                       required>
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-default"
-                                                            ng-click="vm.eopen($event)">
-                                                        <i class="glyphicon glyphicon-calendar" />
-                                                    </button>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="txtRemarks">
-                                            Remarks
-                                        </label>
-                                        <textarea class="form-control"
-                                                  id="txtRemarks"
-                                                  name="txtRemarks"
-                                                  ng-model="vm.projectSetup.Remarks"
-                                                  rows=" 3"></textarea>
-                                    </div>
-                                </div>
-                            </tab>
-                            </tabset>
-                    </div>  
+                            <tr>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black;" width="555">{{value[0].SalesSectionName}}</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black;">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                            </tr>
+                            <tr>
+                            <tr ng:repeat="item in value">
+                                <td width="25px" style="vertical-align: middle; border: 0.5px solid black;">#{{$index+1}}</td>
+                                <td style="width: 550px; border: 0.5px solid black;">
+                                    <b>{{item.Product.ProductName}} :</b>
+                                    {{item.Description}}
+                                </td>
+                                <td style="vertical-align: middle; border: 0.5px solid black;">
+                                    {{item.UOM.UnitOfMeasureName}}
+                                </td>
+                                <td style="vertical-align: middle; width: 50px; border: 0.5px solid black;">
+                                    {{item.Quantity}}
+                                </td>
+                                <td style="vertical-align: middle; width: 50px; border: 0.5px solid black;">
+                                    {{item.UnitPrice}}
+                                </td>
+                                <td style="vertical-align: middle; background-color: #A9A9A9; width: 75px; border: 0.5px solid black;">
+                                    {{vm.SubTotal(item)}}
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 0.5px solid black;">&nbsp;</td>
+                                <td style="border: 0.5px solid black;" width="400px">&nbsp;</tdstyle>
+                                <td style="border: 0.5px solid black;" colspan="3" width="172">{{value[0].SalesSectionName}}  TOTAL:</td>
+                                <td style="border: 0.5px solid black;">{{vm.SectionSubTotal(key)|currency}}</tdstyle>
+                            </tr>
+                        </tbody>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="4">In word: Nineteen Lac Seventy Two Thousand Two Hundred &amp; Eighty Four&nbsp; Only</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Terms</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{vm.salesOrder.Terms}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Terms Of Payment</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{vm.salesOrder.TermsOfPayment}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">EXECLUDED VAT &amp; TAX</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Thanking You</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Very Truly Yours,&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">For ARTISTIC&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Mohd. Nasir Uddin</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">CEO</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">ARTISTIC</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Cell : 01727421628</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">E-Mail : nasir@artistic-interior.net</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="col-lg-12 list-form " ng-show="vm.ListView">

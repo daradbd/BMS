@@ -13,22 +13,23 @@
 
     angular
         .module("companyManagement")
-        .controller("salesOrderCtrl", ["currencyResource", "languageResource", "countryResource", "cityResource", "projectSideResource", "projectSetupResource", "salesQuotationDescriptionResource", "$rootScope", "$state", "salesOrderDescriptionResource", "productResource", "collaboratorResource", "salesOrderResource", salesOrderCtrl]);
-    function salesOrderCtrl(currencyResource, languageResource, countryResource, cityResource, projectSideResource, projectSetupResource, salesQuotationDescriptionResource, $rootScope, $state, salesOrderDescriptionResource, productResource, collaboratorResource, salesOrderResource) {
+        .controller("salesOrderCtrl", ["salesOrderCategoryResource", "unitOfMeasureResource", "Util", "currencyResource", "languageResource", "countryResource", "cityResource", "projectSideResource", "projectSetupResource", "salesQuotationDescriptionResource", "$rootScope", "$state", "salesOrderDescriptionResource", "productResource", "collaboratorResource", "salesOrderResource", salesOrderCtrl]);
+    function salesOrderCtrl(salesOrderCategoryResource,unitOfMeasureResource, Util, currencyResource, languageResource, countryResource, cityResource, projectSideResource, projectSetupResource, salesQuotationDescriptionResource, $rootScope, $state, salesOrderDescriptionResource, productResource, collaboratorResource, salesOrderResource) {
         var vm = this;
-        vm.salesOrders = []
+        vm.salesOrders = [];
+        vm.salesOrderCategorys = [];
         vm.collaborators = [];
         vm.products = [];
         vm.companyBranch = [];
        
 
-        vm.SalesOrderDescription = { salesOrderDesc: [{ SalesSectionID: 1, SalesSectionName: '', ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
+        vm.SalesOrderDescription = { salesOrderDesc: [{ SalesSectionID: 1, SalesSectionName: '', ProductID: 0, Description: "",MOUID:0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
 
      
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -37,6 +38,7 @@
         vm.UpdateButton = false;
         vm.DeleteButton = false;
         vm.ActionButton = false;
+        vm.ImportToExcelButton = false;
 
         vm.selectCity = function (countryID) {
 
@@ -48,10 +50,10 @@
         }
 
         vm.addItem = function (SalesSectionID, SalesSectionName) {
-            vm.SalesOrderDescription.salesOrderDesc.unshift({ SalesSectionID: SalesSectionID, SalesSectionName: SalesSectionName, ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
+            vm.SalesOrderDescription.salesOrderDesc.unshift({ SalesSectionID: SalesSectionID, SalesSectionName: SalesSectionName, ProductID: 0, Description: "",MOUID:0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
         }
         vm.PushItem = function (SalesSectionID, SalesSectionName) {
-            vm.SalesOrderDescription.salesOrderDesc.push({ SalesSectionID: SalesSectionID, SalesSectionName: SalesSectionName, ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
+            vm.SalesOrderDescription.salesOrderDesc.push({ SalesSectionID: SalesSectionID, SalesSectionName: SalesSectionName, ProductID: 0, Description: "",MOUID:0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 });
         }
         vm.removeItem = function (item) {
             vm.SalesOrderDescription.salesOrderDesc.splice(vm.SalesOrderDescription.salesOrderDesc.indexOf(item), 1);
@@ -86,6 +88,13 @@
 
         }
 
+        vm.dtopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.dtopened = !vm.dtopened;
+
+        }
 
         vm.QuotationSubTotal = function () {
             var total = 0.00;
@@ -115,6 +124,24 @@
             });
 
         }
+
+        GetUnitOfMeasures();
+        function GetUnitOfMeasures() {
+            unitOfMeasureResource.query(function (data) {
+                vm.UnitOfMeasures = data;
+
+            });
+        }
+
+
+        GetSalesOrderCateagorys();
+        function GetSalesOrderCateagorys() {
+            salesOrderCategoryResource.query(function (data) {
+                vm.salesOrderCategorys = data;
+
+            });
+        }
+
 
         GetLanguage();
         function GetLanguage() {
@@ -174,12 +201,13 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.ImportToExcelButton = false;
             }
             if (activeMode == 2) //List View Mode
             {
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = false;
 
 
@@ -187,13 +215,14 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.ImportToExcelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -202,12 +231,13 @@
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
                 vm.ActionButton = true;
+                vm.ImportToExcelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
 
@@ -216,6 +246,7 @@
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
                 vm.ActionButton = true;
+                vm.ImportToExcelButton = false;
             }
         }
 
@@ -282,6 +313,7 @@
                
                 vm.salesOrder.ProjectID = vm.projectSetup.ProjectID;
                 vm.salesOrder.ProcesStatusID = 15;
+                vm.salesOrder.Date = Util.offsetTime(vm.salesOrder.Date);
                 salesOrderResource.save(vm.salesOrder,
                     function (data, responseHeaders) {
 
@@ -316,6 +348,7 @@
                     ProductID: value.ProductID,
                     Description: value.Description,
                     Quantity: value.Quantity,
+                    UOMID: value.UOMID,
                     UnitPrice: value.UnitPrice,
                     Taxes: value.Taxes,
                     //ScheduleDate: value.ScheduleDate,
@@ -386,9 +419,10 @@
         vm.Get = function (id) {
             salesOrderResource.get({ 'ID': id }, function (salesOrder) {
                 vm.salesOrder = salesOrder;
+                vm.cmbSalesOrderCategory = { SalesOrderCategoryID: vm.salesOrder.SalesOrderCategoryID };
                 vm.GetProjectSetup(vm.salesOrder.ProjectID);
-
-                vm.cmbCustomer = { CollaboratorID: vm.salesOrder.CustomerID }
+                vm.cmbCustomer = vm.salesOrder.Collaborator;
+               // vm.cmbCustomer = { CollaboratorID: vm.salesOrder.CustomerID }
 
                 if (vm.salesOrder.ProcesStatusID == 14) {
                     vm.GetSalesQuotationDescription(vm.salesOrder.SalesQuotationID);

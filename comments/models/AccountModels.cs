@@ -222,6 +222,10 @@ namespace BMS.Models
 
         public DbSet<ProductionOrderCategory> ProductionOrderCategories { get; set; }
 
+        public DbSet<ProductCostingDescription> ProductCostingDescriptions { get; set; }
+
+        public DbSet<ProductCosting> ProductCostings { get; set; }
+
     }
 
     [Table("UserProfile")]

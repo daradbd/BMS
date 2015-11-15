@@ -13,15 +13,23 @@
 
     angular
         .module("companyManagement")
-        .controller("userAuthenticationCtrl", ["userAuthorizeResource", "$window", "$location", userAuthenticationCtrl]);
-    function userAuthenticationCtrl(userAuthorizeResource,$window, $location) {
+        .controller("userAuthenticationCtrl", ["userAuthorizeResource",  "$window", "$uibModal","$location", userAuthenticationCtrl]);
+    function userAuthenticationCtrl(userAuthorizeResource,  $window, $uibModal,$location) {
         var vm = this;
         //$window.location.href = "/Account/Login/";
        // checkLogin();
         vm.userAuthentications = [];
         vm.CompanyName = "Artistic";
         vm.UserName = "Darad";
-        
+        vm.ShowMenu = function () {
+
+            $uibModal.open({
+                templateUrl: "app/setting/common/menu/menu.html",
+                controller: "menuCtrl as vm"
+               
+            });
+        }
+
         function checkLogin() {
             // $window.location.href = "/Account/Login/";
             // $location.absUrl() = 'http://www.google.com';

@@ -94,6 +94,21 @@
                                    required>
                         </div>
                         <div class="form-group"
+                             ng-class="{'has-error':supplierTypeForm.txtSupplierTypeShortName.$invalid
+                                                                 && supplierTypeForm.txtSupplierTypeShortName.$dirty}">
+
+                            <label for="txtSupplierTypeCode">
+                                SupplierTypeShortName
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtSupplierTypeShortName"
+                                   name="txtSupplierTypeShortName"
+                                   ng-model="vm.supplierType.SupplierTypeShortName"
+                                   placeholder="Enter SupplierTypeShortName"
+                                   required>
+                        </div>
+                        <div class="form-group"
                              ng-class="{'has-error':supplierTypeForm.txtSupplierTypeName.$invalid
                                          && supplierTypeForm.txtSupplierTypeName.$dirty}">
 
@@ -132,6 +147,13 @@
                                 SupplierTypeCode
                             </label>
                             <pre>{{vm.supplierType.SupplierTypeCode}}</pre>
+                        </div>
+                        <div class="form-group">
+
+                            <label for="txtSupplierTypeShortName">
+                                SupplierTypeShortName
+                            </label>
+                            <pre>{{vm.supplierType.SupplierTypeShortName}}</pre>
                         </div>
                         <div class="form-group">
 

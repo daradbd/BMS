@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("requestForQuotationCtrl", ["maintainPurchaseQuotationResource","projectSetupResource", "purchaseRequisitionDescriptionResource", "requestForQuotationDescriptionResource", "productResource", "collaboratorResource", "requestForQuotationResource", requestForQuotationCtrl]);
-    function requestForQuotationCtrl(maintainPurchaseQuotationResource,projectSetupResource, purchaseRequisitionDescriptionResource, requestForQuotationDescriptionResource, productResource, collaboratorResource, requestForQuotationResource) {
+        .controller("requestForQuotationCtrl", ["maintainPurchaseQuotationResource", "projectSetupResource", "purchaseRequisitionDescriptionResource", "requestForQuotationDescriptionResource", "productResource", "collaboratorResource", "$rootScope", "$state", "requestForQuotationResource", requestForQuotationCtrl]);
+    function requestForQuotationCtrl(maintainPurchaseQuotationResource,projectSetupResource, purchaseRequisitionDescriptionResource, requestForQuotationDescriptionResource, productResource, collaboratorResource, $rootScope,$state, requestForQuotationResource) {
         var vm = this;
         vm.requestForQuotations = [];
        // vm.maintainPurchaseQuotation = [];
@@ -37,6 +37,7 @@
         vm.UpdateButton = false;
         vm.DeleteButton = false;
         vm.AcceptRequisitionButton = false;
+        vm.ActionButton = false;
 
         vm.addItem = function () {
             vm.requestForQuotationDescription.requestForQuotationDesc.unshift({ ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1 });
@@ -74,11 +75,13 @@
                 vm.DetailsView = false;
                 vm.EditView = true;
 
+
                 vm.SaveButton = true;
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
                 vm.AcceptRequisitionButton = false;
+                vm.ActionButton = false;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -108,6 +111,7 @@
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
                 vm.AcceptRequisitionButton = (vm.requestForQuotation.ProcesStatusID == 4 ? true : false);
+                vm.ActionButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -121,8 +125,14 @@
                 vm.EditButton = false;
                 vm.UpdateButton = (vm.requestForQuotation.ProcesStatusID == 4 ? false : true);
                 vm.DeleteButton = true;
-                vm.AcceptRequisitionButton=(vm.requestForQuotation.ProcesStatusID == 4 ? true : false);
+                vm.AcceptRequisitionButton = (vm.requestForQuotation.ProcesStatusID == 4 ? true : false);
+                vm.ActionButton = false;
             }
+        }
+
+        vm.PurchaseOrder = function (OrderID) {
+            $rootScope.POrderID = OrderID;
+            $state.go('purchaseOrder');
         }
 
         var DispayButton = function () {

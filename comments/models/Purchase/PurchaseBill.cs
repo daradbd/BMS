@@ -44,6 +44,8 @@
         [StringLength(50)]
         public string ReferenceNo { get; set; }
 
+        public long? VoucherNO { get; set; }
+
         public long? WareHouseID { get; set; }
 
         [StringLength(550)]

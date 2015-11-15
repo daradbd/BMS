@@ -18,7 +18,7 @@
         var vm = this;
         vm.voucherLists = [];
         vm.voucher = { voucherL: [{ COAID: 0, DrCr: true, Amount: 0.0 }] };
-
+        vm.TotalDebit=0;
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -193,14 +193,21 @@
         }
 
         //Get Single Record
-        vm.Get = function (id) {
-            voucherListResource.get({ 'ID': id }, function (voucherList) {
-                vm.voucherList = voucherList;
+        //vm.Get = function (id) {
+        //    voucherListResource.get({ 'ID': id }, function (voucherList) {
+        //        vm.voucherList = voucherList;
+        //        vm.ViewMode(3);
+        //        toastr.success("Data Load Successful", "Form Load");
+        //    });
+        //}
+        vm.Get = function (VoucherNo) {
+            voucherListResource.query({ '$filter': 'VoucherNo eq ' + VoucherNo }, function (data) {
+                vm.voucherList = data[0];
+                vm.voucher.voucherL = data;
                 vm.ViewMode(3);
-                toastr.success("Data Load Successful", "Form Load");
-            });
-        }
 
+        });
+       }
 
         //Data Update
         vm.Update = function (isValid) {

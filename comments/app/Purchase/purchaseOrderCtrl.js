@@ -13,13 +13,14 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseOrderCtrl", ["unitOfMeasureResource", "maintainPurchaseQuotationDescriptionResource", "projectSetupResource", "purchaseOrderDescriptionResource", "productResource", "collaboratorResource", "$rootScope", "$state", "purchaseOrderResource", purchaseOrderCtrl]);
-    function purchaseOrderCtrl(unitOfMeasureResource, maintainPurchaseQuotationDescriptionResource, projectSetupResource, purchaseOrderDescriptionResource, productResource, collaboratorResource, $rootScope, $state, purchaseOrderResource)
+        .controller("purchaseOrderCtrl", ["purchaseOrderCategoryResource", "unitOfMeasureResource", "maintainPurchaseQuotationDescriptionResource", "projectSetupResource", "purchaseOrderDescriptionResource", "productResource", "collaboratorResource", "$rootScope", "$state", "purchaseOrderResource", purchaseOrderCtrl]);
+    function purchaseOrderCtrl(purchaseOrderCategoryResource,unitOfMeasureResource, maintainPurchaseQuotationDescriptionResource, projectSetupResource, purchaseOrderDescriptionResource, productResource, collaboratorResource, $rootScope, $state, purchaseOrderResource)
     {
         var vm = this;
         vm.purchaseOrders = [];
         vm.Suppliers = [];
         vm.products = [];
+        vm.purchaseOrderCategorys  = [];
 
         vm.PurchaseOrderDescription = { PurchaseOrderDesc: [{ ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
 
@@ -143,6 +144,16 @@
         }
 
 
+        GetpurchaseOrderCategoryList();
+        //Get All Data List
+        function GetpurchaseOrderCategoryList() {
+            purchaseOrderCategoryResource.query(function (data) {
+                vm.purchaseOrderCategorys = data;
+               
+
+            });
+        }
+
         vm.PurchaseReceived = function (PurchaseOrderID)
         {
             $rootScope.POrderID = PurchaseOrderID;
@@ -236,7 +247,7 @@
                     SupplierID: vm.purchaseOrder.SupplierID,
                     ProductID: value.ProductID,
                     Description: value.Description,
-                    MOUID: value.MOUID,
+                    UOMID: value.UOMID,
                     Quantity: value.Quantity,
                     UnitPrice: value.UnitPrice,
                    // Taxes: value.Taxes,
@@ -268,7 +279,7 @@
                 //vm.cmbSupplier = { CollaboratorID: vm.purchaseOrder.SupplierID };
                 vm.cmbSupplier = vm.purchaseOrder.Collaborator;
                 vm.cmbProject = { ProjectID: vm.purchaseOrder.ProjectID };
-
+                vm.cmbPurchaseOrderCategory = { PurchaseOrderCategoryID: vm.purchaseOrder.PurchaseOrderCategoryID };
                 if (vm.purchaseOrder.ProcesStatusID == 10) {
                     vm.GetMaintainPurchaseQuotationDescription(vm.purchaseOrder.MaintainPurchaseQuotationID);
                 }

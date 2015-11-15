@@ -97,6 +97,18 @@
                                         ng-options="Employee.Name for Employee in vm.Employees track by Employee.CollaboratorID "
                                         ng-change="vm.purchaseRequisition.EmployeeID=vm.cmbEmployee.CollaboratorID"></select>
                             </div>
+                            <div class="form-group">
+
+                                <label for="cmbWorkPlantID">
+                                    Work Station
+                                </label>
+                                <select class="form-control"
+                                        id="cmbWorkPlantID"
+                                        name="cmbWorkPlantID"
+                                        ng-model="vm.cmbWorkPlantID"
+                                        ng-options="WorkStation.CompanyBranchName for WorkStation in vm.companyBranchs track by WorkStation.CompanyBranchID"
+                                        ng-change="vm.purchaseRequisition.WorkPlantID=vm.cmbWorkPlantID.CompanyBranchID"></select>
+                            </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group"
@@ -113,6 +125,30 @@
                                         ng-options="Project.ProjectName for Project in vm.Projects track by Project.ProjectID "
                                         ng-change="vm.purchaseRequisition.ProjectID=vm.cmbProject.ProjectID"></select>
                             </div>
+                            <div class="form-group">
+
+                                <label for="txtTranDate">
+                                    Data:
+                                </label>
+                                <div class="form-group">
+                                    <p class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtDate"
+                                               name="txtDate"
+                                               ng-model="vm.purchaseRequisition.Date"
+                                               datepicker-popup="MMM dd, yyyy "
+                                               is-open="vm.dtopened"
+                                               required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default"
+                                                    ng-click="vm.dtopen($event)">
+                                                <i class="glyphicon glyphicon-calendar" />
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-12">
@@ -127,6 +163,7 @@
                                             <th>Product</th>
                                             <th>Description</th>
                                             <th>ScheduleDate</th>
+                                            <th>UOM</th>
                                             <th>Quantity</th>
                                             <th></th>
                                         </tr>
@@ -156,6 +193,16 @@
                                                         </button>
                                                     </span>
                                                 </p>
+                                            </td>
+                                            <td>
+                                                <select class="form-control"
+                                                        id="cmbUnitOfMeasure"
+                                                        name="cmbUnitOfMeasure"
+                                                        ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.MOUID}"
+                                                        ng-model="item.cmbUnitOfMeasure"
+                                                        ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
+                                                        ng-change="item.MOUID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+
                                             </td>
                                             <td>
                                                 <input class="form-control" ng:model="item.Quantity" value="0" ng:required ng:validate="number" size="6">
@@ -195,6 +242,12 @@
                                 </label>
                                 <pre>{{vm.purchaseRequisition.Collaborator.Name}}</pre>
                             </div>
+                            <div class="form-group">
+                                <label for=" inputEmployee">
+                                    Work Station
+                                </label>
+                                <pre>{{vm.cmbWorkPlantID.CompanyBranchName}}</pre>
+                            </div>
 
                         </div>
                         <div class="col-lg-6">
@@ -203,6 +256,15 @@
                                     Project Name
                                 </label>
                                 <pre>{{vm.purchaseRequisition.ProjectSetup.ProjectName}}</pre>
+                            </div>
+                            <div class="form-group">
+
+                                <label for="txtTranDate">
+                                    Data:
+                                </label>
+                                <div class="form-group">
+                                    <pre>{{vm.purchaseRequisition.Date|date:'MMM dd, yyyy'}}</pre>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -215,6 +277,7 @@
                                             <th>Product</th>
                                             <th>Description</th>
                                             <th>ScheduleDate</th>
+                                            <th>UOM</th>
                                             <th>Quantity</th>
                                             <th></th>
                                         </tr>
@@ -230,6 +293,9 @@
 
                                                 {{items.ScheduleDate |date:"dd/MM/yyyy"}}
 
+                                            </td>
+                                            <td>
+                                                {{items.UOM.UnitOfMeasureName}}
                                             </td>
                                             <td>
                                                 {{items.Quantity}}

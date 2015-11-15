@@ -189,6 +189,7 @@
                 vm.cmbcountrys = { CountryID: vm.collaborator.CountryID };
                 vm.cmbCitys = { CityID: vm.collaborator.CityID };
                 vm.cmbSupplierTypes = { SupplierTypeID:vm.collaborator.SupplierTypeID };
+               // vm.cmbSupplierTypes=
 
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");

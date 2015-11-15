@@ -13,14 +13,14 @@
 
     angular
         .module("companyManagement")
-        .controller("productionOrderCtrl", ["projectSetupResource","productionOrderDescriptionResource", "salesOrderResource", "salesOrderDescriptionResource", "$rootScope", "companyBranchResource", "productionOrderResource", productionOrderCtrl]);
-    function productionOrderCtrl(projectSetupResource,productionOrderDescriptionResource,salesOrderResource, salesOrderDescriptionResource, $rootScope, companyBranchResource, productionOrderResource) {
+        .controller("productionOrderCtrl", ["unitOfMeasureResource", "projectSetupResource", "productionOrderDescriptionResource", "salesOrderResource", "salesOrderDescriptionResource", "$rootScope", "companyBranchResource", "productionOrderResource", productionOrderCtrl]);
+    function productionOrderCtrl(unitOfMeasureResource, projectSetupResource, productionOrderDescriptionResource, salesOrderResource, salesOrderDescriptionResource, $rootScope, companyBranchResource, productionOrderResource) {
         var vm = this;
         vm.productionOrder = [];
         vm.productionOrders = [];
         vm.projectSetup =[];
         vm.SalesOrderDescription = { salesOrderDesc: [] };
-        vm.productionOrderDescription = { productionOrderDesc: [{ SalesSectionID: 1, SalesSectionName:"", ProductID: 0, OfferDate: "", Oopened: false, ScheduleDate: "", sopened: false, Quantity:0,POrderQuantity:0 }] };
+        vm.productionOrderDescription = { productionOrderDesc: [{ SalesSectionID: 1, SalesSectionName: "", ProductID: 0, OfferDate: "", Oopened: false, MOUID: 0, ScheduleDate: "", sopened: false, Quantity: 0, POrderQuantity: 0 }] };
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -34,11 +34,11 @@
         vm.DeleteButton = false;
 
         vm.addItem = function (item) {
-            vm.productionOrderDescription.productionOrderDesc.unshift({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, OfferDate: "", Oopened: false, ScheduleDate: "", sopened: false, Quantity: item.Quantity,POrderQuantity:0 });
+            vm.productionOrderDescription.productionOrderDesc.unshift({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, OfferDate: "", Oopened: false, MOUID: 0, ScheduleDate: "", sopened: false, Quantity: item.Quantity, POrderQuantity: 0 });
         }
         vm.PushItem = function (item) {
 
-            vm.productionOrderDescription.productionOrderDesc.push({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, OfferDate: "", Oopened: false, ScheduleDate: "", sopened: false, Quantity: item.Quantity,POrderQuantity:0 });
+            vm.productionOrderDescription.productionOrderDesc.push({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, OfferDate: "", Oopened: false, MOUID: 0, ScheduleDate: "", sopened: false, Quantity: item.Quantity, POrderQuantity: 0 });
         }
         vm.removeItem = function (item) {
             vm.productionOrderDescription.productionOrderDesc.splice(vm.productionOrderDescription.productionOrderDesc.indexOf(item), 1);
@@ -124,6 +124,13 @@
 
         var DispayButton = function () {
 
+        }
+        GetUnitOfMeasures();
+        function GetUnitOfMeasures() {
+            unitOfMeasureResource.query(function (data) {
+                vm.UnitOfMeasures = data;
+
+            });
         }
 
 

@@ -1,0 +1,612 @@
+﻿
+
+            <div class="modal-header">
+    <h3 class="modal-title">Menu List</h3>
+</div>
+<div class="modal-body">
+    <nav class="sidebar-nav pop_up_menu">
+
+
+        <ul id="menu">
+
+            <li class="active">
+                <a href="#">
+                    <span class="sidebar-nav-item-icon glyphicon glyphicon-home"></span>
+                    <span class="sidebar-nav-item">Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="sidebar-nav-item-icon glyphicon glyphicon-cog"></span>
+                    <span class="sidebar-nav-item">Settings</span>
+                    <span class="glyphicon arrow"></span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                            <span class="sidebar-nav-item">Common</span>
+                            <span class="glyphicon arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a ui-sref="country" ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Country
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="city"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    City
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="language"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Language
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="currency"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Currency
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-lock"></span>
+                            <span class="sidebar-nav-item">Company</span>
+                            <span class="glyphicon arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a ui-sref="companyCategory"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Company Category
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="companyType"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Company Type
+                                </a>
+                            </li>
+
+                            <li>
+                                <a ui-sref="company"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Company
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="companyBranchType"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Company Branch Type
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="companyBranchCategory"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    CompanyBranchCategory
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="companyBranch"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Company Branch
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="sidebar-nav-item-icon glyphicon glyphicon-cog"></span>
+                    <span class="sidebar-nav-item">Purchase </span>
+                    <span class="glyphicon arrow"></span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                            <span class="sidebar-nav-item">Setup</span>
+                            <span class="glyphicon arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a ui-sref="purchaseOrderCategory"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    OrderCategory
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a ui-sref="supplierType"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Supplier Type
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="suppliers"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Suppliers
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="moneyRequisitionRequest"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            MoneyRequisitionRequest
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="moneyRequisition"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            MoneyRequisition
+                        </a>
+                    </li>
+
+                    <li>
+                        <a ui-sref="purchaseRequisition"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Purchase Requisition
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="requisitionDelivery"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Requisition Delivery
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="requestForQuotation"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Request For Quotation
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="maintainPurchaseQuotation"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Maintain Purchase Quotation
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="purchaseOrder"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Purchase Order
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="purchaseBill"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Purchase Bill
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="purchaseDeliveryReceive"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Purchase Delivery Receive
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="purchaseBillPayment"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Purchase Bill Payment
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="sidebar-nav-item-icon glyphicon glyphicon-cog"></span>
+                    <span class="sidebar-nav-item">Sales</span>
+                    <span class="glyphicon arrow"></span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                            <span class="sidebar-nav-item">Setup</span>
+                            <span class="glyphicon arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a ui-sref="salesQuotationCategory"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Quotation Category
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="salesOrderCategory"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Order Category
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="salesDeliveryCategory"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Delivery Category
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="salesBillCategory"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Bill Category
+                                </a>
+                            </li>
+                        </ul>
+
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a ui-sref="customerType"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Customer Type
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="customers"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Customers
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="salesQuotation"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            sales Quotation
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="salesOrder"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            sales Order
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="salesDelivery"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Sales Delivery
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="salesBill"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Sales Bill
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="salesReceivePayment"  ng-click="vm.CloseMenu()">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                            Sales Receive Payment
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="sidebar-nav-item-icon glyphicon glyphicon-cog"></span>
+                    <span class="sidebar-nav-item">Accounting</span>
+                    <span class="glyphicon arrow"></span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                            <span class="sidebar-nav-item">Configuration</span>
+                            <span class="glyphicon arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a ui-sref="fiscalYear"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Fiscal Year
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="accType"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Account Type
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="paymentMethod"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Payment Method
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="voucherType"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Voucher Type
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="accCOA"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    COA
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="accCOAConfig"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    COA Config
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="accCOAMapping"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    COA Mapping
+                                </a>
+                            </li>
+
+                            <li>
+                                <a ui-sref="bank"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Bank
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="bankBranch"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Bank Branch
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="bankAccountOwnerType"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Account Owner Type
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="bankAccountType"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Bank Account Type
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="bankAccount"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Bank Account
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                            <span class="sidebar-nav-item">Transaction</span>
+                            <span class="glyphicon arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a ui-sref="voucherList"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Voucher
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="trialBalance"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Trial Balance
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="ledgerSheet"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Ledger Sheet
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="sidebar-nav-item-icon glyphicon glyphicon-cog"></span>
+                    <span class="sidebar-nav-item">Production</span>
+                    <span class="glyphicon arrow"></span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                            <span class="sidebar-nav-item">MRP</span>
+                            <span class="glyphicon arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a ui-sref="productionType"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Production Type
+                                </a>
+                            </li>
+
+                            <li>
+                                <a ui-sref="productionOrderCategory"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    productionOrderCategory
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="billofMaterialCategory"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    billofMaterialCategory
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="materialRequirementsPlanning"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    MRP
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="billofMaterial"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Bill of Material
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="productCosting"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Product Costing
+                                </a>
+                            </li>
+
+                            <li>
+                                <a ui-sref="productionOrder"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Production Order
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="productionOrderDelivery"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Production OrderDelivery
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="sidebar-nav-item-icon glyphicon glyphicon-cog"></span>
+                    <span class="sidebar-nav-item">Inventory</span>
+                    <span class="glyphicon arrow"></span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                            <span class="sidebar-nav-item">Product</span>
+                            <span class="glyphicon arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a ui-sref="productCategory"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Product Category
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="unitOfMeasure"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Unit Of Measure
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="product"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Product
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="sidebar-nav-item-icon glyphicon glyphicon-cog"></span>
+                    <span class="sidebar-nav-item">HR</span>
+                    <span class="glyphicon arrow"></span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                            <span class="sidebar-nav-item">Leave</span>
+                            <span class="glyphicon arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a ui-sref="employeeLeaveType"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Leave Type
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="employeeLeaveGroup"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Leave Group
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="employeeLeaveApplication"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Leave Application
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                            <span class="sidebar-nav-item">Employees</span>
+                            <span class="glyphicon arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a ui-sref="department"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Department
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="designation"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    designation
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="employees"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Employees
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                            <span class="sidebar-nav-item">Employees Expenses</span>
+                            <span class="glyphicon arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a ui-sref="expensesType"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Expenses Type
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="employeesExpenses"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    Expenses
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="employeesExpensesPayment"  ng-click="vm.CloseMenu()">
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                    ExpensesPayment
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="vm.CloseMenu()">Cancel</button>
+</div>
+           

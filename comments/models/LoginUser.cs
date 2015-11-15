@@ -56,5 +56,9 @@ namespace BMS.Models
         public bool IsEmployee { get; set; }
         public bool IsSupplier { get; set; }
         public bool IsCustomer { get; set; }
+        public string BGColor { get; set; }
+        public string BRColor { get; set; }
+
+        public string HVColor { get; set; }
     }
 }

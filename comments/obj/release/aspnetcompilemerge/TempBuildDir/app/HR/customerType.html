@@ -94,6 +94,22 @@
                                    required>
                         </div>
                         <div class="form-group"
+                             ng-class="{'has-error':customerTypeForm.txtCustomerTypeShortName.$invalid
+                                         && customerTypeForm.txtCustomerTypeShortName.$dirty}">
+
+                            <label for="txtCustomerTypeShortName">
+                                CustomerTypeShortName
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="txtCustomerTypeShortName"
+                                   name="txtCustomerTypeShortName"
+                                   ng-model="vm.customerType.CustomerTypeShortName"
+                                   placeholder="Enter CustomerTypeShortName"
+                                   required>
+                        </div>
+
+                        <div class="form-group"
                              ng-class="{'has-error':customerTypeForm.txtCustomerTypeName.$invalid
                                          && customerTypeForm.txtCustomerTypeName.$dirty}">
 
