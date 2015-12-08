@@ -18,6 +18,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -35,6 +36,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -48,6 +50,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -62,6 +65,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -75,6 +79,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -92,21 +97,27 @@
         GetList();
 
         function GetList() {
-            languageResource.query(function (data) {
+            languageResource.query().$promise.then(function (data) {
                 vm.languages = data;
-                toastr.success("Language Load Successful", "Form Load");
+                //toastr.success("Language Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Language not Load Successful", "Form Load Error");
             });
         }
 
 
         vm.Save = function (isValid) {
             if (isValid) {
-                languageResource.save(vm.language,
+                languageResource.save(vm.language).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.language = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data not Save Successfully!");
                     });
             }
             else {
@@ -118,22 +129,29 @@
         }
 
         vm.Get = function (id) {
-            languageResource.get({ 'ID': id }, function (language) {
+            languageResource.get({ 'ID': id }).$promise.then(function (language) {
                 vm.language = language;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data not Load Successfully!");
             });
         }
 
 
         vm.Update = function (isValid) {
             if (isValid) {
-                languageResource.update({ 'ID': vm.language.LanguageID }, vm.language);
+                languageResource.update({ 'ID': vm.language.LanguageID }, vm.language).$promise.then(function () {
                 vm.languages = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data not Update Successfully!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -141,10 +159,15 @@
 
 
         vm.Delete = function () {
-            vm.language.$delete({ 'ID': vm.language.LanguageID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+           // vm.language.$delete({ 'ID': vm.language.LanguageID });
+            languageResource.delete({ 'ID': vm.country.CountryID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data not Delete Successfully!");
+            });
         }
 
     }

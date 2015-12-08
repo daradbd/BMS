@@ -29,7 +29,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
-
+        vm.CancelButton = false;
 
 
         vm.ViewMode = function (activeMode) {
@@ -46,6 +46,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -59,6 +60,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -73,6 +75,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -86,6 +89,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -98,21 +102,27 @@
 
         //Get All Data List
         function GetList() {
-            customerTypeResource.query(function (data) {
+            customerTypeResource.query().$promise.then(function (data) {
                 vm.customerTypes = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save customerType
         vm.Save = function (isValid) {
             if (isValid) {
-                customerTypeResource.save(vm.customerType,
+                customerTypeResource.save().$promise.then(vm.customerType,
                     function (data, responseHeaders) {
                         GetList();
                         vm.customerType = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -125,10 +135,13 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            customerTypeResource.get({ 'ID': id }, function (customerType) {
+            customerTypeResource.get({ 'ID': id }).$promise.then(function (customerType) {
                 vm.customerType = customerType;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -136,12 +149,16 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                customerTypeResource.update({ 'ID': vm.customerType.CustomerTypeID }, vm.customerType);
+                customerTypeResource.update({ 'ID': vm.customerType.CustomerTypeID }, vm.customerType).$promise.then(function () {
                 vm.customerTypes = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -149,10 +166,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.customerType.$delete({ 'ID': vm.customerType.CustomerTypeID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+           // vm.customerType.$delete({ 'ID': vm.customerType.CustomerTypeID });
+            customerTypeResource.delete({ 'ID':vm.customerType.CustomerTypeID  }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

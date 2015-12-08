@@ -33,6 +33,7 @@
         public long? UOMID { get; set; }
 
         public float? DeliveredQuantity { get; set; }
+        public float? BilledQuantity { get; set; }
 
         public decimal UnitPrice { get; set; }
 

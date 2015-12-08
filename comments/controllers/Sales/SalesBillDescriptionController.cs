@@ -71,6 +71,8 @@ namespace BMS.Controllers.Sales
             if (ModelState.IsValid)
             {
                 db.SalesBillDescriptions.Add(salesbilldescription);
+                db.Entry(salesbilldescription).State = salesbilldescription.SalesBillDescriptionID == 0 ?
+               EntityState.Added : EntityState.Modified;
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, salesbilldescription);

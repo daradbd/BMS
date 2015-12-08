@@ -99,6 +99,10 @@ namespace BMS.Controllers.Sales
         public HttpResponseMessage DeleteSalesReceivePayment(long id)
         {
             SalesReceivePayment salesreceivepayment = db.SalesReceivePayments.Find(id);
+            salesreceivepayment.Collaborator = null;
+            salesreceivepayment.PaymentMethod = null;
+            salesreceivepayment.ProcesStatus = null;
+
             if (salesreceivepayment == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);

@@ -34,9 +34,11 @@
 
         public decimal? DiscountAmount { get; set; }
 
-        public bool? TaxAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
 
-        public bool? VatAmount { get; set; }
+        public decimal? VatAmount { get; set; }
+
+        public decimal? Shipping { get; set; }
 
         public decimal? GrandTotal { get; set; }
 

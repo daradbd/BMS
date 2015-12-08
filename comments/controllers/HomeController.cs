@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using BMS.Models;
 
 
 namespace BMS.Controllers
@@ -14,11 +15,12 @@ namespace BMS.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            LoginUser loginUser = new LoginUser();
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
             //object id = Membership.FindUsersByName(Membership.GetUser().UserName.ToString());
             ViewBag.BgColor = "#006442";
 
-            ViewBag.UserName = Membership.GetUser().UserName.ToString().ToUpper();
+            ViewBag.User = loginUser; //Membership.GetUser().UserName.ToString().ToUpper();
             return View();
 
             //return Redirect("index.html");

@@ -35,7 +35,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
-
+        vm.CancelButton = false;
 
 
         vm.ViewMode = function (activeMode)
@@ -53,6 +53,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -66,6 +67,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -80,6 +82,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -93,6 +96,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -103,39 +107,50 @@
         GetBankList();
         function GetBankList()
         {
-            bankResource.query(function (data)
+            bankResource.query().$promise.then(function (data)
             {
                 vm.banks = data;
                 toastr.success("Load banks", "Country banks");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
         GetbankBranchList();
         function GetbankBranchList()
         {
-            bankBranchResource.query(function (data)
+            bankBranchResource.query().$promise.then(function (data)
             {
                 vm.bankBranchs = data;
                 toastr.success("Load BankBranch", "Country Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetbankAccountTypeList();
         function GetbankAccountTypeList()
         {
-            bankAccountTypeResource.query(function (data)
+            bankAccountTypeResource.query().$promise.then(function (data)
             {
                 vm.bankAccountTypes = data;
                 toastr.success("Load bankAccountType", "bankAccountType Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
         GetBankAccountOwnerTypeList();
         function GetBankAccountOwnerTypeList()
         {
-            bankAccountOwnerTypeResource.query(function (data)
+            bankAccountOwnerTypeResource.query().$promise.then(function (data)
             {
                 vm.bankAccountOwnerTypes = data;
-                toastr
-.success("Load AccountOwner", "AccountOwner Load");
+                toastr.success("Load AccountOwner", "AccountOwner Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -144,11 +159,14 @@
         //Get All Data List
         function GetList()
         {
-            bankAccountResource.query(function (data)
+            bankAccountResource.query().$promise.then(function (data)
             {
                 vm.bankAccounts = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -157,12 +175,15 @@
         {
             if (isValid)
             {
-                bankAccountResource.save(vm.bankAccount,
+                bankAccountResource.save(vm.bankAccount).$promise.then(
                     function (data, responseHeaders)
                     {
                         GetList();
                         vm.bankAccount = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else
@@ -177,11 +198,14 @@
         //Get Single Record
         vm.Get = function (id)
         {
-            bankAccountResource.get({ 'ID': id }, function (bankAccount)
+            bankAccountResource.get({ 'ID': id }).$promise.then(function (bankAccount)
             {
                 vm.bankAccount = bankAccount;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -191,12 +215,16 @@
         {
             if (isValid)
             {
-                bankAccountResource.update({ 'ID': vm.bankAccount.bankAccountID }, vm.bankAccount);
+                bankAccountResource.update({ 'ID': vm.bankAccount.BankAccountID }, vm.bankAccount).$promise.then(function () {
                 vm.bankAccounts = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else
             {
                 toastr.error("Form is not valid");
@@ -206,10 +234,15 @@
         //Data Delete
         vm.Delete = function ()
         {
-            vm.bankAccount.$delete({ 'ID': vm.bankAccount.bankAccountID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.bankAccount.$delete({ 'ID': vm.bankAccount.bankAccountID });
+            bankAccountResource.delete({ 'ID':vm.bankAccount.BankAccountID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

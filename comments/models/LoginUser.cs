@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Transactions;
 using System.Web;
@@ -11,6 +14,7 @@ using WebMatrix.WebData;
 using BMS.Filters;
 using BMS.Models;
 using BMS.Models.HR;
+using BMS.Models.Setting.Companys;
 
 namespace BMS.Models
 {
@@ -21,13 +25,24 @@ namespace BMS.Models
         {
             
             long userID = WebSecurity.CurrentUserId;
-            Collaborator collabarator = db.Collaborators.Where(u => u.UserID == userID).SingleOrDefault();
+            Collaborator collabarator = db.Collaborators.Include(c=>c.Designation).Where(u => u.UserID == userID).SingleOrDefault();
+           // Designation designation = db.Designations.Where(d => d.DesignationID == collabarator.DesignationID).SingleOrDefault();
+            Company company = db.Companies.Where(c=>c.CompanyID==collabarator.CompanyID).SingleOrDefault();
             this.UserID = collabarator.UserID;
             this.UserName = collabarator.Name;
             this.CompanyID = collabarator.CompanyID;
             this.CompanyBranchID = collabarator.CompanyBranchID;
             this.ReportToID = collabarator.ReportToID;
-            //this.CompanyName = collabarator.CompanyName;
+            if(collabarator.DesignationID!=null)
+            {
+                this.Designation = collabarator.Designation.DesignationName;
+            }
+            else
+            {
+                this.Designation = "";
+            }
+            
+            this.CompanyName = company.CompanyName;
             //this.CompanyBranchName = collabarator.CompanyBranchName;
             this.EmailID = collabarator.EmailID;
             this.Phone = collabarator.Phone;
@@ -49,6 +64,8 @@ namespace BMS.Models
         public string  CompanyBranchName { get; set; }
 
         public string EmailID { get; set; }
+
+        public string Designation { get; set; }
 
         public string Phone { get; set; }
 

@@ -29,7 +29,7 @@ namespace BMS.Controllers.Setting.Common
         public City GetCity(long id)
         {
             City city = db.Cities.Find(id);
-            city.Country = db.Countries.Where(c => c.CountryID == id).FirstOrDefault();
+            city.Country = db.Countries.Where(c => c.CountryID == city.CountryID).FirstOrDefault();
             
              
             if (city == null)
@@ -52,7 +52,7 @@ namespace BMS.Controllers.Setting.Common
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-
+            city.Country = null;
             db.Entry(city).State = EntityState.Modified;
 
             try

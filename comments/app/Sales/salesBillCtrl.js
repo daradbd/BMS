@@ -17,6 +17,13 @@
     function salesBillCtrl(salesBillCategoryResource,unitOfMeasureResource, currencyResource, languageResource, countryResource, cityResource, projectSideResource, projectSetupResource, salesQuotationDescriptionResource, $rootScope, $state, salesOrderDescriptionResource, productResource, collaboratorResource, salesOrderResource, salesBillDescriptionResource, salesBillResource) {
 
         var vm = this;
+
+        vm.Totaltax = 0.00;
+        vm.TotlaDiscount = 0.00;
+        vm.GTotal = 0.00;
+        vm.Shipping = 0.00;
+
+
         vm.salesBills = [];
         vm.salesOrders = []
         vm.salesBillCategorys = [];
@@ -38,6 +45,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
         if ($rootScope.SOrderID > 0) {
@@ -47,10 +55,13 @@
 
         vm.selectCity = function (countryID) {
 
-            cityResource.query({ '$filter': 'CountryID eq ' + countryID }, function (data) {
+            cityResource.query({ '$filter': 'CountryID eq ' + countryID }).$promise.then(function (data) {
                 vm.citys = data;
-                toastr.success("Data function Load Successful", "Form Load");
+                //toastr.success("Data function Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -118,10 +129,23 @@
 
         vm.QuotationSubTotal = function () {
             var total = 0.00;
+            var Totaltax = 0.00;
+            var TotlaDiscount = 0.00;
+
             angular.forEach(vm.SalesBillDescription.salesBillDesc, function (item, key) {
-                total += (item.Quantity * (item.UnitPrice - item.Discount));
+                total += (item.Quantity * (item.UnitPrice));
+                if (item.Taxes > 0) {
+                    Totaltax += ((item.Quantity * (item.UnitPrice - item.Discount)) * (item.Taxes) * 0.01);
+
+                }
+                if (item.Discount > 0) {
+                    TotlaDiscount += (item.Quantity * item.Discount);
+                }
+
             });
-            vm.salesBill.GrandTotal = total;
+            vm.Totaltax = Totaltax;
+            vm.TotlaDiscount = TotlaDiscount;
+            vm.GTotal = (total + vm.Totaltax + vm.Shipping) - vm.TotlaDiscount;
             return total;
         }
 
@@ -148,34 +172,46 @@
 
         GetLanguage();
         function GetLanguage() {
-            languageResource.query(function (data) {
+            languageResource.query().$promise.then(function (data) {
                 vm.Languages = data;
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
 
         }
 
         GetCurrency();
         function GetCurrency() {
-            currencyResource.query(function (data) {
+            currencyResource.query().$promise.then(function (data) {
                 vm.Currencys = data;
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
 
         }
 
         GetcountrysList();
         function GetcountrysList() {
-            countryResource.query(function (data) {
+            countryResource.query().$promise.then(function (data) {
                 vm.countrys = data;
-                toastr.success("Load country", "Country Load");
+                //toastr.success("Load country", "Country Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
 
         GetSalesBillCategoryList();
         function GetSalesBillCategoryList() {
-            salesBillCategoryResource.query(function (data) {
+            salesBillCategoryResource.query().$promise.then(function (data) {
                 vm.salesBillCategorys = data;
                 //toastr.success("Load country", "Country Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -183,20 +219,26 @@
         GetProjectManagerList();
         //Get All Data List
         function GetProjectManagerList() {
-            collaboratorResource.query({ '$filter': 'IsEmployee eq true' }, function (data) {
+            collaboratorResource.query({ '$filter': 'IsEmployee eq true' }).$promise.then(function (data) {
                 vm.ProjectManagers = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetProductList();
         //Get All Data List
         function GetProductList() {
-            productResource.query(function (data) {
+            productResource.query().$promise.then(function (data) {
                 vm.products = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -218,6 +260,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -227,10 +270,12 @@
                 vm.EditView = false;
 
 
+
                 vm.SaveButton = false;
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -245,6 +290,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -258,10 +304,20 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
         var DispayButton = function () {
+
+        }
+        vm.UpdatePercentage = function (Value, KeyName) {
+            angular.forEach(vm.SalesBillDescription.salesBillDesc, function (item, key) {
+
+                item[KeyName] = Value;
+
+
+            });
 
         }
 
@@ -276,18 +332,24 @@
         GetCustomerList();
         //Get All Data List
         function GetCustomerList() {
-            collaboratorResource.query({ '$filter': 'IsCustomer eq true' }, function (data) {
+            collaboratorResource.query({ '$filter': 'IsCustomer eq true' }).$promise.then(function (data) {
                 vm.collaborators = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetUnitOfMeasures();
         function GetUnitOfMeasures() {
-            unitOfMeasureResource.query(function (data) {
+            unitOfMeasureResource.query().$promise.then(function (data) {
                 vm.UnitOfMeasures = data;
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -296,23 +358,34 @@
 
         //Get All Data List
         function GetList() {
-            salesBillResource.query(function (data) {
+            salesBillResource.query().$promise.then(function (data) {
                 vm.salesBills = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save salesBill
         vm.Save = function (isValid) {
             if (isValid) {
-                salesBillResource.save(vm.salesBill,
+                vm.salesBill.GrandTotal = vm.GTotal;
+                vm.salesBill.Shipping = vm.Shipping;
+                vm.salesBill.TaxAmount = vm.Totaltax;
+                vm.salesBill.DiscountAmount =vm.TotlaDiscount;
+
+                salesBillResource.save(vm.salesBill).$promise.then(
                     function (data, responseHeaders) {
                         vm.salesBill = data;
                         vm.SaveBill();
                        // GetList();
                         vm.salesBill = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -348,9 +421,12 @@
                     Discount: value.Discount,
                 };
 
-                salesBillDescriptionResource.save(salesBillInfo,
+                salesBillDescriptionResource.save(salesBillInfo).$promise.then(
                 function (data, responseHeaders) {
 
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Save Failed!");
                 });
             })
 
@@ -358,25 +434,32 @@
         }
         //Get Single Record
         vm.Get = function (id) {
-            salesBillResource.get({ 'ID': id }, function (salesBill) {
+            salesBillResource.get({ 'ID': id }).$promise.then(function (salesBill) {
                 vm.salesBill = salesBill;
+                vm.Shipping = vm.salesBill.Shipping;
                 vm.cmbCustomer = vm.salesBill.Collaborator;
                 vm.cmbSalesBillCategory = { SalesBillCategoryID: vm.salesBill.SalesBillCategoryID };
 
                 vm.GetSalesBillDescription(id);
                 vm.ViewMode(3);
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         vm.GetSalesBillDescription = function (salesBillID) {
 
-            salesBillDescriptionResource.query({ '$filter': 'SalesBillID eq ' + salesBillID }, function (data) {
+            salesBillDescriptionResource.query({ '$filter': 'SalesBillID eq ' + salesBillID }).$promise.then(function (data) {
 
                 // vm.SalesOrderDescription.salesOrderDesc = data;
                 vm.SalesBillDescription.salesBillDesc = data;
                 toastr.success("Data function Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
@@ -384,7 +467,7 @@
         //Get Single Record
        function GetSalesOrder(id) {
 
-            salesOrderResource.get({ 'ID': id }, function (salesOrder) {
+           salesOrderResource.get({ 'ID': id }).$promise.then(function (salesOrder) {
 
                 vm.salesOrder = salesOrder;
                 //vm.cmbCustomer = { CollaboratorID: vm.salesBill.CustomerID }
@@ -398,29 +481,39 @@
                // vm.GetProjectSetup(vm.salesOrder.ProjectID);
                
                 vm.GetSalesOrderDescription(vm.salesOrder.SalesOrderID);
-                vm.ViewMode(1);
-                toastr.success("Data Load Successful", "Form Load");
+               //vm.ViewMode(1);
+               // toastr.success("Data Load Successful", "Form Load");
 
-            });
+           }, function (error) {
+               // error handler
+               toastr.error("Data Load Failed!");
+           });
         }
 
 
         vm.GetSalesOrderDescription = function (salesOrderID) {
 
-            salesOrderDescriptionResource.query({ '$filter': 'SalesOrderID eq ' + salesOrderID }, function (data) {
+            salesOrderDescriptionResource.query({ '$filter': 'SalesOrderID eq ' + salesOrderID }).$promise.then(function (data) {
 
                // vm.SalesOrderDescription.salesOrderDesc = data;
                 vm.SalesBillDescription.salesBillDesc = data;
-                toastr.success("Data function Load Successful", "Form Load");
-
+                //toastr.success("Data function Load Successful", "Form Load");
+                vm.ViewMode(1);
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-
+                vm.salesBill.GrandTotal = vm.GTotal;
+                vm.salesBill.Shipping = vm.Shipping;
+                vm.salesBill.TaxAmount = vm.Totaltax;
+                vm.salesBill.DiscountAmount = vm.TotlaDiscount;
                 salesBillResource.update({ 'ID': vm.salesBill.SalesBillID }, vm.salesBill);
+                vm.SaveBill();
                 vm.salesBills = null;
                 vm.ViewMode(3);
                 GetList();

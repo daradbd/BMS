@@ -31,7 +31,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
-
+        vm.CancelButton = false;
 
 
         vm.ViewMode = function (activeMode)
@@ -49,6 +49,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -62,6 +63,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -76,6 +78,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -89,6 +92,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -103,11 +107,14 @@
         //Get All Data List
         function GetList()
         {
-            bankAccountOwnerTypeResource.query(function (data)
+            bankAccountOwnerTypeResource.query().$promise.then(function (data)
             {
                 vm.bankAccountOwnerTypes = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -116,12 +123,15 @@
         {
             if (isValid)
             {
-                bankAccountOwnerTypeResource.save(vm.bankAccountOwnerType,
+                bankAccountOwnerTypeResource.save().$promise.then(vm.bankAccountOwnerType,
                     function (data, responseHeaders)
                     {
                         GetList();
                         vm.bankAccountOwnerType = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else
@@ -136,11 +146,14 @@
         //Get Single Record
         vm.Get = function (id)
         {
-            bankAccountOwnerTypeResource.get({ 'ID': id }, function (bankAccountOwnerType)
+            bankAccountOwnerTypeResource.get({ 'ID': id }).$promise.then(function (bankAccountOwnerType)
             {
                 vm.bankAccountOwnerType = bankAccountOwnerType;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -150,12 +163,16 @@
         {
             if (isValid)
             {
-                bankAccountOwnerTypeResource.update({ 'ID': vm.bankAccountOwnerType.BankAccountOwnerTypeID }, vm.bankAccountOwnerType);
+                bankAccountOwnerTypeResource.update({ 'ID': vm.bankAccountOwnerType.BankAccountOwnerTypeID }, vm.bankAccountOwnerType).$promise.then(function () {
                 vm.bankAccountOwnerTypes = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else
             {
                 toastr.error("Form is not valid");
@@ -166,9 +183,14 @@
         vm.Delete = function ()
         {
             vm.bankAccountOwnerType.$delete({ 'ID': vm.bankAccountOwnerType.BankAccountOwnerTypeID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            bankAccountOwnerTypeResource.delete({ 'ID':vm.bankAccountOwnerType.BankAccountOwnerTypeID  }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

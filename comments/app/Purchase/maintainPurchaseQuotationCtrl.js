@@ -25,7 +25,7 @@
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -33,6 +33,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
         vm.addItem = function () {
@@ -93,13 +94,14 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
                 vm.SelectForOrderButton = false;
             }
             if (activeMode == 2) //List View Mode
             {
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = false;
 
 
@@ -107,6 +109,8 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
+                vm.CancelButton = true;
                 vm.SelectForOrderButton = false;
             }
 
@@ -114,7 +118,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -122,13 +126,14 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
                 vm.SelectForOrderButton = (vm.maintainPurchaseQuotation.ProcesStatusID == 8 ? true : false);
             }
             if (activeMode == 4)//Edit View Mode
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
 
@@ -136,6 +141,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
                 vm.SelectForOrderButton = (vm.maintainPurchaseQuotation.ProcesStatusID == 8 ? true : false);
             }
         }
@@ -147,30 +153,39 @@
         GetProductList();
         //Get All Data List
         function GetProductList() {
-            productResource.query(function (data) {
+            productResource.query().$promise.then(function (data) {
                 vm.products = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetSupplierList();
         //Get All Data List
         function GetSupplierList() {
-            collaboratorResource.query({ '$filter': 'IsSupplier eq true' }, function (data) {
+            collaboratorResource.query({ '$filter': 'IsSupplier eq true' }).$promise.then(function (data) {
                 vm.Suppliers = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetProjectList();
         //Get All Data List
         function GetProjectList() {
-            projectSetupResource.query(function (data) {
+            projectSetupResource.query().$promise.then(function (data) {
                 vm.Projects = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -178,22 +193,28 @@
 
         //Get All Data List
         function GetList() {
-            maintainPurchaseQuotationResource.query(function (data) {
+            maintainPurchaseQuotationResource.query().$promise.then(function (data) {
                 vm.maintainPurchaseQuotations = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save maintainPurchaseQuotation
         vm.Save = function (isValid) {
             if (isValid) {
-                maintainPurchaseQuotationResource.save(vm.maintainPurchaseQuotation,
+                maintainPurchaseQuotationResource.save(vm.maintainPurchaseQuotation).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.maintainPurchaseQuotation = data;
                         vm.SaveMaintainPurchaseQuotation();
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -228,9 +249,12 @@
                 //vm.voucherList.Amount = value.Amount;
                 //vm.voucherList.DrCr = value.DrCr;
 
-                maintainPurchaseQuotationDescriptionResource.save(MaintainPurchaseQuotationInfo,
+                maintainPurchaseQuotationDescriptionResource.save(MaintainPurchaseQuotationInfo).$promise.then(
                 function (data, responseHeaders) {
 
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Load Failed!");
                 });
             })
 
@@ -247,12 +271,15 @@
                     ProjectID: vm.maintainPurchaseQuotation.ProjectID,
                     ProcesStatusID: 10,
                 };
-                purchaseOrderResource.save(purchaseOrder,
+                purchaseOrderResource.save(purchaseOrder).$promise.then(
                         function (data, responseHeaders) {
                             vm.purchaseOrder = data;
                             vm.maintainPurchaseQuotation.ProcesStatusID = 9;
                             vm.Update(true);
                             toastr.success("Save Successful");
+                        }, function (error) {
+                            // error handler
+                            toastr.error("Data Save Failed!");
                         });
             }
             else {
@@ -264,7 +291,7 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            maintainPurchaseQuotationResource.get({ 'ID': id }, function (maintainPurchaseQuotation) {
+            maintainPurchaseQuotationResource.get({ 'ID': id }).$promise.then(function (maintainPurchaseQuotation) {
                 vm.maintainPurchaseQuotation = maintainPurchaseQuotation;
 
                 vm.cmbSupplier = { CollaboratorID: vm.maintainPurchaseQuotation.SupplierID };
@@ -277,24 +304,33 @@
                     vm.GetMaintainPurchaseQuotationDescription(vm.maintainPurchaseQuotation.MaintainPurchaseQuotationID);
                 }
                 vm.ViewMode(3);
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
         
         
         vm.GetMaintainPurchaseQuotationDescription = function (maintainPurchaseQuotationID) {
 
-            maintainPurchaseQuotationDescriptionResource.query({ '$filter': 'MaintainPurchaseQuotationID eq ' + maintainPurchaseQuotationID }, function (data) {
+            maintainPurchaseQuotationDescriptionResource.query({ '$filter': 'MaintainPurchaseQuotationID eq ' + maintainPurchaseQuotationID }).$promise.then(function (data) {
                 vm.MaintainPurchaseQuotationDescription.MaintainPurchaseQuotationDesc = data;
-                toastr.success("Data function Load Successful", "Form Load");
+                //toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
         vm.GetRequestForQuotationDescription = function (requestForQuotationID) {
 
-            requestForQuotationDescriptionResource.query({ '$filter': 'RequestForQuotationID eq ' + requestForQuotationID }, function (data) {
+            requestForQuotationDescriptionResource.query({ '$filter': 'RequestForQuotationID eq ' + requestForQuotationID }).$promise.then(function (data) {
                 vm.MaintainPurchaseQuotationDescription.MaintainPurchaseQuotationDesc = data;
-                toastr.success("Data function Load Successful", "Form Load");
+               // toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
@@ -304,13 +340,17 @@
                 if (vm.maintainPurchaseQuotation.ProcesStatusID == 7) {
                     vm.maintainPurchaseQuotation.ProcesStatusID = 8;
                 }
-                maintainPurchaseQuotationResource.update({ 'ID': vm.maintainPurchaseQuotation.MaintainPurchaseQuotationID }, vm.maintainPurchaseQuotation);
+                maintainPurchaseQuotationResource.update({ 'ID': vm.maintainPurchaseQuotation.MaintainPurchaseQuotationID }, vm.maintainPurchaseQuotation).$promise.then(function () {
                 vm.SaveMaintainPurchaseQuotation();
                 vm.maintainPurchaseQuotations = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -318,10 +358,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.maintainPurchaseQuotation.$delete({ 'ID': vm.maintainPurchaseQuotation.MaintainPurchaseQuotationID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.maintainPurchaseQuotation.$delete({ 'ID': vm.maintainPurchaseQuotation.MaintainPurchaseQuotationID });
+            maintainPurchaseQuotationResource.delete({ 'ID': vm.maintainPurchaseQuotation.MaintainPurchaseQuotationID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

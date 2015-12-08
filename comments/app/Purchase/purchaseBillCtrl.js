@@ -39,6 +39,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
         vm.addItem = function ()
         {
@@ -68,6 +69,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -81,6 +83,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -95,6 +98,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -108,6 +112,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -161,20 +166,26 @@
 
         GetUnitOfMeasures();
         function GetUnitOfMeasures() {
-            unitOfMeasureResource.query(function (data) {
+            unitOfMeasureResource.query().$promise.then(function (data) {
                 vm.UnitOfMeasures = data;
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
         GetProductList();
         //Get All Data List
         function GetProductList()
         {
-            productResource.query(function (data)
+            productResource.query().$promise.then(function (data)
             {
                 vm.products = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -182,11 +193,14 @@
         //Get All Data List
         function GetSupplierList()
         {
-            collaboratorResource.query({ '$filter': 'IsSupplier eq true' }, function (data)
+            collaboratorResource.query({ '$filter': 'IsSupplier eq true' }).$promise.then(function (data)
             {
                 vm.Suppliers = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -194,11 +208,14 @@
         //Get All Data List
         function GetProjectList()
         {
-            projectSetupResource.query(function (data)
+            projectSetupResource.query().$promise.then(function (data)
             {
                 vm.Projects = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -207,11 +224,14 @@
         //Get All Data List
         function GetList()
         {
-            purchaseBillResource.query(function (data)
+            purchaseBillResource.query().$promise.then(function (data)
             {
                 vm.purchaseBills = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -223,13 +243,16 @@
 
                 vm.purchaseBill.GrandTotal = vm.GrandTotal;
                // vm.purchaseBill = vm.cmbSupplier.CollaboratorID;
-                purchaseBillResource.save(vm.purchaseBill,
+                purchaseBillResource.save(vm.purchaseBill).$promise.then(
                     function (data, responseHeaders)
                     {
                         vm.SavePurchaseBill();
                        // GetList();
                         vm.purchaseBill = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else
@@ -269,10 +292,13 @@
                 //vm.voucherList.Amount = value.Amount;
                 //vm.voucherList.DrCr = value.DrCr;
 
-                purchaseBillDescriptionResource.save(PurchaseBillInfo,
+                purchaseBillDescriptionResource.save(PurchaseBillInfo).$promise.then(
                 function (data, responseHeaders)
                 {
 
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Save Failed!");
                 });
             })
 
@@ -282,14 +308,17 @@
         //Get Single Record
         vm.Get = function (id)
         {
-            purchaseBillResource.get({ 'ID': id }, function (purchaseBill)
+            purchaseBillResource.get({ 'ID': id }).$promise.then(function (purchaseBill)
             {
                 vm.purchaseBill = purchaseBill;
                 vm.cmbSupplier = vm.purchaseBill.Collaborator;
                 vm.cmbProject = vm.purchaseBill.ProjectSetup;
                 vm.GetPurchaseBillDescription(vm.purchaseBill.PurchaseBillID);
                 vm.ViewMode(3);
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -297,7 +326,7 @@
         //Get Single Record
         function GetPurchaseOrder(id)
         {
-            purchaseOrderResource.get({ 'ID': id }, function (purchaseOrder)
+            purchaseOrderResource.get({ 'ID': id }).$promise.then(function (purchaseOrder)
             {
                 vm.purchaseOrder = purchaseOrder;
                // vm.cmbSupplier = { CollaboratorID: vm.purchaseOrder.SupplierID };
@@ -313,6 +342,9 @@
                 vm.ViewMode(1);
 
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -320,20 +352,26 @@
         vm.GetPurchaseBillDescription = function (purchaseBillID)
         {
 
-            purchaseBillDescriptionResource.query({ '$filter': 'PurchaseBillID eq ' + purchaseBillID }, function (data)
+            purchaseBillDescriptionResource.query({ '$filter': 'PurchaseBillID eq ' + purchaseBillID }).$promise.then(function (data)
             {
                 vm.PurchaseBillDescription.PurchaseBillDesc = data;
-                toastr.success("Data function Load Successful", "Form Load");
+                //toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
         vm.GetPurchaseOrderDescription = function (purchaseOrderID)
         {
 
-            purchaseOrderDescriptionResource.query({ '$filter': 'PurchaseOrderID eq ' + purchaseOrderID }, function (data)
+            purchaseOrderDescriptionResource.query({ '$filter': 'PurchaseOrderID eq ' + purchaseOrderID }).$promise.then(function (data)
             {
                 vm.PurchaseBillDescription.PurchaseBillDesc = data;
-                toastr.success("Data function Load Successful", "Form Load");
+               // toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
@@ -342,13 +380,17 @@
         {
             if (isValid)
             {
-                purchaseBillResource.update({ 'ID': vm.purchaseBill.PurchaseBillID }, vm.purchaseBill);
+                purchaseBillResource.update({ 'ID': vm.purchaseBill.PurchaseBillID }, vm.purchaseBill).$promise.then(function () {
                 vm.SavePurchaseBill();
                 vm.purchaseBills = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else
             {
                 toastr.error("Form is not valid");
@@ -358,10 +400,15 @@
         //Data Delete
         vm.Delete = function ()
         {
-            vm.purchaseBill.$delete({ 'ID': vm.purchaseBill.PurchaseBillID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.purchaseBill.$delete({ 'ID': vm.purchaseBill.PurchaseBillID });
+            purchaseBillResource.delete({ 'ID': vm.purchaseBill.PurchaseBillID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

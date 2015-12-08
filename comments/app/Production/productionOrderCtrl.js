@@ -32,7 +32,13 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.date = new Date();
+        vm.date1Open = false;
 
+        vm.openCalendar = function ($event,item) {
+
+            vm.date1Open = !item;
+        };
         vm.addItem = function (item) {
             vm.productionOrderDescription.productionOrderDesc.unshift({ SalesSectionID: item.SalesSectionID, SalesSectionName: item.SalesSectionName, ProductID: item.ProductID, OfferDate: "", Oopened: false, MOUID: 0, ScheduleDate: "", sopened: false, Quantity: item.Quantity, POrderQuantity: 0 });
         }
@@ -58,6 +64,10 @@
             item.Oopened = !item.Oopened;
 
         }
+
+        vm.disabled = function (date, mode) {
+            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+        };
 
         vm.ViewMode = function (activeMode) {
             GetList();
@@ -198,6 +208,7 @@
                     ProductionOrderID: vm.productionOrder.ProductionOrderID,
                     CustomerID: vm.productionOrder.CustomerID,
                     Quantity: value.Quantity,
+                    UOMID: value.UOMID,
                     POrderQuantity:value.POrderQuantity,
                     SalesSectionID: value.SalesSectionID,
                     SalesSectionName: value.SalesSectionName,
@@ -287,8 +298,9 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                productionOrderResource.update({ 'ID': vm.productionOrder.productionOrderID }, vm.productionOrder);
-                vm.productionOrders = null;
+                productionOrderResource.update({ 'ID': vm.productionOrder.ProductionOrderID }, vm.productionOrder);
+                vm.SaveproductionOrderDescriptionResource();
+               // vm.productionOrders = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");

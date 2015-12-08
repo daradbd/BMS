@@ -36,7 +36,7 @@
 
         public decimal? DiscountAmount { get; set; }
 
-        public bool? TaxAmount { get; set; }
+        public decimal? TaxAmount { get; set; }
 
         public decimal? GrandTotal { get; set; }
 

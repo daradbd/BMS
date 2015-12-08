@@ -74,7 +74,7 @@ namespace BMS.Controllers.Purchase
         {
             if (ModelState.IsValid)
             {
-                db.PurchaseRequisitionDescriptions.Add(purchaserequisitiondescription);
+                db.Entry(purchaserequisitiondescription).State = purchaserequisitiondescription.PurchaseRequisitionDescriptionID == 0 ? EntityState.Added : EntityState.Modified;
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, purchaserequisitiondescription);

@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Production;
 using BMS.Models;
-
+using System.Web.Http.OData.Query;
 namespace BMS.Controllers.Sales
 {
     public class SalesBillCategoryController : ApiController
@@ -67,7 +67,9 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
-                db.SalesBillCategories.Add(salesbillcategory);
+                //db.SalesBillCategories.Add(salesbillcategory);
+                db.Entry(salesbillcategory).State = salesbillcategory.SalesBillCategoryID == 0 ?
+                EntityState.Added : EntityState.Modified;
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, salesbillcategory);

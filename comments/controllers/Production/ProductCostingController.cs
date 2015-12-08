@@ -77,6 +77,13 @@ namespace BMS.Controllers.Production
                 if(pc==null)
                 {
                      var sq = db.SalesQuotations.Where(s => s.SalesQuotationID == productcosting.SalesQuotationID).SingleOrDefault();
+
+                     string CustomCode = "PCT-" + DateTime.Now.ToString("yyyyMMdd");
+
+                     int? MaxCode = Convert.ToInt32((db.ProductCostings.Where(r => r.ProductCostingCode.StartsWith(CustomCode)).Select(r => r.ProductCostingCode.Substring(CustomCode.Length, 4)).ToList()).Max());
+                     string BOMCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
+                     productcosting.ProductCostingCode = BOMCode;
+
                      productcosting.SalesQuotationID = sq.SalesQuotationID;
                      productcosting.CustomerID = sq.CustomerID;
                      productcosting.CompanyID = sq.CompanyID; 

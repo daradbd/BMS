@@ -53,7 +53,7 @@
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 Edit
             </button>
-            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(purchaseRequisitionForm.$valid)">
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(true)">
                 <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                 Update
             </button>
@@ -184,8 +184,7 @@
                                                            class="form-control"
                                                            ng-model="item.ScheduleDate"
                                                            datepicker-popup="MMM dd, yyyy"
-                                                           is-open="item.sopened"
-                                                           required>
+                                                           is-open="item.sopened">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default"
                                                                 ng-click="vm.sopen(item,$event)">
@@ -198,10 +197,10 @@
                                                 <select class="form-control"
                                                         id="cmbUnitOfMeasure"
                                                         name="cmbUnitOfMeasure"
-                                                        ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.MOUID}"
+                                                        ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.UOMID}"
                                                         ng-model="item.cmbUnitOfMeasure"
                                                         ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
-                                                        ng-change="item.MOUID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+                                                        ng-change="item.UOMID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
 
                                             </td>
                                             <td>

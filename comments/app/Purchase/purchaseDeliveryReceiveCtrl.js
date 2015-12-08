@@ -29,6 +29,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -46,6 +47,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -59,6 +61,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -73,6 +76,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -86,6 +90,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -98,21 +103,27 @@
 
         //Get All Data List
         function GetList() {
-            purchaseDeliveryReceiveResource.query(function (data) {
+            purchaseDeliveryReceiveResource.query().$promise.then(function (data) {
                 vm.purchaseDeliveryReceives = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save purchaseDeliveryReceive
         vm.Save = function (isValid) {
             if (isValid) {
-                purchaseDeliveryReceiveResource.save(vm.purchaseDeliveryReceive,
+                purchaseDeliveryReceiveResource.save(vm.purchaseDeliveryReceive).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.purchaseDeliveryReceive = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Load Failed!");
                     });
             }
             else {
@@ -125,10 +136,13 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            purchaseDeliveryReceiveResource.get({ 'ID': id }, function (purchaseDeliveryReceive) {
+            purchaseDeliveryReceiveResource.get({ 'ID': id }).$promise.then(function (purchaseDeliveryReceive) {
                 vm.purchaseDeliveryReceive = purchaseDeliveryReceive;
                 vm.ViewMode(3);
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -136,12 +150,16 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                purchaseDeliveryReceiveResource.update({ 'ID': vm.purchaseDeliveryReceive.PurchaseDeliveryReceiveID }, vm.purchaseDeliveryReceive);
+                purchaseDeliveryReceiveResource.update({ 'ID': vm.purchaseDeliveryReceive.PurchaseDeliveryReceiveID }, vm.purchaseDeliveryReceive).$promise.then(function () {
                 vm.purchaseDeliveryReceives = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -149,10 +167,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.purchaseDeliveryReceive.$delete({ 'ID': vm.purchaseDeliveryReceive.PurchaseDeliveryReceiveID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+          //  vm.purchaseDeliveryReceive.$delete({ 'ID': vm.purchaseDeliveryReceive.PurchaseDeliveryReceiveID });
+            purchaseDeliveryReceiveResource.delete({ 'ID': vm.purchaseDeliveryReceive.PurchaseDeliveryReceiveID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }
