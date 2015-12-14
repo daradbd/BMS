@@ -431,9 +431,7 @@
         //Save salesOrder
         vm.SaveSales = function (isValid) {
             if (isValid) {
-               
-                
-                
+
                 vm.salesOrder.TaxAmount = vm.Totaltax;
                 vm.salesOrder.DiscountAmount = vm.TotlaDiscount;
                 vm.salesOrder.GrandTotal = vm.GTotal;
@@ -550,6 +548,35 @@
 
         };
 
+        //vm.SaveProjectSideBranch = function (isValid) {
+        //    if (isValid) {
+        //        vm.companyBranch.CompanyID = vm.cmbCompany.CompanyID;
+        //        vm.companyBranch.ParentBranchID = vm.cmbParentBranch.CompanyBranchID;
+        //        vm.companyBranch.CompanyBranchTypeID = vm.cmbCompanyBranchTypes.CompanyBranchTypeID;
+        //        vm.companyBranch.CompanyBranchCategoryID = 5;
+        //        vm.companyBranch.CountryID = vm.cmbcountrys.CountryID;
+        //        vm.companyBranch.CityID = vm.cmbCitys.CityID;
+        //        vm.companyBranch.LanguageID = vm.cmbLanguages.LanguageID;
+        //        vm.companyBranch.CurrencyID = vm.cmbCurrencys.CurrencyID;
+
+        //        companyBranchResource.save(vm.companyBranch).$promise.then(
+        //            function (data, responseHeaders) {
+        //                GetList();
+        //                vm.companyBranch = null;
+        //                toastr.success("Save Successful");
+        //            }, function (error) {
+        //                // error handler
+        //                toastr.error("Data Save Failed!");
+        //            });
+        //    }
+        //    else {
+
+        //        toastr.error("Form is not valid");
+        //    }
+
+
+        //}
+
 
         //Get Single Record
         vm.Get = function (id) {
@@ -622,6 +649,7 @@
         vm.GetProjectSetup = function (id) {
             projectSetupResource.get({ 'ID': id }).$promise.then(function (projectSetup) {
                 vm.projectSetup = projectSetup;
+                vm.cmbProjectManager = { CollaboratorID: vm.projectSetup.ProjectManagerID };
                 vm.HasProjectSide = (vm.projectSetup.ProjectSideID == null ? false : true);
                 if (vm.projectSetup.ProjectSideID != null)
                 {

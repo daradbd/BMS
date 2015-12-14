@@ -138,7 +138,7 @@ namespace BMS
                         "~/app/Purchase/purchaseDeliveryReceiveCtrl.js",
                         "~/app/Purchase/purchaseOrderCategoryCtrl.js",
 
-
+                        "~/app/Resources/uploadFileCtrl.js",
 
                        "~/app/Sales/salesQuotationCtrl.js",
                        "~/app/Sales/salesDeliveryCtrl.js",
@@ -182,6 +182,7 @@ namespace BMS
                 "~/common/directive/dirContextMenu.js",
                 "~/common/directive/dirSplitter.js",
                 "~/common/directive/dirRTCurrency.js",
+                "~/common/directive/ng-file-upload-all.js",
                 "~/common/directive/dirPrint.js"));
 
 
@@ -239,6 +240,9 @@ namespace BMS
                         "~/common/services/requestForQuotationDescriptionResource.js",
                         "~/common/services/purchaseOrderResource.js",
                         "~/common/services/purchaseOrderDescriptionResource.js",
+
+                        "~/common/services/uploadFileResource.js",
+
 
                         "~/common/services/purchaseDeliveryReceiveResource.js",
                         "~/common/services/purchaseDeliveryReceiveDescriptionResource.js",

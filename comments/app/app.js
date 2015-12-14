@@ -57,6 +57,7 @@
                         url: "/comments",
                         templateUrl: "app/TestModule/Comments.html",
                         controller: "commentListCtrl as vm",
+                       
                         resolve: {
                           
                         }
@@ -336,6 +337,7 @@
                         url: "/salesBill",
                         templateUrl: "app/Sales/salesBill.html",
                         controller: "salesBillCtrl as vm"
+                        
                     })
                     //moneyRequisitionRequest
                     .state("moneyRequisitionRequest", {

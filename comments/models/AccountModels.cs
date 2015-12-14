@@ -25,6 +25,7 @@ using BMS.Models.Expenses;
 using BMS.Models.Production;
 using BMS.Models.HR.Holiday;
 using BMS.Models.Holiday.GeneralHoliday;
+using BMS.Models.Resources;
 
 namespace BMS.Models
 {
@@ -225,6 +226,8 @@ namespace BMS.Models
         public DbSet<ProductCostingDescription> ProductCostingDescriptions { get; set; }
 
         public DbSet<ProductCosting> ProductCostings { get; set; }
+
+        public DbSet<UploadFile> UploadFiles { get; set; }
 
     }
 

@@ -27,6 +27,7 @@
         public long? UOMID { get; set; }
 
         public float? DeliveredQuantity { get; set; }
+        public float? ReceivedQuantity { get; set; }
 
         public DateTime ScheduleDate { get; set; }
 

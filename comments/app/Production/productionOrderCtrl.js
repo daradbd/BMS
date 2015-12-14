@@ -32,6 +32,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
         vm.date = new Date();
         vm.date1Open = false;
 
@@ -83,6 +84,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -96,6 +98,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -110,6 +113,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -123,6 +127,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -137,9 +142,12 @@
         }
         GetUnitOfMeasures();
         function GetUnitOfMeasures() {
-            unitOfMeasureResource.query(function (data) {
+            unitOfMeasureResource.query().$promise.then(function (data) {
                 vm.UnitOfMeasures = data;
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -157,20 +165,26 @@
 
         //Get All Data List
         function GetWorkStationList() {
-            companyBranchResource.query(function (data) {
+            companyBranchResource.query().$promise.then(function (data) {
                 vm.companyBranchs = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
         GetList();
 
         //Get All Data List
         function GetList() {
-            productionOrderResource.query(function (data) {
+            productionOrderResource.query().$promise.then(function (data) {
                 vm.productionOrders = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -180,12 +194,15 @@
                 vm.productionOrder.ReferenceID = vm.salesOrder.SalesOrderID;
                 vm.productionOrder.ReferenceTypeID = 1;
                 vm.productionOrder.ProjectID = vm.salesOrder.ProjectID;
-                productionOrderResource.save(vm.productionOrder,
+                productionOrderResource.save(vm.productionOrder).$promise.then(
                     function (data, responseHeaders) {
                         vm.productionOrder = data;
                         vm.SaveproductionOrderDescriptionResource();
                         GetList();
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -223,9 +240,12 @@
                 };
 
 
-                productionOrderDescriptionResource.save(productionOrderInfo,
+                productionOrderDescriptionResource.save(productionOrderInfo).$promise.then(
                 function (data, responseHeaders) {
 
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Save Failed!");
                 });
             })
 
@@ -234,17 +254,20 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            productionOrderResource.get({ 'ID': id }, function (productionOrder) {
+            productionOrderResource.get({ 'ID': id }).$promise.then(function (productionOrder) {
                 vm.productionOrder = productionOrder;
                 GetProductionOrderDescription(vm.productionOrder.ProductionOrderID)
                 vm.ViewMode(3);
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Get Single Record
         function GetSalesOrder(id) {
-            salesOrderResource.get({ 'ID': id }, function (salesOrder) {
+            salesOrderResource.get({ 'ID': id }).$promise.then(function (salesOrder) {
                 vm.salesOrder = salesOrder;
                 
                 vm.GetProjectSetup(vm.salesOrder.ProjectID);
@@ -253,13 +276,16 @@
                // CheckDetails();
                 
                 vm.ViewMode(1);
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Get Single Record
         vm.GetProjectSetup = function (id) {
-            projectSetupResource.get({ 'ID': id }, function (projectSetup) {
+            projectSetupResource.get({ 'ID': id }).$promise.then(function (projectSetup) {
                 vm.projectSetup = projectSetup;
                 //vm.HasProjectSide = (vm.projectSetup.ProjectSideID == null ? false : true);
                 //vm.GetProjectSide(vm.projectSetup.ProjectSideID);
@@ -270,19 +296,25 @@
       //  GetSalesOrderDescription(1);
         function GetSalesOrderDescription(salesOrderID) {
 
-            salesOrderDescriptionResource.query({ '$filter': 'SalesOrderID eq ' + salesOrderID }, function (data) {
+            salesOrderDescriptionResource.query({ '$filter': 'SalesOrderID eq ' + salesOrderID }).$promise.then(function (data) {
                 vm.SalesOrderDescription.salesOrderDesc = data;
                 vm.productionOrderDescription.productionOrderDesc= data;
-                toastr.success("Data function Load Successful", "Form Load");
+                //toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
         function GetProductionOrderDescription(productionOrderID) {
 
-            productionOrderDescriptionResource.query({ '$filter': 'ProductionOrderID eq ' + productionOrderID }, function (data) {
+            productionOrderDescriptionResource.query({ '$filter': 'ProductionOrderID eq ' + productionOrderID }).$promise.then(function (data) {
                 vm.productionOrderDescription.productionOrderDesc = data;
                 
-                toastr.success("Data function Load Successful", "Form Load");
+                //toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
@@ -298,13 +330,17 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                productionOrderResource.update({ 'ID': vm.productionOrder.ProductionOrderID }, vm.productionOrder);
+                productionOrderResource.update({ 'ID': vm.productionOrder.ProductionOrderID }, vm.productionOrder).$promise.then(function () {
                 vm.SaveproductionOrderDescriptionResource();
                // vm.productionOrders = null;
                 vm.ViewMode(3);
                 GetList();
-                toastr.success("Data Update Successful", "Form Update");
-            }
+                //toastr.success("Data Update Successful", "Form Update");
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -312,10 +348,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.productionOrder.$delete({ 'ID': vm.productionOrder.productionOrderID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.productionOrder.$delete({ 'ID': vm.productionOrder.productionOrderID });
+            productionOrderResource.delete({ 'ID': vm.productionOrder.productionOrderID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

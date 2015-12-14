@@ -24,6 +24,8 @@
 
         public float? Quantity { get; set; }
 
+        public float? ReceivedQuantity { get; set; }
+
         public long? UOMID { get; set; }
 
         public DateTime ScheduleDate { get; set; }

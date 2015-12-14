@@ -27,9 +27,12 @@
         vm.ListView = true;
         vm.DetailsView = false
         vm.EditView = false;
-        
-        GetSalesOrder($rootScope.SOrderID);
-        $rootScope.SOrderID = 0;
+        if ($rootScope.SOrderID > 0)
+        {
+            GetSalesOrder($rootScope.SOrderID);
+            $rootScope.SOrderID = 0;
+        }
+
         // Action Button Control Variable //
         vm.SaveButton = false;
         vm.EditButton = false;
@@ -152,9 +155,10 @@
             if (isValid) {
                 salesDeliveryResource.save(vm.salesDelivery).$promise.then(
                     function (data, responseHeaders) {
+                        vm.salesDelivery = data;
                         vm.SaveDelivery();
                         GetList();
-                        vm.salesDelivery = null;
+                        //vm.salesDelivery = null;
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -214,7 +218,10 @@
         vm.Get = function (id) {
             salesDeliveryResource.get({ 'ID': id }).$promise.then(function (salesDelivery) {
                 vm.salesDelivery = salesDelivery;
-                vm.ViewMode(1);
+
+                vm.salesDelivery.CollaboratorName = vm.salesDelivery.Collaborator.Name;
+                vm.GetSalesOrderDesc(vm.salesDelivery.SalesDeliveryID);
+                vm.ViewMode(3);
                 //toastr.success("Data Load Successful", "Form Load");
             }, function (error) {
                 // error handler
@@ -226,6 +233,7 @@
         function GetSalesOrder (id) {
             salesOrderResource.get({ 'ID': id }).$promise.then(function (salesOrder) {
                 vm.salesOrder = salesOrder;
+                vm.salesDelivery.Collaborator = vm.salesOrder.Collaborator;
                 vm.salesDelivery.SalesOrderID = vm.salesOrder.SalesOrderID;
                 vm.salesDelivery.ProjectID = vm.salesOrder.ProjectID;
                 vm.salesDelivery.CustomerID = vm.salesOrder.CustomerID;
@@ -246,18 +254,29 @@
 
             salesOrderDescriptionResource.query({ '$filter': 'SalesOrderID eq ' + salesOrderID }).$promise.then(function (data) {
                 vm.SalesDeliveryDescription.salesDeliveryDesc = data;
-                toastr.success("Data function Load Successful", "Form Load");
+               // toastr.success("Data function Load Successful", "Form Load");
             }, function (error) {
                 // error handler
                 toastr.error("Data Load Failed!");
             })
         }
 
+        vm.GetSalesOrderDesc = function (SalesDeliveryID) {
+
+            salesDeliveryDescriptionResource.query({ '$filter': 'SalesDeliveryID eq ' + SalesDeliveryID }).$promise.then(function (data) {
+                vm.SalesDeliveryDescription.salesDeliveryDesc = data;
+               // toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            })
+        }
 
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                salesDeliveryResource.update({ 'ID': vm.salesDelivery.salesDeliveryID }, vm.salesDelivery).$promise.then(function () {
+                salesDeliveryResource.update({ 'ID': vm.salesDelivery.SalesDeliveryID }, vm.salesDelivery).$promise.then(function () {
+                vm.SaveDelivery();
                 vm.salesDeliverys = null;
                 vm.ViewMode(3);
                 GetList();

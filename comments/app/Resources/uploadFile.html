@@ -1,0 +1,37 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">I'm a modal!</h3>
+</div>
+<div class="modal-body">
+    <div>
+        <form novalidate name="f1" ng-submit="SaveFile()">
+            <div style="color: red">{{Message}}</div>
+            <table>
+                <tr>
+                    <td>Select File : </td>
+                    <td>
+                        <input type="file" name="file" accept="image/*" onchange="angular.element(this).scope().selectFileforUpload(this.files)" required />
+                        <span class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.file.$error.required">Image required!</span>
+                        <span class="error">{{FileInvalidMessage}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description : </td>
+                    <td>
+                        <input type="text" name="uFileDescription" ng-model="FileDescription" class="{{(IsFormSubmitted?'ng-dirty' + (f1.uFileDescription.$invalid?' ng-invalid':''):'')}}" autofocus />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Upload File" />
+                    </td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+    </div>
+<div class="modal-footer">
+
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

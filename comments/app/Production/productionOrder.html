@@ -1,301 +1,282 @@
-﻿<div class="row">
-    <div class="col-lg-4 breadcrumb-panel">
-
-        <ol class="breadcrumb">
-
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Library</a></li>
-            <li class="active"><a href="#">Data</a></li>
-        </ol>
-
-    </div>
-
-    <div class="col-lg-3 title-panel "><h4>ProductionOrder</h4></div>
-
-    <div class="col-lg-3 search-panel">
-        <div class="input-group">
-            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-            </span>
+﻿    <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Production Order
+        <small>Form</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Production</a></li>
+        <li class="active">Production Order</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <form name="productionOrderForm" novalidate>
+        <div class="row">
+            <div class="col-lg-12 action-botton">
+                <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    New
+                </button>
+                <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(productionOrderForm.$valid)" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    Save
+                </button>
+                <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    Edit
+                </button>
+                <button type="button" class="btn btn-app btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(true)">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    Update
+                </button>
+                <button type="button" class="btn btn-app btn-default " ng-print print-element-id="printThisElement">
+                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                    Print
+                </button>
+                <button type="button" ng-show="vm.DeleteButton" ng-really-message="Are you sure ?" ng-really-click="vm.Delete()" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    Delete
+                </button>
+                <button type="button" ng-show="vm.CancelButton" ng-click="vm.ViewMode(2)" class="btn btn-app btn-primary">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Cancel
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="col-lg-2 button-panel">
-        <!-- /input-group -->
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary active">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked>
-                <span class="glyphicon glyphicon-stats"></span>
-            </label>
-            <label class="btn btn-primary">
-                <input type="radio" name="options" id="option2" autocomplete="off">
-                <span class="glyphicon glyphicon-credit-card"></span>
-            </label>
-            <label class="btn btn-primary">
-                <input type="radio" name="options" id="option3" autocomplete="off">
-                <span class="glyphicon glyphicon-tasks"></span>
-            </label>
-        </div>
-    </div>
-</div>
-<form name="productionOrderForm" novalidate>
-    <div class="row">
-        <div class="col-lg-12 action-botton">
-            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
-                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                New
-            </button>
-            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(productionOrderForm.$valid)" class="btn btn-default ">
-                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                Save
-            </button>
-            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                Edit
-            </button>
-            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(true)">
-                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-                Update
-            </button>
-            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
-                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                Print
-            </button>
-            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                Delete
-            </button>
-            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                Cancel
-            </button>
-        </div>
-    </div>
 
 
-    <div class="row ">
-        <div class="col-lg-12 panel panel-default">
-            <div class="panel-body">
-                <div class="entry-form" ng-show="vm.FromView">
-                    <div class="col-lg-12  fix">
-                        <div class="col-lg-6 animated fadeInRight">
-                            <div class="form-group"
-                                 ng-class="{'has-error':productionOrderForm.txtProductionOrderCode.$invalid
+        <div class="row ">
+            <div class="col-lg-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="entry-form" ng-show="vm.FromView">
+                        <div class="box-header with-border">
+                            <h3 class="box-title" ng-if="vm.SaveButton">Add New Production Order</h3>
+                            <h3 class="box-title" ng-if="vm.UpdateButton">Edit Production Order</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="col-lg-12  fix">
+                                <div class="col-lg-6 animated fadeInRight">
+                                    <div class="form-group"
+                                         ng-class="{'has-error':productionOrderForm.txtProductionOrderCode.$invalid
                                          && productionOrderForm.txtProductionOrderCode.$pristine}">
 
-                                <label for="txtProductionOrderCode">
-                                    ProductionOrderCode
-                                </label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="txtProductionOrderCode"
-                                       name="txtProductionOrderCode"
-                                       ng-model="vm.productionOrder.ProductionOrderCode"
-                                       placeholder="Enter ProductionOrderCode"
-                                       required>
-                            </div>
-                            <div class="form-group"
-                                 ng-class="{'has-error':productionOrderForm.txtProductionOrderName.$invalid
+                                        <label for="txtProductionOrderCode">
+                                            ProductionOrderCode
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtProductionOrderCode"
+                                               name="txtProductionOrderCode"
+                                               ng-model="vm.productionOrder.ProductionOrderCode"
+                                               placeholder="Enter ProductionOrderCode"
+                                               required>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':productionOrderForm.txtProductionOrderName.$invalid
                                          && productionOrderForm.txtProductionOrderName.$pristine}">
 
-                                <label for="txtProductionOrderName">
-                                    ProductionOrderName
-                                </label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="txtProductionOrderName"
-                                       name="txtProductionOrderName"
-                                       ng-model="vm.productionOrder.ProductionOrderName"
-                                       placeholder="Enter ProductionOrderName"
-                                       required>
-                            </div>
-                            <div class="form-group">
-
-                                <label for="cmbWorkStationID">
-                                    Work Station
-                                </label>
-                                <select class="form-control"
-                                        id="cmbWorkStationID"
-                                        name="cmbWorkStationID"
-                                        ng-model="vm.cmbWorkStation"
-                                        ng-options="WorkStation.CompanyBranchName for WorkStation in vm.companyBranchs track by WorkStation.CompanyBranchID"
-                                        ng-change="vm.productionOrder.WorkStationID=vm.cmbWorkStation.CompanyBranchID"></select>
-                            </div>
-
-
-                        </div>
-                        <div class="col-lg-6">
-
-                            <!--<table class="table table-hover fix">
-                                <thead>
-                                    <tr>
-                                        <th>SN</th>
-                                        <th>Product</th>
-                                        <th>Description</th>
-                                        <th>ScheduleDate</th>
-                                        <th>Quantity</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-scroll fix">
-                                    <tr ng:repeat="item in vm.SalesOrderDescription.salesOrderDesc" ng-dblclick="vm.PushItem(vm.GetQProductInfo(item.ProductID))" class="animated fadeInRight">
-                                        <td>#{{$index + 1}}</td>
-                                        <td>
-                                            <pre>{{item.Product.ProductName}}</pre>
-                                        </td>
-                                        <td>
-                                            <pre>{{item.Description}}</pre>
-                                        </td>
-                                        <td>
-                                            <pre>{{item.ScheduleDate | date:'dd-MM-yyyy'}}</pre>
-                                        </td>
-                                        <td>
-                                            <pre>{{item.Quantity}}</pre>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>-->
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <tabset>
-                            <tab heading="Order-Info" active="true">
-                                <div class="col-lg-12">
-                                    <div class=" panel panel-primary" ng:repeat="(key, value) in vm.productionOrderDescription.productionOrderDesc | groupBy:'SalesSectionID'">
-                                        <div class="panel-heading">
-                                            <pre>{{value[0].SalesSectionName}}</pre>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div ng:repeat="(keys, items) in value | groupBy:'ProductID'">
-                                                <div>
-                                                    <button type="button" ng-click="vm.PushItem(vm.GetQProductInfo(keys,items[0].SalesSectionID))" class="btn btn-default">
-                                                        <span class="glyphicon glyphicon-plus"></span>
-                                                    </button>
-                                                    {{ vm.GetQProductInfo(keys,items[0].SalesSectionID).Product.ProductName }} [{{ vm.GetQProductInfo(keys,items[0].SalesSectionID).Quantity }}]
-                                                    <pre><p>{{ vm.GetQProductInfo(keys,items[0].SalesSectionID).Description }}</p></pre>
-                                                </div>
-                                                <table class="table table-hover">
-                                                    <tr>
-
-                                                        <th style="display:none;">Product</th>
-                                                        <th>UOM</th>
-                                                        <th>Quantity</th>
-                                                        <th>Offer Date</th>
-                                                        <th>Schedule Date</th>
-                                                        <th></th>
-                                                    </tr>
-                                                    <tr ng:repeat="item in items">
-                                                        <td style="display:none;">
-                                                            <select class="form-control" ng-model="item.cmbProductID"
-                                                                    ng-init="item.cmbProductID={ProductID:item.ProductID}"
-                                                                    ng-options="product.ProductName for product in vm.products track by product.ProductID"></select>
-                                                        </td>
-                                                        <td>
-                                                            <select class="form-control"
-                                                                   
-                                                                  
-                                                                    ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.UOMID}"
-                                                                    ng-model="item.cmbUnitOfMeasure"
-                                                                    ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
-                                                                    ng-change="item.UOMID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
-
-                                                        </td>
-
-                                                        <td><input class="form-control" ng:model="item.POrderQuantity" ng:required ng:validate="number" size="6"></td>
-                                                        <td>
-                                                            <p class="input-group">
-                                                                <input type="text"
-                                                                       class="form-control"
-                                                                       ng-model="item.OfferDate"
-                                                                       uib-datepicker-popup="dd.MM.yyyy"
-                                                                       is-open="item.Oopened">
-                                                                <span class="input-group-btn">
-                                                                    <button class="btn btn-default"
-                                                                            ng-click="vm.Oopen(item,$event)">
-                                                                        <i class="glyphicon glyphicon-calendar" />
-                                                                    </button>
-                                                                </span>
-                                                            </p>
-
-                                                        </td>
-                                                        <td>
-                                                            <p class="input-group">
-                                                                <input type="text"
-                                                                       class="form-control"
-                                                                       ng-model="item.ScheduleDate"
-
-                                                                       uib-datepicker-popup
-                                                                       is-open="item.sopened">
-                                                                <span class="input-group-btn">
-                                                                    <button class="btn btn-default"
-                                                                            ng-click="vm.sopen(item,$event)">
-                                                                        <i class="glyphicon glyphicon-calendar" />
-                                                                    </button>
-                                                                </span>
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr></tr>
-                                                </table>
-                                            </div>
-
-                                        </div>
+                                        <label for="txtProductionOrderName">
+                                            ProductionOrderName
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtProductionOrderName"
+                                               name="txtProductionOrderName"
+                                               ng-model="vm.productionOrder.ProductionOrderName"
+                                               placeholder="Enter ProductionOrderName"
+                                               required>
                                     </div>
-                                </div><!--//-->
-                            </tab>
-                            </tabset>
+                                    <div class="form-group">
+
+                                        <label for="cmbWorkStationID">
+                                            Work Station
+                                        </label>
+                                        <select class="form-control"
+                                                id="cmbWorkStationID"
+                                                name="cmbWorkStationID"
+                                                ng-model="vm.cmbWorkStation"
+                                                ng-options="WorkStation.CompanyBranchName for WorkStation in vm.companyBranchs track by WorkStation.CompanyBranchID"
+                                                ng-change="vm.productionOrder.WorkStationID=vm.cmbWorkStation.CompanyBranchID"></select>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-lg-6">
+
+                                   
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <tabset>
+                                    <tab heading="Order-Info" active="true">
+                                        <div class="col-lg-12">
+                                            <div class=" box box-info" ng:repeat="(key, value) in vm.productionOrderDescription.productionOrderDesc | groupBy:'SalesSectionID'">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">{{value[0].SalesSectionName}}</h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                                                    </div><!-- /.box-tools -->
+                                                </div>
+                                                <div class="box-body">
+                                                    <div ng:repeat="(keys, items) in value | groupBy:'ProductID'">
+                                                        <div>
+                                                            <!--<button type="button" ng-click="vm.PushItem(vm.GetQProductInfo(keys,items[0].SalesSectionID))" class="btn btn-default">
+                                                                <span class="glyphicon glyphicon-plus"></span>
+                                                            </button>-->
+                                                            {{ vm.GetQProductInfo(keys,items[0].SalesSectionID).Product.ProductName }} <small class="label pull-right bg-yellow">{{ vm.GetQProductInfo(keys,items[0].SalesSectionID).Quantity }}</small>
+                                                            <pre>{{ vm.GetQProductInfo(keys,items[0].SalesSectionID).Description }}</pre>
+                                                        </div>
+                                                        <table class="table table-hover">
+                                                            <tr>
+
+                                                                <th style="display:none;">Product</th>
+                                                                <th>UOM</th>
+                                                                <th>Quantity</th>
+                                                                <th>Offer Date</th>
+                                                                <th>Schedule Date</th>
+                                                                <th></th>
+                                                            </tr>
+                                                            <tr ng:repeat="item in items">
+                                                                <td style="display:none;">
+                                                                    <select class="form-control" ng-model="item.cmbProductID"
+                                                                            ng-init="item.cmbProductID={ProductID:item.ProductID}"
+                                                                            ng-options="product.ProductName for product in vm.products track by product.ProductID"></select>
+                                                                </td>
+                                                                <td>
+                                                                    <select class="form-control"
+                                                                            ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.UOMID}"
+                                                                            ng-model="item.cmbUnitOfMeasure"
+                                                                            ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
+                                                                            ng-change="item.UOMID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+
+                                                                </td>
+
+                                                                <td><input class="form-control" ng:model="item.POrderQuantity" ng:required ng:validate="number" size="6"></td>
+                                                                <td>
+                                                                    <p class="input-group">
+                                                                        <input type="text"
+                                                                               class="form-control"
+                                                                               ng-model="item.OfferDate"
+                                                                               uib-datepicker-popup="dd.MM.yyyy"
+                                                                               is-open="item.Oopened">
+                                                                        <span class="input-group-btn">
+                                                                            <button class="btn btn-default"
+                                                                                    ng-click="vm.Oopen(item,$event)">
+                                                                                <i class="glyphicon glyphicon-calendar" />
+                                                                            </button>
+                                                                        </span>
+                                                                    </p>
+
+                                                                </td>
+                                                                <td>
+                                                                    <p class="input-group">
+                                                                        <input type="text"
+                                                                               class="form-control"
+                                                                               ng-model="item.ScheduleDate"
+                                                                               uib-datepicker-popup
+                                                                               is-open="item.sopened">
+                                                                        <span class="input-group-btn">
+                                                                            <button class="btn btn-default"
+                                                                                    ng-click="vm.sopen(item,$event)">
+                                                                                <i class="glyphicon glyphicon-calendar" />
+                                                                            </button>
+                                                                        </span>
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr></tr>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div><!--//-->
+                                    </tab>
+                                </tabset>
+                            </div>
                         </div>
                     </div>
-                </div>
-        </div>
 
-                <div class="view-form" ng-show="vm.DetailsView">
-                    <div class="col-lg-6 animated fadeInRight">
+                    <div class="view-form" ng-show="vm.DetailsView">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Production Order Details</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="col-lg-6 animated fadeInRight">
 
 
+                            </div>
+                            <div class="col-lg-6">
+
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-6">
 
-                    </div>
-                </div>
+                    <div class="col-lg-12 box " ng-show="vm.ListView">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Production Order List</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="dataTables_length" id="example1_length">
+                                        <label>
+                                            Show <select ng-init="vm.num=5" ng-model="vm.num" class="form-control input-sm">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> entries
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div id="example1_filter" class="dataTables_filter">
+                                        <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="searchText"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 animated fadeInRight">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="printThisElement">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Production Order</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Remarks</th>
+                                                <th class="noPrint">Preview</th>
+                                            </tr>
 
-                <div class="col-lg-12 list-form " ng-show="vm.ListView">
-                    <div class="col-lg-12 animated fadeInRight">
-                        <div class="table-responsive">
-                            <table class="table table-hover" id="printThisElement">
-                                <thead>
-                                    <tr>
-                                        <th>Code</th>
-                                        <th>Production Order</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Remarks</th>
-                                        <th class="noPrint">Edit</th>
-                                    </tr>
-
-                                </thead>
-                                <tbody>
-                                    <tr dir-paginate="productionOrder in vm.productionOrders|orderBy:'-ProductionOrderID'|filter:searchText| itemsPerPage: 5">
-                                        <td>{{productionOrder.ProductionOrderCode  | uppercase}}</td>
-                                        <td>{{productionOrder.ProductionOrderName}}</td>
-                                        <td>{{productionOrder.Date | date:"dd-MMM-yyyy"}}</td>
-                                        <td>{{productionOrder.Date | date:"h:mm a"}}</td>
-                                        <td>{{productionOrder.Remarks}}</td>
-                                        <td class="noPrint">
-                                            <button type="button" ng-click="vm.Get(productionOrder.ProductionOrderID)" class="btn btn-default ">
-                                                View
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="productionOrder in vm.productionOrders|orderBy:'-ProductionOrderID'|filter:searchText| itemsPerPage: vm.num">
+                                                <td>{{productionOrder.ProductionOrderCode  | uppercase}}</td>
+                                                <td>{{productionOrder.ProductionOrderName}}</td>
+                                                <td>{{productionOrder.Date | date:"dd-MMM-yyyy"}}</td>
+                                                <td>{{productionOrder.Date | date:"h:mm a"}}</td>
+                                                <td>{{productionOrder.Remarks}}</td>
+                                                <td class="noPrint">
+                                                    <button type="button" ng-click="vm.Get(productionOrder.ProductionOrderID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
-
+    </form>
+</section><!-- /.content -->

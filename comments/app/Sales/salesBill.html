@@ -308,6 +308,44 @@
 
                                         </div>
                                     </tab>
+                                    <tab heading="Message">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="txtMessage">
+                                                    Dear Sir,
+                                                </label>
+                                                <textarea class="form-control"
+                                                          id="txtMessage"
+                                                          name="txtMessage"
+                                                          ng-model="vm.salesBill.Message"
+                                                          rows=" 6"></textarea>
+                                            </div>
+                                        </div>
+                                    </tab>
+                                    <tab heading="Terms & Condition">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="txtTerms">
+                                                    Terms
+                                                </label>
+                                                <textarea class="form-control"
+                                                          id="txtTerms"
+                                                          name="txtTerms"
+                                                          ng-model="vm.salesBill.Terms"
+                                                          rows=" 6"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="txtTermsOfPayment">
+                                                    Terms of Payment
+                                                </label>
+                                                <textarea class="form-control"
+                                                          id="txtTermsOfPayment"
+                                                          name="txtTermsOfPayment"
+                                                          ng-model="vm.salesBill.TermsOfPayment"
+                                                          rows=" 6"></textarea>
+                                            </div>
+                                        </div>
+                                    </tab>
                                 </tabset>
                             </div>
                         </div>
@@ -315,7 +353,7 @@
 
                     <div class="view-form" ng-show="vm.DetailsView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">City Details</h3>
+                            <h3 class="box-title">SalesBill Details</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <table id="testTable" width="642">
@@ -446,7 +484,7 @@
                                             {{item.UnitPrice}}
                                         </td>
                                         <td style="vertical-align: middle; background-color: #A9A9A9; width: 75px; border: 0.5px solid black;">
-                                            {{vm.SubTotal(item)}}
+                                            {{item.UnitPrice*item.BillQuantity}}
                                         </td>
                                         <td></td>
                                     </tr>
@@ -462,6 +500,32 @@
                                     <td colspan="4"></td>
                                     <td>&nbsp;</td>
                                 </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td style="text-align:right;">Sub Total: </td>
+                                    <td style="text-align:right;">{{vm.QuotationSubTotal()|currency: " " : 2}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td style="text-align:right;">Discount: </td>
+                                    <td style="text-align:right;">{{vm.salesBill.DiscountAmount|currency: " " : 2}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td style="text-align:right;">Tax: </td>
+                                    <td style="text-align:right;">{{vm.salesBill.TaxAmount|currency: " " : 2}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td style="text-align:right;">Shipping: </td>
+                                    <td style="text-align:right;">{{vm.salesBill.Shipping|currency: " " : 2}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td style="text-align:right;">GrandTotal: </td>
+                                    <td style="text-align:right;">{{vm.salesBill.GrandTotal|currency: " " : 2}}</td>
+                                </tr>
+                                <tr></tr>
                                 <tr>
                                     <td colspan="6"></td>
                                 </tr>

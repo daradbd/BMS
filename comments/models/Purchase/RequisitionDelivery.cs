@@ -42,6 +42,8 @@
 
         public int? StatusID { get; set; }
 
+        public bool? IsReceived { get; set; }
+
         public bool? IsDeleted { get; set; }
 
         public int? InsertBy { get; set; }

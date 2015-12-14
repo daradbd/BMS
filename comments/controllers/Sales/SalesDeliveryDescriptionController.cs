@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Production;
 using BMS.Models;
+using System.Web.Http.OData.Query;
 
 namespace BMS.Controllers.Sales
 {
@@ -18,10 +19,11 @@ namespace BMS.Controllers.Sales
         private UsersContext db = new UsersContext();
 
         // GET api/SalesDeliveryDescription
-        public IEnumerable<SalesDeliveryDescription> GetSalesDeliveryDescriptions()
+        public IEnumerable<SalesDeliveryDescription> GetSalesDeliveryDescriptions(ODataQueryOptions Options)
         {
-            var salesdeliverydescriptions = db.SalesDeliveryDescriptions.Include(s => s.Product).Include(u=>u.UOM);
-            return salesdeliverydescriptions.AsEnumerable();
+           // var salesdeliverydescriptions = db.SalesDeliveryDescriptions.Include(s => s.Product).Include(u=>u.UOM);
+            return Options.ApplyTo(db.SalesDeliveryDescriptions.AsQueryable().Include(s => s.Product).Include(u=>u.UOM)) as IEnumerable<SalesDeliveryDescription>;
+           
         }
 
         // GET api/SalesDeliveryDescription/5

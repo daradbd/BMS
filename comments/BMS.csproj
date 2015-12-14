@@ -274,6 +274,8 @@
     <Compile Include="Controllers\Purchase\RequestForQuotationDescriptionController.cs" />
     <Compile Include="Controllers\Purchase\RequisitionDeliveryController.cs" />
     <Compile Include="Controllers\Purchase\RequisitionDeliveryDescriptionController.cs" />
+    <Compile Include="Controllers\Resources\DataController.cs" />
+    <Compile Include="Controllers\Resources\UploadFileController.cs" />
     <Compile Include="Controllers\Sales\SalesBillCategoryController.cs" />
     <Compile Include="Controllers\Sales\SalesBillController.cs" />
     <Compile Include="Controllers\Sales\SalesBillDescriptionController.cs" />
@@ -540,6 +542,8 @@
     <Content Include="app\Purchase\requestForQuotationCtrl.js" />
     <Content Include="app\Purchase\requisitionDelivery.html" />
     <Content Include="app\Purchase\requisitionDeliveryCtrl.js" />
+    <Content Include="app\Resources\uploadFile.html" />
+    <Content Include="app\Resources\uploadFileCtrl.js" />
     <Content Include="app\Sales\salesBill.html" />
     <Content Include="app\Sales\salesBillCategory.html" />
     <Content Include="app\Sales\salesBillCategoryCtrl.js" />
@@ -595,9 +599,11 @@
     <Content Include="common\directive\dirSplitter.js" />
     <Content Include="common\directive\dirStpaModal.js" />
     <Content Include="common\directive\dirTreeview.js" />
+    <Content Include="common\directive\ng-file-upload-all.js" />
     <Content Include="common\factory\Excel.js" />
     <Content Include="common\filter\angular-filter.js" />
     <Content Include="common\filter\ngGroup.js" />
+    <Content Include="common\others\authenticate.js" />
     <Content Include="common\services\accCOAConfigResource.js" />
     <Content Include="common\services\accCOAMappingResource.js" />
     <Content Include="common\services\accCOAResource.js" />
@@ -690,6 +696,7 @@
     <Content Include="common\services\taxResource.js" />
     <Content Include="common\services\trialBalanceResource.js" />
     <Content Include="common\services\unitOfMeasureResource.js" />
+    <Content Include="common\services\uploadFileResource.js" />
     <Content Include="common\services\userAuthorizeResource.js" />
     <Content Include="common\services\voucherListResource.js" />
     <Content Include="common\services\voucherTypeResource.js" />
@@ -1775,6 +1782,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
