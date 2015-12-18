@@ -42,9 +42,9 @@
 
         public int? StatusID { get; set; }
 
-        public bool? IsDelivered { get; set; }
+        public bool IsDelivered { get; set; }
 
-        public bool? IsReceived { get; set; }
+        public bool IsReceived { get; set; }
 
         public bool? IsDeleted { get; set; }
 

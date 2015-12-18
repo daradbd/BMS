@@ -35,6 +35,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
         vm.ActionButton = false;
 
 
@@ -84,6 +85,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
                 vm.ActionButton = false;
             }
             if (activeMode == 2) //List View Mode
@@ -98,6 +100,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
                 vm.ActionButton = false;
             }
 
@@ -113,6 +116,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
                 vm.ActionButton = true;
             }
             if (activeMode == 4)//Edit View Mode
@@ -127,6 +131,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
                 vm.ActionButton = false;
             }
         }
@@ -147,10 +152,13 @@
         GetpurchaseOrderCategoryList();
         //Get All Data List
         function GetpurchaseOrderCategoryList() {
-            purchaseOrderCategoryResource.query(function (data) {
+            purchaseOrderCategoryResource.query().$promise.then(function (data) {
                 vm.purchaseOrderCategorys = data;
                
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -171,36 +179,48 @@
             unitOfMeasureResource.query(function (data) {
                 vm.UnitOfMeasures = data;
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetProductList();
         //Get All Data List
         function GetProductList() {
-            productResource.query(function (data) {
+            productResource.query().$promise.then(function (data) {
                 vm.products = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetSupplierList();
         //Get All Data List
         function GetSupplierList() {
-            collaboratorResource.query({ '$filter': 'IsSupplier eq true' }, function (data) {
+            collaboratorResource.query({ '$filter': 'IsSupplier eq true' }).$promise.then(function (data) {
                 vm.Suppliers = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetProjectList();
         //Get All Data List
         function GetProjectList() {
-            projectSetupResource.query(function (data) {
+            projectSetupResource.query().$promise.then(function (data) {
                 vm.Projects = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -208,22 +228,28 @@
 
         //Get All Data List
         function GetList() {
-            purchaseOrderResource.query(function (data) {
+            purchaseOrderResource.query().$promise.then(function (data) {
                 vm.purchaseOrders = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save purchaseOrder
         vm.Save = function (isValid) {
             if (isValid) {
-                purchaseOrderResource.save(vm.purchaseOrder,
+                purchaseOrderResource.save(vm.purchaseOrder).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.purchaseOrder = data;
                         vm.SavePurchaseOrder();
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -260,9 +286,12 @@
                 //vm.voucherList.Amount = value.Amount;
                 //vm.voucherList.DrCr = value.DrCr;
 
-                purchaseOrderDescriptionResource.save(PurchaseOrderInfo,
+                purchaseOrderDescriptionResource.save(PurchaseOrderInfo).$promise.then(
                 function (data, responseHeaders) {
 
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Load Failed!");
                 });
             })
 
@@ -273,7 +302,7 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            purchaseOrderResource.get({ 'ID': id }, function (purchaseOrder) {
+            purchaseOrderResource.get({ 'ID': id }).$promise.then(function (purchaseOrder) {
                 vm.purchaseOrder = purchaseOrder;
 
                 //vm.cmbSupplier = { CollaboratorID: vm.purchaseOrder.SupplierID };
@@ -288,22 +317,31 @@
                 }
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         vm.GetMaintainPurchaseQuotationDescription = function (maintainPurchaseQuotationID) {
 
-            maintainPurchaseQuotationDescriptionResource.query({ '$filter': 'MaintainPurchaseQuotationID eq ' + maintainPurchaseQuotationID }, function (data) {
+            maintainPurchaseQuotationDescriptionResource.query({ '$filter': 'MaintainPurchaseQuotationID eq ' + maintainPurchaseQuotationID }).$promise.then(function (data) {
                 vm.PurchaseOrderDescription.PurchaseOrderDesc = data;
                 toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
         vm.GetPurchaseOrderDescription = function (purchaseOrderID) {
 
-            purchaseOrderDescriptionResource.query({ '$filter': 'PurchaseOrderID eq ' + purchaseOrderID }, function (data) {
+            purchaseOrderDescriptionResource.query({ '$filter': 'PurchaseOrderID eq ' + purchaseOrderID }).$promise.then(function (data) {
                 vm.PurchaseOrderDescription.PurchaseOrderDesc = data;
                 toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
@@ -313,13 +351,17 @@
                 if (vm.purchaseOrder.ProcesStatusID == 10) {
                     vm.purchaseOrder.ProcesStatusID = 11;
                 }
-                purchaseOrderResource.update({ 'ID': vm.purchaseOrder.PurchaseOrderID }, vm.purchaseOrder);
+                purchaseOrderResource.update({ 'ID': vm.purchaseOrder.PurchaseOrderID }, vm.purchaseOrder).$promise.then(function () {
                 vm.SavePurchaseOrder();
                 vm.purchaseOrders = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -327,10 +369,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.purchaseOrder.$delete({ 'ID': vm.purchaseOrder.PurchaseOrderID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.purchaseOrder.$delete({ 'ID': vm.purchaseOrder.PurchaseOrderID });
+            purchaseOrderResource.delete({ 'ID': vm.purchaseOrder.PurchaseOrderID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

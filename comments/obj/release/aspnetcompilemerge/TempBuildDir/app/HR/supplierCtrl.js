@@ -38,44 +38,60 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
         GetSupplierType();
         function GetSupplierType() {
-            supplierTypeResource.query(function (data) {
+            supplierTypeResource.query().$promise.then(function (data) {
                 vm.SupplierTypes = data;
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
 
         }
 
         vm.selectCity = function (countryID) {
 
-            cityResource.query({ '$filter': 'CountryID eq ' + countryID }, function (data) {
+            cityResource.query({ '$filter': 'CountryID eq ' + countryID }).$promise.then(function (data) {
                 vm.citys = data;
                 toastr.success("Data function Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetLanguage();
         function GetLanguage() {
-            languageResource.query(function (data) {
+            languageResource.query().$promise.then(function (data) {
                 vm.Languages = data;
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
 
         }
 
         GetCurrency();
         function GetCurrency() {
-            currencyResource.query(function (data) {
+            currencyResource.query().$promise.then(function (data) {
                 vm.Currencys = data;
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
 
         }
         GetcountrysList();
         function GetcountrysList() {
-            countryResource.query(function (data) {
+            countryResource.query().$promise.then(function (data) {
                 vm.countrys = data;
                 toastr.success("Load country", "Country Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -93,6 +109,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -106,6 +123,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -120,6 +138,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -133,6 +152,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -145,10 +165,13 @@
 
         //Get All Data List
         function GetList() {
-            collaboratorResource.query({ '$filter': 'IsSupplier eq true' }, function (data) {
+            collaboratorResource.query({ '$filter': 'IsSupplier eq true' }).$promise.then(function (data) {
                 vm.collaborators = data;
                 toastr.success("Data function Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -162,11 +185,14 @@
                 vm.collaborator.SupplierTypeID = vm.cmbSupplierTypes.SupplierTypeID;
                 vm.collaborator.IsSupplier = true;
                
-                collaboratorResource.save(vm.collaborator,
+                collaboratorResource.save(vm.collaborator).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.collaborator = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Load Failed!");
                     });
             }
             else {
@@ -179,7 +205,7 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            collaboratorResource.get({ 'ID': id }, function (collaborator) {
+            collaboratorResource.get({ 'ID': id }).$promise.then(function (collaborator) {
                 vm.collaborator = collaborator;
 
                 vm.selectCity(vm.collaborator.CountryID);
@@ -193,6 +219,9 @@
 
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -206,12 +235,16 @@
                 vm.collaborator.CountryID = vm.cmbcountrys.CountryID;
                 vm.collaborator.SupplierTypeID = vm.cmbSupplierTypes.SupplierTypeID;
                 vm.collaborator.IsSupplier = true;
-                collaboratorResource.update({ 'ID': vm.collaborator.CollaboratorID }, vm.collaborator);
+                collaboratorResource.update({ 'ID': vm.collaborator.CollaboratorID }, vm.collaborator).$promise.then(function () {
                 vm.collaborators = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -219,10 +252,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.collaborator.$delete({ 'ID': vm.collaborator.CollaboratorID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.collaborator.$delete({ 'ID': vm.collaborator.CollaboratorID });
+            collaboratorResource.delete({ 'ID': vm.collaborator.CollaboratorID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

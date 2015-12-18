@@ -268,6 +268,8 @@
     <Compile Include="Controllers\Purchase\PurchaseOrderCategoryController.cs" />
     <Compile Include="Controllers\Purchase\PurchaseOrderController.cs" />
     <Compile Include="Controllers\Purchase\PurchaseOrderDescriptionController.cs" />
+    <Compile Include="Controllers\Purchase\PurchasePermitController.cs" />
+    <Compile Include="Controllers\Purchase\PurchasePermitDescriptionController.cs" />
     <Compile Include="Controllers\Purchase\PurchaseRequisitionController.cs" />
     <Compile Include="Controllers\Purchase\PurchaseRequisitionDescriptionController.cs" />
     <Compile Include="Controllers\Purchase\RequestForQuotationController.cs" />
@@ -379,6 +381,8 @@
     <Compile Include="Models\Purchase\PurchaseDeliveryReceiveDescription.cs" />
     <Compile Include="Models\Purchase\PurchaseOrder.cs" />
     <Compile Include="Models\Purchase\PurchaseOrderDescription.cs" />
+    <Compile Include="Models\Purchase\PurchasePermit.cs" />
+    <Compile Include="Models\Purchase\PurchasePermitDescription.cs" />
     <Compile Include="Models\Purchase\PurchaseRequisition.cs" />
     <Compile Include="Models\Purchase\PurchaseRequisitionDescription.cs" />
     <Compile Include="Models\Purchase\RequestForQuotation.cs" />
@@ -526,6 +530,8 @@
     <Content Include="app\Purchase\moneyRequisitionCtrl.js" />
     <Content Include="app\Purchase\moneyRequisitionRequest.html" />
     <Content Include="app\Purchase\moneyRequisitionRequestCtrl.js" />
+    <Content Include="app\Purchase\purchaseApproval.html" />
+    <Content Include="app\Purchase\purchaseApprovalCtrl.js" />
     <Content Include="app\Purchase\purchaseBill.html" />
     <Content Include="app\Purchase\purchaseBillCtrl.js" />
     <Content Include="app\Purchase\purchaseBillPayment.html" />
@@ -536,11 +542,15 @@
     <Content Include="app\Purchase\purchaseOrderCategory.html" />
     <Content Include="app\Purchase\purchaseOrderCategoryCtrl.js" />
     <Content Include="app\Purchase\purchaseOrderCtrl.js" />
+    <Content Include="app\Purchase\purchaseOrderList.html" />
+    <Content Include="app\Purchase\purchaseOrderListCtrl.js" />
     <Content Include="app\Purchase\purchaseRequisition.html" />
     <Content Include="app\Purchase\purchaseRequisitionCtrl.js" />
     <Content Include="app\Purchase\requestForQuotation.html" />
     <Content Include="app\Purchase\requestForQuotationCtrl.js" />
+    <Content Include="app\Purchase\requisitionReceive.html" />
     <Content Include="app\Purchase\requisitionDelivery.html" />
+    <Content Include="app\Purchase\requisitionReceiveCtrl.js" />
     <Content Include="app\Purchase\requisitionDeliveryCtrl.js" />
     <Content Include="app\Resources\uploadFile.html" />
     <Content Include="app\Resources\uploadFileCtrl.js" />
@@ -673,6 +683,8 @@
     <Content Include="common\services\purchaseOrderCategoryResource.js" />
     <Content Include="common\services\purchaseOrderDescriptionResource.js" />
     <Content Include="common\services\purchaseOrderResource.js" />
+    <Content Include="common\services\purchasePermitDescriptionResource.js" />
+    <Content Include="common\services\purchasePermitResource.js" />
     <Content Include="common\services\purchaseRequisitionDescriptionResource.js" />
     <Content Include="common\services\purchaseRequisitionResource.js" />
     <Content Include="common\services\requestForQuotationDescriptionResource.js" />

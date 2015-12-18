@@ -33,7 +33,10 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
         vm.SentToQuotationButton = false;
+
+
         vm.addItem = function () {
             vm.PurchaseRequisitionDescription.purchaseRequisitionDesc.unshift({ ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1 });
         }
@@ -81,6 +84,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -96,6 +100,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
                 vm.SentToQuotationButton = false;
             }
 
@@ -111,6 +116,7 @@
                 vm.EditButton = (vm.purchaseRequisition.ProcesStatusID == 1 ? true : false);
                 vm.UpdateButton = false;
                 vm.DeleteButton = (vm.purchaseRequisition.ProcesStatusID == 1 ? true : false);
+                vm.CancelButton = true;
                 vm.SentToQuotationButton =( vm.purchaseRequisition.ProcesStatusID ==1 ? true : false);
             }
             if (activeMode == 4)//Edit View Mode
@@ -125,6 +131,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = (vm.purchaseRequisition.ProcesStatusID == 1 ? true : false);
                 vm.DeleteButton = (vm.purchaseRequisition.ProcesStatusID == 1 ? true : false);
+                vm.CancelButton = true;
                 vm.SentToQuotationButton = false;
             }
         }
@@ -151,7 +158,7 @@
 
         GetUnitOfMeasures();
         function GetUnitOfMeasures() {
-            unitOfMeasureResource.query(function (data) {
+            unitOfMeasureResource.query().$promise.then(function (data) {
                 vm.UnitOfMeasures = data;
 
             });
@@ -161,7 +168,7 @@
 
         //Get All Data List
         function GetWorkStationList() {
-            companyBranchResource.query(function (data) {
+            companyBranchResource.query().$promise.then(function (data) {
                 vm.companyBranchs = data;
                 toastr.success("Data Load Successful", "Form Load");
 
@@ -171,7 +178,7 @@
         GetEmployeeList();
         //Get All Data List
         function GetEmployeeList() {
-            collaboratorResource.query({ '$filter': 'IsEmployee eq true' }, function (data) {
+            collaboratorResource.query({ '$filter': 'IsEmployee eq true' }).$promise.then(function (data) {
                 vm.Employees = data;
                 toastr.success("Data Load Successful", "Form Load");
 
@@ -181,7 +188,7 @@
         GetProductList();
         //Get All Data List
         function GetProductList() {
-            productResource.query(function (data) {
+            productResource.query().$promise.then(function (data) {
                 vm.products = data;
                 toastr.success("Data Load Successful", "Form Load");
 
@@ -192,7 +199,7 @@
         GetProjectList();
         //Get All Data List
         function GetProjectList() {
-            projectSetupResource.query(function (data) {
+            projectSetupResource.query().$promise.then(function (data) {
                 vm.Projects = data;
                 toastr.success("Data Load Successful", "Form Load");
 
@@ -204,7 +211,7 @@
 
         //Get All Data List
         function GetList() {
-            purchaseRequisitionResource.query(function (data) {
+            purchaseRequisitionResource.query().$promise.then(function (data) {
                 vm.purchaseRequisitions = data;
                 toastr.success("Data Load Successful", "Form Load");
 
@@ -215,7 +222,7 @@
         vm.Save = function (isValid) {
             if (isValid) {
                 vm.purchaseRequisition.ProcesStatusID = 1;
-                purchaseRequisitionResource.save(vm.purchaseRequisition,
+                purchaseRequisitionResource.save(vm.purchaseRequisition).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.purchaseRequisition = data;
@@ -241,7 +248,7 @@
                     ProjectID: vm.purchaseRequisition.ProjectID,
                     ProcesStatusID:4,
             };
-            requestForQuotationResource.save(requestForQuotation,
+                requestForQuotationResource.save(requestForQuotation).$promise.then(
                     function (data, responseHeaders) {
                         vm.requestForQuotation = data;
                         vm.purchaseRequisition.ProcesStatusID = 2;
@@ -263,10 +270,11 @@
                 // var TDate = new Date(vm.voucherList.TranDate);
 
                 var purchaseRequisitionInfo = {
+                    PurchaseRequisitionDescriptionID: value.PurchaseRequisitionDescriptionID,
                     PurchaseRequisitionID: vm.purchaseRequisition.PurchaseRequisitionID,
                     ProductID: value.ProductID,
                     Description: value.Description,
-                    MOUID: value.MOUID,
+                    UOMID: value.UOMID,
                     Quantity: value.Quantity,
                     ScheduleDate: value.ScheduleDate,
                 };
@@ -276,7 +284,7 @@
                 //vm.voucherList.Amount = value.Amount;
                 //vm.voucherList.DrCr = value.DrCr;
 
-                purchaseRequisitionDescriptionResource.save(purchaseRequisitionInfo,
+                purchaseRequisitionDescriptionResource.save(purchaseRequisitionInfo).$promise.then(
                 function (data, responseHeaders) {
 
                 });
@@ -289,7 +297,7 @@
         vm.Get = function (id) {
             vm.PurchaseRequisitionDescription = null;
             vm.PurchaseRequisitionDescription = { purchaseRequisitionDesc: [] };
-            purchaseRequisitionResource.get({ 'ID': id }, function (purchaseRequisition) {
+            purchaseRequisitionResource.get({ 'ID': id }).$promise.then(function (purchaseRequisition) {
                 vm.purchaseRequisition = purchaseRequisition;
                 vm.cmbEmployee = { CollaboratorID: vm.purchaseRequisition.EmployeeID };
                 vm.cmbProject = { ProjectID: vm.purchaseRequisition.ProjectID };
@@ -302,7 +310,7 @@
 
         vm.GetRequisitionDescription = function (purchaseRequisitionID) {
             
-            purchaseRequisitionDescriptionResource.query({ '$filter': 'PurchaseRequisitionID eq ' + purchaseRequisitionID }, function (data) {
+            purchaseRequisitionDescriptionResource.query({ '$filter': 'PurchaseRequisitionID eq ' + purchaseRequisitionID }).$promise.then(function (data) {
                 vm.PurchaseRequisitionDescription.purchaseRequisitionDesc = data;
                 toastr.success("Data function Load Successful", "Form Load");
             })
@@ -313,12 +321,17 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                purchaseRequisitionResource.update({ 'ID': vm.purchaseRequisition.PurchaseRequisitionID }, vm.purchaseRequisition);
+                purchaseRequisitionResource.update({ 'ID': vm.purchaseRequisition.PurchaseRequisitionID }, vm.purchaseRequisition).$promise.then(function () {
+                vm.SaveRequisition();
                 vm.purchaseRequisitions = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -326,10 +339,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.purchaseRequisition.$delete({ 'ID': vm.purchaseRequisition.purchaseRequisitionID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+           // vm.purchaseRequisition.$delete({ 'ID': vm.purchaseRequisition.purchaseRequisitionID });
+            purchaseRequisitionResource.delete({ 'ID': vm.purchaseRequisition.purchaseRequisitionID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

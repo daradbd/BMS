@@ -146,21 +146,27 @@
 
         //Get All Data List
         function GetList() {
-            ledgerSheetResource.query(function (data) {
+            ledgerSheetResource.query().$promise.then(function (data) {
                 vm.ledgerList = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save ledgerSheet
         vm.Save = function (isValid) {
             if (isValid) {
-                ledgerSheetResource.save(vm.ledgerSheet,
+                ledgerSheetResource.save(vm.ledgerSheet).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.ledgerSheet = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -175,12 +181,15 @@
         vm.Get = function (ledgers) {
             vm.ledgerSheets = null;
             var param = { 'ID': ledgers.COAID};
-            ledgerSheetResource.query(param, function (data) {
+            ledgerSheetResource.query().$promise.then(param, function (data) {
                 vm.ledgerSheets = data;
                 vm.cmbAccCOA = ledgers;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
                 console.log(JSON.stringify(vm.ledgerSheets));
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -199,12 +208,16 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                ledgerSheetResource.update({ 'ID': vm.ledgerSheet.ledgerSheetID }, vm.ledgerSheet);
+                ledgerSheetResource.update({ 'ID': vm.ledgerSheet.ledgerSheetID }, vm.ledgerSheet).$promise.then(function () {
                 vm.ledgerSheets = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -212,10 +225,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.ledgerSheet.$delete({ 'ID': vm.ledgerSheet.ledgerSheetID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+           // vm.ledgerSheet.$delete({ 'ID': vm.ledgerSheet.ledgerSheetID });
+            ledgerSheetResource.delete({ 'ID': vm.ledgerSheet.ledgerSheetID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

@@ -29,6 +29,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -46,6 +47,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -59,6 +61,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -73,6 +76,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -86,6 +90,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -96,10 +101,13 @@
         getCOAList();
         function getCOAList () {
 
-            accCOAResource.query({ '$filter': 'HasChild eq false' }, function (data) {
+            accCOAResource.query({ '$filter': 'HasChild eq false' }).$promise.then(function (data) {
                 vm.AccCOAs = data;
                 //toastr.success("Data function Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -107,10 +115,13 @@
 
         //Get All Data List
         function GetList() {
-            purchaseOrderCategoryResource.query(function (data) {
+            purchaseOrderCategoryResource.query().$promise.then(function (data) {
                 vm.purchaseOrderCategorys = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -118,11 +129,14 @@
         vm.Save = function (isValid) {
             if (isValid) {
                 vm.purchaseOrderCategory.COAID = vm.cmbCOAID.COAID;
-                purchaseOrderCategoryResource.save(vm.purchaseOrderCategory,
+                purchaseOrderCategoryResource.save(vm.purchaseOrderCategory).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.purchaseOrderCategory = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Load Failed!");
                     });
             }
             else {
@@ -135,10 +149,13 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            purchaseOrderCategoryResource.get({ 'ID': id }, function (purchaseOrderCategory) {
+            purchaseOrderCategoryResource.get({ 'ID': id }).$promise.then(function (purchaseOrderCategory) {
                 vm.purchaseOrderCategory = purchaseOrderCategory;
                 vm.ViewMode(3);
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -147,12 +164,16 @@
         vm.Update = function (isValid) {
             if (isValid) {
                 vm.purchaseOrderCategory.COAID = vm.cmbCOAID.COAID;
-                purchaseOrderCategoryResource.update({ 'ID': vm.purchaseOrderCategory.PurchaseOrderCategoryID }, vm.purchaseOrderCategory);
+                purchaseOrderCategoryResource.update({ 'ID': vm.purchaseOrderCategory.PurchaseOrderCategoryID }, vm.purchaseOrderCategory).$promise.then(function () {
                 vm.purchaseOrderCategorys = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -160,10 +181,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.purchaseOrderCategory.$delete({ 'ID': vm.purchaseOrderCategory.PurchaseOrderCategoryID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.purchaseOrderCategory.$delete({ 'ID':  });
+            purchaseOrderCategoryResource.delete({ 'ID': vm.purchaseOrderCategory.PurchaseOrderCategoryID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

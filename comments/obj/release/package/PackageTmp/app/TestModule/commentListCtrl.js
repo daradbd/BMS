@@ -9,7 +9,8 @@
         vm.open = function () {
 
            $uibModal.open({
-                templateUrl: "app/setting/common/country/country.html",
+               templateUrl: "app/setting/common/country/country.html",
+               size: 'lg',
                 controller: "countryCtrl as vm"
             });
         }

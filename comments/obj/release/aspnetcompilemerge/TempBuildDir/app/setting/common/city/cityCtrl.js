@@ -20,19 +20,27 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
         GetcountrysList();
         function GetcountrysList() {
-            countryResource.query(function (data) {
+            countryResource.query().$promise.then(function (data) {
                 vm.countrys = data;
-                toastr.success("Load country", "Country Load");
+                //toastr.success("Load country", "Country Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Country not Load Successfully!");
             });
         }
 
 
         vm.ChangeCountry=function()
         {
-            vm.city.CountryID = vm.cmbcountrys.CountryID;
-            vm.countryName = vm.cmbcountrys.CountryName;
+            if (vm.city)
+            {
+                vm.city.CountryID = vm.cmbcountrys.CountryID;
+                vm.countryName = vm.cmbcountrys.CountryName;
+            }
+
 
         }
 
@@ -40,6 +48,7 @@
             GetList();
             if (activeMode == 1)//Form View Mode
             {
+                vm.cmbcountrys = null;
                 vm.city = null;
                 vm.FromView = true;
                 vm.ListView = false;
@@ -50,6 +59,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -63,6 +73,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -77,6 +88,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -90,6 +102,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -107,23 +120,30 @@
         GetList();
 
         function GetList() {
-            cityResource.query(function (data) {
+            cityResource.query().$promise.then(function (data) {
                 vm.citys = data;
                 //vm.cunt.CountryID = vm.citys.CountryID;
-                toastr.success("Data function Load Successful", "Form Load");
+                //toastr.success("Data function Load Successful", "Form Load");
 
-            });
+            }), function (error) {
+                // error handler
+                toastr.error("Data not Delete Successfully!");
+            };
         }
 
 
         vm.Save = function (isValid) {
             if (isValid) {
-                cityResource.save(vm.city,
+                vm.city.CountryID = vm.cmbcountrys.CountryID;
+                cityResource.save(vm.city).$promise.then(
                     function (data,responseHeaders) {
                         GetList();
                        
                         vm.city = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data not Save Successfully!");
                     });
             }
             else {
@@ -135,27 +155,34 @@
         }
 
         vm.Get = function (id) {
-            cityResource.get({ 'ID': id }, function (city) {
+            cityResource.get({ 'ID': id }).$promise.then(function (city) {
                 vm.city = city;
-                vm.cmbcountrys = { CountryID: vm.city.CountryID };
-                //vm.countryName = vm.cmbcountrys.CountryName;
+                //vm.cmbcountrys = { CountryID: vm.city.CountryID };
+                vm.cmbcountrys = vm.city.Country;
                 //vm.FromView = true;
                 //vm.EditView = false;
                 //vm.ListView = false;
                 //vm.DetailsView = true;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data not Load Successfully!");
             });
         }
 
 
         vm.Update = function (isValid) {
             if (isValid) {
-                cityResource.update({ 'ID': vm.city.CityID }, vm.city);
-                vm.citys = null;
-                vm.ViewMode(3);
-                GetList();
-                toastr.success("Data Update Successful", "Form Update");
+                cityResource.update({ 'ID': vm.city.CityID }, vm.city).$promise.then(function () {
+                    vm.citys = null;
+                    vm.ViewMode(3);
+                    GetList();
+                    toastr.success("Data Update Successful", "Form Update");
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data not Update Successfully!");
+                });
             }
             else {
                 toastr.error("Form is not valid");
@@ -164,10 +191,15 @@
 
 
         vm.Delete = function () {
-            vm.city.$delete({ 'ID': vm.city.CityID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.city.$delete({ 'ID': vm.city.CityID });
+            countryResource.delete({ 'ID': vm.city.CityID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data not Delete Successfully!");
+            });
         }
 
     }

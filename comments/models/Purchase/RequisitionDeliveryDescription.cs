@@ -24,7 +24,11 @@
 
         public float? Quantity { get; set; }
 
+        public long? RequisitionQuantity { get; set; }
+
         public float? ReceivedQuantity { get; set; }
+
+        public float? StockQuantity { get; set; }
 
         public long? UOMID { get; set; }
 

@@ -32,6 +32,8 @@
 
         public decimal UnitPrice { get; set; }
 
+        public decimal ApproxPrice { get; set; }
+
         public decimal Taxes { get; set; }
         public decimal Discount { get; set; }
         public int? DiscountType { get; set; }

@@ -18,6 +18,9 @@
         [StringLength(50)]
         public string RequisitionDeliveryCode { get; set; }
 
+        [StringLength(50)]
+        public string RequisitionCode { get; set; }
+
         public long? PurchaseRequisitionID { get; set; }
         public long? EmployeeID { get; set; }
 
@@ -42,9 +45,9 @@
 
         public int? StatusID { get; set; }
 
-        public bool? IsReceived { get; set; }
+        public bool IsReceived { get; set; }
 
-        public bool? IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }
 
         public int? InsertBy { get; set; }
 

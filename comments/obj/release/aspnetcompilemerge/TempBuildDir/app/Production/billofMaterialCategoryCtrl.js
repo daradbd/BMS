@@ -29,6 +29,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -46,12 +47,13 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = false;
 
 
@@ -59,13 +61,14 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -73,12 +76,13 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
 
@@ -86,6 +90,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -98,7 +103,7 @@
 
         //Get All Data List
         function GetList() {
-            billofMaterialCategoryResource.query(function (data) {
+            billofMaterialCategoryResource.query().$promise.then(function (data) {
                 vm.billofMaterialCategorys = data;
                 toastr.success("Data Load Successful", "Form Load");
 
@@ -108,11 +113,14 @@
         //Save billofMaterialCategory
         vm.Save = function (isValid) {
             if (isValid) {
-                billofMaterialCategoryResource.save(vm.billofMaterialCategory,
+                billofMaterialCategoryResource.save(vm.billofMaterialCategory).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.billofMaterialCategory = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Load Failed!");
                     });
             }
             else {
@@ -125,10 +133,13 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            billofMaterialCategoryResource.get({ 'ID': id }, function (billofMaterialCategory) {
+            billofMaterialCategoryResource.get({ 'ID': id }).$promise.then(function (billofMaterialCategory) {
                 vm.billofMaterialCategory = billofMaterialCategory;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -136,12 +147,17 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                billofMaterialCategoryResource.update({ 'ID': vm.billofMaterialCategory.BillofMaterialCategoryID }, vm.billofMaterialCategory);
+                billofMaterialCategoryResource.update({ 'ID': vm.billofMaterialCategory.BillofMaterialCategoryID }, vm.billofMaterialCategory).$promise.then(function () {
                 vm.billofMaterialCategorys = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -149,10 +165,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.billofMaterialCategory.$delete({ 'ID': vm.billofMaterialCategory.BillofMaterialCategoryID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+           // vm.billofMaterialCategory.$delete({ 'ID': vm.billofMaterialCategory.BillofMaterialCategoryID });
+            billofMaterialCategoryResource.delete({ 'ID': vm.billofMaterialCategory.BillofMaterialCategoryID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

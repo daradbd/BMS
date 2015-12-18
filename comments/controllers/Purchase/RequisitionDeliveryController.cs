@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Purchase;
 using BMS.Models;
+using System.Web.Http.OData.Query;
 
 namespace BMS.Controllers.Purchase
 {
@@ -18,10 +19,10 @@ namespace BMS.Controllers.Purchase
         private UsersContext db = new UsersContext();
 
         // GET api/RequisitionDelivery
-        public IEnumerable<RequisitionDelivery> GetRequisitionDeliveries()
+        public IEnumerable<RequisitionDelivery> GetRequisitionDeliveries(ODataQueryOptions Options)
         {
-            var requisitiondeliveries = db.RequisitionDeliveries.Include(r => r.Collaborator).Include(r => r.ProcesStatus).Include(r => r.ProjectSetup);
-            return requisitiondeliveries.AsEnumerable();
+            return Options.ApplyTo(db.RequisitionDeliveries.AsQueryable().Include(r => r.Collaborator).Include(r => r.ProcesStatus).Include(r => r.ProjectSetup)) as IEnumerable<RequisitionDelivery>;
+           
         }
 
         // GET api/RequisitionDelivery/5
@@ -68,6 +69,11 @@ namespace BMS.Controllers.Purchase
         {
             if (ModelState.IsValid)
             {
+                string CustomCode = "ARD-" + DateTime.Now.ToString("yyyyMMdd");
+
+                int? MaxCode = Convert.ToInt32((db.RequisitionDeliveries.Where(r => r.RequisitionDeliveryCode.StartsWith(CustomCode)).Select(r => r.RequisitionDeliveryCode.Substring(CustomCode.Length, 4)).ToList()).Max());
+                string RDCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
+                requisitiondelivery.RequisitionDeliveryCode = RDCode;
                 db.RequisitionDeliveries.Add(requisitiondelivery);
                 db.SaveChanges();
 

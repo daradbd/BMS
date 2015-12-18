@@ -24,7 +24,7 @@
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -32,6 +32,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -49,6 +50,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -62,6 +64,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -76,6 +79,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -89,6 +93,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
         vm.dtopen = function ($event) {
@@ -103,20 +108,26 @@
         GetCustomerList();
         //Get All Data List
         function GetCustomerList() {
-            collaboratorResource.query({ '$filter': 'IsCustomer eq true' }, function (data) {
+            collaboratorResource.query({ '$filter': 'IsCustomer eq true' }).$promise.then(function (data) {
                 vm.collaborators = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetProjectList();
         //Get All Data List
         function GetProjectList() {
-            projectSetupResource.query(function (data) {
+            projectSetupResource.query().$promise.then(function (data) {
                 vm.Projects = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -127,10 +138,13 @@
 
         GetPaymentMethod();
         function GetPaymentMethod() {
-            paymentMethodResource.query(function (data) {
+            paymentMethodResource.query().$promise.then(function (data) {
                 vm.paymentMethods = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -138,21 +152,27 @@
 
         //Get All Data List
         function GetList() {
-            salesReceivePaymentResource.query(function (data) {
+            salesReceivePaymentResource.query().$promise.then(function (data) {
                 vm.salesReceivePayments = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save salesReceivePayment
         vm.Save = function (isValid) {
             if (isValid) {
-                salesReceivePaymentResource.save(vm.salesReceivePayment,
+                salesReceivePaymentResource.save(vm.salesReceivePayment).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.salesReceivePayment = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Load Failed!");
                     });
             }
             else {
@@ -165,7 +185,7 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            salesReceivePaymentResource.get({ 'ID': id }, function (salesReceivePayment) {
+            salesReceivePaymentResource.get({ 'ID': id }).$promise.then(function (salesReceivePayment) {
                 vm.salesReceivePayment = salesReceivePayment;
                 //vm.cmbPaymentMethod = vm.salesReceivePayment.PaymentMethod;
                // vm.cmbPaymentMethod = { PaymentMethodID: vm.salesReceivePayment.PaymentMethodID };
@@ -176,16 +196,22 @@
                 vm.cmbDepositTo = { COAID: vm.salesReceivePayment.DepositTo };
 
                 vm.ViewMode(3);
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         vm.GetPaymentMethod = function (id) {
-            paymentMethodResource.get({ 'ID': id }, function (paymentMethod) {
+            paymentMethodResource.get({ 'ID': id }).$promise.then(function (paymentMethod) {
                 vm.paymentMethod = paymentMethod;
                 vm.cmbPaymentMethod = vm.paymentMethod;
                 //vm.ViewMode(3);
                 //toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -193,12 +219,16 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                salesReceivePaymentResource.update({ 'ID': vm.salesReceivePayment.SalesReceivePaymentID }, vm.salesReceivePayment);
+                salesReceivePaymentResource.update({ 'ID': vm.salesReceivePayment.SalesReceivePaymentID }, vm.salesReceivePayment).$promise.then(function () {
                 vm.salesReceivePayments = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -206,10 +236,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.salesReceivePayment.$delete({ 'ID': vm.salesReceivePayment.SalesReceivePaymentID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+           // vm.salesReceivePayment.$delete({ 'ID': vm.salesReceivePayment.SalesReceivePaymentID });
+            salesReceivePaymentResource.delete({ 'ID': vm.salesReceivePayment.SalesReceivePaymentID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

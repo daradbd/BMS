@@ -229,6 +229,12 @@ namespace BMS.Models
 
         public DbSet<UploadFile> UploadFiles { get; set; }
 
+        public DbSet<RequisitionDeliveryDescription> RequisitionDeliveryDescriptions { get; set; }
+
+        public DbSet<PurchasePermit> PurchasePermits { get; set; }
+
+        public DbSet<PurchasePermitDescription> PurchasePermitDescriptions { get; set; }
+
     }
 
     [Table("UserProfile")]

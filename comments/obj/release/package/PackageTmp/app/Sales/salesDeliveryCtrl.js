@@ -27,14 +27,18 @@
         vm.ListView = true;
         vm.DetailsView = false
         vm.EditView = false;
-        
-        GetSalesOrder($rootScope.SOrderID);
-        $rootScope.SOrderID = 0;
+        if ($rootScope.SOrderID > 0)
+        {
+            GetSalesOrder($rootScope.SOrderID);
+            $rootScope.SOrderID = 0;
+        }
+
         // Action Button Control Variable //
         vm.SaveButton = false;
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -52,6 +56,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -65,6 +70,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -79,6 +85,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -92,6 +99,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -119,9 +127,12 @@
 
         GetUnitOfMeasures();
         function GetUnitOfMeasures() {
-            unitOfMeasureResource.query(function (data) {
+            unitOfMeasureResource.query().$promise.then(function (data) {
                 vm.UnitOfMeasures = data;
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -129,22 +140,29 @@
 
         //Get All Data List
         function GetList() {
-            salesDeliveryResource.query(function (data) {
+            salesDeliveryResource.query().$promise.then(function (data) {
                 vm.salesDeliverys = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save salesDelivery
         vm.Save = function (isValid) {
             if (isValid) {
-                salesDeliveryResource.save(vm.salesDelivery,
+                salesDeliveryResource.save(vm.salesDelivery).$promise.then(
                     function (data, responseHeaders) {
+                        vm.salesDelivery = data;
                         vm.SaveDelivery();
                         GetList();
-                        vm.salesDelivery = null;
+                        //vm.salesDelivery = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -184,9 +202,12 @@
                 //vm.voucherList.Amount = value.Amount;
                 //vm.voucherList.DrCr = value.DrCr;
 
-                salesDeliveryDescriptionResource.save(salesDeliveryInfo,
+                salesDeliveryDescriptionResource.save(salesDeliveryInfo).$promise.then(
                 function (data, responseHeaders) {
 
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Save Failed!");
                 });
             })
 
@@ -195,17 +216,24 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            salesDeliveryResource.get({ 'ID': id }, function (salesDelivery) {
+            salesDeliveryResource.get({ 'ID': id }).$promise.then(function (salesDelivery) {
                 vm.salesDelivery = salesDelivery;
-                vm.ViewMode(1);
-                toastr.success("Data Load Successful", "Form Load");
+
+                vm.salesDelivery.CollaboratorName = vm.salesDelivery.Collaborator.Name;
+                vm.GetSalesOrderDesc(vm.salesDelivery.SalesDeliveryID);
+                vm.ViewMode(3);
+                //toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
 
         function GetSalesOrder (id) {
-            salesOrderResource.get({ 'ID': id }, function (salesOrder) {
+            salesOrderResource.get({ 'ID': id }).$promise.then(function (salesOrder) {
                 vm.salesOrder = salesOrder;
+                vm.salesDelivery.Collaborator = vm.salesOrder.Collaborator;
                 vm.salesDelivery.SalesOrderID = vm.salesOrder.SalesOrderID;
                 vm.salesDelivery.ProjectID = vm.salesOrder.ProjectID;
                 vm.salesDelivery.CustomerID = vm.salesOrder.CustomerID;
@@ -214,29 +242,50 @@
                 vm.GetSalesOrderDescription(vm.salesOrder.SalesOrderID);
                 
                 vm.ViewMode(1);
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
 
         vm.GetSalesOrderDescription = function (salesOrderID) {
 
-            salesOrderDescriptionResource.query({ '$filter': 'SalesOrderID eq ' + salesOrderID }, function (data) {
+            salesOrderDescriptionResource.query({ '$filter': 'SalesOrderID eq ' + salesOrderID }).$promise.then(function (data) {
                 vm.SalesDeliveryDescription.salesDeliveryDesc = data;
-                toastr.success("Data function Load Successful", "Form Load");
+               // toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
+        vm.GetSalesOrderDesc = function (SalesDeliveryID) {
+
+            salesDeliveryDescriptionResource.query({ '$filter': 'SalesDeliveryID eq ' + SalesDeliveryID }).$promise.then(function (data) {
+                vm.SalesDeliveryDescription.salesDeliveryDesc = data;
+               // toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            })
+        }
 
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                salesDeliveryResource.update({ 'ID': vm.salesDelivery.salesDeliveryID }, vm.salesDelivery);
+                salesDeliveryResource.update({ 'ID': vm.salesDelivery.SalesDeliveryID }, vm.salesDelivery).$promise.then(function () {
+                vm.SaveDelivery();
                 vm.salesDeliverys = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -245,10 +294,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.salesDelivery.$delete({ 'ID': vm.salesDelivery.salesDeliveryID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.salesDelivery.$delete({ 'ID': vm.salesDelivery.salesDeliveryID });
+            salesDeliveryResource.delete({ 'ID': vm.salesDelivery.salesDeliveryID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

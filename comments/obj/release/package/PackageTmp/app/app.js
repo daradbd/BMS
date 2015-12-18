@@ -4,14 +4,29 @@
     var app = angular.module("companyManagement",
                             ["common.services",
                              "ngAnimate",
-                             "ui.bootstrap",
+                             'ui.bootstrap',
                              'angularUtils.directives.dirPagination',
                              'ng.group',
                              'angularTreeview',
                              'io.dennis.contextmenu',
                              'angular.filter',
                              'bgDirectives',
+                             'ng.ConfirmMsg',
                              "ui.router", ]);
+
+    //app.config(function ($provide) {
+    //    $provide.decorator("$exceptionHandler",
+    //        ["$delegate",
+    //            function ($delegate) {
+    //                return function (exception, cause) {
+    //                    exception.message = "Please contact the Help Desk! \n Message: " + exception.message;
+    //                    $delegate(exception, cause);
+    //                    toastr.error(exception.message);
+    //                };
+    //            }
+    //        ]);
+
+    //});
     
     app.factory('Util', function () {
         return {
@@ -242,7 +257,10 @@
                     .state("customers", {
                         url: "/customers",
                         templateUrl: "app/HR/customer.html",
-                        controller: "customerCtrl as vm"
+                        controller: "customerCtrl as vm",
+                        resolve: {
+                            customerFormData: function () { return {}; }
+                    }, 
                     })
                     //employees
                     .state("employees", {

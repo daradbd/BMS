@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Purchase;
 using BMS.Models;
+using System.Web.Http.OData.Query;
 
 namespace BMS.Controllers.Purchase
 {
@@ -18,9 +19,9 @@ namespace BMS.Controllers.Purchase
         private UsersContext db = new UsersContext();
 
         // GET api/PurchaseRequisition
-        public IEnumerable<PurchaseRequisition> GetPurchaseRequisitions()
+        public IEnumerable<PurchaseRequisition> GetPurchaseRequisitions(ODataQueryOptions Options)
         {
-            return db.PurchaseRequisitions.Include(r=>r.Collaborator).Include(r=>r.ProcesStatus).Include(r=>r.ProjectSetup).Include(w=>w.WorkPlant).AsEnumerable();
+            return Options.ApplyTo(db.PurchaseRequisitions.AsQueryable().Include(r => r.Collaborator).Include(r => r.ProcesStatus).Include(r => r.ProjectSetup).Include(w => w.WorkPlant)) as IEnumerable<PurchaseRequisition>;
         }
 
         // GET api/PurchaseRequisition/5

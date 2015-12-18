@@ -136,6 +136,10 @@ namespace BMS
                        "~/app/Purchase/purchaseOrderCtrl.js",
                         "~/app/Purchase/requisitionDeliveryCtrl.js",
                         "~/app/Purchase/purchaseDeliveryReceiveCtrl.js",
+                        "~/app/Purchase/requisitionReceiveCtrl.js",
+                        "~/app/Purchase/purchaseOrderListCtrl.js",
+                        "~/app/Purchase/purchaseApprovalCtrl.js",
+
                         "~/app/Purchase/purchaseOrderCategoryCtrl.js",
 
                         "~/app/Resources/uploadFileCtrl.js",
@@ -240,6 +244,9 @@ namespace BMS
                         "~/common/services/requestForQuotationDescriptionResource.js",
                         "~/common/services/purchaseOrderResource.js",
                         "~/common/services/purchaseOrderDescriptionResource.js",
+                        "~/common/services/purchasePermitResource.js",
+                        "~/common/services/purchasePermitDescriptionResource.js",
+
 
                         "~/common/services/uploadFileResource.js",
 

@@ -31,7 +31,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
-
+        vm.CancelButton = false;
 
 
         vm.ViewMode = function (activeMode) {
@@ -48,6 +48,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -61,6 +62,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -75,6 +77,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -88,6 +91,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -97,18 +101,24 @@
 
         GetProductCategorys();
         function GetProductCategorys() {
-            productCategoryResource.query(function (data) {
+            productCategoryResource.query().$promise.then(function (data) {
                 vm.ProductCategorys = data;
               
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
 
         }
         GetUnitOfMeasures();
         function GetUnitOfMeasures() {
-            unitOfMeasureResource.query(function (data) {
+            unitOfMeasureResource.query().$promise.then(function (data) {
                 vm.UnitOfMeasures = data;
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -116,21 +126,27 @@
 
         //Get All Data List
         function GetList() {
-            productResource.query(function (data) {
+            productResource.query().$promise.then(function (data) {
                 vm.products = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save product
         vm.Save = function (isValid) {
             if (isValid) {
-                productResource.save(vm.product,
+                productResource.save(vm.product).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.product = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -143,12 +159,15 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            productResource.get({ 'ID': id }, function (product) {
+            productResource.get({ 'ID': id }).$promise.then(function (product) {
                 vm.product = product;
                 vm.cmbProductCategory = { ProductCategoryID: vm.product.ProductCategoryID };
                 vm.cmbUnitOfMeasure = { UnitOfMeasureID: vm.product.MOUID };
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -156,12 +175,16 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                productResource.update({ 'ID': vm.product.ProductID }, vm.product);
+                productResource.update({ 'ID': vm.product.ProductID }, vm.product).$promise.then(function () {
                 vm.products = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -169,10 +192,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.product.$delete({ 'ID': vm.product.ProductID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.product.$delete({ 'ID': vm.product.ProductID });
+            productResource.delete({ 'ID': vm.product.ProductID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

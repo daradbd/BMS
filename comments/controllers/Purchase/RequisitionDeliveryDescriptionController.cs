@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Purchase;
 using BMS.Models;
+using System.Web.Http.OData.Query;
 
 namespace BMS.Controllers.Purchase
 {
@@ -18,38 +19,40 @@ namespace BMS.Controllers.Purchase
         private UsersContext db = new UsersContext();
 
         // GET api/RequisitionDeliveryDescription
-        public IEnumerable<RequestForQuotationDescription> GetRequestForQuotationDescriptions()
+        public IEnumerable<RequisitionDeliveryDescription> GetRequisitionDeliveryDescriptions(ODataQueryOptions Options)
         {
-            var requestforquotationdescriptions = db.RequestForQuotationDescriptions.Include(r => r.Product);
-            return requestforquotationdescriptions.AsEnumerable();
+            //var requisitiondeliverydescriptions = db.RequisitionDeliveryDescriptions.Include(r => r.Product).Include(r => r.UOM);
+            //return requisitiondeliverydescriptions.AsEnumerable();
+            return Options.ApplyTo(db.RequisitionDeliveryDescriptions.AsQueryable().Include(p => p.Product).Include(p => p.Product.ProductCategory).Include(u => u.UOM)) as IEnumerable<RequisitionDeliveryDescription>;
+
         }
 
         // GET api/RequisitionDeliveryDescription/5
-        public RequestForQuotationDescription GetRequestForQuotationDescription(long id)
+        public RequisitionDeliveryDescription GetRequisitionDeliveryDescription(long id)
         {
-            RequestForQuotationDescription requestforquotationdescription = db.RequestForQuotationDescriptions.Find(id);
-            if (requestforquotationdescription == null)
+            RequisitionDeliveryDescription requisitiondeliverydescription = db.RequisitionDeliveryDescriptions.Find(id);
+            if (requisitiondeliverydescription == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
 
-            return requestforquotationdescription;
+            return requisitiondeliverydescription;
         }
 
         // PUT api/RequisitionDeliveryDescription/5
-        public HttpResponseMessage PutRequestForQuotationDescription(long id, RequestForQuotationDescription requestforquotationdescription)
+        public HttpResponseMessage PutRequisitionDeliveryDescription(long id, RequisitionDeliveryDescription requisitiondeliverydescription)
         {
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            if (id != requestforquotationdescription.RequestForQuotationDescriptionID)
+            if (id != requisitiondeliverydescription.RequisitionDeliveryDescriptionID)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
-            db.Entry(requestforquotationdescription).State = EntityState.Modified;
+            db.Entry(requisitiondeliverydescription).State = EntityState.Modified;
 
             try
             {
@@ -64,15 +67,16 @@ namespace BMS.Controllers.Purchase
         }
 
         // POST api/RequisitionDeliveryDescription
-        public HttpResponseMessage PostRequestForQuotationDescription(RequestForQuotationDescription requestforquotationdescription)
+        public HttpResponseMessage PostRequisitionDeliveryDescription(RequisitionDeliveryDescription requisitiondeliverydescription)
         {
             if (ModelState.IsValid)
             {
-                db.RequestForQuotationDescriptions.Add(requestforquotationdescription);
+                db.Entry(requisitiondeliverydescription).State = requisitiondeliverydescription.RequisitionDeliveryDescriptionID == 0 ? EntityState.Added : EntityState.Modified;
+                //db.RequisitionDeliveryDescriptions.Add(requisitiondeliverydescription);
                 db.SaveChanges();
 
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, requestforquotationdescription);
-                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = requestforquotationdescription.RequestForQuotationDescriptionID }));
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, requisitiondeliverydescription);
+                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = requisitiondeliverydescription.RequisitionDeliveryDescriptionID }));
                 return response;
             }
             else
@@ -82,15 +86,15 @@ namespace BMS.Controllers.Purchase
         }
 
         // DELETE api/RequisitionDeliveryDescription/5
-        public HttpResponseMessage DeleteRequestForQuotationDescription(long id)
+        public HttpResponseMessage DeleteRequisitionDeliveryDescription(long id)
         {
-            RequestForQuotationDescription requestforquotationdescription = db.RequestForQuotationDescriptions.Find(id);
-            if (requestforquotationdescription == null)
+            RequisitionDeliveryDescription requisitiondeliverydescription = db.RequisitionDeliveryDescriptions.Find(id);
+            if (requisitiondeliverydescription == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
-            db.RequestForQuotationDescriptions.Remove(requestforquotationdescription);
+            db.RequisitionDeliveryDescriptions.Remove(requisitiondeliverydescription);
 
             try
             {
@@ -101,7 +105,7 @@ namespace BMS.Controllers.Purchase
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, requestforquotationdescription);
+            return Request.CreateResponse(HttpStatusCode.OK, requisitiondeliverydescription);
         }
 
         protected override void Dispose(bool disposing)

@@ -27,7 +27,7 @@
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
         vm.RFQuotationButton = false;
 
@@ -36,6 +36,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
         vm.AcceptRequisitionButton = false;
         vm.ActionButton = false;
 
@@ -80,6 +81,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
                 vm.AcceptRequisitionButton = false;
                 vm.ActionButton = false;
             }
@@ -95,6 +97,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
                 vm.AcceptRequisitionButton = false;
             }
 
@@ -102,7 +105,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -110,6 +113,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
                 vm.AcceptRequisitionButton = (vm.requestForQuotation.ProcesStatusID == 4 ? true : false);
                 vm.ActionButton = true;
             }
@@ -117,7 +121,7 @@
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
                 vm.RFQuotationButton = (vm.requestForQuotation.ProcesStatusID == 4 ? false : true);
@@ -125,6 +129,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = (vm.requestForQuotation.ProcesStatusID == 4 ? false : true);
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
                 vm.AcceptRequisitionButton = (vm.requestForQuotation.ProcesStatusID == 4 ? true : false);
                 vm.ActionButton = false;
             }
@@ -142,20 +147,26 @@
         GetEmployeeList();
         //Get All Data List
         function GetEmployeeList() {
-            collaboratorResource.query({ '$filter': 'IsEmployee eq true' }, function (data) {
+            collaboratorResource.query({ '$filter': 'IsEmployee eq true' }).$promise.then(function (data) {
                 vm.Employees = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetSupplierList();
         //Get All Data List
         function GetSupplierList() {
-            collaboratorResource.query({ '$filter': 'IsSupplier eq true' }, function (data) {
+            collaboratorResource.query({ '$filter': 'IsSupplier eq true' }).$promise.then(function (data) {
                 vm.Suppliers = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -163,20 +174,26 @@
         GetProductList();
         //Get All Data List
         function GetProductList() {
-            productResource.query(function (data) {
+            productResource.query().$promise.then(function (data) {
                 vm.products = data;
-                toastr.success("Data Load Successful", "Form Load");
+                //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetProjectList();
         //Get All Data List
         function GetProjectList() {
-            projectSetupResource.query(function (data) {
+            projectSetupResource.query().$promise.then(function (data) {
                 vm.Projects = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -184,22 +201,28 @@
 
         //Get All Data List
         function GetList() {
-            requestForQuotationResource.query(function (data) {
+            requestForQuotationResource.query().$promise.then(function (data) {
                 vm.requestForQuotations = data;
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save requestForQuotation
         vm.Save = function (isValid) {
             if (isValid) {
-                requestForQuotationResource.save(vm.requestForQuotation,
+                requestForQuotationResource.save(vm.requestForQuotation).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.requestForQuotation = data;
                         vm.SaveRequestForQuotation();
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Load Failed!");
                     });
             }
             else {
@@ -229,9 +252,12 @@
                 //vm.voucherList.Amount = value.Amount;
                 //vm.voucherList.DrCr = value.DrCr;
 
-                requestForQuotationDescriptionResource.save(RequestForQuotationInfo,
+                requestForQuotationDescriptionResource.save(RequestForQuotationInfo).$promise.then(
                 function (data, responseHeaders) {
 
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Load Failed!");
                 });
             })
 
@@ -245,12 +271,15 @@
                 vm.maintainPurchaseQuotation.RequestForQuotationCode = vm.requestForQuotation.RequestForQuotationCode;
                 vm.maintainPurchaseQuotation.ProjectID = vm.requestForQuotation.ProjectID;
                 vm.maintainPurchaseQuotation.ProcesStatusID = 7;
-                maintainPurchaseQuotationResource.save(vm.maintainPurchaseQuotation,
+                maintainPurchaseQuotationResource.save(vm.maintainPurchaseQuotation).$promise.then(
                     function (data, responseHeaders) {
                        // GetList();
                         vm.maintainPurchaseQuotation = data;
                        // vm.SaveMaintainPurchaseQuotation();
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Load Failed!");
                     });
             }
             else {
@@ -270,7 +299,7 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            requestForQuotationResource.get({ 'ID': id }, function (requestForQuotation) {
+            requestForQuotationResource.get({ 'ID': id }).$promise.then(function (requestForQuotation) {
                 vm.requestForQuotation = requestForQuotation;
 
                 vm.cmbEmployee = { CollaboratorID: vm.requestForQuotation.EmployeeID };
@@ -286,22 +315,31 @@
                 }
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         vm.GetRequisitionDescription = function (purchaseRequisitionID) {
 
-            purchaseRequisitionDescriptionResource.query({ '$filter': 'PurchaseRequisitionID eq ' + purchaseRequisitionID }, function (data) {
+            purchaseRequisitionDescriptionResource.query({ '$filter': 'PurchaseRequisitionID eq ' + purchaseRequisitionID }).$promise.then(function (data) {
                 vm.requestForQuotationDescription.requestForQuotationDesc = data;
                 toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
         vm.GetRequestForQuotationDescription = function (requestForQuotationID) {
 
-            requestForQuotationDescriptionResource.query({ '$filter': 'RequestForQuotationID eq ' + requestForQuotationID }, function (data) {
+            requestForQuotationDescriptionResource.query({ '$filter': 'RequestForQuotationID eq ' + requestForQuotationID }).$promise.then(function (data) {
                 vm.requestForQuotationDescription.requestForQuotationDesc = data;
                 toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
@@ -309,12 +347,16 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                requestForQuotationResource.update({ 'ID': vm.requestForQuotation.RequestForQuotationID }, vm.requestForQuotation);
+                requestForQuotationResource.update({ 'ID': vm.requestForQuotation.RequestForQuotationID }, vm.requestForQuotation).$promise.then(function () {
                 vm.requestForQuotations = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -322,10 +364,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.requestForQuotation.$delete({ 'ID': vm.requestForQuotation.RequestForQuotationID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.requestForQuotation.$delete({ 'ID': vm.requestForQuotation.RequestForQuotationID });
+            requestForQuotationResource.delete({ 'ID': vm.requestForQuotation.RequestForQuotationID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

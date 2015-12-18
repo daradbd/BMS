@@ -369,6 +369,13 @@
                         templateUrl: "app/Purchase/requisitionDelivery.html",
                         controller: "requisitionDeliveryCtrl as vm"
                     })
+                    //requisitionReceive
+                    .state("requisitionReceive", {
+                        url: "/requisitionReceive",
+                        templateUrl: "app/Purchase/requisitionReceive.html",
+                        controller: "requisitionReceiveCtrl as vm"
+                    })
+
                    //requestForQuotation
                     .state("requestForQuotation", {
                         url: "/requestForQuotation",
@@ -387,6 +394,17 @@
                         url: "/purchaseOrder",
                         templateUrl: "app/Purchase/purchaseOrder.html",
                         controller: "purchaseOrderCtrl as vm"
+                    })
+                    //purchaseOrder
+                    .state("purchaseOrderList", {
+                        url: "/purchaseOrderList",
+                        templateUrl: "app/Purchase/purchaseOrderList.html",
+                        controller: "purchaseOrderListCtrl as vm"
+                    })
+                    .state("purchaseApproval", {
+                        url: "/purchaseApproval",
+                        templateUrl: "app/Purchase/purchaseApproval.html",
+                        controller: "purchaseApprovalCtrl as vm"
                     })
                     //purchaseDeliveryReceive
                     .state("purchaseDeliveryReceive", {

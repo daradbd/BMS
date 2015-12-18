@@ -13,12 +13,12 @@
 
     angular
         .module("companyManagement")
-        .controller("productCostingCtrl", ["unitOfMeasureResource", "productResource", "productCostingDescriptionResource", "productCostingResource", productCostingCtrl]);
-    function productCostingCtrl(unitOfMeasureResource,productResource,productCostingDescriptionResource,productCostingResource) {
+        .controller("productCostingCtrl", ["unitOfMeasureResource", "productResource", "productCostingDescriptionResource", "productCostingResource","$window", productCostingCtrl]);
+    function productCostingCtrl(unitOfMeasureResource, productResource, productCostingDescriptionResource, productCostingResource, $window) {
         var vm = this;
         vm.productCostings = [];
        // vm.productCostingDescription = [];
-
+        vm.height=$window.innerHeight-180;
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -30,6 +30,8 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
+        vm.ImportToExcelButton = false;
 
         vm.ProductCostingDescription = { productCostingDesc: [{ SalesSectionID: 1, SalesSectionName: '', ProductID: 0, Description: "", MOUID: 0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
 
@@ -47,6 +49,8 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.PrintButton = false;
+                vm.CancelButton = false;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -60,6 +64,8 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.PrintButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -74,12 +80,15 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.PrintButton = true;
+                vm.CancelButton = true;
+                vm.ImportToExcelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
 
@@ -87,6 +96,8 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.PrintButton = false;
+                vm.CancelButton = true;
             }
         }
 
@@ -120,10 +131,10 @@
         }
 
 
-        vm.QuotationSubTotal = function () {
+        vm.SubTotal = function () {
             var total = 0.00;
             angular.forEach(vm.ProductCostingDescription.productCostingDesc, function (item, key) {
-                total += (item.Quantity * (item.UnitPrice - item.Discount));
+                total += item.FinalMRP;
             });
             return total;
         }
@@ -264,7 +275,8 @@
                 vm.productCosting = productCosting;
                 GetProductCostingDescription(vm.productCosting.SalesQuotationID);
                 vm.ViewMode(3);
-                toastr.success("Data Load Successful", "Form Load");
+               // toastr.success(vm.SubTotal(), 'Total Amount:', { closeButton: true, timeOut: 0,extendedTimeout:0 });
+                //toastr.success("Data Load Successful", "Form Load");
             });
         }
 
@@ -279,7 +291,7 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                productCostingResource.update({ 'ID': vm.ProductCosting.ProductCostingID }, vm.productCosting);
+                productCostingResource.update({ 'ID': vm.productCosting.ProductCostingID }, vm.productCosting);
                 vm.SaveProductCosting();
                 vm.productCostings = null;
                 vm.ViewMode(3);
