@@ -75,8 +75,8 @@
                                                     <th>Description</th>
                                                     <th>ScheduleDate</th>
                                                     <th>Quantity</th>
-                                                    <th>Tax</th>
-                                                    <th>Discount</th>
+                                                    <th>Received Quantity</th>
+                                                    <th>Receive Quantity</th>
                                                     <th>UnitPrice</th>
                                                     <th>Total</th>
                                                     <th></th>
@@ -97,10 +97,10 @@
                                                         {{item.Quantity}}
                                                     </td>
                                                     <td>
-                                                        {{item.Taxes}}
+                                                        {{item.ReceivedQuantity}}
                                                     </td>
                                                     <td>
-                                                        {{item.Discount}}
+                                                        <input class="form-control" ng:model="item.ReceiveQuantity" value="0" ng:required ng:validate="number" size="6">
                                                     </td>
                                                     <td>
                                                         {{item.UnitPrice}}
@@ -157,8 +157,6 @@
                                                     <th>Description</th>
                                                     <th>ScheduleDate</th>
                                                     <th>Quantity</th>
-                                                    <th>Tax</th>
-                                                    <th>Discount</th>
                                                     <th>UnitPrice</th>
                                                     <th>Total</th>
                                                     <th></th>
@@ -177,12 +175,6 @@
                                                     </td>
                                                     <td>
                                                         {{item.Quantity}}
-                                                    </td>
-                                                    <td>
-                                                        {{item.Taxes}}
-                                                    </td>
-                                                    <td>
-                                                        {{item.Discount}}
                                                     </td>
                                                     <td>
                                                         {{item.UnitPrice}}
