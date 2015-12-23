@@ -609,3 +609,4 @@ D:\github\BMS\Comments\obj\Debug\BMS.Migrations.Initial.resources
 D:\github\BMS\Comments\obj\Debug\BMS.csproj.GenerateResource.Cache
 D:\github\BMS\Comments\obj\Debug\BMS.dll
 D:\github\BMS\Comments\obj\Debug\BMS.pdb
+D:\github\BMS\Comments\obj\Debug\BMS.csprojResolveAssemblyReference.cache
