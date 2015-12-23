@@ -53,6 +53,11 @@
                        // href: "/Account/Login/",
                            // controller: "userAuthenticationCtrl as vm"
                     })
+                    .state("formList", {
+                        url: "formList",
+                        templateUrl: "app/setting/Security/formList.html",
+                        controller: "formListCtrl as vm"
+                    })
                     .state("companyCategory", {
                         url: "companyCategory",
                         templateUrl: "app/setting/company/companyCategory/companyCategory.html",

@@ -1,0 +1,549 @@
+﻿<div class="row">
+    <div class="col-lg-4 breadcrumb-panel">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><a href="#">Data</a></li>
+        </ol>
+
+    </div>
+
+    <div class="col-lg-3 title-panel "><h4>SalesDelivery</h4></div>
+
+    <div class="col-lg-3 search-panel">
+        <div class="input-group">
+            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2 button-panel">
+        <!-- /input-group -->
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                <span class="glyphicon glyphicon-stats"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off">
+                <span class="glyphicon glyphicon-credit-card"></span>
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </label>
+        </div>
+    </div>
+</div>
+<form name="salesDeliveryForm" novalidate>
+    <div class="row">
+        <div class="col-lg-12 action-botton">
+            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                New
+            </button>
+            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(salesDeliveryForm.$valid)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                Save
+            </button>
+            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(salesDeliveryForm.$valid)">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                Update
+            </button>
+            <button type="button" class="btn btn-default " ng-print print-element-id="printThisElement">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                Print
+            </button>
+            <button type="button" class="btn btn-default " ng-show="vm.DeleteButton" ng-click="vm.Delete()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                Delete
+            </button>
+            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default ">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Cancel
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-12 panel panel-default">
+            <div class="panel-body">
+                <div class="entry-form" ng-show="vm.FromView">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6 animated fadeInRight">
+                            <div class="form-group">
+
+                                <label for="cmbCollaborator">
+                                    Customer
+                                </label>
+                                <pre>{{vm.salesDelivery.CollaboratorName}}</pre>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtRemarks">
+                                    Address:
+                                </label>
+
+                                <!--{{vm.cmbCustomer.Street}},{{vm.cmbCustomer.POBox}},{{vm.cmbCustomer.City.CityName}},{{vm.cmbCustomer.Country.CountryName}}-->
+
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error':salesDeliveryForm.txtSubject.$invalid
+                                         && salesDeliveryForm.txtSubject.$dirty}">
+
+                                <label for="txtTitle">
+                                    Subject:
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtSubject"
+                                       name="txtSubject"
+                                       ng-model="vm.salesDelivery.Subject"
+                                       placeholder="Enter Subject"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group"
+                                 ng-class="{'has-error':salesDeliveryForm.txtReferenceNo.$invalid
+                                         && salesDeliveryForm.txtReferenceNo.$dirty}">
+
+                                <label for="txtReferenceNo">
+                                    Reference No
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="txtReferenceNo"
+                                       name="txtReferenceNo"
+                                       ng-model="vm.salesDelivery.ReferenceNo"
+                                       placeholder="Enter ReferenceNo"
+                                       required>
+                            </div>
+                            <div class="form-group">
+
+                                <label for="txtTranDate">
+                                    Data:
+                                </label>
+                                <div class="form-group">
+                                    <p class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtDate"
+                                               name="txtDate"
+                                               ng-model="vm.salesDelivery.Date"
+                                               datepicker-popup="MMM dd, yyyy "
+                                               is-open="vm.dtopened"
+                                               required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default"
+                                                    ng-click="vm.dtopen($event)">
+                                                <i class="glyphicon glyphicon-calendar" />
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <tabset>
+                            <tab heading="Product-Info" active="true">
+                                <div class="col-lg-12">
+                                    <div class=" panel panel-primary" ng:repeat="(key, value) in vm.SalesDeliveryDescription.salesDeliveryDesc | groupBy:'SalesSectionID'">
+                                        <div class="panel-heading">
+
+                                            <pre>{{value[0].SalesSectionName}}</pre>
+                                        </div>
+                                        <div class="panel-body">
+                                            <table class="table table-hover">
+                                                <tr>
+
+                                                    <th>Description</th>
+                                                    <th>UOM</th>
+                                                    <th>Quantity</th>
+                                                    <th>RemainQuantity</th>
+                                                    <th>RDQuantity</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr ng:repeat="item in value" class="animated fadeInRight">
+
+                                                    <td>
+                                                        <b>{{item.Product.ProductName}} :</b>
+                                                        <p>{{item.Description}}</p>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control"
+                                                                id="cmbUnitOfMeasure"
+                                                                name="cmbUnitOfMeasure"
+                                                                ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.UOMID}"
+                                                                ng-model="item.cmbUnitOfMeasure"
+                                                                ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
+                                                                ng-change="item.UOMID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+
+                                                    </td>
+                                                    <td style="vertical-align:middle">
+                                                        {{item.Quantity}}
+                                                    </td>
+
+                                                    <td>
+                                                        <pre>{{ vm.RemainQuantity(item)}}</pre>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" ng:model="item.RDQuantity" ng-disabled="(item.Quantity-item.DeliveredQuantity)<0"
+                                                               ng-change="vm.CheckMax(item)"
+                                                               value="0" ng:required ng:validate="number" size="6">
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </tab>
+                            <tab heading="Message">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtMessage">
+                                            Dear Sir,
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtMessage"
+                                                  name="txtMessage"
+                                                  ng-model="vm.salesDelivery.Message"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab heading="Terms & Condition">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="txtTerms">
+                                            Terms
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTerms"
+                                                  name="txtTerms"
+                                                  ng-model="vm.salesDelivery.Terms"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtTermsOfPayment">
+                                            Terms of Payment
+                                        </label>
+                                        <textarea class="form-control"
+                                                  id="txtTermsOfPayment"
+                                                  name="txtTermsOfPayment"
+                                                  ng-model="vm.salesDelivery.TermsOfPayment"
+                                                  rows=" 6"></textarea>
+                                    </div>
+                                </div>
+                            </tab>
+                        </tabset>
+
+                    </div>
+                </div>
+
+                <div class="view-form" ng-show="vm.DetailsView">
+                    <table id="testTable" width="642">
+                        <tbody>
+                            <tr>
+                                <td colspan="4" width="693">Dated &nbsp;&nbsp; :{{vm.salesDelivery.Date}}</td>
+                                <td width="69">&nbsp;</td>
+                                <td width="80">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" width="693">Reference Quotation&nbsp;&nbsp; :{{vm.salesDelivery.SalesQuotationCode}} </td>
+                                <td width="69">&nbsp;</td>
+                                <td width="80">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>To</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">{{vm.salesDelivery.Collaborator.Name}}</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">German House</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Road 90, House 10/C, Gulshan 2</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Dhaka 1212 / Bangladesh</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">SUBJECT :&nbsp; {{vm.salesDelivery.Subject}}</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Project Address : Rajshahi City&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Dear Sir.</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" width="842">{{vm.salesDelivery.Message}}</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr style="padding:5px;">
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black;">SL</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">DESCRIPTION</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">UNIT</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">QTY&nbsp;</td>
+                            </tr>
+
+                            <tr>
+                        <tbody ng:repeat="(key, value) in vm.SalesDeliveryDescription.salesDeliveryDesc | groupBy:'SalesSectionID'">
+
+                            <tr>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black;" width="555">{{value[0].SalesSectionName}}</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black;">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                                <td style="background-color: #A9A9A9; font-weight: 500; border: 0.5px solid black; ">&nbsp;</td>
+                            </tr>
+                            <tr>
+                            <tr ng:repeat="item in value">
+                                <td width="25px" style="vertical-align: middle; border: 0.5px solid black;">#{{$index+1}}</td>
+                                <td style="width: 550px; border: 0.5px solid black;">
+                                    <b>{{item.Product.ProductName}} :</b>
+                                    {{item.Description}}
+                                </td>
+                                <td style="vertical-align: middle; border: 0.5px solid black;">
+                                    {{item.UOM.UnitOfMeasureName}}
+                                </td>
+                                <td style="vertical-align: middle; width: 50px; border: 0.5px solid black;">
+                                    {{item.Quantity}}
+                                </td>
+
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 0.5px solid black;">&nbsp;</td>
+                                <td style="border: 0.5px solid black;" width="400px">&nbsp;</td>
+                                <td style="border: 0.5px solid black;" colspan="3" width="172">{{value[0].SalesSectionName}}  TOTAL:</td>
+                                <td style="border: 0.5px solid black;">{{vm.SectionSubTotal(key)|currency}}</td>
+                            </tr>
+                        </tbody>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="4">In word: Nineteen Lac Seventy Two Thousand Two Hundred &amp; Eighty Four&nbsp; Only</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Terms</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{vm.salesDelivery.Terms}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Terms Of Payment</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{vm.salesDelivery.TermsOfPayment}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">EXECLUDED VAT &amp; TAX</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Thanking You</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Very Truly Yours,&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">For ARTISTIC&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Mohd. Nasir Uddin</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">CEO</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">ARTISTIC</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Cell : 01727421628</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">E-Mail : nasir@artistic-interior.net</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-lg-12 list-form " ng-show="vm.ListView">
+                    <div class="col-lg-12 animated fadeInRight">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="printThisElement">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Remarks</th>
+                                        <th class="noPrint">Edit</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="salesDelivery in vm.salesDeliverys|filter:searchText| itemsPerPage: 5">
+                                        <td>{{salesDelivery.SalesDeliveryCode  | uppercase}}</td>
+                                        <td>{{salesDelivery.Remarks}}</td>
+                                        <td class="noPrint">
+                                            <button type="button" ng-click="vm.Get(salesDelivery.SalesDeliveryID)" class="btn btn-default ">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
