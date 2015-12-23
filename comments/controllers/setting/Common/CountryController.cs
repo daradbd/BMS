@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Common
     public class CountryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Country
         public IQueryable<Country> GetCountries()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Setting.Common
         {
             if (ModelState.IsValid)
             {
+                country.InsertBy = loginUser.UserID;
                 db.Countries.Add(country);
                 db.SaveChanges();
 

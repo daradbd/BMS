@@ -32,6 +32,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -49,6 +50,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -62,6 +64,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -76,6 +79,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -89,6 +93,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -99,25 +104,34 @@
 
         vm.selectCity = function (countryID) {
 
-            cityResource.query({ '$filter': 'CountryID eq ' + countryID }, function (data) {
+            cityResource.query({ '$filter': 'CountryID eq ' + countryID }).$promise.then(function (data) {
                 vm.citys = data;
                 toastr.success("Data function Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetbanksList();
         function GetbanksList() {
-            bankResource.query(function (data) {
+            bankResource.query().$promise.then(function (data) {
                 vm.banks = data;
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
         }
 
         GetcountrysList();
         function GetcountrysList() {
-            countryResource.query(function (data) {
+            countryResource.query().$promise.then(function (data) {
                 vm.countrys = data;
                 toastr.success("Load country", "Country Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -125,10 +139,13 @@
 
         //Get All Data List
         function GetList() {
-            bankBranchResource.query(function (data) {
+            bankBranchResource.query().$promise.then(function (data) {
                 vm.bankBranchs = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -139,11 +156,14 @@
                 vm.bankBranch.CountryID = vm.cmbcountrys.CountryID;
                 vm.bankBranch.CityID = vm.cmbCitys.CityID;
 
-                bankBranchResource.save(vm.bankBranch,
+                bankBranchResource.save(vm.bankBranch).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.bankBranch = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -156,7 +176,7 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            bankBranchResource.get({ 'ID': id }, function (bankBranch) {
+            bankBranchResource.get({ 'ID': id }).$promise.then(function (bankBranch) {
                 vm.bankBranch = bankBranch;
                 vm.cmbBanks = { BankID: vm.bankBranch.BankID };
                 vm.cmbcountrys = { CountryID: vm.bankBranch.CountryID };
@@ -164,6 +184,9 @@
                 vm.cmbCitys = { CityID: vm.bankBranch.CityID };
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -174,12 +197,16 @@
                 vm.bankBranch.CountryID = vm.cmbcountrys.CountryID;
                 vm.bankBranch.CityID = vm.cmbCitys.CityID;
 
-                bankBranchResource.update({ 'ID': vm.bankBranch.BankBranchID }, vm.bankBranch);
+                bankBranchResource.update({ 'ID': vm.bankBranch.BankBranchID }, vm.bankBranch).$promise.then(function () {
                 vm.bankBranchs = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -187,10 +214,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.bankBranch.$delete({ 'ID': vm.bankBranch.bankBranchID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.bankBranch.$delete({ 'ID': vm.bankBranch.bankBranchID });
+            bankBranchResource.delete({ 'ID': vm.bankBranch.BankBranchID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

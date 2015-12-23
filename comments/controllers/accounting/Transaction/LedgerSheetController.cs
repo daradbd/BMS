@@ -20,6 +20,7 @@ namespace BMS.Controllers.Accounting.Transaction
     public class LedgerSheetController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
         // GET api/ledgersheet
         public IEnumerable<AccCOA> Get()
         {

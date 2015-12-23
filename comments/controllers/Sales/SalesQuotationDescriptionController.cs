@@ -17,6 +17,7 @@ namespace BMS.Controllers.Sales
     public class SalesQuotationDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesQuotationDescription
         public IEnumerable<SalesQuotationDescription> GetSalesQuotationDescriptions(ODataQueryOptions Options)
@@ -68,7 +69,7 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
-
+                salesquotationdescription.InsertBy = loginUser.UserID;
                 db.Entry(salesquotationdescription).State = salesquotationdescription.SalesQuotationDescriptionID == 0 ? EntityState.Added : EntityState.Modified;
                 db.SaveChanges();
 

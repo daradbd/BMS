@@ -29,7 +29,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
-
+        vm.CancelButton = false;
 
 
         vm.ViewMode = function (activeMode) {
@@ -46,6 +46,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -59,6 +60,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -73,6 +75,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -86,6 +89,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -98,21 +102,27 @@
 
         //Get All Data List
         function GetList() {
-            accCOAConfigResource.query(function (data) {
+            accCOAConfigResource.query().$promise.then(function (data) {
                 vm.accCOAConfigs = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save accCOAConfig
         vm.Save = function (isValid) {
             if (isValid) {
-                accCOAConfigResource.save(vm.accCOAConfig,
+                accCOAConfigResource.save(vm.accCOAConfig).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.accCOAConfig = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -125,10 +135,13 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            accCOAConfigResource.get({ 'ID': id }, function (accCOAConfig) {
+            accCOAConfigResource.get({ 'ID': id }).$promise.then(function (accCOAConfig) {
                 vm.accCOAConfig = accCOAConfig;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 

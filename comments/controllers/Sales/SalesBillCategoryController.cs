@@ -16,6 +16,7 @@ namespace BMS.Controllers.Sales
     public class SalesBillCategoryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesBillCategory
         public IEnumerable<SalesBillCategory> GetSalesBillCategories()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
+                salesbillcategory.InsertBy = loginUser.UserID;
                 db.SalesBillCategories.Add(salesbillcategory);
                 db.SaveChanges();
 

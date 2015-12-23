@@ -13,12 +13,12 @@
 
     angular
         .module("companyManagement")
-        .controller("productCostingCtrl", ["unitOfMeasureResource", "productResource", "productCostingDescriptionResource", "productCostingResource", productCostingCtrl]);
-    function productCostingCtrl(unitOfMeasureResource,productResource,productCostingDescriptionResource,productCostingResource) {
+        .controller("productCostingCtrl", ["unitOfMeasureResource", "productResource", "productCostingDescriptionResource", "productCostingResource","$window", productCostingCtrl]);
+    function productCostingCtrl(unitOfMeasureResource, productResource, productCostingDescriptionResource, productCostingResource, $window) {
         var vm = this;
         vm.productCostings = [];
        // vm.productCostingDescription = [];
-
+        vm.height=$window.innerHeight-180;
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

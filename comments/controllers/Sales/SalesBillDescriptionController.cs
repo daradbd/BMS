@@ -17,6 +17,7 @@ namespace BMS.Controllers.Sales
     public class SalesBillDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesBillDescription
         public IEnumerable<SalesBillDescription> GetSalesBillDescriptions(ODataQueryOptions Options)
@@ -70,6 +71,7 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
+                salesbilldescription.InsertBy = loginUser.UserID;
                 db.SalesBillDescriptions.Add(salesbilldescription);
                 db.SaveChanges();
 

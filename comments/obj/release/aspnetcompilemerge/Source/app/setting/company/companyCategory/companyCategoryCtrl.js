@@ -18,6 +18,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -35,6 +36,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if(activeMode==2) //List View Mode
             {
@@ -48,6 +50,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -62,6 +65,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -75,6 +79,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -93,23 +98,29 @@
         GetList();
 
         function GetList () {
-            companyCategoryResource.query(function (data) {
+            companyCategoryResource.query().$promise.then(function (data) {
                 vm.companyCategorys = data;
                 toastr.success("Data function Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
       
       
         vm.Save = function (isValid) {
             if (isValid) {
-                companyCategoryResource.save(vm.companyCategory,
+                companyCategoryResource.save(vm.companyCategory).$promise.then(
                     function (data,responseHeaders) {
                         GetList();
                         var idd =JSON.parse( responseHeaders.id);
                         alert(idd);
                         vm.companyCategory = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else
@@ -122,7 +133,7 @@
         }
 
         vm.Get = function (id) {
-        companyCategoryResource.get({ 'ID': id }, function (companyCategory) {
+            companyCategoryResource.get({ 'ID': id }).$promise.then(function (companyCategory) {
             vm.companyCategory = companyCategory;
             //vm.FromView = true;
             //vm.EditView = false;
@@ -130,18 +141,25 @@
             //vm.DetailsView = true;
             vm.ViewMode(3);
             toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
 
         vm.Update = function (isValid) {
             if (isValid) {
-                companyCategoryResource.update({ 'ID': vm.companyCategory.CompanyCategoryID }, vm.companyCategory);
+                companyCategoryResource.update({ 'ID': vm.companyCategory.CompanyCategoryID }, vm.companyCategory).$promise.then(function () {
                 vm.companyCategorys = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -149,10 +167,15 @@
 
 
         vm.Delete = function () {
-            vm.companyCategory.$delete({ 'ID': vm.companyCategory.CompanyCategoryID });
-                toastr.error("Data Delete Successfully!");
+            //vm.companyCategory.$delete({ 'ID': vm.companyCategory.CompanyCategoryID });
+            companyCategoryResource.delete({ 'ID': vm.companyCategory.CompanyCategoryID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
                 GetList();
-                vm.ViewMode(1);
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
          }
 
     }

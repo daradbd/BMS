@@ -16,6 +16,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
     public class BankAccountOwnerTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/BankAccountOwnerType
         public IEnumerable<BankAccountOwnerType> GetBankAccountOwnerTypes()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
         {
             if (ModelState.IsValid)
             {
+                bankaccountownertype.InsertBy = loginUser.UserID;
                 db.BankAccountOwnerTypes.Add(bankaccountownertype);
                 db.SaveChanges();
 

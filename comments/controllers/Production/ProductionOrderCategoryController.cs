@@ -16,6 +16,7 @@ namespace BMS.Controllers.Production
     public class ProductionOrderCategoryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProductionOrderCategory
         public IEnumerable<ProductionOrderCategory> GetProductionOrderCategories()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Production
         {
             if (ModelState.IsValid)
             {
+                productionordercategory.InsertBy = loginUser.UserID;
                 db.ProductionOrderCategories.Add(productionordercategory);
                 db.SaveChanges();
 

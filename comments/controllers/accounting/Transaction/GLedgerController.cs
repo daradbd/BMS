@@ -16,6 +16,7 @@ namespace BMS.Controllers.Accounting.Transaction
     public class GLedgerController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/GLedger
         public IEnumerable<GLedger> GetGLedgers()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Accounting.Transaction
         {
             if (ModelState.IsValid)
             {
+                gledger.InsertBy = loginUser.UserID;
                 db.GLedgers.Add(gledger);
                 db.SaveChanges();
 

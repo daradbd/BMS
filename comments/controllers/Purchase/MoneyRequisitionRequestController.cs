@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class MoneyRequisitionRequestController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/MoneyRequisitionRequest
         public IEnumerable<MoneyRequisitionRequest> GetMoneyRequisitionRequests()
@@ -69,6 +70,7 @@ namespace BMS.Controllers.Purchase
             if (ModelState.IsValid)
             {
                 //db.MoneyRequisitionRequests.Add(moneyrequisitionrequest);
+                moneyrequisitionrequest.InsertBy = loginUser.UserID;
                 db.Entry(moneyrequisitionrequest).State = moneyrequisitionrequest.MoneyRequisitionRequestID == 0 ?
                     EntityState.Added : EntityState.Modified;
                 db.SaveChanges();

@@ -30,6 +30,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -47,6 +48,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -60,6 +62,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -74,6 +77,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -87,6 +91,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -98,31 +103,40 @@
 
         //Get All Data List
         function GetaccCOAConfigList() {
-            accCOAConfigResource.query(function (data) {
+            accCOAConfigResource.query().$promise.then(function (data) {
                 vm.accCOAConfigs = data;
                // toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
         GetList();
 
         //Get All Data List
         function GetList() {
-            paymentMethodResource.query(function (data) {
+            paymentMethodResource.query().$promise.then(function (data) {
                 vm.paymentMethods = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save paymentMethod
         vm.Save = function (isValid) {
             if (isValid) {
-                paymentMethodResource.save(vm.paymentMethod,
+                paymentMethodResource.save(vm.paymentMethod).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.paymentMethod = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -135,10 +149,13 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            paymentMethodResource.get({ 'ID': id }, function (paymentMethod) {
+            paymentMethodResource.get({ 'ID': id }).$promise.then(function (paymentMethod) {
                 vm.paymentMethod = paymentMethod;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -146,12 +163,16 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                paymentMethodResource.update({ 'ID': vm.paymentMethod.PaymentMethodID }, vm.paymentMethod);
+                paymentMethodResource.update({ 'ID': vm.paymentMethod.PaymentMethodID }, vm.paymentMethod).$promise.then(function () {
                 vm.paymentMethods = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -159,10 +180,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.paymentMethod.$delete({ 'ID': vm.paymentMethod.PaymentMethodID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+           // vm.paymentMethod.$delete({ 'ID': vm.paymentMethod.PaymentMethodID });
+            paymentMethodResource.delete({ 'ID': vm.paymentMethod.PaymentMethodID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

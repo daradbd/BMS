@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class MaintainPurchaseQuotationController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/MaintainPurchaseQuotation
         public IEnumerable<MaintainPurchaseQuotation> GetMaintainPurchaseQuotations()
@@ -74,6 +75,7 @@ namespace BMS.Controllers.Purchase
                 int? MaxCode = Convert.ToInt32((db.MaintainPurchaseQuotations.Where(r => r.MaintainPurchaseQuotationCode.StartsWith(CustomCode)).Select(r => r.MaintainPurchaseQuotationCode.Substring(CustomCode.Length, 4)).ToList()).Max());
                 string QRCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
                 maintainpurchasequotation.MaintainPurchaseQuotationCode = QRCode;
+                maintainpurchasequotation.InsertBy = loginUser.UserID;
                 db.MaintainPurchaseQuotations.Add(maintainpurchasequotation);
                 db.SaveChanges();
 

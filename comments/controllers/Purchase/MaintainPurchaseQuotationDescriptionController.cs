@@ -17,6 +17,7 @@ namespace BMS.Controllers.Purchase
     public class MaintainPurchaseQuotationDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/MaintainPurchaseQuotationDescription
         public IEnumerable<MaintainPurchaseQuotationDescription> GetMaintainPurchaseQuotationDescriptions(ODataQueryOptions Options)
@@ -72,6 +73,7 @@ namespace BMS.Controllers.Purchase
                // db.MaintainPurchaseQuotationDescriptions.Add(maintainpurchasequotationdescription);
                 db.Entry(maintainpurchasequotationdescription).State = maintainpurchasequotationdescription.MaintainPurchaseQuotationDescriptionID == 0 ?
                     EntityState.Added : EntityState.Modified;
+                maintainpurchasequotationdescription.InsertBy = loginUser.UserID;
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, maintainpurchasequotationdescription);

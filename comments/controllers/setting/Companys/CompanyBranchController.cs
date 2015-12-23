@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Companys
     public class CompanyBranchController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/CompanyBranch
         public IEnumerable<CompanyBranch> GetCompanyBranches()
@@ -81,6 +82,7 @@ namespace BMS.Controllers.Setting.Companys
         {
             if (ModelState.IsValid)
             {
+                companybranch.InsertBy = loginUser.UserID;
                 db.CompanyBranches.Add(companybranch);
                 db.SaveChanges();
 

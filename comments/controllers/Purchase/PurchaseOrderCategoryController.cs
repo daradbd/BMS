@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class PurchaseOrderCategoryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/PurchaseOrderCategory
         public IEnumerable<PurchaseOrderCategory> GetPurchaseOrderCategories()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Purchase
         {
             if (ModelState.IsValid)
             {
+                purchaseordercategory.InsertBy = loginUser.UserID;
                 db.PurchaseOrderCategories.Add(purchaseordercategory);
                 db.SaveChanges();
 

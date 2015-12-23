@@ -12,6 +12,7 @@ namespace BMS.Controllers.Accounting.Transaction
     public class TrialBalanceController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
         // GET api/trialbalance
         public HttpResponseMessage Get()
         {

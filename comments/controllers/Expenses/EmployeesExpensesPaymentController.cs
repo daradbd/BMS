@@ -16,6 +16,7 @@ namespace BMS.Controllers.Expenses
     public class EmployeesExpensesPaymentController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/EmployeesExpensesPayment
         public IEnumerable<EmployeesExpensesPayment> GetEmployeesExpensesPayments()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Expenses
         {
             if (ModelState.IsValid)
             {
+                employeesexpensespayment.InsertBy = loginUser.UserID;
                 db.EmployeesExpensesPayments.Add(employeesexpensespayment);
                 db.SaveChanges();
 

@@ -16,7 +16,7 @@ namespace BMS.Controllers.Sales
     public class SalesBillController : ApiController
     {
         private UsersContext db = new UsersContext();
-        LoginUser loginUser = new LoginUser();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesBill
         public IEnumerable<SalesBill> GetSalesBills()
@@ -83,6 +83,7 @@ namespace BMS.Controllers.Sales
                 int? MaxCode = Convert.ToInt32((db.SalesBills.Where(r => r.SalesBillCode.StartsWith(CustomCode)).Select(r => r.SalesBillCode.Substring(CustomCode.Length, 4)).ToList()).Max());
                 string SBCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
                 salesbill.SalesBillCode = SBCode;
+                salesbill.InsertBy = loginUser.UserID;
                 salesbill.Date = DateTime.Now.ToLocalTime();
 
                 db.SalesBills.Add(salesbill);

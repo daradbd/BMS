@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Companys
     public class CompanyController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Company
         public IEnumerable<Company> GetCompanies()
@@ -84,6 +85,7 @@ namespace BMS.Controllers.Setting.Companys
         {
             if (ModelState.IsValid)
             {
+                company.InsertBy = loginUser.UserID;
                 db.Companies.Add(company);
                 db.SaveChanges();
 

@@ -16,6 +16,7 @@ namespace BMS.Controllers.Inventory
     public class ProductController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Product
         public IEnumerable<Product> GetProducts()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Inventory
         {
             if (ModelState.IsValid)
             {
+                product.InsertBy = loginUser.UserID;
                 db.Products.Add(product);
                 db.SaveChanges();
 

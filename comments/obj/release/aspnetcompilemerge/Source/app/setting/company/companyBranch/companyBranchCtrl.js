@@ -36,7 +36,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
-
+        vm.CancelButton = false;
 
         vm.selectCity = function (countryID) {
 
@@ -62,6 +62,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -75,6 +76,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -89,6 +91,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -102,6 +105,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -111,46 +115,64 @@
 
         GetLanguage();
         function GetLanguage() {
-            languageResource.query(function (data) {
+            languageResource.query().$promise.then(function (data) {
                 vm.Languages = data;
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
 
         }
 
         GetCurrency();
         function GetCurrency() {
-            currencyResource.query(function (data) {
+            currencyResource.query().$promise.then(function (data) {
                 vm.Currencys = data;
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
 
         }
 
         GetcompanyBranchType();
         function GetcompanyBranchType() {
-            companyBranchTypeResource.query(function (data) {
+            companyBranchTypeResource.query().$promise.then(function (data) {
                 vm.CompanyBranchTypes = data;
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetcountrysList();
         function GetcountrysList() {
-            countryResource.query(function (data) {
+            countryResource.query().$promise.then(function (data) {
                 vm.countrys = data;
                 toastr.success("Load country", "Country Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         GetCompanys();
         function GetCompanys() {
-            companyResource.query(function (data) {
+            companyResource.query().$promise.then(function (data) {
                 vm.companys = data;
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
         GetCompanyBranchCategorys();
         function GetCompanyBranchCategorys() {
-            companyBranchCategoryResource.query(function (data) {
+            companyBranchCategoryResource.query().$promise.then(function (data) {
                 vm.companyBranchCategorys = data;
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -159,10 +181,13 @@
 
         //Get All Data List
         function GetList() {
-            companyBranchResource.query(function (data) {
+            companyBranchResource.query().$promise.then(function (data) {
                 vm.companyBranchs = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -178,11 +203,14 @@
                 vm.companyBranch.LanguageID = vm.cmbLanguages.LanguageID;
                 vm.companyBranch.CurrencyID = vm.cmbCurrencys.CurrencyID;
 
-                companyBranchResource.save(vm.companyBranch,
+                companyBranchResource.save(vm.companyBranch).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.companyBranch = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -195,7 +223,7 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            companyBranchResource.get({ 'ID': id }, function (companyBranch) {
+            companyBranchResource.get({ 'ID': id }).$promise.then(function (companyBranch) {
                 vm.companyBranch = companyBranch;
                 vm.cmbCompany = { CompanyID: companyBranch.CompanyID };
                 vm.cmbParentBranch = { CompanyBranchID: vm.companyBranch.ParentBranchID };
@@ -209,6 +237,9 @@
 
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Save Failed!");
             });
         }
 
@@ -224,12 +255,16 @@
                 vm.companyBranch.CityID = vm.cmbCitys.CityID;
                 vm.companyBranch.LanguageID = vm.cmbLanguages.LanguageID;
                 vm.companyBranch.CurrencyID = vm.cmbCurrencys.CurrencyID;
-                companyBranchResource.update({ 'ID': vm.companyBranch.CompanyBranchID }, vm.companyBranch);
+                companyBranchResource.update({ 'ID': vm.companyBranch.CompanyBranchID }, vm.companyBranch).$promise.then(function () {
                 vm.companyBranchs = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -237,10 +272,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.companyBranch.$delete({ 'ID': vm.companyBranch.CompanyBranchID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.companyBranch.$delete({ 'ID': vm.companyBranch.CompanyBranchID });
+            companyBranchResource.delete({ 'ID': vm.companyBranch.CompanyBranchID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

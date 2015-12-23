@@ -16,6 +16,7 @@ namespace BMS.Controllers.Production
     public class ProductCostingController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProductCosting
         public IEnumerable<ProductCosting> GetProductCostings()
@@ -79,8 +80,9 @@ namespace BMS.Controllers.Production
                      var sq = db.SalesQuotations.Where(s => s.SalesQuotationID == productcosting.SalesQuotationID).SingleOrDefault();
                      productcosting.SalesQuotationID = sq.SalesQuotationID;
                      productcosting.CustomerID = sq.CustomerID;
-                     productcosting.CompanyID = sq.CompanyID; 
+                     productcosting.CompanyID = sq.CompanyID;
 
+                     productcosting.InsertBy = loginUser.UserID;
                      db.ProductCostings.Add(productcosting);
                      db.SaveChanges();
 

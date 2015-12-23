@@ -17,6 +17,7 @@ namespace BMS.Controllers.Inventory
     public class ProductReceiveDeliveryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProductReceiveDelivery
         public IEnumerable<ProductReceiveDelivery> GetProductReceiveDeliveries()
@@ -69,6 +70,7 @@ namespace BMS.Controllers.Inventory
         {
             if (ModelState.IsValid)
             {
+                productreceivedelivery.InsertBy = loginUser.UserID;
                 db.ProductReceiveDeliveries.Add(productreceivedelivery);
                 db.SaveChanges();
 

@@ -16,6 +16,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
     public class BankController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Bank
         public IEnumerable<Bank> GetBanks()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
         {
             if (ModelState.IsValid)
             {
+                bank.InsertBy = loginUser.UserID;
                 db.Banks.Add(bank);
                 db.SaveChanges();
 

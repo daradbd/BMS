@@ -17,6 +17,7 @@ namespace BMS.Controllers.Sales
     public class SalesReceivePaymentController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
         List<AccCOA> AccCOAList = new List<AccCOA>();
 
         // GET api/SalesReceivePayment
@@ -82,6 +83,7 @@ namespace BMS.Controllers.Sales
                 string SPCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
                 salesreceivepayment.SalesReceivePaymentCode = SPCode;
                 salesreceivepayment.Date = DateTime.Now.ToLocalTime();
+                salesreceivepayment.InsertBy = loginUser.UserID;
                 db.SalesReceivePayments.Add(salesreceivepayment);
                 db.SaveChanges();
 

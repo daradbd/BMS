@@ -10,12 +10,14 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Production;
 using BMS.Models;
+using WebMatrix.WebData;
 
 namespace BMS.Controllers.Sales
 {
     public class SalesQuotationController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesQuotation
         public IEnumerable<SalesQuotation> GetSalesQuotations()
@@ -76,6 +78,7 @@ namespace BMS.Controllers.Sales
 
                 salesquotation.SalesQuotationCode = SQCode;
 
+                salesquotation.InsertBy = loginUser.UserID;
                 db.SalesQuotations.Add(salesquotation);
 
                 db.SaveChanges();

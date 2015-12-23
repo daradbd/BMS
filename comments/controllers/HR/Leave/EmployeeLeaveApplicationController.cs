@@ -16,7 +16,7 @@ namespace BMS.Controllers.HR.Leave
     public class EmployeeLeaveApplicationController : ApiController
     {
         private UsersContext db = new UsersContext();
-
+        private LoginUser loginUser = new LoginUser();
         // GET api/EmployeeLeaveApplication
         public IEnumerable<EmployeeLeaveApplication> GetEmployeeLeaveApplications()
         {
@@ -70,7 +70,7 @@ namespace BMS.Controllers.HR.Leave
         {
             if (ModelState.IsValid)
             {
-                
+                employeeleaveapplication.InsertBy = loginUser.UserID;
                 db.EmployeeLeaveApplications.Add(employeeleaveapplication);
                 db.SaveChanges();
 

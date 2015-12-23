@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class RequisitionDeliveryDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/RequisitionDeliveryDescription
         public IEnumerable<RequestForQuotationDescription> GetRequestForQuotationDescriptions()
@@ -68,6 +69,7 @@ namespace BMS.Controllers.Purchase
         {
             if (ModelState.IsValid)
             {
+                requestforquotationdescription.InsertBy = loginUser.UserID;
                 db.RequestForQuotationDescriptions.Add(requestforquotationdescription);
                 db.SaveChanges();
 

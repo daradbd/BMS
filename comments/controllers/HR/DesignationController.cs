@@ -16,6 +16,7 @@ namespace BMS.Controllers.HR
     public class DesignationController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Designation
         public IEnumerable<Designation> GetDesignations()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.HR
         {
             if (ModelState.IsValid)
             {
+                designation.InsertBy = loginUser.UserID;
                 db.Designations.Add(designation);
                 db.SaveChanges();
 

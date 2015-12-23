@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class RequisitionDeliveryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/RequisitionDelivery
         public IEnumerable<RequisitionDelivery> GetRequisitionDeliveries()
@@ -68,6 +69,7 @@ namespace BMS.Controllers.Purchase
         {
             if (ModelState.IsValid)
             {
+                requisitiondelivery.InsertBy = loginUser.UserID;
                 db.RequisitionDeliveries.Add(requisitiondelivery);
                 db.SaveChanges();
 

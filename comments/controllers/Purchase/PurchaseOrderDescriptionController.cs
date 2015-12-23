@@ -17,6 +17,7 @@ namespace BMS.Controllers.Purchase
     public class PurchaseOrderDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/PurchaseOrderDescription
         public IEnumerable<PurchaseOrderDescription> GetPurchaseOrderDescriptions(ODataQueryOptions Options)
@@ -69,6 +70,7 @@ namespace BMS.Controllers.Purchase
         {
             if (ModelState.IsValid)
             {
+                purchaseorderdescription.InsertBy = loginUser.UserID;
                 //db.PurchaseOrderDescriptions.Add(purchaseorderdescription);
                 db.Entry(purchaseorderdescription).State = purchaseorderdescription.PurchaseOrderDescriptionID == 0 ?
                    EntityState.Added : EntityState.Modified;

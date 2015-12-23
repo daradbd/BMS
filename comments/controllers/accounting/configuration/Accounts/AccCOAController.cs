@@ -17,6 +17,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
     public class AccCOAController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/AccCOA
         public IEnumerable<AccCOA> GetAccCOAs(ODataQueryOptions Options)
@@ -69,6 +70,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
         {
             if (ModelState.IsValid)
             {
+                acccoa.InsertBy = loginUser.UserID;
                 db.AccCOAs.Add(acccoa);
                 db.SaveChanges();
 

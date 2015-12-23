@@ -16,6 +16,7 @@ namespace BMS.Controllers.Project
     public class ProjectSetupController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProjectSetup
         public IEnumerable<ProjectSetup> GetProjectSetups()
@@ -68,6 +69,7 @@ namespace BMS.Controllers.Project
             if (ModelState.IsValid)
             {
                 //db.ProjectSetups.Add(projectsetup);
+                projectsetup.InsertBy = loginUser.UserID;
                 db.Entry(projectsetup).State = projectsetup.ProjectID == 0 ?
                 EntityState.Added : EntityState.Modified;
                 db.SaveChanges();

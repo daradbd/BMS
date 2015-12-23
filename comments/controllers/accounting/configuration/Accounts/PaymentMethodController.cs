@@ -16,6 +16,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
     public class PaymentMethodController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/PaymentMethod
         public HttpResponseMessage GetPaymentMethods()
@@ -106,6 +107,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
         {
             if (ModelState.IsValid)
             {
+                paymentmethod.InsertBy = loginUser.UserID;
                 db.PaymentMethods.Add(paymentmethod);
                 db.SaveChanges();
 

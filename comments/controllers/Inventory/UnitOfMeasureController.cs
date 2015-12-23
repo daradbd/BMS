@@ -16,6 +16,7 @@ namespace BMS.Controllers.Inventory
     public class UnitOfMeasureController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/UnitOfMeasure
         public IEnumerable<UnitOfMeasure> GetUnitOfMeasures()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Inventory
         {
             if (ModelState.IsValid)
             {
+                unitofmeasure.InsertBy = loginUser.UserID;
                 db.UnitOfMeasures.Add(unitofmeasure);
                 db.SaveChanges();
 

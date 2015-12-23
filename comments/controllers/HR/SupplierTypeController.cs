@@ -16,6 +16,7 @@ namespace BMS.Controllers.HR
     public class SupplierTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SupplierType
         public IEnumerable<SupplierType> GetSupplierTypes()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.HR
         {
             if (ModelState.IsValid)
             {
+                suppliertype.InsertBy = loginUser.UserID;
                 db.SupplierTypes.Add(suppliertype);
                 db.SaveChanges();
 

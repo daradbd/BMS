@@ -10,7 +10,6 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Production;
 using BMS.Models;
-using BMS.Models.Production;
 using System.Web.Http.OData.Query;
 
 namespace BMS.Controllers.Production
@@ -18,6 +17,7 @@ namespace BMS.Controllers.Production
     public class BillofMaterialDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/BillofMaterialDescription
         public IEnumerable<BillofMaterialDescription> GetBillofMaterialDescriptions(ODataQueryOptions Options)
@@ -79,6 +79,7 @@ namespace BMS.Controllers.Production
                // var CostPrice = (db.BillofMaterialDescriptions.Where(r => (r.BillofMaterialDescriptionID == billofmaterialdescription.BillofMaterialDescriptionID) && (r.ProductID == billofmaterialdescription.ProductID)).Select(r => (r.RawMaterialQuantity)));
                 var CostPrice = (db.BillofMaterialDescriptions.Where(r => (r.BillofMaterialID == billofmaterialdescription.BillofMaterialID) && (r.SalesSectionID == billofmaterialdescription.SalesSectionID) && (r.ProductID == billofmaterialdescription.ProductID) && (r.IsBOM == true)).Select(r => ((r.RawMaterialQuantity * (r.RawMaterialUniteRate + r.OtherCost)) / r.ProductQuantity))).ToList().Sum();
                 salesquotationdescription.CostPrice = Convert.ToDecimal(CostPrice);
+                salesquotationdescription.InsertBy = loginUser.UserID;
                 db.Entry(salesquotationdescription).State = EntityState.Modified;
                 db.SaveChanges();
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, billofmaterialdescription);

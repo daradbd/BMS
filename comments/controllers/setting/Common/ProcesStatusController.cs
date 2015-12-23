@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Common
     public class ProcesStatusController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProcesStatus
         public IEnumerable<ProcesStatus> GetProcesStatus()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Setting.Common
         {
             if (ModelState.IsValid)
             {
+                processtatus.InsertBy = loginUser.UserID;
                 db.ProcesStatus.Add(processtatus);
                 db.SaveChanges();
 

@@ -17,6 +17,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
     public class BankBranchController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/BankBranch
         public IEnumerable<BankBranch> GetBankBranches(ODataQueryOptions Options)
@@ -69,6 +70,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
         {
             if (ModelState.IsValid)
             {
+                bankbranch.InsertBy = loginUser.UserID;
                 db.BankBranches.Add(bankbranch);
                 db.SaveChanges();
 

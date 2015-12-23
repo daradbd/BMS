@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Companys
     public class CompanyTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/CompanyType
         public IEnumerable<CompanyType> GetCompanyTypes()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Setting.Companys
         {
             if (ModelState.IsValid)
             {
+                companytype.InsertBy = loginUser.UserID;
                 db.CompanyTypes.Add(companytype);
                 db.SaveChanges();
 

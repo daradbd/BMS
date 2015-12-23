@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class RequestForQuotationController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/RequestForQuotation
         public IEnumerable<RequestForQuotation> GetRequestForQuotations()
@@ -73,6 +74,7 @@ namespace BMS.Controllers.Purchase
                 int? MaxCode = Convert.ToInt32((db.RequestForQuotations.Where(r => r.RequestForQuotationCode.StartsWith(CustomCode)).Select(r => r.RequestForQuotationCode.Substring(CustomCode.Length, 4)).ToList()).Max());
                 string QRCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
                 requestforquotation.RequestForQuotationCode = QRCode;
+                requestforquotation.InsertBy = loginUser.UserID;
 
                 db.RequestForQuotations.Add(requestforquotation);
                 db.SaveChanges();

@@ -29,6 +29,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
         vm.addItem = function () {
             vm.employeesExpensesDescription.employeesExpensesDesc.unshift({ ExpensesTypeID: 0, EmployeesExpensesDescriptionName: "", ExpenseDate: "", sopened: false, ProjectID: 0, Quantity: 1, ExpenseRate: 0,ApproveAmount:0 });
@@ -69,6 +70,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -82,6 +84,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -96,6 +99,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -109,6 +113,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
         vm.sopen = function ($event) {
@@ -132,7 +137,7 @@
 
         //Get All Data List
         function GetExpensesTypetList() {
-            expensesTypeResource.query(function (data) {
+            expensesTypeResource.query().$promise.then(function (data) {
                 vm.expensesTypes = data;
 
             });
@@ -141,7 +146,7 @@
         GetProjectList();
         //Get All Data List
         function GetProjectList() {
-            projectSetupResource.query(function (data) {
+            projectSetupResource.query().$promise.then(function (data) {
                 vm.Projects = data;
 
             });
@@ -150,7 +155,7 @@
         GetEmployeeList();
         //Get All Data List
         function GetEmployeeList() {
-            collaboratorResource.query({ '$filter': 'IsEmployee eq true' }, function (data) {
+            collaboratorResource.query({ '$filter': 'IsEmployee eq true' }).$promise.then(function (data) {
                 vm.Employees = data;
 
             });
@@ -161,21 +166,27 @@
 
         //Get All Data List
         function GetList() {
-            employeesExpensesResource.query(function (data) {
+            employeesExpensesResource.query().$promise.then(function (data) {
                 vm.employeesExpensess = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Save employeesExpenses
         vm.Save = function (isValid) {
             if (isValid) {
-                employeesExpensesResource.save(vm.employeesExpenses,
+                employeesExpensesResource.save(vm.employeesExpenses).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.employeesExpenses = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Load Failed!");
                     });
             }
             else {
@@ -188,10 +199,13 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            employeesExpensesResource.get({ 'ID': id }, function (employeesExpenses) {
+            employeesExpensesResource.get({ 'ID': id }).$promise.then(function (employeesExpenses) {
                 vm.employeesExpenses = employeesExpenses;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -199,12 +213,16 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                employeesExpensesResource.update({ 'ID': vm.employeesExpenses.EmployeesExpensesID }, vm.employeesExpenses);
+                employeesExpensesResource.update({ 'ID': vm.employeesExpenses.EmployeesExpensesID }, vm.employeesExpenses).$promise.then(function () {
                 vm.employeesExpensess = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -212,10 +230,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.employeesExpenses.$delete({ 'ID': vm.employeesExpenses.EmployeesExpensesID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.employeesExpenses.$delete({ 'ID': vm.employeesExpenses.EmployeesExpensesID });
+            employeesExpensesResource.delete({ 'ID':vm.employeesExpenses.EmployeesExpensesID  }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

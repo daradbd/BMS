@@ -16,6 +16,7 @@ namespace BMS.Controllers.Sales
     public class SalesOrderCategoryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesOrderCategory
         public IEnumerable<SalesOrderCategory> GetSalesOrderCategories()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
+                salesordercategory.InsertBy = loginUser.UserID;
                 db.SalesOrderCategories.Add(salesordercategory);
                 db.SaveChanges();
 

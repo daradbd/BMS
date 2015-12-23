@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class PurchaseRequisitionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/PurchaseRequisition
         public IEnumerable<PurchaseRequisition> GetPurchaseRequisitions()
@@ -74,6 +75,7 @@ namespace BMS.Controllers.Purchase
                 int? MaxCode = Convert.ToInt32((db.PurchaseRequisitions.Where(r => r.PurchaseRequisitionCode.StartsWith(CustomCode)).Select(r => r.PurchaseRequisitionCode.Substring(CustomCode.Length, 4)).ToList()).Max());
                 string PQCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
                 purchaserequisition.PurchaseRequisitionCode = PQCode;
+                purchaserequisition.InsertBy = loginUser.UserID;
 
                 db.PurchaseRequisitions.Add(purchaserequisition);
                 db.SaveChanges();

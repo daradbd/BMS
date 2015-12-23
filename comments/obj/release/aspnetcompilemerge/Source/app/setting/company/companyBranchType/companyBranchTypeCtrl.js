@@ -29,6 +29,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -46,6 +47,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -59,6 +61,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -73,6 +76,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -86,7 +90,9 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
+
         }
 
         var DispayButton = function () {
@@ -98,21 +104,27 @@
 
         //Get All Data List
         function GetList() {
-            companyBranchTypeResource.query(function (data) {
+            companyBranchTypeResource.query().$promise.then(function (data) {
                 vm.companyBranchTypes = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Save Failed!");
             });
         }
 
         //Save companyBranchType
         vm.Save = function (isValid) {
             if (isValid) {
-                companyBranchTypeResource.save(vm.companyBranchType,
+                companyBranchTypeResource.save(vm.companyBranchType).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.companyBranchType = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -125,10 +137,13 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            companyBranchTypeResource.get({ 'ID': id }, function (companyBranchType) {
+            companyBranchTypeResource.get({ 'ID': id }).$promise.then(function (companyBranchType) {
                 vm.companyBranchType = companyBranchType;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Save Failed!");
             });
         }
 
@@ -136,12 +151,16 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                companyBranchTypeResource.update({ 'ID': vm.companyBranchType.companyBranchTypeID }, vm.companyBranchType);
+                companyBranchTypeResource.update({ 'ID': vm.companyBranchType.companyBranchTypeID }, vm.companyBranchType).$promise.then(function () {
                 vm.companyBranchTypes = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -149,10 +168,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.companyBranchType.$delete({ 'ID': vm.companyBranchType.companyBranchTypeID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.companyBranchType.$delete({ 'ID': vm.companyBranchType.companyBranchTypeID });
+            companyBranchTypeResource.delete({ 'ID': vm.companyBranchType.companyBranchTypeID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

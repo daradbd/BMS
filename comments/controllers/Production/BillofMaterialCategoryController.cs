@@ -16,6 +16,7 @@ namespace BMS.Controllers.Production
     public class BillofMaterialCategoryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/BillofMaterialCategory
         public IEnumerable<BillofMaterialCategory> GetBillofMaterialCategories()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Production
         {
             if (ModelState.IsValid)
             {
+                billofmaterialcategory.InsertBy = loginUser.UserID;
                 db.BillofMaterialCategories.Add(billofmaterialcategory);
                 db.SaveChanges();
 

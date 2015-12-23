@@ -29,6 +29,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -46,6 +47,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -59,6 +61,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
@@ -73,6 +76,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -86,6 +90,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -97,10 +102,13 @@
 
         //Get All Data List
         function GetaccCOAList() {
-            accCOAResource.query(function (data) {
+            accCOAResource.query().$promise.then(function (data) {
                 vm.accCOAs = data;
                 //toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -108,10 +116,13 @@
 
         //Get All Data List
         function GetList() {
-            accCOAMappingResource.query(function (data, responseHeaders) {
+            accCOAMappingResource.query().$promise.then(function (data, responseHeaders) {
                 vm.accCOAMappings = data;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -126,11 +137,14 @@
                     Suffix: accCOAMapping.Suffix,
                     CreateChild: accCOAMapping.CreateChild,
                 };
-                accCOAMappingResource.save(COAMapping,
+                accCOAMappingResource.save(COAMapping).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.accCOAMapping = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -143,10 +157,13 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            accCOAMappingResource.get({ 'ID': id }, function (accCOAMapping) {
+            accCOAMappingResource.get({ 'ID': id }).$promise.then(function (accCOAMapping) {
                 vm.accCOAMapping = accCOAMapping;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -154,12 +171,16 @@
         //Data Update
         vm.Update = function (accCOAMapping) {
             if (accCOAMapping) {
-                accCOAMappingResource.update({ 'ID': vaccCOAMapping.accCOAMappingID }, accCOAMapping);
+                accCOAMappingResource.update({ 'ID': vaccCOAMapping.accCOAMappingID }, accCOAMapping).$promise.then(function () {
                 vm.accCOAMappings = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -167,10 +188,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.accCOAMapping.$delete({ 'ID': vm.accCOAMapping.accCOAMappingID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+            //vm.accCOAMapping.$delete({ 'ID': vm.accCOAMapping.accCOAMappingID });
+            accCOAMappingResource.delete({ 'ID': vm.accCOAMapping.accCOAMappingID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
     }

@@ -605,8 +605,7 @@ D:\github\BMS\Comments\bin\DotNetOpenAuth.OpenId.xml
 D:\github\BMS\Comments\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
 D:\github\BMS\Comments\bin\Org.Mentalis.Security.Cryptography.xml
 D:\github\BMS\Comments\bin\Mono.Math.xml
-D:\github\BMS\Comments\obj\Debug\BMS.dll
-D:\github\BMS\Comments\obj\Debug\BMS.pdb
 D:\github\BMS\Comments\obj\Debug\BMS.Migrations.Initial.resources
 D:\github\BMS\Comments\obj\Debug\BMS.csproj.GenerateResource.Cache
-D:\github\BMS\Comments\obj\Debug\BMS.csprojResolveAssemblyReference.cache
+D:\github\BMS\Comments\obj\Debug\BMS.dll
+D:\github\BMS\Comments\obj\Debug\BMS.pdb

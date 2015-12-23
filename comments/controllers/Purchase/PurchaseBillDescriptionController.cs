@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class PurchaseBillDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/PurchaseBillDescription
         public IEnumerable<PurchaseBillDescription> GetPurchaseBillDescriptions()
@@ -69,6 +70,7 @@ namespace BMS.Controllers.Purchase
             if (ModelState.IsValid)
             {
                 //db.PurchaseBillDescriptions.Add(purchasebilldescription);
+                purchasebilldescription.InsertBy = loginUser.UserID;
                 db.Entry(purchasebilldescription).State = purchasebilldescription.PurchaseBillDescriptionID == 0 ?
                 EntityState.Added : EntityState.Modified;
 

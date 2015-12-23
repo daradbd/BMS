@@ -16,6 +16,7 @@ namespace BMS.Controllers.Sales
     public class SalesDeliveryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesDelivery
         public IEnumerable<SalesDelivery> GetSalesDeliveries()
@@ -68,6 +69,7 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
+                salesdelivery.InsertBy = loginUser.UserID;
                 db.SalesDeliveries.Add(salesdelivery);
                 db.SaveChanges();
 

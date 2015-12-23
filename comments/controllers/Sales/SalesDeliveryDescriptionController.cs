@@ -16,6 +16,7 @@ namespace BMS.Controllers.Sales
     public class SalesDeliveryDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesDeliveryDescription
         public IEnumerable<SalesDeliveryDescription> GetSalesDeliveryDescriptions()
@@ -69,6 +70,7 @@ namespace BMS.Controllers.Sales
             if (ModelState.IsValid)
             {
                 //db.SalesDeliveryDescriptions.Add(salesdeliverydescription);
+                salesdeliverydescription.InsertBy = loginUser.UserID;
                 db.Entry(salesdeliverydescription).State = salesdeliverydescription.SalesDeliveryDescriptionID == 0 ?
                 EntityState.Added : EntityState.Modified;
                 db.SaveChanges();

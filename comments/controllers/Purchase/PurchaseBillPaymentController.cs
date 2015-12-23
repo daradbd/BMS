@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class PurchaseBillPaymentController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/PurchaseBillPayment
         public IEnumerable<PurchaseBillPayment> GetPurchaseBillPayments()
@@ -71,6 +72,7 @@ namespace BMS.Controllers.Purchase
                 ControlVoucher controlvoucher = new ControlVoucher();
                 long SupplierCOAID = (long)db.Collaborators.Where(c => c.CollaboratorID == purchasebillpayment.SupplierID).Select(c => c.SupplierCOAID).FirstOrDefault();
                 purchasebillpayment.VoucherNO = controlvoucher.CreateVoucher( SupplierCOAID,(long)purchasebillpayment.CreditTo, (decimal)purchasebillpayment.PaymentTotal, (long)1, (DateTime)purchasebillpayment.Date);
+                purchasebillpayment.InsertBy = loginUser.UserID;
                 db.PurchaseBillPayments.Add(purchasebillpayment);
                 db.SaveChanges();
 

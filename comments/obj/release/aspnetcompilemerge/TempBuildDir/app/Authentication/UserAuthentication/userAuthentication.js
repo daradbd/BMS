@@ -13,9 +13,15 @@
 
     angular
         .module("companyManagement")
-        .controller("userAuthenticationCtrl", ["userAuthorizeResource",  "$window", "$uibModal","$location", userAuthenticationCtrl]);
-    function userAuthenticationCtrl(userAuthorizeResource,  $window, $uibModal,$location) {
+        .controller("userAuthenticationCtrl", ["userAuthorizeResource",  "$window", "$location","$scope", userAuthenticationCtrl]);
+    function userAuthenticationCtrl(userAuthorizeResource, $window, $location, $scope) {
         var vm = this;
+        $scope.$on('LOAD', function() {
+            $scope.loading = true;
+        });
+        $scope.$on('UNLOAD', function () {
+            $scope.loading = false;
+        });
         //$window.location.href = "/Account/Login/";
        // checkLogin();
         vm.userAuthentications = [];
@@ -23,11 +29,11 @@
         vm.UserName = "Darad";
         vm.ShowMenu = function () {
 
-            $uibModal.open({
-                templateUrl: "app/setting/common/menu/menu.html",
-                controller: "menuCtrl as vm"
+            //$uibModal.open({
+            //    templateUrl: "app/setting/common/menu/menu.html",
+            //    controller: "menuCtrl as vm"
                
-            });
+            //});
         }
 
         function checkLogin() {

@@ -16,6 +16,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
     public class AccTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/AccType
         public IEnumerable<AccType> GetAccTypes()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
         {
             if (ModelState.IsValid)
             {
+                acctype.InsertBy = loginUser.UserID;
                 db.AccTypes.Add(acctype);
                 db.SaveChanges();
 

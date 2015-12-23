@@ -16,6 +16,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
     public class BankAccountController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/BankAccount
         public IEnumerable<BankAccount> GetBankAccounts()
@@ -76,6 +77,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
                 bankaccount.LiabilityCOAID = controlCOA.CreateCOA(bankCode + "-" + brakBranchCode + "-" + bankaccount.BankAccountNumber, 10002);
                 bankaccount.ExpenseCOAID = controlCOA.CreateCOA(bankCode + "-" + brakBranchCode + "-" + bankaccount.BankAccountNumber, 10004);
                 bankaccount.IncomeCOAID = controlCOA.CreateCOA(bankCode + "-" + brakBranchCode + "-" + bankaccount.BankAccountNumber, 10003);
+                bankaccount.InsertBy = loginUser.UserID;
 
                 db.BankAccounts.Add(bankaccount);
                 db.SaveChanges();

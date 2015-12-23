@@ -16,6 +16,7 @@ namespace BMS.Controllers.HR
     public class DepartmentController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Department
         public IEnumerable<Department> GetDepartments()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.HR
         {
             if (ModelState.IsValid)
             {
+                department.InsertBy = loginUser.UserID;
                 db.Departments.Add(department);
                 db.SaveChanges();
 

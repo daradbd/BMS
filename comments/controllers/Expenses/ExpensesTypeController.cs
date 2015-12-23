@@ -16,6 +16,7 @@ namespace BMS.Controllers.Expenses
     public class ExpensesTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ExpensesType
         public IEnumerable<ExpensesType> GetExpensesTypes()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Expenses
         {
             if (ModelState.IsValid)
             {
+                expensestype.InsertBy = loginUser.UserID;
                 db.ExpensesTypes.Add(expensestype);
                 db.SaveChanges();
 

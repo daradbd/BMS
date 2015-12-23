@@ -20,6 +20,7 @@ namespace BMS.Controllers.HR
     public class CollaboratorController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Collaborator
         public IEnumerable<Collaborator> GetCollaborators(ODataQueryOptions Options)
@@ -102,7 +103,7 @@ namespace BMS.Controllers.HR
                     
 
                     string CollaboratorCode = "";
-                    long COAID = 0;
+                    //long COAID = 0;
                     if (collaborator.IsCustomer == true)
                     {
                         CollaboratorCode = "CUS-" + DateTime.Now.ToString("yyyyMMdd");
@@ -127,6 +128,7 @@ namespace BMS.Controllers.HR
                     //AccountController acc = new AccountController();
                     //acc.Register(RM);
                     collaborator.UserID = WebSecurity.GetUserId(collaborator.EmailID);
+                    collaborator.InsertBy = loginUser.UserID;
                     //WebSecurity.InitializeDatabaseConnection();
                     //WebSecurity.CreateUserAndAccount(, );
                     db.Collaborators.Add(collaborator);

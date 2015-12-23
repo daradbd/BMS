@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class PurchaseDeliveryReceiveDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/PurchaseDeliveryReceiveDescription
         public IEnumerable<PurchaseDeliveryReceiveDescription> GetPurchaseDeliveryReceiveDescriptions()
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Purchase
         {
             if (ModelState.IsValid)
             {
+                purchasedeliveryreceivedescription.InsertBy = loginUser.UserID;
                 db.PurchaseDeliveryReceiveDescriptions.Add(purchasedeliveryreceivedescription);
                 db.SaveChanges();
 

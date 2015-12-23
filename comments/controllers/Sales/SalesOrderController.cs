@@ -16,6 +16,7 @@ namespace BMS.Controllers.Sales
     public class SalesOrderController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesOrder
         public IEnumerable<SalesOrder> GetSalesOrders()
@@ -75,6 +76,7 @@ namespace BMS.Controllers.Sales
                 string SOCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
                 salesorder.SalesOrderCode = SOCode;
                 salesorder.Date = DateTime.Now.ToLocalTime();
+                salesorder.InsertBy = loginUser.UserID;
                 db.SalesOrders.Add(salesorder);
                 db.SaveChanges();
 

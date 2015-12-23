@@ -35,6 +35,7 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
 
 
 
@@ -52,6 +53,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
@@ -66,6 +68,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
                 GetList();
             }
 
@@ -81,6 +84,7 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
@@ -94,6 +98,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -174,20 +179,26 @@
 
         vm.GetAccType = GetAccType();
         function GetAccType() {
-            accTypeResource.query(function (data) {
+            accTypeResource.query().$promise.then(function (data) {
                 vm.AccTypes = data;
 
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             })
 
         }
 
         vm.selectParentCOAID = function(AccTypeID) {
 
-            accCOAResource.query({ '$filter': 'AccTypeID eq ' + AccTypeID }, function (data) {
+            accCOAResource.query({ '$filter': 'AccTypeID eq ' + AccTypeID }).$promise.then(function (data) {
                 vm.ParentCOAIDs = data;
                 //toastr.success("Data function Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -196,12 +207,15 @@
 
         //Get All Data List
         function GetList() {
-            accCOAResource.query(function (data) {
+            accCOAResource.query().$promise.then(function (data) {
                 vm.accCOAs = data;
                 CreateTree(vm.accCOAs);
                 vm.roleList = vm.accCOATree;
                 toastr.success("Data Load Successful", "Form Load");
 
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -210,11 +224,14 @@
             if (isValid) {
                 vm.accCOA.BalanceType = vm.cmbAccType.BalanceType;
                 vm.accCOA.AccTypeID = vm.cmbAccType.AccTypeID;
-                accCOAResource.save(vm.accCOA,
+                accCOAResource.save(vm.accCOA).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.accCOA = null;
                         toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
                     });
             }
             else {
@@ -227,7 +244,7 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            accCOAResource.get({ 'ID': id }, function (accCOA) {
+            accCOAResource.get({ 'ID': id }).$promise.then(function (accCOA) {
                 vm.accCOA = accCOA;
                 //var pID = accCOA.ParentCOAID;
                 vm.cmbAccType = { AccTypeID: vm.accCOA.AccTypeID };
@@ -238,6 +255,9 @@
 
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
@@ -245,12 +265,16 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                accCOAResource.update({ 'ID': vm.accCOA.COAID }, vm.accCOA);
+                accCOAResource.update({ 'ID': vm.accCOA.COAID }, vm.accCOA).$promise.then(function () {
                 vm.accCOAs = null;
                 vm.ViewMode(3);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
-            }
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Update Failed!");
+                });
+                }
             else {
                 toastr.error("Form is not valid");
             }
@@ -258,10 +282,15 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.accCOA.$delete({ 'ID': vm.accCOA.COAID });
-            toastr.error("Data Delete Successfully!");
-            GetList();
-            vm.ViewMode(1);
+           // vm.accCOA.$delete({ 'ID': vm.accCOA.COAID });
+            accCOAResource.delete({ 'ID': vm.accCOA.COAID }).$promise.then(function (data) {
+                // success handler
+                toastr.success("Data Delete Successfully!");
+                GetList();
+            }, function (error) {
+                // error handler
+                toastr.error("Data Delete Failed!");
+            });
         }
 
       
