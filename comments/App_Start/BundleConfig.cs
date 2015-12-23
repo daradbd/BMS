@@ -29,16 +29,25 @@ namespace BMS
                 "~/Content/css/animate.css",
                 "~/Content/login.css"));
 
+            //bundles.Add(new StyleBundle("~/Style/css").Include(
+            //"~/Content/css/metisMenu.css",
+            //"~/Content/css/sidebar.css",
+            //"~/Content/css/toastr.css",
+            //"~/Content/css/style.css",
+            // "~/Content/css/treeview.css",
+            //"~/Content/css/animate.css",
+            //"~/Content/css/responsive.css",
+            //"~/Content/css/jqxsummer.css",
+            //"~/Content/css/printStyle.css"));
+
+
             bundles.Add(new StyleBundle("~/Style/css").Include(
-            "~/Content/css/metisMenu.css",
-            "~/Content/css/sidebar.css",
             "~/Content/css/toastr.css",
-            "~/Content/css/style.css",
              "~/Content/css/treeview.css",
             "~/Content/css/animate.css",
-            "~/Content/css/responsive.css",
-            "~/Content/css/jqxsummer.css",
-            "~/Content/css/printStyle.css"));
+            "~/Content/css/printStyle.css",
+            "~/Content/css/style.css"));
+
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
@@ -57,15 +66,8 @@ namespace BMS
 
 
             bundles.Add(new ScriptBundle("~/Library/Scripts").Include(
-                        "~/Content/js/angularjs/angular.js",
                         "~/Content/js/jquery/jquery.js",
-                        "~/Content/js/jquery/bootstrap.js",
-
-                        "~/Content/js/jquery/jqxcore.js",
-                        "~/Content/js/jquery/jqxbuttons.js",
-                        "~/Content/js/jquery/jqxsplitter.js",
-
-                        "~/Content/js/jquery/metisMenu.js",
+                        "~/Content/js/angularjs/angular.js",
                         "~/Content/js/angularjs/angular-resource.js",
                         "~/Content/js/angularjs/ui-utils.js",
                         "~/Content/js/angularjs/angular-ui-router.js",
@@ -117,6 +119,7 @@ namespace BMS
 
                        "~/app/HR/collaboratorCtrl.js",
                        "~/app/HR/customerCtrl.js",
+                       "~/app/HR/customerModalCtrl.js",
                        "~/app/HR/supplierCtrl.js",
                        "~/app/HR/employeeCtrl.js",
                        "~/app/HR/customerTypeCtrl.js",
@@ -175,7 +178,6 @@ namespace BMS
                 "~/common/filter/ngGroup.js",
                 "~/common/filter/angular-filter.js",
                 "~/common/directive/dirPagination.js",
-                "~/common/directive/dirTreeview.js",
                 "~/common/directive/dirContextMenu.js",
                 "~/common/directive/dirSplitter.js",
                 "~/common/directive/dirPrint.js"));
@@ -183,6 +185,7 @@ namespace BMS
 
             bundles.Add(new ScriptBundle("~/Services/Scripts").Include(
                         "~/common/services/common.services.js",
+                        "~/common/services/modalServices.js",
                         "~/common/services/commentResource.js",
                         "~/common/services/companyCategoryResource.js",
                         "~/common/services/companyBranchCategoryResource.js",

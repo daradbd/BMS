@@ -53,7 +53,7 @@
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 Edit
             </button>
-            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(productionOrderForm.$valid)">
+            <button type="button" class="btn btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(true)">
                 <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                 Update
             </button>
@@ -81,7 +81,7 @@
                         <div class="col-lg-6 animated fadeInRight">
                             <div class="form-group"
                                  ng-class="{'has-error':productionOrderForm.txtProductionOrderCode.$invalid
-                                         && productionOrderForm.txtProductionOrderCode.$dirty}">
+                                         && productionOrderForm.txtProductionOrderCode.$pristine}">
 
                                 <label for="txtProductionOrderCode">
                                     ProductionOrderCode
@@ -96,7 +96,7 @@
                             </div>
                             <div class="form-group"
                                  ng-class="{'has-error':productionOrderForm.txtProductionOrderName.$invalid
-                                         && productionOrderForm.txtProductionOrderName.$dirty}">
+                                         && productionOrderForm.txtProductionOrderName.$pristine}">
 
                                 <label for="txtProductionOrderName">
                                     ProductionOrderName
@@ -121,8 +121,11 @@
                                         ng-options="WorkStation.CompanyBranchName for WorkStation in vm.companyBranchs track by WorkStation.CompanyBranchID"
                                         ng-change="vm.productionOrder.WorkStationID=vm.cmbWorkStation.CompanyBranchID"></select>
                             </div>
+
+
                         </div>
                         <div class="col-lg-6">
+
                             <!--<table class="table table-hover fix">
                                 <thead>
                                     <tr>
@@ -176,27 +179,26 @@
                                                     <tr>
 
                                                         <th style="display:none;">Product</th>
-                                                        <th>MOU</th>
+                                                        <th>UOM</th>
                                                         <th>Quantity</th>
                                                         <th>Offer Date</th>
                                                         <th>Schedule Date</th>
                                                         <th></th>
                                                     </tr>
-                                                    <tr ng:repeat="item in items" class="animated fadeInRight">
+                                                    <tr ng:repeat="item in items">
                                                         <td style="display:none;">
                                                             <select class="form-control" ng-model="item.cmbProductID"
                                                                     ng-init="item.cmbProductID={ProductID:item.ProductID}"
-                                                                    ng-options="product.ProductName for product in vm.products track by product.ProductID"
-                                                                    ng-change="vm.updateItem(item)"></select>
+                                                                    ng-options="product.ProductName for product in vm.products track by product.ProductID"></select>
                                                         </td>
                                                         <td>
                                                             <select class="form-control"
-                                                                    id="cmbUnitOfMeasure"
-                                                                    name="cmbUnitOfMeasure"
-                                                                    ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.MOUID}"
+                                                                   
+                                                                  
+                                                                    ng-init="item.cmbUnitOfMeasure={UnitOfMeasureID:item.UOMID}"
                                                                     ng-model="item.cmbUnitOfMeasure"
                                                                     ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
-                                                                    ng-change="item.MOUID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+                                                                    ng-change="item.UOMID=item.cmbUnitOfMeasure.UnitOfMeasureID"></select>
 
                                                         </td>
 
@@ -206,9 +208,8 @@
                                                                 <input type="text"
                                                                        class="form-control"
                                                                        ng-model="item.OfferDate"
-                                                                       datepicker-popup
-                                                                       is-open="item.Oopened"
-                                                                       required>
+                                                                       uib-datepicker-popup="dd.MM.yyyy"
+                                                                       is-open="item.Oopened">
                                                                 <span class="input-group-btn">
                                                                     <button class="btn btn-default"
                                                                             ng-click="vm.Oopen(item,$event)">
@@ -216,15 +217,16 @@
                                                                     </button>
                                                                 </span>
                                                             </p>
+
                                                         </td>
                                                         <td>
                                                             <p class="input-group">
                                                                 <input type="text"
                                                                        class="form-control"
                                                                        ng-model="item.ScheduleDate"
-                                                                       datepicker-popup
-                                                                       is-open="item.sopened"
-                                                                       required>
+
+                                                                       uib-datepicker-popup
+                                                                       is-open="item.sopened">
                                                                 <span class="input-group-btn">
                                                                     <button class="btn btn-default"
                                                                             ng-click="vm.sopen(item,$event)">

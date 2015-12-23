@@ -263,10 +263,11 @@
                 // var TDate = new Date(vm.voucherList.TranDate);
 
                 var purchaseRequisitionInfo = {
+                    PurchaseRequisitionDescriptionID: value.PurchaseRequisitionDescriptionID,
                     PurchaseRequisitionID: vm.purchaseRequisition.PurchaseRequisitionID,
                     ProductID: value.ProductID,
                     Description: value.Description,
-                    MOUID: value.MOUID,
+                    UOMID: value.UOMID,
                     Quantity: value.Quantity,
                     ScheduleDate: value.ScheduleDate,
                 };
@@ -314,6 +315,7 @@
         vm.Update = function (isValid) {
             if (isValid) {
                 purchaseRequisitionResource.update({ 'ID': vm.purchaseRequisition.PurchaseRequisitionID }, vm.purchaseRequisition);
+                vm.SaveRequisition();
                 vm.purchaseRequisitions = null;
                 vm.ViewMode(3);
                 GetList();

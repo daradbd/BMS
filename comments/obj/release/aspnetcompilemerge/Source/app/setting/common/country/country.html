@@ -1,166 +1,165 @@
-﻿<!--<div class="row">
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#jqxSplitter").jqxSplitter({ width: '100%', height: '100%', theme: 'summer', panels: [{ size: '50%' }, { size: '50%' }] });
-        });
-
-        //$("#jqxButton").jqxButton({
-        //    height: '30px',
-        //    width: '120px',
-        //    theme: 'energyblue'
-        //});
-        $('#jqxButton').on('click', function () {
-            $("#jqxSplitter").jqxSplitter({ width: '100%', height: '100%', theme: 'summer', panels: [{ size: '50%' }, { size: '50%' }] });
-        });
-
-
-    </script>-->
-    <div class="col-lg-4 breadcrumb-panel">
-
-        <ol class="breadcrumb">
-
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Library</a></li>
-            <li class="active"><a href="#">Data</a></li>
-        </ol>
-
-    </div>
-    <div class="col-lg-3 title-panel "><h4>Country</h4></div>
-    <div class="col-lg-3 search-panel">
-        <div class="input-group">
-            <input type="text" ng-focus="vm.ViewMode(2)" ng-model="searchText" class="form-control" placeholder="Search for...">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-            </span>
+﻿
+    <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Country
+        <small>Form</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Setting</a></li>
+        <li><a href="#">Common</a></li>
+        <li class="active">Country</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <form name="countryForm" novalidate>
+        <div class="row">
+            <div class="col-lg-12 action-botton">
+                <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-app btn-default"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> New</button>
+                <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(countryForm.$valid)" class="btn btn-app btn-default "><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
+                <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-app btn-default "><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</button>
+                <button type="button" ng-show="vm.UpdateButton" ng-click="vm.Update(countryForm.$valid)" class="btn btn-app btn-default "><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Update</button>
+                <button type="button" ng-print print-element-id="printThisElement" class="btn btn-app btn-default "><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
+                <button type="button" ng-show="vm.DeleteButton" ng-really-message="Are you sure ?" ng-really-click="vm.Delete()" class="btn btn-app btn-default "><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
+                <button type="button" ng-show="vm.CancelButton" ng-click="vm.ViewMode(2)" class="btn btn-app btn-default "><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+            </div>
         </div>
-    </div>
-    <div class="col-lg-2 button-panel">
-        <!-- /input-group -->
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary active">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked> <span class="glyphicon glyphicon-stats"></span>
-            </label>
-            <label class="btn btn-primary">
-                <input type="radio" name="options" id="option2" autocomplete="off"> <span class="glyphicon glyphicon-credit-card"></span>
-            </label>
-            <label class="btn btn-primary">
-                <input type="radio" name="options" id="option3" autocomplete="off"> <span class="glyphicon glyphicon-tasks"></span>
-            </label>
-            <button type="button" id='jqxButton' class="btn btn-primary" aria-label="Left Align">
-                <span class="glyphicon glyphicon-object-align-vertical"></span>
-            </button>
-        </div>
-    </div>
-</div>
-<form name="countryForm" class="max_height" novalidate>
-    <div class="row">
-        <div class="col-lg-12 action-botton">
-            <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-default "><span class="glyphicon glyphicon-file" aria-hidden="true"></span> New</button>
-            <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(countryForm.$valid)" class="btn btn-default "><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
-            <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-default "><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</button>
-            <button type="button" ng-show="vm.UpdateButton" ng-click="vm.Update(countryForm.$valid)" class="btn btn-default "><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Update</button>
-            <button type="button" ng-print print-element-id="printThisElement" class="btn btn-default "><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
-            <button type="button" ng-show="vm.DeleteButton" ng-click="vm.Delete()" class="btn btn-default "><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
-            <button type="button" ng-click="vm.ViewMode(2)" class="btn btn-default "><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
-        </div>
-    </div>
 
 
-    <div class="row max_height">
-        <div class="col-lg-12 max_height">
-            <bg-splitter orientation="horizontal" position="left" unit="px">
-                <bg-pane>
-                    <!--Left Begin-->
-                    <div class="view_info_box col-lg-12 center">
-                        <div class="entry-form" ng-show="vm.FromView">
-                            <div class="form-group" ng-class="{'has-error':countryForm.txtCountryCode.$invalid && countryForm.txtCountryCode.$dirty}">
-                                <label for=" inputCountrycode">
-                                    Country Code
-                                </label>
-                                <input ng-show="vm.EditView" type="text" class="form-control" id="txtCountryCode" name="txtCountryCode"
-                                       ng-model="vm.country.CountryCode" required
-                                       placeholder="Enter Country Code">
-                            </div>
-                            <div class="form-group">
-                                <label for="InputCountryName">Country Name</label>
-                                <input ng-show="vm.EditView" type="text" class="form-control" id="txtCountryName"
-                                       ng-model="vm.country.CountryName"
-                                       placeholder=" enter country name">
-                            </div>
-                            <div class="form-group">
-                                <label for="InputCountryRemarks">Remarks</label>
-                                <textarea ng-show="vm.EditView" class="form-control" id="txtCountryRemarks"
-                                          ng-model="vm.country.Remarks"
-                                          rows=" 3"></textarea>
+        <div class="row ">
+            <div class="col-lg-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="entry-form" ng-show="vm.FromView">
+                        <div class="box-header with-border">
+                            <h3 class="box-title" ng-if="vm.SaveButton">Add New Country</h3>
+                            <h3 class="box-title" ng-if="vm.UpdateButton">Edit Country</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                                <div class="col-lg-6 animated fadeInRight">
+                                    <div class="form-group" ng-class="{'has-error':countryForm.txtCountryCode.$invalid && countryForm.txtCountryCode.$dirty}">
+                                        <label for=" inputCountrycode">
+                                            Country Code
+                                        </label>
+                                        <input ng-show="vm.EditView" type="text" class="form-control" id="txtCountryCode" name="txtCountryCode"
+                                                ng-model="vm.country.CountryCode" required
+                                                placeholder="Enter Country Code">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputCountryName">Country Name</label>
+                                        <input ng-show="vm.EditView" type="text" class="form-control" id="txtCountryName"
+                                                ng-model="vm.country.CountryName"
+                                                placeholder=" enter country name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputCountryRemarks">Remarks</label>
+                                        <textarea ng-show="vm.EditView" class="form-control" id="txtCountryRemarks"
+                                                    ng-model="vm.country.Remarks"
+                                                    rows=" 3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                </div>
                             </div>
 
-                        </div>
-                        <div class="col-lg-12 list-form " ng-show="vm.ListView">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Code</th>
-                                            <th>Country Name</th>
-                                            <th>Remarks</th>
-                                        </tr>
+                            </div>
 
-                                    </thead>
-                                    <tbody>
-                                        <tr dir-paginate="country in vm.countrys|filter:searchText| itemsPerPage: 5" ng-click="vm.Get(country.CountryID)" ng-class="{'bg-primary':country.CountryID==vm.country.CountryID}">
-                                            <td>{{country.CountryCode  | uppercase}}</td>
-                                            <td>{{country.CountryName}}</td>
-                                            <td>{{country.Remarks| limitTo : 25 : 0}}...</td>
-                                            <!--<td class="noPrint">
-                                    <button type="button" class="btn btn-default ">
-                                        View
-                                    </button>
-                                </td>-->
-                                        </tr>
-                                    </tbody>
+                            <div class="view-form" ng-show="vm.DetailsView">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Country Details</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="col-lg-6 animated fadeInRight">
 
-                                </table>
-                                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                        <div class="form-group">
+                                            <label for=" inputCitycode">
+                                                Country Code
+                                            </label>
+                                            <pre>{{vm.country.CountryCode}}</pre>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="InputCityName">Country Name</label>
+                                            <pre>{{vm.country.CountryName}}</pre>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="InputCountryName">Remarks</label>
+                                            <pre>{{vm.country.Remarks}}</pre>
+                                        </div>
 
+
+
+                                    </div>
+                                    <div class="col-lg-6">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                    <div class="col-lg-12 box" ng-show="vm.ListView">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">City List</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="dataTables_length" id="example1_length">
+                                        <label>
+                                            Show <select ng-init="vm.num=5" ng-model="vm.num" class="form-control input-sm">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> entries
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div id="example1_filter" class="dataTables_filter">
+                                        <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="searchText"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 animated fadeInRight">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Country Name</th>
+                                                <th>Remarks</th>
+                                                <th class="noPrint">Preview</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="country in vm.countrys|filter:searchText| itemsPerPage: vm.num">
+                                                <td>{{country.CountryCode  | uppercase}}</td>
+                                                <td>{{country.CountryName}}</td>
+                                                <td>{{country.Remarks| limitTo : 30 : 0}}...</td>
+                                                <td class="noPrint">
+                                                    <button type="button" ng-click="vm.Get(country.CountryID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                </bg-pane><!--Left End-->
-                <bg-pane>
-                    <!-- Right begin-->
-                    <div class="view_info_box col-lg-12 center" id="printThisElement">
-                        <div class="view_info_head">
-                            <h4>Company ID: 1398 9760 60</h4>
-                            <h2>Country</h2>
-                        </div>
-                        <hr class="separatorSubscriptionPage">
-                        <div class="view_info_body">
-                            <ul>
-                                <li><label for="">Country Code:</label><p>{{vm.country.CountryCode}}</p></li>
-                                <li><label for="">Country Name:</label> <p>{{vm.country.CountryName}}</p></li>
-                                <li><label for="">Remarks :</label> <p>{{vm.country.Remarks}}</p></li>
-                            </ul>
-                            <p class="view_para">Once you subscribe, your subscription history appears here for convenient reference.</p>
+
+                            </div>
                         </div>
 
-                        <div class="sub_title_of_view">
-                            <h3>QuickBooks Online Payroll</h3>
-                        </div>
-                        <div class="view_bottom_sec">
-                            <ul>
-                                <li>
-                                    <label for="">Subscription Status:</label><p>
-                                        Canceled
-                                        <br /><small>You can still view and update your payroll data, but you can't create paychecks, pay payroll taxes, or file payroll forms</small>
-                                    </p>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
-            </bg-pane><!-- Right End-->
-        </bg-splitter><!-- end spliter-->
-        </div>
 
-    </div>
-
-</form>
+    </form>
+</section><!-- /.content -->

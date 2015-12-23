@@ -4,14 +4,16 @@
     var app = angular.module("companyManagement",
                             ["common.services",
                              "ngAnimate",
-                             "ui.bootstrap",
+                             'ui.bootstrap',
                              'angularUtils.directives.dirPagination',
                              'ng.group',
                              'angularTreeview',
                              'io.dennis.contextmenu',
                              'angular.filter',
                              'bgDirectives',
+                             'ng.ConfirmMsg',
                              "ui.router", ]);
+
     
     app.factory('Util', function () {
         return {
@@ -50,6 +52,11 @@
                         url: "/Account/Login/",
                        // href: "/Account/Login/",
                            // controller: "userAuthenticationCtrl as vm"
+                    })
+                    .state("formList", {
+                        url: "formList",
+                        templateUrl: "app/setting/Security/formList.html",
+                        controller: "formListCtrl as vm"
                     })
                     .state("companyCategory", {
                         url: "companyCategory",
@@ -242,7 +249,10 @@
                     .state("customers", {
                         url: "/customers",
                         templateUrl: "app/HR/customer.html",
-                        controller: "customerCtrl as vm"
+                        controller: "customerCtrl as vm",
+                        resolve: {
+                            customerFormData: function () { return {}; }
+                    }, 
                     })
                     //employees
                     .state("employees", {
