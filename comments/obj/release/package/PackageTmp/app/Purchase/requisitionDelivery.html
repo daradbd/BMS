@@ -15,10 +15,6 @@
     <form name="requisitionDeliveryForm" novalidate>
         <div class="row">
             <div class="col-lg-12 action-botton">
-                <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-app btn-default ">
-                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                    New
-                </button>
                 <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(requisitionDeliveryForm.$valid)" class="btn btn-app btn-default ">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     Save
@@ -57,11 +53,136 @@
                             <h3 class="box-title" ng-if="vm.UpdateButton">Edit Requisition Delivery</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <div class="col-lg-6 animated fadeInRight">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6 animated fadeInRight">
+                                    <div class="form-group">
+                                        <label for=" inputCitycode">
+                                            Requisition Code
+                                        </label>
+                                        <pre>{{vm.requisitionDelivery.RequisitionCode}}</pre>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=" inputCitycode">
+                                            Requisition By
+                                        </label>
+                                        <pre>{{vm.purchaseRequisition.Collaborator.Name}}</pre>
+                                    </div>
+                                    <div class="form-group">
 
+                                        <label for="cmbWorkPlantID">
+                                            Work Station
+                                        </label>
+                                        <pre>{{vm.purchaseRequisition.ProjectSetup.ProjectName}}</pre>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="form-group">
+                                        <label for=" inputCitycode">
+                                            Date
+                                        </label>
+                                        <pre>{{vm.purchaseRequisition.Date}}</pre>
+                                    </div>
+                                    <div class="form-group"
+                                         ng-class="{'has-error':requisitionDeliveryForm.cmbProject.$invalid
+                                             && requisitionDeliveryForm.cmbProject.$dirty}">
+
+                                        <label for="cmbProject">
+                                            Project
+                                        </label>
+                                        <pre>{{vm.purchaseRequisition.WorkPlant.CompanyBranchName}}</pre>
+                                        
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="txtTranDate">
+                                            Data:
+                                        </label>
+                                        <div class="form-group">
+                                            <p class="input-group">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="txtDate"
+                                                       name="txtDate"
+                                                       ng-model="vm.requisitionDelivery.Date"
+                                                       datepicker-popup="dd MMM, yyyy "
+                                                       is-open="vm.dtopened"
+                                                       required>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default"
+                                                            ng-click="vm.dtopen($event)">
+                                                        <i class="glyphicon glyphicon-calendar" />
+                                                    </button>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
+                                <tabset>
+                                    <tab heading="Product-Info" active="true">
+                                        <div class="col-lg-12 animated fadeInRight">
+                                            <table class="table table-hover">
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Description</th>
+                                                    <th>ScheduleDate</th>
+                                                    <th>UOM</th>
+                                                    <th>Quantity</th>
+                                                    <th>DeliveredQty</th>
+                                                    <th>DeliveryQty</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr ng:repeat="item in vm.PurchaseRequisitionDescription.purchaseRequisitionDesc" class="animated fadeInRight">
 
+                                                    <td>
+                                                        {{item.Product.ProductName}}
+                                                    </td>
+                                                    <td>
+                                                        <p class="input-group">
+                                                            {{item.Description}}
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="input-group">
+                                                            {{item.ScheduleDate}}
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        {{item.UOM.UnitOfMeasureName}}
+
+                                                    </td>
+                                                    <td>
+                                                        {{item.Quantity}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.DeliveredQuantity}}
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" ng-init="item.DeliveryQuantity=(item.Quantity-item.DeliveredQuantity)" ng:model="item.DeliveryQuantity" value="0" ng:required ng:validate="number" size="6">
+                                                    </td>
+                                                    <td>
+                                                        {{item.StockQuantity}}
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </tab>
+                                </tabset>
                             </div>
                         </div>
                     </div>
@@ -71,68 +192,191 @@
                             <h3 class="box-title">Requisition Delivery Details</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <div class="col-lg-6 animated fadeInRight">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6 animated fadeInRight">
 
 
-                            </div>
-                            <div class="col-lg-6">
+                                    </div>
+                                    <div class="col-lg-6">
 
-                            </div>
-                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Description</th>
+                                            <th>ScheduleDate</th>
+                                            <th>UOM</th>
+                                            <th>RequisitionQuantity</th>
+                                            <th>DeliveredQty</th>
+                                            <th>ReceivedQuantity</th>
+                                            <th>StockQuantity</th>
+                                        </tr>
+                                        <tr ng:repeat="item in  vm.requisitionDeliveryDescription.requisitionDeliveryDesc" class="animated fadeInRight">
+
+                                            <td>
+                                                {{item.Product.ProductName}}
+                                            </td>
+                                            <td>
+                                                <p class="input-group">
+                                                    {{item.Description}}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p class="input-group">
+                                                    {{item.ScheduleDate}}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                {{item.UOM.UnitOfMeasureName}}
+
+                                            </td>
+                                            <td>
+                                                {{item.RequisitionQuantity}}
+                                            </td>
+                                            <td>
+                                                {{item.Quantity}}
+                                            </td>
+                                            <td>
+                                                {{item.ReceivedQuantity}}
+                                            </td>
+                                            <td>
+                                                {{item.StockQuantity}}
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                           </div>
                     </div>
 
                     <div class="col-lg-12 box " ng-show="vm.ListView">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Requisition Delivery List</h3>
-                        </div><!-- /.box-header -->
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="dataTables_length" id="example1_length">
-                                        <label>
-                                            Show <select ng-init="vm.num=5" ng-model="vm.num" class="form-control input-sm">
-                                                <option value="5">5</option>
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select> entries
-                                        </label>
+                        <tabset>
+                            <tab heading="Requisition Delivery Pending List" active="true">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Purchase Requisition List</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="dataTables_length" id="example1_length">
+                                                <label>
+                                                    Show <select ng-init="vm.num=5" ng-model="vm.num" class="form-control input-sm">
+                                                        <option value="5">5</option>
+                                                        <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
+                                                    </select> entries
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div id="example1_filter" class="dataTables_filter">
+                                                <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="searchText"></label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div id="example1_filter" class="dataTables_filter">
-                                        <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="searchText"></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 animated fadeInRight">
-                                <div class="table-responsive">
-                                    <table class="table table-hover" id="printThisElement">
-                                        <thead>
-                                            <tr>
-                                                <th>Code</th>
-                                                <th>Remarks</th>
-                                                <th class="noPrint">Preview</th>
-                                            </tr>
+                                    <div class="col-lg-12 animated fadeInRight">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="printThisElement">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Code</th>
+                                                        <th>Employee</th>
+                                                        <th>Date</th>
+                                                        <th>Status</th>
+                                                        <th class="noPrint">Preview</th>
+                                                    </tr>
 
-                                        </thead>
-                                        <tbody>
-                                            <tr dir-paginate="requisitionDelivery in vm.requisitionDeliverys|filter:searchText| itemsPerPage: vm.num">
-                                                <td>{{requisitionDelivery.RequisitionDeliveryCode  | uppercase}}</td>
-                                                <td>{{requisitionDelivery.Remarks}}</td>
-                                                <td class="noPrint">
-                                                    <button type="button" ng-click="vm.Get(requisitionDelivery.RequisitionDeliveryID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
-                                                        <i class="fa fa-eye"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                                </thead>
+                                                <tbody>
+                                                    <tr dir-paginate="purchaseRequisition in vm.purchaseRequisitions|filter:searchText| itemsPerPage: vm.num">
+                                                        <td>{{purchaseRequisition.PurchaseRequisitionCode  | uppercase}}</td>
+                                                        <td>{{purchaseRequisition.Collaborator.Name}}</td>
+                                                        <td>{{purchaseRequisition.Date}}</td>
+                                                        <td>{{purchaseRequisition.ProcesStatus.ProcesStatusName}}</td>
+                                                        <td class="noPrint">
+                                                            <button type="button" ng-click="vm.GetPurchaseRequisition(purchaseRequisition.PurchaseRequisitionID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                                                <i class="fa fa-eye"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </tab>
+                            <tab heading="Requisition Delivery List" active="true">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Requisition Delivery List</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="dataTables_length" id="example1_length">
+                                                <label>
+                                                    Show <select ng-init="vm.numc=5" ng-model="vm.numc" class="form-control input-sm">
+                                                        <option value="5">5</option>
+                                                        <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
+                                                    </select> entries
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div id="example1_filter" class="dataTables_filter">
+                                                <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="searchTextc"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 animated fadeInRight">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="printThisElement">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Code</th>
+                                                        <th>RequisitionCode</th>
+                                                        <th>Date</th>
+                                                        <th class="noPrint">Preview</th>
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    <tr dir-paginate="requisitionDelivery in vm.requisitionDeliverys|filter:searchTextc| itemsPerPage: vm.numc">
+                                                        <td>{{requisitionDelivery.RequisitionDeliveryCode  | uppercase}}</td>
+                                                        <td>{{requisitionDelivery.RequisitionCode}}</td>
+                                                        <td>{{requisitionDelivery.Date}}</td>
+                                                        <td class="noPrint">
+                                                            <button type="button" ng-click="vm.Get(requisitionDelivery.RequisitionDeliveryID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                                                <i class="fa fa-eye"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tab>
+                        </tabset>
                     </div>
                 </div>
             </div>

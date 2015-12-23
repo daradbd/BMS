@@ -13,10 +13,13 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseDeliveryReceiveCtrl", ["purchaseDeliveryReceiveResource", purchaseDeliveryReceiveCtrl]);
-    function purchaseDeliveryReceiveCtrl(purchaseDeliveryReceiveResource) {
+        .controller("purchaseDeliveryReceiveCtrl", ["purchaseOrderDescriptionResource","purchaseOrderResource","purchaseDeliveryReceiveResource", purchaseDeliveryReceiveCtrl]);
+    function purchaseDeliveryReceiveCtrl(purchaseOrderDescriptionResource,purchaseOrderResource, purchaseDeliveryReceiveResource) {
         var vm = this;
         vm.purchaseDeliveryReceives = [];
+        vm.purchaseOrders = [];
+        vm.PurchaseOrderDescription = [];
+
 
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -93,12 +96,30 @@
                 vm.CancelButton = true;
             }
         }
-
+        vm.QuotationSubTotal = function () {
+            var total = 0.00;
+            angular.forEach(vm.PurchaseOrderDescription, function (item, key) {
+                total += (item.Quantity * item.UnitPrice);
+            });
+            return total;
+        }
         var DispayButton = function () {
 
         }
 
+        GetPurchaseOrderList();
 
+        //Get All Data List
+        function GetPurchaseOrderList() {
+            purchaseOrderResource.query().$promise.then(function (data) {
+                vm.purchaseOrders = data;
+                //toastr.success("Data Load Successful", "Form Load");
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
         GetList();
 
         //Get All Data List
@@ -147,6 +168,39 @@
         }
 
 
+        //Get Single Record
+        vm.GetpurchaseOrder = function (id) {
+            purchaseOrderResource.get({ 'ID': id }).$promise.then(function (purchaseOrder) {
+                vm.purchaseOrder = purchaseOrder;
+
+                //vm.cmbSupplier = { CollaboratorID: vm.purchaseOrder.SupplierID };
+                //vm.cmbSupplier = vm.purchaseOrder.Collaborator;
+                //vm.cmbProject = { ProjectID: vm.purchaseOrder.ProjectID };
+                //vm.cmbPurchaseOrderCategory = { PurchaseOrderCategoryID: vm.purchaseOrder.PurchaseOrderCategoryID };
+                //if (vm.purchaseOrder.ProcesStatusID == 10) {
+                //    vm.GetMaintainPurchaseQuotationDescription(vm.purchaseOrder.MaintainPurchaseQuotationID);
+                //}
+                //else {
+                    vm.GetPurchaseOrderDescription(vm.purchaseOrder.PurchaseOrderID);
+                //}
+                vm.ViewMode(4);
+                toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
+
+        vm.GetPurchaseOrderDescription = function (purchaseOrderID) {
+
+            purchaseOrderDescriptionResource.query({ '$filter': 'PurchaseOrderID eq ' + purchaseOrderID }).$promise.then(function (data) {
+                vm.PurchaseOrderDescription = data;
+                toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            })
+        }
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {

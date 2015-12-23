@@ -13,8 +13,9 @@
 
     angular
         .module("companyManagement")
-        .controller("userAuthenticationCtrl", ["userAuthorizeResource",  "$window", "$uibModal","$location","$scope", userAuthenticationCtrl]);
-    function userAuthenticationCtrl(userAuthorizeResource, $window, $uibModal, $location, $scope) {
+        .controller("userAuthenticationCtrl", ["userAuthorizeResource", "$window", "$uibModal", "$location", "$scope", "$rootScope", userAuthenticationCtrl]);
+    function userAuthenticationCtrl(userAuthorizeResource, $window, $uibModal, $location, $scope,$rootScope) {
+        $rootScope.IsPermit = false;
         var vm = this;
         $scope.$on('LOAD', function() {
             $scope.loading = true;

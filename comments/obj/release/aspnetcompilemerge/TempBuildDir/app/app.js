@@ -47,7 +47,16 @@
                 "$urlRouterProvider",
                 function ($stateProvider, $urlRouterProvider) {
 
-
+                    function check ($rootScope, $window) {
+                        if (!$rootScope.IsPermit) {
+                            //$state.go("language");
+                           
+                            $window.location= "#/comments";
+                            alert("HI");
+                            return false;
+                           
+                        }
+                    };
                       $urlRouterProvider.otherwise("/comments");
                  
 
@@ -57,6 +66,7 @@
                         url: "/comments",
                         templateUrl: "app/TestModule/Comments.html",
                         controller: "commentListCtrl as vm",
+                       
                         resolve: {
                           
                         }
@@ -79,7 +89,10 @@
                     .state("country", {
                         url: "country",
                         templateUrl: "app/setting/common/country/country.html",
-                        controller: "countryCtrl as vm"
+                        controller: "countryCtrl as vm",
+                        resolve: {
+                            "check": check
+                        }
                     })
                     .state("city", {
                         url: "city",
@@ -336,6 +349,7 @@
                         url: "/salesBill",
                         templateUrl: "app/Sales/salesBill.html",
                         controller: "salesBillCtrl as vm"
+                        
                     })
                     //moneyRequisitionRequest
                     .state("moneyRequisitionRequest", {
@@ -367,6 +381,13 @@
                         templateUrl: "app/Purchase/requisitionDelivery.html",
                         controller: "requisitionDeliveryCtrl as vm"
                     })
+                    //requisitionReceive
+                    .state("requisitionReceive", {
+                        url: "/requisitionReceive",
+                        templateUrl: "app/Purchase/requisitionReceive.html",
+                        controller: "requisitionReceiveCtrl as vm"
+                    })
+
                    //requestForQuotation
                     .state("requestForQuotation", {
                         url: "/requestForQuotation",
@@ -385,6 +406,17 @@
                         url: "/purchaseOrder",
                         templateUrl: "app/Purchase/purchaseOrder.html",
                         controller: "purchaseOrderCtrl as vm"
+                    })
+                    //purchaseOrder
+                    .state("purchaseOrderList", {
+                        url: "/purchaseOrderList",
+                        templateUrl: "app/Purchase/purchaseOrderList.html",
+                        controller: "purchaseOrderListCtrl as vm"
+                    })
+                    .state("purchaseApproval", {
+                        url: "/purchaseApproval",
+                        templateUrl: "app/Purchase/purchaseApproval.html",
+                        controller: "purchaseApprovalCtrl as vm"
                     })
                     //purchaseDeliveryReceive
                     .state("purchaseDeliveryReceive", {

@@ -57,12 +57,79 @@
                             <h3 class="box-title" ng-if="vm.UpdateButton">Edit Purchase Delivery Receive</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <div class="col-lg-6 animated fadeInRight">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6 animated fadeInRight">
 
-                            </div>
-                            <div class="col-lg-6">
+                                </div>
+                                <div class="col-lg-6">
 
+                                </div>
                             </div>
+                            <div class="col-lg-12">
+                                <tabset>
+                                    <tab heading="Product-Info" active="true">
+                                        <div class="col-lg-12">
+                                            <table class="table table-hover">
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Description</th>
+                                                    <th>ScheduleDate</th>
+                                                    <th>Quantity</th>
+                                                    <th>Received Quantity</th>
+                                                    <th>Receive Quantity</th>
+                                                    <th>UnitPrice</th>
+                                                    <th>Total</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr ng:repeat="item in vm.PurchaseOrderDescription">
+
+                                                    <td>
+                                                        {{item.Product.ProductName}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.Description}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.ScheduleDate| date:"dd/MM/yyyy"}}
+
+                                                    </td>
+                                                    <td>
+                                                        {{item.Quantity}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.ReceivedQuantity}}
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" ng:model="item.ReceiveQuantity" value="0" ng:required ng:validate="number" size="6">
+                                                    </td>
+                                                    <td>
+                                                        {{item.UnitPrice}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.UnitPrice*item.Quantity}}
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>{{vm.QuotationSubTotal()|currency}}</td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+
+                                    </tab>
+                                </tabset>
+                            </div>
+                        </div>
+
                         </div>
                     </div>
 
@@ -71,6 +138,7 @@
                             <h3 class="box-title">Purchase Delivery Receive Details</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
+                            <div class="col-lg-12">
                             <div class="col-lg-6 animated fadeInRight">
 
 
@@ -78,12 +146,68 @@
                             <div class="col-lg-6">
 
                             </div>
+                           </div>
+                            <div class="col-lg-12">
+                                <tabset>
+                                    <tab heading="Product-Info" active="true">
+                                        <div class="col-lg-12">
+                                            <table class="table table-hover">
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Description</th>
+                                                    <th>ScheduleDate</th>
+                                                    <th>Quantity</th>
+                                                    <th>UnitPrice</th>
+                                                    <th>Total</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr ng:repeat="item in vm.PurchaseOrderDescription">
+
+                                                    <td>
+                                                        {{item.Product.ProductName}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.Description}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.ScheduleDate| date:"dd/MM/yyyy"}}
+
+                                                    </td>
+                                                    <td>
+                                                        {{item.Quantity}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.UnitPrice}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.UnitPrice*item.Quantity}}
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>{{vm.QuotationSubTotal()|currency}}</td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+
+                                    </tab>
+                                </tabset>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-lg-12 box " ng-show="vm.ListView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Purchase Delivery Receive List</h3>
+                            <h3 class="box-title">Purchase Order List</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="row">
@@ -112,18 +236,26 @@
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
-                                                <th>Remarks</th>
+                                                <th>Supplier</th>
+                                                <th>QuotationCode</th>
+                                                <th>Status</th>
                                                 <th class="noPrint">Preview</th>
                                             </tr>
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="purchaseDeliveryReceive in vm.purchaseDeliveryReceives|filter:searchText| itemsPerPage: vm.num">
-                                                <td>{{purchaseDeliveryReceive.PurchaseDeliveryReceiveCode  | uppercase}}</td>
-                                                <td>{{purchaseDeliveryReceive.Remarks}}</td>
+                                            <tr dir-paginate="purchaseOrder in vm.purchaseOrders|filter:searchText| itemsPerPage: vm.num">
+                                                <td>{{purchaseOrder.PurchaseOrderCode  | uppercase}}</td>
+                                                <td>
+                                                    {{purchaseOrder.Collaborator.Name}}
+                                                </td>
+                                                <td>
+                                                    {{purchaseOrder.RequestForQuotationCode}}
+                                                </td>
+                                                <td><span ng-if="purchaseOrder.IsReceived==true" class="label label-success">Received</span><span ng-if="purchaseOrder.IsReceived==false" class="label label-warning">Pending</span></td>
                                                 <td class="noPrint">
-                                                    <button type="button" ng-click="vm.Get(purchaseDeliveryReceive.PurchaseDeliveryReceiveID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
-                                                        <i class="fa fa-eye"></i>
+                                                    <button type="button" ng-click="vm.GetpurchaseOrder(purchaseOrder.PurchaseOrderID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                                        <i ng-if="purchaseOrder.IsReceived==true" class="fa fa-eye"></i><i ng-if="purchaseOrder.IsReceived==false" class="fa fa-cart-arrow-down"></i>
                                                     </button>
                                                 </td>
                                             </tr>

@@ -47,7 +47,16 @@
                 "$urlRouterProvider",
                 function ($stateProvider, $urlRouterProvider) {
 
-
+                    function check ($rootScope, $window) {
+                        if (!$rootScope.IsPermit) {
+                            //$state.go("language");
+                           
+                            $window.location= "#/comments";
+                            alert("HI");
+                            return false;
+                           
+                        }
+                    };
                       $urlRouterProvider.otherwise("/comments");
                  
 
@@ -80,7 +89,10 @@
                     .state("country", {
                         url: "country",
                         templateUrl: "app/setting/common/country/country.html",
-                        controller: "countryCtrl as vm"
+                        controller: "countryCtrl as vm",
+                        resolve: {
+                            "check": check
+                        }
                     })
                     .state("city", {
                         url: "city",

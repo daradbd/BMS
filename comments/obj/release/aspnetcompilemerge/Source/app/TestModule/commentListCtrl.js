@@ -9,9 +9,9 @@
         vm.open = function () {
 
            $uibModal.open({
-               templateUrl: "app/setting/common/country/country.html",
+               templateUrl: "app/Resources/uploadFile.html",
                size: 'lg',
-                controller: "countryCtrl as vm"
+               controller: "uploadFileCtrl as vm"
             });
         }
 

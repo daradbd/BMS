@@ -13,17 +13,15 @@
 
     angular
         .module("companyManagement")
-        .controller("requisitionDeliveryCtrl", ["unitOfMeasureResource", "companyBranchResource", "requisitionDeliveryDescriptionResource", "requestForQuotationResource", "purchaseRequisitionDescriptionResource", "productResource", "projectSetupResource", "collaboratorResource", "purchaseRequisitionResource", "requisitionDeliveryResource", requisitionDeliveryCtrl]);
-    function requisitionDeliveryCtrl(unitOfMeasureResource, companyBranchResource,requisitionDeliveryDescriptionResource, requestForQuotationResource, purchaseRequisitionDescriptionResource, productResource, projectSetupResource, collaboratorResource, purchaseRequisitionResource,requisitionDeliveryResource) {
+        .controller("requisitionReceiveCtrl", ["unitOfMeasureResource", "companyBranchResource", "requestForQuotationResource", "requisitionDeliveryDescriptionResource", "purchaseRequisitionDescriptionResource", "productResource", "projectSetupResource", "collaboratorResource", "purchaseRequisitionResource", "requisitionDeliveryResource", requisitionReceiveCtrl]);
+    function requisitionReceiveCtrl(unitOfMeasureResource, companyBranchResource, requestForQuotationResource,requisitionDeliveryDescriptionResource, purchaseRequisitionDescriptionResource, productResource, projectSetupResource, collaboratorResource, purchaseRequisitionResource, requisitionDeliveryResource) {
         var vm = this;
         vm.requisitionDeliverys = [];
         vm.purchaseRequisitions = [];
-        vm.PurchaseRequisitionDescription = { purchaseRequisitionDesc: [] };
-
         vm.requisitionDeliveryDescription = { requisitionDeliveryDesc: [] };
-
-        vm.products = [];
+        vm.PurchaseRequisitionDescription = { purchaseRequisitionDesc: [] };
         vm.requisitionDelivery = {};
+        vm.products = [];
 
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -44,7 +42,7 @@
             GetList();
             if (activeMode == 1)//Form View Mode
             {
-               
+                //vm.requisitionDelivery = null;
                 vm.FromView = true;
                 vm.ListView = false;
                 vm.DetailsView = false;
@@ -80,22 +78,23 @@
 
 
                 vm.SaveButton = false;
-                vm.EditButton = true;
+                vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
                 vm.CancelButton = true;
+
             }
             if (activeMode == 4)//Edit View Mode
             {
                 vm.FromView = true;
                 vm.ListView = false;
                 vm.DetailsView = false
-                vm.EditView = true;
+                vm.EditView = false;
 
 
                 vm.SaveButton = false;
                 vm.EditButton = false;
-                vm.UpdateButton = true;
+                vm.UpdateButton = false;
                 vm.DeleteButton = true;
                 vm.CancelButton = true;
             }
@@ -163,47 +162,11 @@
             });
         }
 
-        GetPurchaseRequisitionList();
-
-        function GetPurchaseRequisitionList() {
-            purchaseRequisitionResource.query({ '$filter': 'IsDelivered eq false' }).$promise.then(function (data) {
-                vm.purchaseRequisitions = data;
-                toastr.success("Data Load Successful", "Form Load");
-
-            });
-        }
-
-
-        //Get Single Record
-        vm.GetPurchaseRequisition = function (id) {
-            //vm.requisitionDelivery = null;
-            vm.PurchaseRequisitionDescription = null;
-            vm.PurchaseRequisitionDescription = { purchaseRequisitionDesc: [] };
-            purchaseRequisitionResource.get({ 'ID': id }).$promise.then(function (purchaseRequisition) {
-                vm.purchaseRequisition = purchaseRequisition;
-                vm.requisitionDelivery.RequisitionCode = vm.purchaseRequisition.PurchaseRequisitionCode;
-                vm.cmbProject = { ProjectID: vm.purchaseRequisition.ProjectID };
-                vm.cmbWorkPlantID = vm.purchaseRequisition.WorkPlant;
-                vm.GetRequisitionDescription(id);
-                vm.ViewMode(1);
-                toastr.success("Data Load Successful", "Form Load");
-            });
-        }
-
-        vm.GetRequisitionDescription = function (purchaseRequisitionID) {
-
-            purchaseRequisitionDescriptionResource.query({ '$filter': 'PurchaseRequisitionID eq ' + purchaseRequisitionID }).$promise.then(function (data) {
-                vm.PurchaseRequisitionDescription.purchaseRequisitionDesc = data;
-                toastr.success("Data function Load Successful", "Form Load");
-            })
-        }
-
-
         GetList();
 
-        //Get All Data List
+        //Get All Data List{ '$filter': 'IsReceived eq false' }
         function GetList() {
-            requisitionDeliveryResource.query(function (data) {
+            requisitionDeliveryResource.query().$promise.then(function (data) {
                 vm.requisitionDeliverys = data;
                 toastr.success("Data Load Successful", "Form Load");
 
@@ -213,17 +176,10 @@
         //Save requisitionDelivery
         vm.Save = function (isValid) {
             if (isValid) {
-                vm.requisitionDelivery.EmployeeID = vm.purchaseRequisition.EmployeeID;
-                vm.requisitionDelivery.ProjectID = vm.purchaseRequisition.ProjectID;
-                vm.requisitionDelivery.WorkPlantID = vm.purchaseRequisition.WorkPlantID;
-                vm.requisitionDelivery.PurchaseRequisitionID = vm.purchaseRequisition.PurchaseRequisitionID;
-                vm.requisitionDelivery.RequisitionCode = vm.purchaseRequisition.PurchaseRequisitionCode;
                 requisitionDeliveryResource.save(vm.requisitionDelivery,
                     function (data, responseHeaders) {
-                        vm.requisitionDelivery = data;
-                        vm.SaveRequisitionDelivery();
-                       // GetList();
-                        //vm.requisitionDelivery = null;
+                        GetList();
+                        vm.requisitionDelivery = null;
                         toastr.success("Save Successful");
                     });
             }
@@ -235,10 +191,53 @@
 
         }
 
-        //Save Quotation Description
+        //Get Single Record
+        vm.Get = function (id) {
+            vm.requisitionDeliveryDescription.requisitionDeliveryDesc = null;
+            vm.requisitionDelivery = null;
+            requisitionDeliveryResource.get({ 'ID': id }, function (requisitionDelivery) {
+                vm.requisitionDelivery = requisitionDelivery;
+                vm.GetRequisitionDelivery(vm.requisitionDelivery.RequisitionDeliveryID);
+                if (vm.requisitionDelivery.IsReceived == true)
+                {
+                    vm.ViewMode(3);
+                }
+                else
+                {
+                    vm.ViewMode(1);
+                }
+               
+                toastr.success("Data Load Successful", "Form Load");
+            });
+        }
+
+        vm.GetRequisitionDelivery = function (RequisitionDeliveryID) {
+
+            requisitionDeliveryDescriptionResource.query({ '$filter': 'RequisitionDeliveryID eq ' + RequisitionDeliveryID }).$promise.then(function (data) {
+                vm.requisitionDeliveryDescription.requisitionDeliveryDesc = data;
+               // toastr.success("Data function Load Successful", "Form Load");
+            })
+        }
+
+        //Data Update
+        vm.Update = function (isValid) {
+            if (isValid) {
+                vm.requisitionDelivery.IsReceived = true;
+                requisitionDeliveryResource.update({ 'ID': vm.requisitionDelivery.RequisitionDeliveryID }, vm.requisitionDelivery);
+                //vm.requisitionDeliverys = null;
+                vm.SaveRequisitionDelivery();
+                vm.ViewMode(3);
+                GetList();
+                toastr.success("Data Update Successful", "Form Update");
+            }
+            else {
+                toastr.error("Form is not valid");
+            }
+        }
+
         vm.SaveRequisitionDelivery = function () {
 
-            angular.forEach(vm.PurchaseRequisitionDescription.purchaseRequisitionDesc, function (value, key) {
+            angular.forEach(vm.requisitionDeliveryDescription.requisitionDeliveryDesc, function (value, key) {
                 // var TDate = new Date(vm.voucherList.TranDate);
 
                 var RequisitionDeliveryInfo = {
@@ -247,8 +246,9 @@
                     ProductID: value.ProductID,
                     Description: value.Description,
                     UOMID: value.UOMID,
-                    RequisitionQuantity: value.Quantity,
-                    Quantity: value.DeliveryQuantity,
+                    RequisitionQuantity:value.RequisitionQuantity,
+                    ReceivedQuantity:value.ReceivedQuantity,
+                    Quantity:value.Quantity,
                     ScheduleDate: value.ScheduleDate,
                     StockQuantity: value.StockQuantity
                 };
@@ -265,38 +265,6 @@
             })
 
 
-        }
-
-        //Get Single Record
-        vm.Get = function (id) {
-            requisitionDeliveryResource.get({ 'ID': id }, function (requisitionDelivery) {
-                vm.requisitionDelivery = requisitionDelivery;
-                vm.GetRequisitionDelivery(vm.requisitionDelivery.RequisitionDeliveryID);
-                vm.ViewMode(3);
-                toastr.success("Data Load Successful", "Form Load");
-            });
-        }
-
-        vm.GetRequisitionDelivery = function (RequisitionDeliveryID) {
-
-            requisitionDeliveryDescriptionResource.query({ '$filter': 'RequisitionDeliveryID eq ' + RequisitionDeliveryID }).$promise.then(function (data) {
-                vm.requisitionDeliveryDescription.requisitionDeliveryDesc = data;
-                toastr.success("Data function Load Successful", "Form Load");
-            })
-        }
-
-        //Data Update
-        vm.Update = function (isValid) {
-            if (isValid) {
-                requisitionDeliveryResource.update({ 'ID': vm.requisitionDelivery.requisitionDeliveryID }, vm.requisitionDelivery);
-                vm.requisitionDeliverys = null;
-                vm.ViewMode(3);
-                GetList();
-                toastr.success("Data Update Successful", "Form Update");
-            }
-            else {
-                toastr.error("Form is not valid");
-            }
         }
 
         //Data Delete
