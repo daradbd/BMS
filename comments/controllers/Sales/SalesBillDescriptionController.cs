@@ -17,6 +17,7 @@ namespace BMS.Controllers.Sales
     public class SalesBillDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesBillDescription
         public IEnumerable<SalesBillDescription> GetSalesBillDescriptions(ODataQueryOptions Options)
@@ -51,6 +52,7 @@ namespace BMS.Controllers.Sales
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            salesbilldescription.UpdateBy = loginUser.UserID;
             db.Entry(salesbilldescription).State = EntityState.Modified;
 
             try
@@ -70,6 +72,7 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
+                salesbilldescription.InsertBy = loginUser.UserID;
                 db.SalesBillDescriptions.Add(salesbilldescription);
                 db.Entry(salesbilldescription).State = salesbilldescription.SalesBillDescriptionID == 0 ?
                EntityState.Added : EntityState.Modified;

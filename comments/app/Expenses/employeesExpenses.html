@@ -1,14 +1,14 @@
 ﻿    <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Employees Expenses
+        {{vm.FormName}}
         <small>Form</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">HR</a></li>
         <li><a href="#">Expenses</a></li>
-        <li class="active">Employees Expenses</li>
+        <li class="active">{{vm.FormName}}</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -28,7 +28,7 @@
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     Edit
                 </button>
-                <button type="button" class="btn btn-app btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(employeesExpensesForm.$valid)">
+                <button type="button" class="btn btn-app btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(true)">
                     <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                     Update
                 </button>
@@ -54,8 +54,8 @@
                 <div class="box box-primary">
                     <div class="entry-form" ng-show="vm.FromView">
                         <div class="box-header with-border">
-                            <h3 class="box-title" ng-if="vm.SaveButton">Add New Employees Expenses</h3>
-                            <h3 class="box-title" ng-if="vm.UpdateButton">Edit Employees Expenses</h3>
+                            <h3 class="box-title" ng-if="vm.SaveButton">Add New {{vm.FormName}}</h3>
+                            <h3 class="box-title" ng-if="vm.UpdateButton">Edit{{vm.FormName}}</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-12">
@@ -102,21 +102,21 @@
 
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div ng-if="vm.totalApply()" class="form-group">
 
                                         <label for="txtApplyAmount">
                                             ApplyAmount
                                         </label>
-                                        <pre>{{ vm.employeesExpenses.ApplyAmount}}</pre>
+                                        <pre>{{ vm.employeesExpenses.ApplyAmount=vm.totalApply()}}</pre>
                                     </div>
-                                    <div class="form-group">
+                                    <div ng-if="vm.FormTypeID==2" class="form-group">
 
                                         <label for="txtApproveAmount">
                                             ApproveAmount
                                         </label>
-                                        <pre>{{vm.employeesExpenses.ApproveAmount}}</pre>
+                                        <pre>{{vm.employeesExpenses.ApproveAmount= vm.totalApproveAmount()}}</pre>
                                     </div>
-                                    <div class="form-group">
+                                    <div ng-if="vm.FormTypeID==2" class="form-group">
 
                                         <label for="txtDisbursementDate">
                                             DisbursementDate
@@ -127,10 +127,9 @@
                                                        class="form-control"
                                                        id="txtDisbursementDate"
                                                        name="txtDisbursementDate"
-                                                       ng-model="vm.employeeLeaveApplication.DisbursementDate"
+                                                       ng-model="vm.employeesExpenses.DisbursementDate"
                                                        datepicker-popup="MMM dd, yyyy "
-                                                       is-open="vm.sopened"
-                                                       required>
+                                                       is-open="vm.sopened">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default"
                                                             ng-click="vm.sopen($event)">
@@ -154,19 +153,20 @@
                                                     </button>
                                                     <th>Expenses Type</th>
                                                     <th>Description</th>
-                                                    <th>Product</th>
-                                                    <th>ScheduleDate</th>
+                                                    <th>Project</th>
+                                                    <th>ExpenseDate</th>
                                                     <th>Quantity</th>
                                                     <th>ExpenseRate</th>
                                                     <th>Total</th>
-                                                    <th>Approve Amount</th>
+                                                    <th ng-if="vm.FormTypeID==2">Approve Amount</th>
                                                     <th></th>
                                                 </tr>
                                                 <tr ng:repeat="item in vm.employeesExpensesDescription.employeesExpensesDesc" class="animated fadeInRight">
                                                     <td>
                                                         <select class="form-control" ng-model="item.cmbExpensesType"
                                                                 ng-init="item.cmbExpensesType={ExpensesTypeID:item.ExpensesTypeID}"
-                                                                ng-options="ExpensesTypes.ExpensesTypeName for ExpensesTypes in vm.expensesTypes track by ExpensesTypes.ExpensesTypeID "</select>
+                                                                ng-options="ExpensesTypes.ExpensesTypeName for ExpensesTypes in vm.expensesTypes track by ExpensesTypes.ExpensesTypeID "
+                                                                ng-change="item.ExpensesTypeID=item.cmbExpensesType.ExpensesTypeID"></select>
                                                     </td>
                                                     <td>
                                                         <input class="form-control" ng:model="item.EmployeesExpensesDescriptionName" value="" ng:required size="10">
@@ -175,7 +175,7 @@
                                                         <select class="form-control" ng-model="item.cmbProject"
                                                                 ng-init="item.cmbProject={ProjectID:item.ProjectID}"
                                                                 ng-options="Project.ProjectName for Project in vm.Projects track by Project.ProjectID "
-                                                                ng-change="vm.updateItem(item)"></select>
+                                                                ng-change="item.ProjectID=item.cmbProject.ProjectID"></select>
                                                     </td>
 
                                                     <td>
@@ -184,8 +184,7 @@
                                                                    class="form-control"
                                                                    ng-model="item.ExpenseDate"
                                                                    datepicker-popup="MMM dd, yyyy"
-                                                                   is-open="item.sopened"
-                                                                   required>
+                                                                   is-open="item.sopened">
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-default"
                                                                         ng-click="vm.ssopen(item,$event)">
@@ -203,7 +202,7 @@
                                                     <td>
                                                         <pre>{{item.ExpenseRate*item.Quantity}}</pre>
                                                     </td>
-                                                    <td>
+                                                    <td ng-if="vm.FormTypeID==2">
                                                         <input class="form-control" ng:model="item.ApproveAmount" value="0" ng:required ng:validate="number" size="6">
                                                     </td>
 
@@ -234,22 +233,132 @@
 
                     <div class="view-form" ng-show="vm.DetailsView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Employees Expenses Details</h3>
+                            <h3 class="box-title">{{vm.FormName}} Details</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <div class="col-lg-6 animated fadeInRight">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6 animated fadeInRight">
+                                    <div class="form-group">
 
+                                        <label for="cmbEmployeeID">
+                                            Employee
+                                        </label>
+                                        <pre>{{ vm.employeesExpenses.Employee.Name}}</pre>
+                                    </div>
+                                    <div class="form-group">
 
+                                        <label for="txtEmployeesExpensesName">
+                                            EmployeesExpensesName
+                                        </label>
+                                        <pre>{{vm.employeesExpenses.EmployeesExpensesName}}</pre>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtRemarks">
+                                            Remarks
+                                        </label>
+                                        <pre>{{vm.employeesExpenses.Remarks}}</pre>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <div ng-if="vm.employeesExpenses.ApplyAmount" class="form-group">
+
+                                        <label for="txtApplyAmount">
+                                            ApplyAmount
+                                        </label>
+                                        <pre>{{ vm.employeesExpenses.ApplyAmount}}</pre>
+                                    </div>
+                                    <div ng-if="vm.employeesExpenses.ApproveAmount" class="form-group">
+
+                                        <label for="txtApproveAmount">
+                                            ApproveAmount
+                                        </label>
+                                        <pre>{{vm.employeesExpenses.ApproveAmount}}</pre>
+                                    </div>
+                                    <div ng-if="vm.employeesExpenses.DisbursementDate" class="form-group">
+
+                                        <label for="txtDisbursementDate">
+                                            DisbursementDate
+                                        </label>
+                                        <div class="form-group">
+                                            <pre>{{vm.employeesExpenses.DisbursementDate | date:"dd-MMM-yyyy"}}</pre>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
+                                <tabset>
+                                    <tab heading="Product-Info" active="true">
+                                        <div class="col-lg-12 animated fadeInRight">
+                                            <table class="table table-hover">
+                                                <tr>
+                                                    
+                                                    <th>Expenses Type</th>
+                                                    <th>Description</th>
+                                                    <th>Project</th>
+                                                    <th>ExpenseDate</th>
+                                                    <th>Quantity</th>
+                                                    <th>ExpenseRate</th>
+                                                    <th>Total</th>
+                                                    <th ng-if="vm.employeesExpenses.ApproveAmount">Approve Amount</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr ng:repeat="item in vm.employeesExpensesDescription.employeesExpensesDesc" class="animated fadeInRight">
+                                                    <td>
+                                                       {{item.ExpensesType.ExpensesTypeName}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.EmployeesExpensesDescriptionName}}
+                                                    </td>
+                                                    <td>
+                                                       {{item.Project.ProjectName}}
+                                                    </td>
 
+                                                    <td>
+                                                        <p class="input-group">
+                                                            {{item.ExpenseDate| date:"dd-MMM-yyyy"}}
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        {{item.Quantity}}
+                                                    </td>
+                                                    <td>
+                                                       {{item.ExpenseRate}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.ExpenseRate*item.Quantity}}
+                                                    </td>
+                                                    <td ng-if="item.ApproveAmount">
+                                                        {{item.ApproveAmount}}
+                                                    </td>
+
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                           
+                                        </div>
+
+                                    </tab>
+                                </tabset>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-12 box " ng-show="vm.ListView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">EmployeesExpenses List</h3>
+                            <h3 class="box-title">{{vm.FormName}} List</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="row">
@@ -278,20 +387,23 @@
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
+                                                <th>Expenses</th>
                                                 <th>Remarks</th>
                                                 <th class="noPrint">Preview</th>	
                                             </tr>
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="employeesExpenses in vm.employeesExpensess|filter:searchText| itemsPerPage: vm.num">
+                                            <tr dir-paginate="employeesExpenses in vm.employeesExpensess|orderBy:'-EmployeesExpensesID'|filter:searchText| itemsPerPage: vm.num">
                                                 <td>{{employeesExpenses.EmployeesExpensesCode  | uppercase}}</td>
+                                                <td>{{employeesExpenses.Employee.Name}}</td>
+                                                <td>{{employeesExpenses.EmployeesExpensesName}}</td>
                                                 <td>{{employeesExpenses.Remarks}}</td>
                                                 <td class="noPrint">
-                                                    
+
                                                     <button type="button" ng-click="vm.Get(employeesExpenses.EmployeesExpensesID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
                                                         <i class="fa fa-eye"></i>
-                                                    </button>	
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </tbody>

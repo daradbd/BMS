@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Companys
     public class CompanyCategoryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/CompanyCategory
         public IEnumerable<CompanyCategory> GetCompanyCategories()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Setting.Companys
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            companycategory.UpdateBy = loginUser.UserID;
             db.Entry(companycategory).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Setting.Companys
         {
             if (ModelState.IsValid)
             {
+                companycategory.InsertBy = loginUser.UserID;
                 db.CompanyCategories.Add(companycategory);
                 db.SaveChanges();
 

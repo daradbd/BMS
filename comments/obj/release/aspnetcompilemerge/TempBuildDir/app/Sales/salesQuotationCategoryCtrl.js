@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("salesQuotationCategoryCtrl", ["salesQuotationCategoryResource", salesQuotationCategoryCtrl]);
-    function salesQuotationCategoryCtrl(salesQuotationCategoryResource) {
+        .controller("salesQuotationCategoryCtrl", ["salesQuotationCategoryResource", "appAuth", salesQuotationCategoryCtrl]);
+    function salesQuotationCategoryCtrl(salesQuotationCategoryResource, appAuth) {
         var vm = this;
         vm.salesQuotationCategorys = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Companys
     public class CompanyBranchTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/CompanyBranchType
         public IEnumerable<CompanyBranchType> GetCompanyBranchTypes()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Setting.Companys
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            companybranchtype.UpdateBy = loginUser.UserID;
             db.Entry(companybranchtype).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Setting.Companys
         {
             if (ModelState.IsValid)
             {
+                companybranchtype.InsertBy = loginUser.UserID;
                 db.CompanyBranchTypes.Add(companybranchtype);
                 db.SaveChanges();
 

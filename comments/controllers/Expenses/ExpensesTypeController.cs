@@ -16,6 +16,7 @@ namespace BMS.Controllers.Expenses
     public class ExpensesTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ExpensesType
         public IEnumerable<ExpensesType> GetExpensesTypes()
@@ -47,6 +48,7 @@ namespace BMS.Controllers.Expenses
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            expensestype.UpdateBy = loginUser.UserID;
 
             db.Entry(expensestype).State = EntityState.Modified;
 

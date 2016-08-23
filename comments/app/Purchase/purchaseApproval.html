@@ -6,7 +6,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Purchase</a></li>
+        <li><a href="#">Accounting</a></li>
         <li class="active">Purchase Order Approval</li>
     </ol>
 </section>
@@ -60,7 +60,7 @@
 
                     <div class="view-form" ng-show="vm.DetailsView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Requisition Delivery Details</h3>
+                            <h3 class="box-title">Purchase Order Approval Details</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-12">
@@ -80,7 +80,7 @@
                                         <label for="Date">
                                             Date:
                                         </label>
-                                        <pre>{{vm.purchasePermit.Date}}</pre>
+                                        <pre>{{vm.purchasePermit.Date| date:"dd-MMM-yyyy"}}</pre>
                                     </div>
                                 </div>
                             </div>
@@ -95,9 +95,9 @@
                                                     <!--<th>ScheduleDate</th>-->
                                                     <th>UOM</th>
                                                     <th>Quantity</th>
-                                                    <!--<th>Tax</th>
-                                                    <th>Discount</th>-->
-                                                    <th>UnitPrice</th>
+                                                    <th>Previous Purchase Date</th>
+                                                   <th>Cost Price</th>
+                                                    <th>Approx UnitPrice</th>
                                                     <th>Total</th>
                                                     <th></th>
                                                 </tr>
@@ -118,10 +118,16 @@
                                                     {{item.Quantity}}
                                                 </td>
                                                 <td>
-                                                    {{item.UnitPrice}}
+                                                    {{item.Product.LastPurchaseDate| date:"dd-MMM-yyyy"}}
                                                 </td>
                                                 <td>
-                                                    {{item.UnitPrice*item.Quantity}}
+                                                    {{item.Product.CostPrice|isNull:0}}
+                                                </td>
+                                                <td>
+                                                    {{item.UnitPrice|currency: " " : 2	}}
+                                                </td>
+                                                <td>
+                                                    {{(item.UnitPrice*item.Quantity)|currency: " " : 2}}
                                                 </td>
                                                 <td></td>
                                             </tr>
@@ -139,7 +145,7 @@
 
                     <div class="col-lg-12 box " ng-show="vm.ListView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Requisition Delivery List</h3>
+                            <h3 class="box-title">Purchase Order Approval List</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="row">
@@ -176,9 +182,9 @@
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="purchasePermit in vm.purchasePermits|filter:searchText| itemsPerPage: vm.num">
+                                            <tr dir-paginate="purchasePermit in vm.purchasePermits|orderBy:'-PurchasePermitID'|filter:searchText| itemsPerPage: vm.num">
                                                 <td>{{purchasePermit.PurchasePermitCode  | uppercase}}</td>
-                                                <td>{{purchasePermit.Date}}</td>
+                                                <td>{{purchasePermit.Date| date:"dd-MMM-yyyy"}}</td>
                                                 <td>{{purchasePermit.Collaborator.Name}}</td>
                                                 <td><span ng-if="purchasePermit.IsApproved==true" class="label label-success">Approved</span><span ng-if="purchasePermit.IsApproved==false" class="label label-warning">Pending</span></td>
                                                 <td class="noPrint">

@@ -16,6 +16,7 @@ namespace BMS.Controllers.Production
     public class ProductionTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProductionType
         public IEnumerable<ProductionType> GetProductionTypes()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Production
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            productiontype.UpdateBy = loginUser.UserID;
             db.Entry(productiontype).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Production
         {
             if (ModelState.IsValid)
             {
+                productiontype.InsertBy = loginUser.UserID;
                 db.ProductionTypes.Add(productiontype);
                 db.SaveChanges();
 

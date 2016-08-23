@@ -24,6 +24,14 @@
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     Save
                 </button>
+                <button type="button" ng-if="vm.isModal" ng-show="vm.SaveButton" ng-click="vm.SaveClose(collaboratorForm.$valid)" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    Save & Close
+                </button>
+                <button type="button" ng-if="vm.isModal" ng-show="vm.EditButton" ng-click="vm.SelectClose()" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                    Select & Close
+                </button>
                 <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-app btn-default ">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     Edit
@@ -43,6 +51,10 @@
                 <button type="button" ng-show="vm.CancelButton" ng-click="vm.ViewMode(2)" class="btn btn-app btn-primary">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     Cancel
+                </button>
+                <button type="button" ng-if="vm.isModal" ng-click="vm.mClose()" class="btn btn-app btn-primary">
+                    <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                    Close
                 </button>
             </div>
         </div>
@@ -138,9 +150,7 @@
                                                           rows=" 3"></textarea>
                                             </div>
 
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':bankBranchForm.txtPOBox.$invalid
-                                             && bankBranchForm.txtPOBox.$dirty}">
+                                            <div class="form-group">
 
                                                 <label for="txtPOBox">
                                                     PO Box
@@ -150,8 +160,7 @@
                                                        id="txtPOBox"
                                                        name="txtPOBox"
                                                        ng-model="vm.bankBranch.POBox"
-                                                       placeholder="Enter POBox"
-                                                       required>
+                                                       placeholder="Enter POBox">
                                                 <label for="txtPostalCode">
                                                     Postal Code
                                                 </label>
@@ -162,6 +171,18 @@
                                                        ng-model="vm.bankBranch.PostalCode"
                                                        placeholder="Enter PostalCode"
                                                        required>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label for="txtPhone">
+                                                    Phone
+                                                </label>
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="txtPhone"
+                                                       name="txtSwiftCode"
+                                                       ng-model="vm.bankBranch.Phone"
+                                                       placeholder="Enter Phone">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -200,6 +221,18 @@
                                                        placeholder="Enter EmailID"
                                                        required>
                                             </div>
+                                            <div class="form-group">
+
+                                                <label for="txtFax">
+                                                    Fax
+                                                </label>
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="txtFax"
+                                                       name="txtFax"
+                                                       ng-model="vm.bankBranch.Fax"
+                                                       placeholder="Enter Fax">
+                                            </div>
                                         </div>
 
                                     </tab>
@@ -224,7 +257,7 @@
                                     <div class="form-group">
 
                                         <label for="txtBankBranchName">
-                                            BankBranchName
+                                            Bank Branch Name
                                         </label>
                                         <pre>{{vm.bankBranch.BankBranchName}}</pre>
                                     </div>
@@ -240,7 +273,7 @@
                                     <div class="form-group">
 
                                         <label for="txtSwiftCode">
-                                            SwiftCode
+                                            Swift Code
                                         </label>
                                         <pre>{{vm.bankBranch.SwiftCode}}</pre>
                                     </div>
@@ -268,6 +301,12 @@
                                                 </label>
                                                 <pre>{{vm.bankBranch.PostalCode}}</pre>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="txtPhone">
+                                                    Phone
+                                                </label>
+                                                <pre>{{vm.bankBranch.Phone}}</pre>
+                                            </div>
                                         </div>
                                         <div class="col-lg-6">
 
@@ -291,6 +330,12 @@
                                                     EmailID
                                                 </label>
                                                 <pre>{{vm.bankBranch.EmailID}}</pre>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="txtFax">
+                                                    Fax
+                                                </label>
+                                                <pre>{{vm.bankBranch.Fax}}</pre>
                                             </div>
                                         </div>
 
@@ -331,19 +376,20 @@
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
-                                                <th>SwiftCode</th>
+                                                <th>Bank</th>
                                                 <th>BankBranchName</th>
-                                                <th>Remarks</th>
+                                                <th>SwiftCode</th>
                                                 <th class="noPrint">Preview</th>
                                             </tr>
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="bankBranch in vm.bankBranchs|filter:searchText| itemsPerPage: vm.num">
+                                            <tr dir-paginate="bankBranch in vm.bankBranchs|orderBy:'-BankBranchID'|filter:searchText| itemsPerPage: vm.num ">
                                                 <td>{{bankBranch.BankBranchCode  | uppercase}}</td>
-                                                <td>{{bankBranch.SwiftCode}}</td>
+                                                <td>{{bankBranch.Bank.BankName}}</td>
                                                 <td>{{bankBranch.BankBranchName}}</td>
-                                                <td>{{bankBranch.Remarks}}</td>
+                                                <td>{{bankBranch.SwiftCode}}</td>
+
                                                 <td class="noPrint">
                                                     <button type="button" ng-click="vm.Get(bankBranch.BankBranchID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
                                                         <i class="fa fa-eye"></i>

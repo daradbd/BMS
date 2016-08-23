@@ -17,6 +17,7 @@ namespace BMS.Controllers.Purchase
     public class PurchaseOrderController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/PurchaseOrder
         public IEnumerable<PurchaseOrder> GetPurchaseOrders(ODataQueryOptions Options)
@@ -53,6 +54,7 @@ namespace BMS.Controllers.Purchase
             purchaseorder.Collaborator = null;
             purchaseorder.ProcesStatus = null;
             purchaseorder.ProjectSetup = null;
+            purchaseorder.UpdateBy = loginUser.UserID;
 
             db.Entry(purchaseorder).State = EntityState.Modified;
 
@@ -78,6 +80,7 @@ namespace BMS.Controllers.Purchase
                 int? MaxCode = Convert.ToInt32((db.PurchaseOrders.Where(r => r.PurchaseOrderCode.StartsWith(CustomCode)).Select(r => r.PurchaseOrderCode.Substring(CustomCode.Length, 4)).ToList()).Max());
                 string POCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
                 purchaseorder.PurchaseOrderCode = POCode;
+                purchaseorder.InsertBy = loginUser.UserID;
 
                 db.PurchaseOrders.Add(purchaseorder);
                 db.SaveChanges();

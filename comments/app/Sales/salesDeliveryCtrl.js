@@ -13,12 +13,13 @@
 
     angular
         .module("companyManagement")
-        .controller("salesDeliveryCtrl", ["unitOfMeasureResource", "salesDeliveryDescriptionResource", "salesOrderDescriptionResource", "$rootScope", "salesOrderResource", "salesDeliveryResource", salesDeliveryCtrl]);
+        .controller("salesDeliveryCtrl", ["salesDeliveryCategoryResource", "unitOfMeasureResource", "salesDeliveryDescriptionResource", "salesOrderDescriptionResource", "$rootScope", "salesOrderResource", "salesDeliveryResource", "appAuth", salesDeliveryCtrl]);
 
-    function salesDeliveryCtrl(unitOfMeasureResource, salesDeliveryDescriptionResource, salesOrderDescriptionResource, $rootScope, salesOrderResource, salesDeliveryResource) {
+    function salesDeliveryCtrl(salesDeliveryCategoryResource, unitOfMeasureResource, salesDeliveryDescriptionResource, salesOrderDescriptionResource, $rootScope, salesOrderResource, salesDeliveryResource, appAuth) {
         var vm = this;
         vm.salesDeliverys = [];
         vm.salesDelivery = {};
+        appAuth.checkPermission();
 
         vm.SalesDeliveryDescription = { salesDeliveryDesc: [{ ProductID: 0, Description: "", MOUID: 0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
         
@@ -124,6 +125,17 @@
             item.RDQuantity = (item.Quantity - item.DeliveredQuantity) < item.RDQuantity ? (item.Quantity - item.DeliveredQuantity) : item.RDQuantity;
         }
 
+        GetSalesDeliveryCateagorys();
+        function GetSalesDeliveryCateagorys() {
+            salesDeliveryCategoryResource.query().$promise.then(function (data) {
+                vm.salesDeliveryCategorys = data;
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
+
 
         GetUnitOfMeasures();
         function GetUnitOfMeasures() {
@@ -159,6 +171,7 @@
                         vm.SaveDelivery();
                         GetList();
                         //vm.salesDelivery = null;
+                        vm.ViewMode(2);
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -278,7 +291,7 @@
                 salesDeliveryResource.update({ 'ID': vm.salesDelivery.SalesDeliveryID }, vm.salesDelivery).$promise.then(function () {
                 vm.SaveDelivery();
                 vm.salesDeliverys = null;
-                vm.ViewMode(3);
+                vm.ViewMode(2);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
                 }, function (error) {
@@ -297,6 +310,7 @@
             //vm.salesDelivery.$delete({ 'ID': vm.salesDelivery.salesDeliveryID });
             salesDeliveryResource.delete({ 'ID': vm.salesDelivery.salesDeliveryID }).$promise.then(function (data) {
                 // success handler
+                vm.ViewMode(2);
                 toastr.success("Data Delete Successfully!");
                 GetList();
             }, function (error) {

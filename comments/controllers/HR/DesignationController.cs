@@ -16,10 +16,12 @@ namespace BMS.Controllers.HR
     public class DesignationController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Designation
         public IEnumerable<Designation> GetDesignations()
         {
+            //HttpCookie objHTTPCk = HttpContext.Current.Request.Cookies.Get("DARADERP");
             return db.Designations.AsEnumerable();
         }
 
@@ -47,6 +49,7 @@ namespace BMS.Controllers.HR
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            designation.UpdateBy = loginUser.UserID;
 
             db.Entry(designation).State = EntityState.Modified;
 
@@ -67,6 +70,7 @@ namespace BMS.Controllers.HR
         {
             if (ModelState.IsValid)
             {
+                designation.InsertBy = loginUser.UserID;
                 db.Designations.Add(designation);
                 db.SaveChanges();
 

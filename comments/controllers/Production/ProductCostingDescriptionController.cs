@@ -17,6 +17,7 @@ namespace BMS.Controllers.Production
     public class ProductCostingDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProductCostingDescription
         public IEnumerable<ProductCostingDescription> GetProductCostingDescriptions(ODataQueryOptions Options)
@@ -49,7 +50,7 @@ namespace BMS.Controllers.Production
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-
+            productcostingdescription.UpdateBy = loginUser.UserID;
             db.Entry(productcostingdescription).State = EntityState.Modified;
 
             try
@@ -70,6 +71,8 @@ namespace BMS.Controllers.Production
             SalesQuotationDescription salesquotationdescription = db.SalesQuotationDescriptions.Where(q => (q.SalesQuotationID == productcostingdescription.SalesQuotationID) && (q.SalesSectionID == productcostingdescription.SalesSectionID) && (q.ProductID == productcostingdescription.ProductID)).FirstOrDefault();
             if (ModelState.IsValid)
             {
+
+                productcostingdescription.InsertBy = loginUser.UserID;
                 db.Entry(productcostingdescription).State = productcostingdescription.ProductCostingDescriptionID == 0 ?
                 EntityState.Added : EntityState.Modified;
 

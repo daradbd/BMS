@@ -1,13 +1,13 @@
 ﻿    <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Purchase Requisition
+        Raw material Requisition
         <small>Form</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Purchase</a></li>
-        <li class="active">Purchase Requisition</li>
+        <li><a href="#">Production</a></li>
+        <li class="active">Raw material Requisition</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -57,8 +57,8 @@
                 <div class="box box-primary">
                     <div class="entry-form" ng-show="vm.FromView">
                         <div class="box-header with-border">
-                            <h3 class="box-title" ng-if="vm.SaveButton">Add New Purchase Requisition</h3>
-                            <h3 class="box-title" ng-if="vm.UpdateButton">Edit Purchase Requisition</h3>
+                            <h3 class="box-title" ng-if="vm.SaveButton">Add New Raw material Requisition</h3>
+                            <h3 class="box-title" ng-if="vm.UpdateButton">Edit Raw material Requisition</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-12">
@@ -156,7 +156,7 @@
                                                         <input class="form-control" ng:model="item.Description" value="" ng:required ng:validate="number" size="6">
                                                     </td>
                                                     <td>
-                                                        <p class="input-group">
+                                                        <p class="input-group" style="width:150px;">
                                                             <input type="text"
                                                                    class="form-control"
                                                                    ng-model="item.ScheduleDate"
@@ -185,7 +185,7 @@
                                                     </td>
 
 
-                                                    <td></td>
+                                                    <td><button type="button" ng-really-message="Are you sure ?" ng-really-click="vm.removeItem(item)" item="item" class="btn btn-flat btn-danger btn-xs" aria-label="Close"><i class="fa fa-minus-square"></i></button></td>
                                                 </tr>
                                                 <tr>
 
@@ -212,7 +212,7 @@
 
                     <div class="view-form" ng-show="vm.DetailsView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Purchase Requisition Details</h3>
+                            <h3 class="box-title">Raw material Requisition Details</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-12">
@@ -307,7 +307,7 @@
                     </div>
                     <div class="col-lg-12 box " ng-show="vm.ListView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Purchase Requisition List</h3>
+                            <h3 class="box-title">Raw material Requisition List</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="row">
@@ -344,10 +344,10 @@
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="purchaseRequisition in vm.purchaseRequisitions|filter:searchText| itemsPerPage: vm.num">
+                                            <tr dir-paginate="purchaseRequisition in vm.purchaseRequisitions|orderBy:'-PurchaseRequisitionID'|filter:searchText| itemsPerPage: vm.num">
                                                 <td>{{purchaseRequisition.PurchaseRequisitionCode  | uppercase}}</td>
                                                 <td>{{purchaseRequisition.Collaborator.Name}}</td>
-                                                <td>{{purchaseRequisition.Date}}</td>
+                                                <td>{{purchaseRequisition.Date| date:"dd-MMM-yyyy"}}</td>
                                                 <td>{{purchaseRequisition.ProcesStatus.ProcesStatusName}}</td>
                                                 <td class="noPrint">
                                                     <button type="button" ng-click="vm.Get(purchaseRequisition.PurchaseRequisitionID)" data-skin="skin-blue" class="btn btn-primary btn-xs">

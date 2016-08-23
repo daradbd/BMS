@@ -10,17 +10,21 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Accounting.Configuration.Banks;
 using BMS.Models;
+using System.Web.Http.OData.Query;
 
 namespace BMS.Controllers.Accounting.Configuration.Banks
 {
     public class BankAccountController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/BankAccount
-        public IEnumerable<BankAccount> GetBankAccounts()
+        public IEnumerable<BankAccount> GetBankAccounts(ODataQueryOptions options)
         {
-            return db.BankAccounts.AsEnumerable();
+            var BankAccounts = options.ApplyTo(db.BankAccounts.AsQueryable().Include(b=>b.Bank).Include(b=>b.BankBranch).Include(t=>t.BankAccountType)) as IEnumerable<BankAccount>;
+            return BankAccounts.AsEnumerable();
+
         }
 
         // GET api/BankAccount/5
@@ -38,6 +42,9 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
         // PUT api/BankAccount/5
         public HttpResponseMessage PutBankAccount(long id, BankAccount bankaccount)
         {
+            bankaccount.Bank = null;
+            bankaccount.BankBranch = null;
+            bankaccount.BankAccountType = null;
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
@@ -48,6 +55,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            bankaccount.UpdateBy = loginUser.UserID;
             db.Entry(bankaccount).State = EntityState.Modified;
 
             try
@@ -76,6 +84,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
                 bankaccount.LiabilityCOAID = controlCOA.CreateCOA(bankCode + "-" + brakBranchCode + "-" + bankaccount.BankAccountNumber, 10002);
                 bankaccount.ExpenseCOAID = controlCOA.CreateCOA(bankCode + "-" + brakBranchCode + "-" + bankaccount.BankAccountNumber, 10004);
                 bankaccount.IncomeCOAID = controlCOA.CreateCOA(bankCode + "-" + brakBranchCode + "-" + bankaccount.BankAccountNumber, 10003);
+                bankaccount.InsertBy = loginUser.UserID;
 
                 db.BankAccounts.Add(bankaccount);
                 db.SaveChanges();

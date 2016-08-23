@@ -178,7 +178,7 @@
 
                                             </thead>
                                             <tbody>
-                                                <tr dir-paginate="bankAccountOwnerType in vm.bankAccountOwnerTypes|filter:searchText| itemsPerPage: vm.num">
+                                                <tr dir-paginate="bankAccountOwnerType in vm.bankAccountOwnerTypes|filter:searchText| itemsPerPage: vm.num |orderBy:'-BankAccountOwnerTypeID'">
                                                     <td>{{bankAccountOwnerType.BankAccountOwnerTypeCode  | uppercase}}</td>
                                                     <td>{{bankAccountOwnerType.BankAccountOwnerTypeName}}</td>
                                                     <td>{{bankAccountOwnerType.Remarks}}</td>

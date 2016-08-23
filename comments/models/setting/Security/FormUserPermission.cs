@@ -14,6 +14,8 @@
 
         [StringLength(50)]
         public string FormUserPermissionCode { get; set; }
+        public long? UserID { get; set; }
+        public long? FormID { get; set; }
 
         public bool? View { get; set; }
 

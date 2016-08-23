@@ -13,11 +13,14 @@
 
     angular
         .module("companyManagement")
-        .controller("employeesExpensesCtrl", ["expensesTypeResource", "projectSetupResource", "collaboratorResource", "Util", "employeesExpensesResource", employeesExpensesCtrl]);
-    function employeesExpensesCtrl(expensesTypeResource,projectSetupResource, collaboratorResource, Util, employeesExpensesResource) {
+        .controller("employeesExpensesCtrl", ["employeeExpensesDescriptionResource", "expensesTypeResource", "projectSetupResource", "collaboratorResource", "Util", "employeesExpensesResource", "param", "appAuth", employeesExpensesCtrl]);
+    function employeesExpensesCtrl(employeeExpensesDescriptionResource, expensesTypeResource, projectSetupResource, collaboratorResource, Util, employeesExpensesResource, param, appAuth) {
         var vm = this;
+        vm.FormTypeID = param.FormTypeID;
+        vm.FormName = param.FormName;
         vm.employeesExpensess = [];
-
+        vm.employeesExpensesDescription = { employeesExpensesDesc:[]};
+        //appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -116,6 +119,7 @@
                 vm.CancelButton = true;
             }
         }
+
         vm.sopen = function ($event) {
             $event.preventDefault();
             $event.stopPropagation();
@@ -123,6 +127,30 @@
             vm.sopened = !vm.sopened;
 
         }
+
+
+        vm.totalApply = function () {
+            var totalApply = 0.00;
+            angular.forEach(vm.employeesExpensesDescription.employeesExpensesDesc, function (item, key) {
+
+                totalApply += (item.ExpenseRate * item.Quantity);
+
+            });
+            return totalApply;
+
+        }
+
+        vm.totalApproveAmount = function () {
+            var totalApproveAmount = 0.00;
+                    angular.forEach(vm.employeesExpensesDescription.employeesExpensesDesc, function (item, key) {
+
+                        totalApproveAmount += (item.ApproveAmount);
+
+                    });
+                    return totalApproveAmount;
+
+                }
+
         vm.eopen = function ($event) {
             $event.preventDefault();
             $event.stopPropagation();
@@ -181,8 +209,9 @@
             if (isValid) {
                 employeesExpensesResource.save(vm.employeesExpenses).$promise.then(
                     function (data, responseHeaders) {
+                        vm.employeesExpenses = data;
+                        vm.SaveExpensesDesc();
                         GetList();
-                        vm.employeesExpenses = null;
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -197,10 +226,61 @@
 
         }
 
+
+        //Save Quotation Description
+        vm.SaveExpensesDesc = function () {
+
+            angular.forEach(vm.employeesExpensesDescription.employeesExpensesDesc, function (value, key) {
+                // var TDate = new Date(vm.voucherList.TranDate);
+
+                var employeesExpensesDesc = {
+                    EmployeesExpensesDescriptionID: value.EmployeesExpensesDescriptionID,
+                    EmployeesExpensesDescriptionName:value.EmployeesExpensesDescriptionName,
+                    EmployeesExpensesID:vm.employeesExpenses.EmployeesExpensesID,
+                    EmployeeID: vm.employeesExpenses.EmployeeID,
+                    ExpensesTypeID: value.ExpensesTypeID,
+                    ProjectID: value.ProjectID,
+                    ExpenseDate: value.ExpenseDate,
+                    Quantity: value.Quantity,
+                    ExpenseRate: value.ExpenseRate,
+                    ApproveAmount: value.ApproveAmount,
+                    
+                };
+                
+
+                employeeExpensesDescriptionResource.save(employeesExpensesDesc).$promise.then(
+                function (data, responseHeaders) {
+
+                }, function (error) {
+                    // error handler
+                    toastr.error("Data Load Failed!");
+                });
+            })
+            vm.employeesExpenses = null;
+            vm.employeesExpensesDescription.employeesExpensesDesc = null;
+
+        }
+
+
         //Get Single Record
         vm.Get = function (id) {
             employeesExpensesResource.get({ 'ID': id }).$promise.then(function (employeesExpenses) {
                 vm.employeesExpenses = employeesExpenses;
+                vm.cmbEmployee = vm.employeesExpenses.Employee;
+                vm.GetExpensesDesc(vm.employeesExpenses.EmployeesExpensesID);
+                vm.ViewMode(3);
+                toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
+
+        //Get Single Record
+        vm.GetExpensesDesc = function (EmployeesExpensesID) {
+            employeeExpensesDescriptionResource.query({ '$filter': 'EmployeesExpensesID eq ' + EmployeesExpensesID }).$promise.then(function (employeeExpensesDescription) {
+                vm.employeesExpensesDescription.employeesExpensesDesc = employeeExpensesDescription;
+
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
             }, function (error) {
@@ -214,10 +294,13 @@
         vm.Update = function (isValid) {
             if (isValid) {
                 employeesExpensesResource.update({ 'ID': vm.employeesExpenses.EmployeesExpensesID }, vm.employeesExpenses).$promise.then(function () {
-                vm.employeesExpensess = null;
-                vm.ViewMode(3);
-                GetList();
-                toastr.success("Data Update Successful", "Form Update");
+                    vm.SaveExpensesDesc().then(function () {
+                        vm.employeesExpensess = null;
+                        vm.ViewMode(3);
+                        GetList();
+                        toastr.success("Data Update Successful", "Form Update");
+                    });
+
                 }, function (error) {
                     // error handler
                     toastr.error("Data Update Failed!");

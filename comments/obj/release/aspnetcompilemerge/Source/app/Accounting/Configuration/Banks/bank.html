@@ -24,6 +24,14 @@
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     Save
                 </button>
+                <button type="button" ng-if="vm.isModal" ng-show="vm.SaveButton" ng-click="vm.SaveClose(collaboratorForm.$valid)" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    Save & Close
+                </button>
+                <button type="button" ng-if="vm.isModal" ng-show="vm.EditButton" ng-click="vm.SelectClose()" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                    Select & Close
+                </button>
                 <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-app btn-default ">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     Edit
@@ -43,6 +51,10 @@
                 <button type="button" ng-show="vm.CancelButton" ng-click="vm.ViewMode(2)" class="btn btn-app btn-primary">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     Cancel
+                </button>
+                <button type="button" ng-if="vm.isModal" ng-click="vm.mClose()" class="btn btn-app btn-primary">
+                    <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                    Close
                 </button>
             </div>
         </div>
@@ -176,14 +188,14 @@
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="bank in vm.banks|filter:searchText| itemsPerPage: vm.num">
+                                            <tr dir-paginate="bank in vm.banks|orderBy:'-BankID'|filter:searchText| itemsPerPage: vm.num ">
                                                 <td>{{bank.BankCode  | uppercase}}</td>
                                                 <td>{{bank.BankName}}</td>
                                                 <td>{{bank.Remarks}}</td>
                                                 <td class="noPrint">
                                                     <button type="button" ng-click="vm.Get(bank.BankID)" data-skin=" skin-blue" class="btn btn-primary btn-xs">
                                                         <i class="fa fa-eye"></i>
-                                                    </button>	
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </tbody>

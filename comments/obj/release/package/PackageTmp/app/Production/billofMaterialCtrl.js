@@ -13,11 +13,12 @@
 
     angular
         .module("companyManagement")
-        .controller("billofMaterialCtrl", ["productCostingResource","billofMaterialDescriptionResource", "salesQuotationDescriptionResource", "productResource", "productionTypeResource", "billofMaterialResource", billofMaterialCtrl]);
-    function billofMaterialCtrl(productCostingResource,billofMaterialDescriptionResource, salesQuotationDescriptionResource, productResource, productionTypeResource, billofMaterialResource) {
+        .controller("billofMaterialCtrl", ["productCostingResource", "billofMaterialDescriptionResource", "salesQuotationDescriptionResource", "productResource", "productionTypeResource", "billofMaterialResource", "appAuth", billofMaterialCtrl]);
+    function billofMaterialCtrl(productCostingResource, billofMaterialDescriptionResource, salesQuotationDescriptionResource, productResource, productionTypeResource, billofMaterialResource, appAuth) {
         var vm = this;
         vm.billofMaterials = [];
         vm.productCosting = {};
+        appAuth.checkPermission();
        // vm.SalesQuotationDescription = { salesQuotationDesc: [{}] };
         vm.SalesQuotationDescription = { salesQuotationDesc: [] };
 

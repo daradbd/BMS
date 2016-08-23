@@ -13,17 +13,37 @@
 
     angular
         .module("companyManagement")
-        .controller("productCtrl", ["unitOfMeasureResource", "productCategoryResource", "productResource", productCtrl]);
-    function productCtrl(unitOfMeasureResource,productCategoryResource, productResource) {
+        .controller("productCtrl", ["productBrandResource", "productSpecificationDescriptionResource", "productSpecificationResource", "unitOfMeasureResource", "productCategoryResource", "productResource", "$uibModal", "param", "appAuth", "$scope", productCtrl]);
+    function productCtrl(productBrandResource, productSpecificationDescriptionResource, productSpecificationResource, unitOfMeasureResource, productCategoryResource, productResource, $uibModal, param, appAuth, $scope) {
         var vm = this;
+        vm.pTypeID = param.ProductTypeID;
+        vm.pName = param.ProductTypeName;
         vm.products = [];
         vm.UnitOfMeasures = [];
         vm.ProductCategorys = [];
+        vm.productSpecifications = [];
+        vm.productSpecificationDescriptions = [];
+        $scope.names = ["john", "bill", "charlie", "robert", "alban", "oscar", "marie", "celine", "brad", "drew", "rebecca", "michel", "francis", "jean", "paul", "pierre", "nicolas", "alfred", "gerard", "louis", "albert", "edouard", "benoit", "guillaume", "nicolas", "joseph"];
+    
+
+        vm.ProductSpecificationDescription = { producttSpecificationnDesc: [] };
+
+        vm.addItem = function () {
+            vm.ProductSpecificationDescription.producttSpecificationnDesc.unshift({ProductSpecificationDescriptionID:0,IsShowInTitle:false, ProductSpecificationID: 0, SpecificationValue: "" });
+        }
+        vm.PushItem = function () {
+            vm.ProductSpecificationDescription.producttSpecificationnDesc.push({ ProductSpecificationDescriptionID: 0, IsShowInTitle: false, ProductSpecificationID: 0, SpecificationValue: "" });
+        }
+        vm.removeItem = function (item) {
+            vm.ProductSpecificationDescription.producttSpecificationnDesc.splice(vm.ProductSpecificationDescription.producttSpecificationnDesc.indexOf(item), 1);
+        }
+
+      //  appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -52,9 +72,13 @@
             }
             if (activeMode == 2) //List View Mode
             {
+                //vm.product.Image = "#";
+                vm.product = null;
+                vm.ProductSpecificationDescription.producttSpecificationnDesc = null;
+                vm.product = null;
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = false;
 
 
@@ -69,7 +93,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -83,7 +107,7 @@
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
 
@@ -97,6 +121,47 @@
 
         var DispayButton = function () {
 
+        }
+        vm.openUpload = function () {
+
+            var FileUpload = $uibModal.open({
+                templateUrl: "app/Resources/uploadFile.html",
+                size: 'lg',
+                controller: "uploadFileCtrl as vm"
+            });
+
+            FileUpload.result.then(function (d) {
+                vm.product.Image = d.File.UploadFilePath;
+                
+
+            });
+        }
+        GetProductBrandList();
+
+        //Get All Data List
+        function GetProductBrandList() {
+            productBrandResource.query().$promise.then(function (data) {
+                vm.productBrands = data;
+                toastr.success("Data Load Successful", "Form Load");
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
+
+        GetSpecificationList();
+
+        //Get All Data List
+        function GetSpecificationList() {
+            productSpecificationResource.query().$promise.then(function (data) {
+                vm.productSpecifications = data;
+                toastr.success("Data Load Successful", "Form Load");
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
         }
 
         GetProductCategorys();
@@ -126,7 +191,19 @@
 
         //Get All Data List
         function GetList() {
-            productResource.query().$promise.then(function (data) {
+            var filterby = '';
+            if (vm.pTypeID == 2) {
+                filterby = 'IsRawmaterial eq false';
+            }
+            else if (vm.pTypeID ==3 ) {
+                filterby = 'IsRawmaterial eq true';
+
+            }
+           else if (vm.pTypeID ==1 ) {
+               filterby = 'IsRawmaterial eq true or IsRawmaterial eq false';
+
+            }
+            productResource.query({ '$filter': filterby }).$promise.then(function (data) {
                 vm.products = data;
                 toastr.success("Data Load Successful", "Form Load");
 
@@ -141,8 +218,11 @@
             if (isValid) {
                 productResource.save(vm.product).$promise.then(
                     function (data, responseHeaders) {
-                        GetList();
-                        vm.product = null;
+                       // GetList();
+                        vm.product = data;
+                        vm.SaveSpecification();
+                        
+
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -157,12 +237,41 @@
 
         }
 
+        //Save Specification Description
+        vm.SaveSpecification = function () {
+
+            angular.forEach(vm.ProductSpecificationDescription.producttSpecificationnDesc, function (value, key) {
+               
+                var productSpecificationInfo = {
+                    ProductSpecificationDescriptionID: value.ProductSpecificationDescriptionID,
+                    ProductSpecificationID: value.ProductSpecificationID,
+                    IsShowInTitle: value.IsShowInTitle,
+                    ProductID: vm.product.ProductID,
+                    SpecificationValue: value.SpecificationValue,
+                };
+                
+
+                productSpecificationDescriptionResource.save(productSpecificationInfo).$promise.then(
+                function (data, responseHeaders) {
+
+                });
+            })
+
+            vm.cmbUnitOfMeasure = null;
+            vm.cmbProductCategory = null;
+            vm.cmbProductBrand = null;
+            vm.product = null;
+            GetList();
+            vm.ViewMode(2);
+        }
         //Get Single Record
         vm.Get = function (id) {
             productResource.get({ 'ID': id }).$promise.then(function (product) {
                 vm.product = product;
                 vm.cmbProductCategory = { ProductCategoryID: vm.product.ProductCategoryID };
-                vm.cmbUnitOfMeasure = { UnitOfMeasureID: vm.product.MOUID };
+                vm.cmbUnitOfMeasure = { UnitOfMeasureID: vm.product.UOMID };
+                vm.cmbProductBrand = { ProductBrandID: vm.product.ProductBrandID };
+                GetproductSpecificationDescription(vm.product.ProductID);
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
             }, function (error) {
@@ -171,11 +280,25 @@
             });
         }
 
+       
+
+        //Get All Data List
+        function GetproductSpecificationDescription(ProductID) {
+            productSpecificationDescriptionResource.query({ '$filter': 'ProductID eq ' + ProductID }).$promise.then(function (data) {
+                vm.ProductSpecificationDescription.producttSpecificationnDesc = data;
+                toastr.success("Data Load Successful", "Form Load");
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
 
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
                 productResource.update({ 'ID': vm.product.ProductID }, vm.product).$promise.then(function () {
+                vm.SaveSpecification();
                 vm.products = null;
                 vm.ViewMode(3);
                 GetList();

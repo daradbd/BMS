@@ -27,7 +27,7 @@
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     Edit
                 </button>
-                <button type="button" class="btn btn-app btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(collaboratorForm.$valid)">
+                <button type="button" class="btn btn-app btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(true)">
                     <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                     Update
                 </button>
@@ -43,6 +43,7 @@
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     Cancel
                 </button>
+               
             </div>
         </div>
 
@@ -60,9 +61,15 @@
                             <div class="col-lg-12">
 
                                 <div class="col-lg-6 animated fadeInRight">
-                                    <div class="form-group"
-                                         ng-class="{'has-error':collaboratorForm.txtCollabaratorCode.$invalid
-                                         && collaboratorForm.txtCollabaratorCode.$dirty}">
+                                    <div class="form-group">
+
+                                        <img ng-if="vm.collaborator.Image" ng-src="{{vm.collaborator.Image}}" style="width:90px;height:90px;margin:2px">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-default" ng-click="vm.openUpload()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload</button>
+
+                                    </div>
+                                    <!--<div class="form-group">
 
                                         <label for="txtCollabaratorCode">
                                             Code
@@ -73,8 +80,8 @@
                                                name="txtCollabaratorCode"
                                                ng-model="vm.collaborator.CollaboratorCode"
                                                placeholder="Enter CollaboratorCode"
-                                               required>
-                                    </div>
+                                               >
+                                    </div>-->
                                     <div class="form-group"
                                          ng-class="{'has-error':collaboratorForm.txtName.$invalid
                                          && collaboratorForm.txtName.$dirty}">
@@ -123,6 +130,17 @@
                                     </div>
                                     <div class="form-group">
 
+                                        <label for="cmbCompanyBranch">
+                                            Company Branch
+                                        </label>
+                                        <select class="form-control"
+                                                ng-model="vm.cmbCompanyBranch"
+                                                ng-options="companyBranch.CompanyBranchName for companyBranch in vm.companyBranchs track by companyBranch.CompanyBranchID"
+                                                ng-change="vm.collaborator.CompanyBranchID=vm.cmbCompanyBranch.CompanyBranchID"></select>
+                                    </div>
+
+                                    <div class="form-group">
+
                                         <label for="cmbDepartment">
                                             Department
                                         </label>
@@ -141,6 +159,16 @@
                                                 ng-options="designation.DesignationName for designation in vm.designations track by designation.DesignationID "
                                                 ng-change="vm.collaborator.DesignationID=vm.cmbDesignations.DesignationID"></select>
                                     </div>
+                                    <div class="form-group">
+
+                                        <label for="txtIsActive">
+                                            Is Active
+                                        </label>
+                                        <input type="checkbox"
+                                               id="txtIsActive"
+                                               name="txtIsActive"
+                                               ng-model="vm.collaborator.IsActive">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -158,9 +186,7 @@
                                                           rows=" 3"></textarea>
                                             </div>
 
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaborator.txtPOBox.$invalid
-                                             && collaboratorForm.txtPOBox.$dirty}">
+                                            <div class="form-group">
 
                                                 <label for="txtPOBox">
                                                     POBox
@@ -209,130 +235,328 @@
 
                                     </tab>
 
-                                    <tab heading="Contact Info">
+                                    <tab heading="Personal_Details">
                                         <div class="col-lg-6">
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtNID.$invalid
-                                         && collaboratorForm.txtID.$dirty}">
+                                            <div class="form-group">
 
-                                                <label for="txtNID">
-                                                    National ID
+                                                <label for="txtFathersName">
+                                                    Fathers Name
                                                 </label>
                                                 <input type="text"
                                                        class="form-control"
-                                                       id="txtNID"
-                                                       name="txtNID"
-                                                       ng-model="vm.collaborator.NID"
-                                                       placeholder="Enter National ID NO"
+                                                       id="txtFathersName"
+                                                       name="txtFathersName"
+                                                       ng-model="vm.employeeDetails.FathersName"
+                                                       placeholder="Enter FathersName"
                                                        required>
                                             </div>
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtEmailID.$invalid
-                                         && collaboratorForm.txtEmailID.$dirty}">
+                                            <div class="form-group">
 
-                                                <label for="txtEmailID">
-                                                    EmailID
+                                                <label for="txtMothersName">
+                                                    Mothers Name
                                                 </label>
                                                 <input type="text"
                                                        class="form-control"
-                                                       id="txtEmailID"
-                                                       name="txtEmailID"
-                                                       ng-model="vm.collaborator.EmailID"
-                                                       placeholder="Enter EmailID"
+                                                       id="txtMothersName"
+                                                       name="txtMothersName"
+                                                       ng-model="vm.employeeDetails.MothersName"
+                                                       placeholder="Enter MothersName"
                                                        required>
                                             </div>
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtPhone.$invalid
-                                         && collaboratorForm.txtPhone.$dirty}">
+                                            <div class="form-group">
 
-                                                <label for="txtPhone">
-                                                    Phone
+                                                <label for="txtDateofBirth">
+                                                    Date of Birth:
                                                 </label>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="txtPhone"
-                                                       name="txtPhone"
-                                                       ng-model="vm.collaborator.Phone"
-                                                       placeholder="Enter Phone"
-                                                       required>
+                                                <div class="form-group">
+                                                    <p class="input-group">
+                                                        <input type="text"
+                                                               class="form-control"
+                                                               id="txtDateofBirth"
+                                                               name="txtDateofBirth"
+                                                               ng-model="vm.employeeDetails.DateofBirth"
+                                                               datepicker-popup="MMM dd, yyyy "
+                                                               is-open="vm.dobopened"
+                                                               required>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-default"
+                                                                    ng-click="vm.dobopen($event)">
+                                                                <i class="glyphicon glyphicon-calendar" />
+                                                            </button>
+                                                        </span>
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtFaxNo.$invalid
-                                         && collaboratorForm.txtFaxNo.$dirty}">
+                                            <div class="form-group">
 
-                                                <label for="txtFaxNo">
-                                                    FaxNo
+                                                <label for="txtJoinDate">
+                                                    Join Date:
                                                 </label>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="txtFaxNo"
-                                                       name="txtFaxNo"
-                                                       ng-model="vm.collaborator.FaxNo"
-                                                       placeholder="Enter FaxNo"
-                                                       required>
+                                                <div class="form-group">
+                                                    <p class="input-group">
+                                                        <input type="text"
+                                                               class="form-control"
+                                                               id="txtJoinDate"
+                                                               name="txtJoinDate"
+                                                               ng-model="vm.employeeDetails.JoinDate"
+                                                               datepicker-popup="MMM dd, yyyy "
+                                                               is-open="vm.jdopened"
+                                                               required>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-default"
+                                                                    ng-click="vm.jdopen($event)">
+                                                                <i class="glyphicon glyphicon-calendar" />
+                                                            </button>
+                                                        </span>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtTINNO.$invalid
-                                         && collaboratorForm.txtTINNO.$dirty}">
+                                            <div class="form-group">
 
-                                                <label for="txtTINNO">
-                                                    TINNO
+                                                <label for="txtCardNumber">
+                                                    Card Number
                                                 </label>
                                                 <input type="text"
                                                        class="form-control"
-                                                       id="txtTINNO"
-                                                       name="txtTINNO"
-                                                       ng-model="vm.collaborator.TINNO"
-                                                       placeholder="Enter TINNO"
+                                                       id="txtCardNumber"
+                                                       name="txtCardNumber"
+                                                       ng-model="vm.employeeDetails.CardNumber"
+                                                       placeholder="Enter CardNumber"
                                                        required>
                                             </div>
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtFBPage.$invalid
-                                         && collaboratorForm.txtFBPage.$dirty}">
+                                            <div class="form-group">
 
-                                                <label for="txtFBPage">
-                                                    FBPage
+                                                <label for="txtNationality">
+                                                    Nationality
                                                 </label>
                                                 <input type="text"
                                                        class="form-control"
-                                                       id="txtFBPage"
-                                                       name="txtFBPage"
-                                                       ng-model="vm.collaborator.FBPage"
-                                                       placeholder="Enter FBPage"
+                                                       id="txtNationality"
+                                                       name="txtNationality"
+                                                       ng-model="vm.employeeDetails.Nationality"
+                                                       placeholder="Enter Nationality"
                                                        required>
                                             </div>
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtMobile.$invalid
-                                         && collaboratorForm.txtMobile.$dirty}">
+                                            <div class="form-group">
 
-                                                <label for="txtMobile">
-                                                    Mobile
+                                                <label for="txtBloodGroup">
+                                                    BloodGroup
                                                 </label>
                                                 <input type="text"
                                                        class="form-control"
-                                                       id="txtMobile"
-                                                       name="txtMobile"
-                                                       ng-model="vm.collaborator.Mobile"
-                                                       placeholder="Enter Mobile"
+                                                       id="txtBloodGroup"
+                                                       name="txtBloodGroup"
+                                                       ng-model="vm.employeeDetails.BloodGroup"
+                                                       placeholder="Enter BloodGroup"
                                                        required>
                                             </div>
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtWebsite.$invalid
-                                         && collaboratorForm.txtWebsite.$dirty}">
+                                            <div class="form-group">
 
-                                                <label for="txtWebsite">
-                                                    Website
+                                                <label for="txtReligion">
+                                                    Religion
                                                 </label>
                                                 <input type="text"
                                                        class="form-control"
-                                                       id="txtWebsite"
-                                                       name="txtWebsite"
-                                                       ng-model="vm.collaborator.Website"
-                                                       placeholder="Enter Website"
+                                                       id="txtReligion"
+                                                       name="txtReligion"
+                                                       ng-model="vm.employeeDetails.Religion"
+                                                       placeholder="Enter Religion"
                                                        required>
                                             </div>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inlineRadioOptions" ng-model="vm.employeeDetails.GenderID"  ng-value="1"> Male
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inlineRadioOptions" ng-model="vm.employeeDetails.GenderID" ng-value="2"> Female
+                                            </label>
+                                        </div>
+                                        
+                                    </tab>
+                                <tab heading="Contact Info">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+
+                                            <label for="txtNID">
+                                                National ID
+                                            </label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtNID"
+                                                   name="txtNID"
+                                                   ng-model="vm.collaborator.NID"
+                                                   placeholder="Enter National ID NO"
+                                                   required>
+                                        </div>
+                                        <div class="form-group"
+                                             ng-class="{'has-error':collaboratorForm.txtEmailID.$invalid
+                                         && collaboratorForm.txtEmailID.$dirty}">
+
+                                            <label for="txtEmailID">
+                                                EmailID
+                                            </label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtEmailID"
+                                                   name="txtEmailID"
+                                                   ng-model="vm.collaborator.EmailID"
+                                                   placeholder="Enter EmailID"
+                                                   required>
+                                        </div>
+                                        <div class="form-group"
+                                             ng-class="{'has-error':collaboratorForm.txtPhone.$invalid
+                                         && collaboratorForm.txtPhone.$dirty}">
+
+                                            <label for="txtPhone">
+                                                Phone
+                                            </label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtPhone"
+                                                   name="txtPhone"
+                                                   ng-model="vm.collaborator.Phone"
+                                                   placeholder="Enter Phone"
+                                                   required>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label for="txtFaxNo">
+                                                FaxNo
+                                            </label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtFaxNo"
+                                                   name="txtFaxNo"
+                                                   ng-model="vm.collaborator.FaxNo"
+                                                   placeholder="Enter FaxNo"
+                                                   required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+
+                                            <label for="txtTINNO">
+                                                TIN-NO
+                                            </label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtTINNO"
+                                                   name="txtTINNO"
+                                                   ng-model="vm.collaborator.TINNO"
+                                                   placeholder="Enter TINNO"
+                                                   required>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label for="txtFBPage">
+                                                FBPage
+                                            </label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtFBPage"
+                                                   name="txtFBPage"
+                                                   ng-model="vm.collaborator.FBPage"
+                                                   placeholder="Enter FBPage"
+                                                   required>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label for="txtMobile">
+                                                Mobile
+                                            </label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtMobile"
+                                                   name="txtMobile"
+                                                   ng-model="vm.collaborator.Mobile"
+                                                   placeholder="Enter Mobile"
+                                                   required>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label for="txtWebsite">
+                                                Website
+                                            </label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtWebsite"
+                                                   name="txtWebsite"
+                                                   ng-model="vm.collaborator.Website"
+                                                   placeholder="Enter Website"
+                                                   required>
+                                        </div>
+                                    </div>
+                                </tab>
+                                <tab heading="Contact Person">
+                                    <div class="col-lg-12">
+
+                                        <div class="form-group">
+                                            <button type="button" class="btn bg-primary" ng-click="vm.ShowContactsPerson()"><span class="fa  fa-user-plus" aria-hidden="true"></span></button>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-12">
+
+                                        <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="contactPerons in vm.contactsPersons">
+                                            <div class="info-box">
+
+                                                <span class="fa-stack fa-3x pull-left">
+                                                    <i class="fa fa-circle fa-stack-2x text-light-blue"></i>
+                                                    <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">{{contactPerons.Name}}</span>
+                                                    <span ng-if="contactPerons.Designation" class="info-box-text"><small>({{contactPerons.Designation.DesignationName}})</small></span>
+                                                    <span class="info-box-text"><i class="fa fa-phone margin-r-5"></i><small>{{contactPerons.Mobile}}</small></span>
+                                                    <span class="info-box-text"><i class="fa fa-envelope margin-r-5"></i><small>{{contactPerons.EmailID}}</small></span>
+                                                </div><!-- /.info-box-content -->
+                                            </div><!-- /.info-box -->
+                                        </div>
+
+
+                                    </div>
+                                </tab>
+                                    <tab heading="Bank Accounts">
+                                        <div class="col-lg-12">
+
+                                            <div class="form-group">
+                                                <button type="button" class="btn bg-primary" ng-click="vm.ShowBankAccount()"><span class="fa  fa-user-plus" aria-hidden="true"></span></button>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <table class="table table-hover" id="printThisElement">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Bank</th>
+                                                        <th>Branch</th>
+                                                        <th>Account Name</th>
+                                                        <th>Account Number</th>
+                                                        <!--<th class="noPrint">Preview</th>-->
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    <tr dir-paginate="bankAccount in vm.bankAccounts|orderBy:'-BankAccountID'|filter:searchText| itemsPerPage: vm.num " pagination-id="pgBankAccounts">
+                                                        <td>{{bankAccount.Bank.BankName  | uppercase}}</td>
+                                                        <td>{{bankAccount.BankBranch.BankBranchName}}</td>
+                                                        <td>{{bankAccount.BankAccountName}}</td>
+                                                        <td>{{bankAccount.BankAccountNumber}}</td>
+
+                                                        <!--<td class="noPrint">
+                        <button type="button" ng-click="vm.Get(bankAccount.BankAccountID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </td>-->
+                                                        <dir-pagination-controls pagination-id="pgBankAccounts" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+
                                         </div>
                                     </tab>
                                     <tab heading="Others">
@@ -347,6 +571,14 @@
                                                         ng-model="vm.cmbLanguages"
                                                         ng-options="language.LanguageName for language in vm.Languages track by language.LanguageID "></select>
                                             </div>
+                                            <div class="form-group">
+
+                                                <img ng-if="vm.collaborator.Signature" ng-src="{{vm.collaborator.Signature}}" style="width:150px;height:150px;margin:2px">
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-default" ng-click="vm.openUploadSignature()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload Signature</button>
+
+                                            </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -360,12 +592,105 @@
                                             </div>
                                         </div>
                                     </tab>
+                                    <tab heading="Salary">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-12">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+
+                                                        <label for="txtCTCAmount">
+                                                            CTC Amount
+                                                        </label>
+                                                        <input type="text"
+                                                               class="form-control"
+                                                               id="txtCTCAmount"
+                                                               name="txtCTCAmount"
+                                                               ng-model="vm.collaborator.CTCAmount"
+                                                               placeholder="Enter CTCAmount"
+                                                               required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6"></div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Pay Component</th>
+                                                                <th>Type</th>
+                                                                <th>Monthly</th>
+                                                                <th>Annual</th>
+
+                                                            </tr>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="SalaryComponent in vm.SalaryComponents">
+                                                                <td>{{SalaryComponent.SalaryComponentName  | uppercase}}</td>
+                                                                <td>{{SalaryComponent.PayType.PayTypeName}}</td>
+                                                                <td>
+                                                                    <input type="text"
+                                                                           class="form-control"
+                                                                           ng-model="SalaryComponent.ComponentValue">
+                                                                </td>
+                                                                <td ng-if="SalaryComponent.ComponentValue">{{SalaryComponent.ComponentValue*12}}</td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                   Net Earning: {{vm.GetNetEarnings()}}
+                                                </div>
+                                            </div>
+                                            
+                                           
+                                            
+                                        </div>
+                                    </tab>
+                                    <tab heading="Document">
+                                        <div class="col-lg-12">
+
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-file btn-app" ng-click="vm.openUploadAttachFile()"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Upload</button>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6 col-sm-6 col-xs-12" ng-repeat="attachFile in vm.attachFiles">
+                                                <div class="info-box bg-yellow">
+                                                    <div class="box-tools pull-right">
+                                                        <button class="btn btn-box-tool"><i class="fa fa-times"></i></button>
+                                                    </div>
+                                                    
+                                                        <span class="info-box-icon">
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='pdf'" class="fa fa-file-pdf-o"></i>
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='doc'||vm.fileType(attachFile.AttachFilePath)=='docx'" class="fa fa-file-word-o"></i>
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='xls'||vm.fileType(attachFile.AttachFilePath)=='xlsx'" class="fa fa-file-excel-o"></i>
+
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='png'||vm.fileType(attachFile.AttachFilePath)=='jpeg'||vm.fileType(attachFile.AttachFilePath)=='gif'||vm.fileType(attachFile.AttachFilePath)=='jpg'" class="fa fa-file-image-o"></i>
+                                                        </span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">{{attachFile.AttachFileName}}</span>
+                                                            <span class="info-box-number">{{vm.fileType(attachFile.AttachFilePath)}}</span>
+
+                                                        </div><!-- /.info-box-content -->
+                                                      
+                                                </div><!-- /.info-box -->
+                                            </div>
+                                           
+                                        </div>
+                                    </tab>
+                                   
                                 </tabset>
                             </div>
                         </div>
                     </div>
 
                     <div class="view-form" ng-show="vm.DetailsView">
+                        <div class="form-group">
+                            <img ng-if="vm.collaborator.Image" ng-src="{{vm.collaborator.Image}}" style="width:90px;height:90px;margin:2px">
+                        </div>
                         <div class="box-header with-border">
                             <h3 class="box-title">{{vm.Title}} Details</h3>
                         </div><!-- /.box-header -->
@@ -421,7 +746,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <tabset>
-                                    <tab heading="Address" active="true">
+                                    <tab active="true" heading="Address">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="txtStreet">
@@ -461,67 +786,201 @@
                                         </div>
 
                                     </tab>
-
-                                    <tab heading="Contact Info">
+                                    <tab heading="Personal_Details">
                                         <div class="col-lg-6">
                                             <div class="form-group">
 
-                                                <label for="txtNID">
-                                                    National ID
+                                                <label for="txtFathersName">
+                                                    Fathers Name
                                                 </label>
-                                                <pre>{{vm.collaborator.NID}}</pre>
+                                                <pre>{{vm.employeeDetails.FathersName}}</pre>
                                             </div>
                                             <div class="form-group">
 
-                                                <label for="txtEmailID">
-                                                    EmailID
+                                                <label for="txtMothersName">
+                                                    Mothers Name
                                                 </label>
-                                                <pre>{{vm.collaborator.EmailID}}</pre>
+                                                <pre>{{vm.employeeDetails.MothersName}}</pre>
                                             </div>
                                             <div class="form-group">
 
-                                                <label for="txtPhone">
-                                                    Phone
+                                                <label for="txtDateofBirth">
+                                                    Date of Birth:
                                                 </label>
-                                                <pre>{{vm.collaborator.Phone}}</pre>
+                                                <div class="form-group">
+                                                    <pre>{{vm.employeeDetails.DateofBirth| date:"dd-MMM-yyyy"}}</pre>
+                                                </div>
                                             </div>
                                             <div class="form-group">
 
-                                                <label for="txtFaxNo">
-                                                    FaxNo
+                                                <label for="txtJoinDate">
+                                                    Join Date:
                                                 </label>
-                                                <pre>{{vm.collaborator.FaxNo}}</pre>
+                                                <div class="form-group">
+                                                    <pre>{{vm.employeeDetails.JoinDate| date:"dd-MMM-yyyy"}}</pre>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
 
-                                                <label for="txtTINNO">
-                                                    TINNO
+                                                <label for="txtCardNumber">
+                                                    Card Number
                                                 </label>
-                                                <pre>{{vm.collaborator.TINNO}}</pre>
+                                                <pre>{{vm.employeeDetails.CardNumber}}</pre>
                                             </div>
                                             <div class="form-group">
 
-                                                <label for="txtFBPage">
-                                                    FBPage
+                                                <label for="txtNationality">
+                                                    Nationality
                                                 </label>
-                                                <pre>{{vm.collaborator.FBPage}}</pre>
+                                                <pre>{{vm.employeeDetails.Nationality}}</pre>
                                             </div>
                                             <div class="form-group">
 
-                                                <label for="txtMobile">
-                                                    Mobile
+                                                <label for="txtBloodGroup">
+                                                    BloodGroup
                                                 </label>
-                                                <pre>{{vm.collaborator.Mobile}}</pre>
+                                                <pre>{{vm.employeeDetails.BloodGroup}}</pre>
                                             </div>
                                             <div class="form-group">
 
-                                                <label for="txtWebsite">
-                                                    Website
+                                                <label for="txtReligion">
+                                                    Religion
                                                 </label>
-                                                <pre>{{vm.collaborator.Website}}</pre>
+                                                <pre>{{vm.employeeDetails.Religion}}</pre>
                                             </div>
+                                            <div class="form-group">
+
+                                                <label for="txtGender">
+                                                    Gender
+                                                </label>
+                                                <pre ng-show="vm.employeeDetails.GenderID == 1">Male</pre><pre ng-show="vm.employeeDetails.GenderID == 2">Female</pre>
+                                            </div>
+                                           
+                                           
+                                        </div>
+
+                                    </tab>
+
+                                <tab heading="Contact Info">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+
+                                            <label for="txtNID">
+                                                National ID
+                                            </label>
+                                            <pre>{{vm.collaborator.NID}}</pre>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label for="txtEmailID">
+                                                EmailID
+                                            </label>
+                                            <pre>{{vm.collaborator.EmailID}}</pre>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label for="txtPhone">
+                                                Phone
+                                            </label>
+                                            <pre>{{vm.collaborator.Phone}}</pre>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label for="txtFaxNo">
+                                                FaxNo
+                                            </label>
+                                            <pre>{{vm.collaborator.FaxNo}}</pre>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+
+                                            <label for="txtTINNO">
+                                                TINNO
+                                            </label>
+                                            <pre>{{vm.collaborator.TINNO}}</pre>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label for="txtFBPage">
+                                                FBPage
+                                            </label>
+                                            <pre>{{vm.collaborator.FBPage}}</pre>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label for="txtMobile">
+                                                Mobile
+                                            </label>
+                                            <pre>{{vm.collaborator.Mobile}}</pre>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label for="txtWebsite">
+                                                Website
+                                            </label>
+                                            <pre>{{vm.collaborator.Website}}</pre>
+                                        </div>
+                                    </div>
+                                </tab>
+                                    <tab ng-if="vm.contactsPersons.length>0" heading="Contact Person">
+
+                                        <div class="col-lg-12">
+
+                                            <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="contactPerons in vm.contactsPersons">
+                                                <div class="info-box">
+
+                                                    <span class="fa-stack fa-3x pull-left">
+                                                        <i class="fa fa-circle fa-stack-2x text-light-blue"></i>
+                                                        <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">{{contactPerons.Name}}</span>
+                                                        <span ng-if="contactPerons.Designation" class="info-box-text"><small>({{contactPerons.Designation.DesignationName}})</small></span>
+                                                        <span class="info-box-text"><i class="fa fa-phone margin-r-5"></i><small>{{contactPerons.Mobile}}</small></span>
+                                                        <span class="info-box-text"><i class="fa fa-envelope margin-r-5"></i><small>{{contactPerons.EmailID}}</small></span>
+                                                    </div><!-- /.info-box-content -->
+                                                </div><!-- /.info-box -->
+                                            </div>
+
+
+                                        </div>
+                                    </tab>
+                                    <tab ng-if="vm.bankAccounts.length>0" heading="Bank Accounts">
+
+                                        <div class="col-lg-12">
+                                            <table class="table table-hover" id="printThisElement">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Bank</th>
+                                                        <th>Branch</th>
+                                                        <th>Account Name</th>
+                                                        <th>Account Number</th>
+                                                        <!--<th class="noPrint">Preview</th>-->
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    <tr dir-paginate="bankAccount in vm.bankAccounts|orderBy:'-BankAccountID'|filter:searchText| itemsPerPage: vm.num " pagination-id="pgBankAccounts">
+                                                        <td>{{bankAccount.Bank.BankName  | uppercase}}</td>
+                                                        <td>{{bankAccount.BankBranch.BankBranchName}}</td>
+                                                        <td>{{bankAccount.BankAccountName}}</td>
+                                                        <td>{{bankAccount.BankAccountNumber}}</td>
+
+                                                        <!--<td class="noPrint">
+                            <button type="button" ng-click="vm.Get(bankAccount.BankAccountID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>-->
+                                                        <dir-pagination-controls pagination-id="pgBankAccounts" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+
+
                                         </div>
                                     </tab>
                                     <tab heading="Others">
@@ -534,6 +993,16 @@
                                                 </label>
                                                 <pre>{{vm.collaborator.Language.LanguageName}}</pre>
                                             </div>
+                                            <div class="form-group">
+
+                                                <label for="cmbSignature">
+                                                    Signature
+                                                </label>
+    
+                                            </div>
+                                            <div class="form-group">
+                                                <img ng-if="vm.collaborator.Signature" ng-src="{{vm.collaborator.Signature}}" style="width:250px;height:150px;margin:2px">
+                                            </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -543,6 +1012,61 @@
                                                 </label>
                                                 <pre>{{vm.collaborator.Currency.CurrencyName}}</pre>
                                             </div>
+                                        </div>
+                                    </tab>
+                                    <tab heading="Salary">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Pay Component</th>
+                                                            <th>Type</th>
+                                                            <th>Monthly</th>
+                                                            <th>Annual</th>
+
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="SalaryComponent in vm.SalaryComponents">
+                                                            <td>{{SalaryComponent.SalaryComponentName  | uppercase}}</td>
+                                                            <td>{{SalaryComponent.PayType.PayTypeName}}</td>
+                                                            <td>{{SalaryComponent.ComponentValue}}</td>
+                                                            <td ng-if="SalaryComponent.ComponentValue">{{SalaryComponent.ComponentValue*12}}</td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+
+
+                                        </div>
+                                    </tab>
+                                    <tab ng-if="vm.attachFiles.length>0" heading="Document">
+                                        <div class="col-lg-12">
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6 col-sm-6 col-xs-12" ng-repeat="attachFile in vm.attachFiles">
+                                                <div class="info-box bg-yellow">
+                                                    <a href="{{attachFile.AttachFilePath}}" download="{{attachFile.AttachFileName}}" target="_blank">
+                                                        <span class="info-box-icon">
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='pdf'" class="fa fa-file-pdf-o"></i>
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='doc'||vm.fileType(attachFile.AttachFilePath)=='docx'" class="fa fa-file-word-o"></i>
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='xls'||vm.fileType(attachFile.AttachFilePath)=='xlsx'" class="fa fa-file-excel-o"></i>
+
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='png'||vm.fileType(attachFile.AttachFilePath)=='jpeg'||vm.fileType(attachFile.AttachFilePath)=='gif'||vm.fileType(attachFile.AttachFilePath)=='jpg'" class="fa fa-file-image-o"></i>
+                                                        </span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">{{attachFile.AttachFileName}}</span>
+                                                            <span class="info-box-number">{{vm.fileType(attachFile.AttachFilePath)}}</span>
+
+                                                        </div><!-- /.info-box-content -->
+                                                    </a>
+                                                </div><!-- /.info-box -->
+                                            </div>
+
                                         </div>
                                     </tab>
                                 </tabset>
@@ -557,6 +1081,7 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-sm-6">
+                                    
                                     <div class="dataTables_length" id="example1_length">
                                         <label>
                                             Show <select ng-init="vm.num=5" ng-model="vm.num" class="form-control input-sm">
@@ -567,12 +1092,17 @@
                                                 <option value="100">100</option>
                                             </select> entries
                                         </label>
+                                       
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div id="example1_filter" class="dataTables_filter">
-                                        <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="searchText"></label>
+                                        <label><input type="search" class="form-control" placeholder="Search.." ng-model="searchText"></label>
+                                        <button type="button" ng-click="vm.ListSarch= !vm.ListSarch" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                            <i ng-if="!vm.ListSarch" class="fa fa-search-plus"></i><i ng-if="vm.ListSarch" class="fa fa-search-minus"></i>
+                                        </button>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <div class="col-lg-12 animated fadeInRight">
@@ -582,18 +1112,52 @@
                                             <tr>
                                                 <th>Code</th>
                                                 <th>Name</th>
+                                                <th>Department</th>
+                                                <th>Branch</th>
                                                 <th>Phone</th>
                                                 <th>Address</th>
-                                                <th class="noPrint">Preview</th>
+                                                <th>Status</th>
+                                                <th class="noPrint">Preview
+                                                    
+                                                </th>
                                             </tr>
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="collaborator in vm.collaborators|filter:searchText| itemsPerPage: vm.num">
+                                            
+                                            <tr ng-if="vm.ListSarch">
+                                                <td><input type="text" class="form-control" ng-model="vm.CollaboratorCodeF" placeholder="Enter Code"></td>
+                                                <td>
+                                                    <input type="text"class="form-control"ng-model="vm.NameF"placeholder="Enter Name">
+                                                </td>
+                                                <td style="max-width: 200px;">
+                                                    <select class="form-control" ng-model="vm.cmbDepartmentsF"
+                                                            ng-options="department.DepartmentName for department in vm.departments track by department.DepartmentID ">
+                                                        <option></option>
+                                                    </select>
+                                                </td>
+                                                <td style="max-width: 200px;">
+                                                    <select class="form-control"
+                                                            ng-model="vm.cmbCompanyBranchF"
+                                                            ng-options="companyBranch.CompanyBranchName for companyBranch in vm.companyBranchs track by companyBranch.CompanyBranchID">
+                                                        <option></option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="vm.MobileF" placeholder="Enter Mobile">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="vm.CityF" placeholder="Enter Address">
+                                                </td>
+                                            </tr>
+                                            <tr dir-paginate="collaborator in vm.collaborators|filterBy: ['CollaboratorCode']: vm.CollaboratorCodeF|filterBy: ['Name']: vm.NameF|filterBy: ['City.CityName']: vm.CityF|filterBy: ['Mobile']: vm.MobilehF|filterBy: ['CompanyBranch.CompanyBranchName']: vm.cmbCompanyBranchF.CompanyBranchName|filterBy: ['Department.DepartmentName']: vm.cmbDepartmentsF.DepartmentName|filter:searchText| itemsPerPage: vm.num" pagination-id="pgEmployees">
                                                 <td>{{collaborator.CollaboratorCode  | uppercase}}</td>
                                                 <td>{{collaborator.Name}}</td>
+                                                <td>{{collaborator.Department.DepartmentName}}</td>
+                                                <td>{{collaborator.CompanyBranch.CompanyBranchName}}</td>
                                                 <td>{{collaborator.Mobile}}</td>
-                                                <td>{{collaborator.Street}},{{collaborator.City.CityName}}</td>
+                                                <td>{{collaborator.City.CityName}}</td>
+                                                <td><small class="label bg-green" ng-if="collaborator.IsActive"><i class="fa fa-user"></i></small><small class="label bg-red" ng-if="!collaborator.IsActive"><i class="fa fa-user-times bg-red"></i></small> </td>
                                                 <td class="noPrint">
                                                     <button type="button" ng-click="vm.Get(collaborator.CollaboratorID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
                                                         <i class="fa fa-eye"></i>
@@ -602,7 +1166,10 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                   <div><dir-pagination-controls pagination-id="pgEmployees" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                       
+                                    
+                                    </div> 
                                 </div>
                             </div>
                         </div>

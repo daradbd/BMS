@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("salesBillCategoryCtrl", ["salesBillCategoryResource", salesBillCategoryCtrl]);
-    function salesBillCategoryCtrl(salesBillCategoryResource) {
+        .controller("salesBillCategoryCtrl", ["salesBillCategoryResource", "appAuth", salesBillCategoryCtrl]);
+    function salesBillCategoryCtrl(salesBillCategoryResource, appAuth) {
         var vm = this;
         vm.salesBillCategorys = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

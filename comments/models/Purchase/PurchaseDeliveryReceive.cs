@@ -22,14 +22,14 @@
 
         public long? PurchaseOrderID { get; set; }
 
-        public long? PurchaseOrderCode { get; set; }
+        public string PurchaseOrderCode { get; set; }
         public long? ProjectID { get; set; }
 
         public long? SupplierID { get; set; }
 
         public DateTime? Date { get; set; }
 
-        public long? SalesPersonID { get; set; }
+        public long? PurchasePersonID { get; set; }
 
         [StringLength(50)]
         public string ReferenceNo { get; set; }
@@ -45,37 +45,39 @@
 
         public long? ProcesStatusID { get; set; }
 
+        public bool IsBilled { get; set; }
+
         public int? StatusID { get; set; }
 
         public bool? IsDeleted { get; set; }
 
-        public int? InsertBy { get; set; }
+        public long? InsertBy { get; set; }
 
         public DateTime? InsertDate { get; set; }
 
         [StringLength(50)]
         public string InsertPC { get; set; }
 
-        public int? UpdateBy { get; set; }
+        public long? UpdateBy { get; set; }
 
         public DateTime? UpdateDate { get; set; }
 
         [StringLength(50)]
         public string UpdatePC { get; set; }
 
-        public int? DeleteBy { get; set; }
+        public long? DeleteBy { get; set; }
 
         public DateTime? DeleteDate { get; set; }
 
         [StringLength(50)]
         public string DeletePC { get; set; }
 
-        //[ForeignKey("SupplierID")]
-        //public virtual Collaborator Collaborator { get; set; }
+        [ForeignKey("SupplierID")]
+        public virtual Collaborator Collaborator { get; set; }
 
-        //public virtual ProcesStatus ProcesStatus { get; set; }
+        public virtual ProcesStatus ProcesStatus { get; set; }
 
-        //public virtual ProjectSetup ProjectSetup { get; set; }
+        public virtual ProjectSetup ProjectSetup { get; set; }
 
 
     }

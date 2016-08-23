@@ -10,6 +10,9 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Production;
 using BMS.Models;
+using BMS.Models.Accounting.Configuration.Periods;
+using BMS.Models.HR;
+using System.Data.Objects;
 
 namespace BMS.Controllers.Sales
 {
@@ -52,6 +55,7 @@ namespace BMS.Controllers.Sales
             }
             salesbill.Collaborator = null;
             salesbill.ProcesStatus = null;
+            salesbill.UpdateBy = loginUser.UserID;
 
             db.Entry(salesbill).State = EntityState.Modified;
 
@@ -72,7 +76,14 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
-                string CustomCode = "SB-" + DateTime.Now.ToString("yyyyMMdd");
+
+                FiscalYear fiscalYear = db.FiscalYears.Where(f => (EntityFunctions.TruncateTime(f.StartDate) <= DateTime.Now) && (EntityFunctions.TruncateTime(f.EndDate) >= DateTime.Now)).SingleOrDefault();
+                SalesBillCategory salesBillCategory = db.SalesBillCategories.Where(sb => sb.SalesBillCategoryID == salesbill.SalesBillCategoryID).SingleOrDefault();
+                Collaborator custormer = db.Collaborators.Where(c => c.CollaboratorID == salesbill.CustomerID).Include(c => c.CustomerType).SingleOrDefault();
+
+                string CustomCode = salesBillCategory.SalesBillCategoryCode + "/" + custormer.CustomerType.CustomerTypeID.ToString().PadLeft(3, '0') + "/" + fiscalYear.FiscalYearName + "/" + custormer.CollaboratorCode + "-";
+                
+                //string CustomCode = "SB-" + DateTime.Now.ToString("yyyyMMdd");
                 ControlVoucher controlvoucher = new ControlVoucher();
 
                 long SalesCOAID =(long)db.AccCOAMappings.Where(a => a.AccCOAConfigID == 18 && a.CompanyID == loginUser.CompanyID).Select(a=>a.AccCOAID).FirstOrDefault();
@@ -80,10 +91,11 @@ namespace BMS.Controllers.Sales
                 long CustomerCOAID = (long)db.Collaborators.Where(c => c.CollaboratorID == salesbill.CustomerID).Select(c => c.CustomerCOAID).FirstOrDefault();
                 salesbill.VoucherNO = controlvoucher.CreateVoucher(CustomerCOAID, SalesCOAID, (decimal)salesbill.GrandTotal, (long)1, (DateTime)salesbill.Date);
 
-                int? MaxCode = Convert.ToInt32((db.SalesBills.Where(r => r.SalesBillCode.StartsWith(CustomCode)).Select(r => r.SalesBillCode.Substring(CustomCode.Length, 4)).ToList()).Max());
-                string SBCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
+                int? MaxCode = Convert.ToInt32((db.SalesBills.Where(r => r.SalesBillCode.StartsWith(CustomCode)).Select(r => r.SalesBillCode.Substring(CustomCode.Length, 8)).ToList()).Max());
+                string SBCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(8, '0');
                 salesbill.SalesBillCode = SBCode;
                 salesbill.Date = DateTime.Now.ToLocalTime();
+                salesbill.InsertBy = loginUser.UserID;
 
                 db.SalesBills.Add(salesbill);
                 db.SaveChanges();

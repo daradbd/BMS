@@ -30,7 +30,7 @@
 
         public long? UOMID { get; set; }
 
-        public DateTime ScheduleDate { get; set; }
+        public decimal UnitPrice { get; set; }
 
         public long? CompanyBranchID { get; set; }
 
@@ -43,30 +43,30 @@
 
         public bool? IsDeleted { get; set; }
 
-        public int? InsertBy { get; set; }
+        public long? InsertBy { get; set; }
 
         public DateTime? InsertDate { get; set; }
 
         [StringLength(50)]
         public string InsertPC { get; set; }
 
-        public int? UpdateBy { get; set; }
+        public long? UpdateBy { get; set; }
 
         public DateTime? UpdateDate { get; set; }
 
         [StringLength(50)]
         public string UpdatePC { get; set; }
 
-        public int? DeleteBy { get; set; }
+        public long? DeleteBy { get; set; }
 
         public DateTime? DeleteDate { get; set; }
 
         [StringLength(50)]
         public string DeletePC { get; set; }
 
-        //public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         [ForeignKey("UOMID")]
-        public UnitOfMeasure UOM { get; set; }
+        public virtual UnitOfMeasure UOM { get; set; }
     }
 }

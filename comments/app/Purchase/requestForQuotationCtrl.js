@@ -13,15 +13,15 @@
 
     angular
         .module("companyManagement")
-        .controller("requestForQuotationCtrl", ["maintainPurchaseQuotationResource", "projectSetupResource", "purchaseRequisitionDescriptionResource", "requestForQuotationDescriptionResource", "productResource", "collaboratorResource", "$rootScope", "$state", "requestForQuotationResource", requestForQuotationCtrl]);
-    function requestForQuotationCtrl(maintainPurchaseQuotationResource,projectSetupResource, purchaseRequisitionDescriptionResource, requestForQuotationDescriptionResource, productResource, collaboratorResource, $rootScope,$state, requestForQuotationResource) {
+        .controller("requestForQuotationCtrl", ["maintainPurchaseQuotationResource", "projectSetupResource", "purchaseRequisitionDescriptionResource", "requestForQuotationDescriptionResource", "productResource", "collaboratorResource", "$rootScope", "$state", "requestForQuotationResource", "appAuth", requestForQuotationCtrl]);
+    function requestForQuotationCtrl(maintainPurchaseQuotationResource, projectSetupResource, purchaseRequisitionDescriptionResource, requestForQuotationDescriptionResource, productResource, collaboratorResource, $rootScope, $state, requestForQuotationResource, appAuth) {
         var vm = this;
         vm.requestForQuotations = [];
        // vm.maintainPurchaseQuotation = [];
         vm.collaborators = [];
         vm.Employees = [];
         vm.products = [];
-
+        appAuth.checkPermission();
 
         vm.requestForQuotationDescription = { requestForQuotationDesc: [{ ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1 }] };
         // View Mode Control Variable // 

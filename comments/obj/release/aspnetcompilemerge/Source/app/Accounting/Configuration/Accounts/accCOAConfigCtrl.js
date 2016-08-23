@@ -13,10 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("accCOAConfigCtrl", ["accCOAConfigResource", accCOAConfigCtrl]);
-    function accCOAConfigCtrl(accCOAConfigResource) {
+        .controller("accCOAConfigCtrl", ["accCOAConfigResource", "appAuth", accCOAConfigCtrl]);
+    function accCOAConfigCtrl(accCOAConfigResource, appAuth) {
         var vm = this;
         vm.accCOAConfigs = [];
+        appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;

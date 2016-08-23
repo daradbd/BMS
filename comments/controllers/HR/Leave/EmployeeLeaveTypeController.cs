@@ -16,6 +16,7 @@ namespace BMS.Controllers.HR.Leave
     public class EmployeeLeaveTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/EmployeeLeaveType
         public IEnumerable<EmployeeLeaveType> GetEmployeeLeaveTypes()
@@ -47,6 +48,7 @@ namespace BMS.Controllers.HR.Leave
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            employeeleavetype.UpdateBy = loginUser.UserID;
 
             db.Entry(employeeleavetype).State = EntityState.Modified;
 
@@ -67,6 +69,7 @@ namespace BMS.Controllers.HR.Leave
         {
             if (ModelState.IsValid)
             {
+                employeeleavetype.InsertBy = loginUser.UserID;
                 db.EmployeeLeaveTypes.Add(employeeleavetype);
                 db.SaveChanges();
 

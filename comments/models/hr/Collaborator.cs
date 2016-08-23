@@ -1,6 +1,7 @@
 namespace BMS.Models.HR
 {
     using BMS.Models.Setting.Common;
+    using BMS.Models.Setting.Companys;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,10 @@ namespace BMS.Models.HR
 
         [StringLength(550)]
         public string Image { get; set; }
+
+        [StringLength(550)]
+        public string Signature { get; set; }
+
 
         [StringLength(150)]
         public string NID { get; set; }
@@ -72,7 +77,7 @@ namespace BMS.Models.HR
         [StringLength(150)]
         public string TINNO { get; set; }
 
-        public bool? IsCompany { get; set; }
+        public bool IsCompany { get; set; }
 
         public bool IsCustomer { get; set; }
 
@@ -87,11 +92,15 @@ namespace BMS.Models.HR
         public long? SupplierCOAID { get; set; }
 
         public bool IsEmployee { get; set; }
+
+        public decimal? CTCAmount { get; set; }
         public long? ReportToID { get; set; }
         public long? DepartmentID { get; set; }
         public long? DesignationID { get; set; }
 
         public long? EmployeeCOAID { get; set; }
+
+        public long? SalesAssociateID { get; set; }
 
         public long? ParentID { get; set; }
 
@@ -106,23 +115,25 @@ namespace BMS.Models.HR
 
         public int? StatusID { get; set; }
 
+        public bool IsActive { get; set; }
+
         public bool? IsDeleted { get; set; }
 
-        public int? InsertBy { get; set; }
+        public long? InsertBy { get; set; }
 
         public DateTime? InsertDate { get; set; }
 
         [StringLength(50)]
         public string InsertPC { get; set; }
 
-        public int? UpdateBy { get; set; }
+        public long? UpdateBy { get; set; }
 
         public DateTime? UpdateDate { get; set; }
 
         [StringLength(50)]
         public string UpdatePC { get; set; }
 
-        public int? DeleteBy { get; set; }
+        public long? DeleteBy { get; set; }
 
         public DateTime? DeleteDate { get; set; }
 
@@ -147,7 +158,13 @@ namespace BMS.Models.HR
 
         public Designation Designation { get; set; }
 
-        [ForeignKey("ReportToID")]
-        public Collaborator ReportTo { get; set; }
+        [ForeignKey("SalesAssociateID")]
+        public virtual Collaborator SalesAssociate { get; set; }
+
+        //[ForeignKey("ReportToID")]
+        //public virtual Collaborator ReportTo { get; set; }
+
+        public CompanyBranch CompanyBranch { get; set; }
+
     }
 }

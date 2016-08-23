@@ -16,6 +16,7 @@ namespace BMS.Controllers.Sales
     public class SalesSectionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesSection
         public IEnumerable<SalesSection> GetSalesSections()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Sales
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            salessection.UpdateBy = loginUser.UserID;
             db.Entry(salessection).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
+                salessection.InsertBy = loginUser.UserID;
                 db.SalesSections.Add(salessection);
                 db.SaveChanges();
 

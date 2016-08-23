@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("companyBranchTypeCtrl", ["companyBranchTypeResource", companyBranchTypeCtrl]);
-    function companyBranchTypeCtrl(companyBranchTypeResource) {
+        .controller("companyBranchTypeCtrl", ["companyBranchTypeResource", "appAuth", companyBranchTypeCtrl]);
+    function companyBranchTypeCtrl(companyBranchTypeResource, appAuth) {
         var vm = this;
         vm.companyBranchTypes = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

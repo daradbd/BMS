@@ -23,7 +23,7 @@
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     Save
                 </button>
-                <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-app btn-default ">
+                <button ng-if="vm.purchaseBill.IsApproved == false" type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-app btn-default ">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     Edit
                 </button>
@@ -73,7 +73,7 @@
                                                 ng-options="Supplier.Name for Supplier in vm.Suppliers track by Supplier.CollaboratorID "
                                                 ng-change="vm.purchaseBill.SupplierID=vm.cmbSupplier.CollaboratorID"></select>
                                     </div>
-                                    <div class="form-group">
+                                    <div ng-if="vm.cmbSupplier.Street" class="form-group">
                                         <label for="txtRemarks">
                                             Address:
                                         </label>
@@ -196,7 +196,7 @@
 
                                                         </td>
                                                         <td>
-                                                            <input class="form-control" ng:model="item.Quantity" value="0" ng:required ng:validate="number" size="6">
+                                                            <input class="form-control"  ng:model="item.Quantity" value="0" ng:required ng:validate="number" size="6">
                                                         </td>
                                                         <!--<td>
                     <input class="form-control" ng:model="item.Taxes" value="0.00" ng:required ng:validate="number" size="6">
@@ -208,9 +208,9 @@
                                                             <input class="form-control" ng:model="item.UnitPrice" value="0.00" ng:required ng:validate="number" size="6">
                                                         </td>
                                                         <td>
-                                                            {{item.UnitPrice*item.Quantity}}
+                                                            {{(item.UnitPrice*item.Quantity)|currency: " " : 2}}
                                                         </td>
-                                                        <td></td>
+                                                        <td><button type="button" ng-really-message="Are you sure ?" ng-really-click="vm.removeItem(item)" item="item" class="btn btn-flat btn-danger btn-xs" aria-label="Close"><i class="fa fa-minus-square"></i></button></td>
                                                     </tr>
                                                     <tr>
 
@@ -222,7 +222,7 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td>
-                                                            {{vm.BillSubTotal()|currency}}
+                                                            {{vm.BillSubTotal()|currency: " " : 2}}
 
                                                         </td>
                                                     </tr>
@@ -282,12 +282,156 @@
                             <h3 class="box-title">Purchase Bill Details</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <div class="col-lg-6 animated fadeInRight">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6 animated fadeInRight">
+                                    <div class="form-group">
 
+                                        <label for="cmbSupplier">
+                                            Supplier
+                                        </label>
+                                        <pre>{{vm.purchaseBill.Collaborator.Name}}</pre>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtRemarks">
+                                            Address:
+                                        </label>
 
+                                        {{vm.cmbSupplier.Street}},{{vm.cmbSupplier.POBox}},{{vm.cmbSupplier.City.CityName}},{{vm.cmbSupplier.Country.CountryName}}
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=" inputReferenceNo">
+                                            ReferenceNo
+                                        </label>
+                                        <pre>{{vm.purchaseBill.ReferenceNo}}</pre>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="txtTitle">
+                                            Subject:
+                                        </label>
+                                        <pre>{{vm.purchaseBill.Subject}}</pre>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="txtTranDate">
+                                            Data:
+                                        </label>
+                                        <div class="form-group">
+                                            <pre>{{ vm.purchaseBill.Date}}</pre>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="cmbProject">
+                                            Project
+                                        </label>
+                                        <pre>{{vm.purchaseBill.ProjectSetup.ProjectName}}</pre>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
+                                <tabset>
+                                    <tab heading="Product-Info" active="true">
+                                        <div class="box box-info col-lg-12">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">Product List</h3>
+                                                <div class="box-tools pull-right">
+                                                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                                                </div><!-- /.box-tools -->
+                                            </div>
+                                            <div class="box-body">
+                                                <table class="table table-hover">
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Description</th>
+                                                        <th>UOM</th>
+                                                        <th>Quantity</th>
+                                                        <!--<th>Tax</th>
+                                <th>Discount</th>-->
+                                                        <th>UnitPrice</th>
+                                                        <th>Total</th>
+                                                        <th></th>
+                                                    </tr>
+                                                    <tr ng:repeat="item in vm.PurchaseBillDescription.PurchaseBillDesc" class="animated fadeInRight">
 
+                                                        <td>
+                                                            <pre>{{item.Product.ProductName}}</pre>
+                                                        </td>
+                                                        <td>
+                                                            <pre>{{item.Description}}</pre>
+                                                        </td>
+                                                        <td>
+                                                            <pre>{{item.UOM.UnitOfMeasureCode}}</pre>
+
+                                                        </td>
+                                                        <td>
+                                                            <pre>{{item.Quantity}}</pre>
+                                                        </td>
+                                                        <!--<td>
+                                    <input class="form-control" ng:model="item.Taxes" value="0.00" ng:required ng:validate="number" size="6">
+                                </td>
+                                <td>
+                                    <input class="form-control" ng:model="item.Discount" value="0.00" ng:required ng:validate="number" size="6">
+                                </td>-->
+                                                        <td>
+                                                            <pre>{{item.UnitPrice|currency: " " : 2	}}</pre>
+                                                        </td>
+                                                        <td>
+                                                            {{(item.UnitPrice*item.Quantity)|currency: " " : 2}}
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        
+                                                        <td>
+                                                            {{vm.BillSubTotal()|currency: " " : 2}}
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                               
+                                            </div>
+                                        </div>
+
+                                    </tab>
+                                    <tab heading="Message">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="txtMessage">
+                                                    Dear Sir,
+                                                </label>
+                                                <pre>{{ vm.purchaseBill.Message}}</pre>
+                                            </div>
+                                        </div>
+                                    </tab>
+                                    <tab heading="Terms & Condition">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="txtTerms">
+                                                    Terms
+                                                </label>
+                                                <pre>{{vm.purchaseBill.Terms}}</pre>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="txtTermsOfPayment">
+                                                    Terms of Payment
+                                                </label>
+                                                <pre>{{vm.purchaseBill.TermsOfPayment}}</pre>
+                                            </div>
+                                        </div>
+                                    </tab>
+                                </tabset>
                             </div>
                         </div>
                     </div>
@@ -323,15 +467,17 @@
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
-                                                <th>Remarks</th>
+                                                <th>supplier</th>
+                                                <th>Date</th>
                                                 <th class="noPrint">Preview</th>
                                             </tr>
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="purchaseBill in vm.purchaseBills|filter:searchText| itemsPerPage: vm.num">
+                                            <tr dir-paginate="purchaseBill in vm.purchaseBills|orderBy:'-PurchaseBillID'|filter:searchText| itemsPerPage: vm.num">
                                                 <td>{{purchaseBill.PurchaseBillCode  | uppercase}}</td>
-                                                <td>{{purchaseBill.Remarks}}</td>
+                                                <td>{{purchaseBill.Collaborator.Name}}</td>
+                                                <td>{{purchaseBill.Date| date:"dd-MMM-yyyy"}}</td>
                                                 <td class="noPrint">
                                                     <button type="button" ng-click="vm.Get(purchaseBill.PurchaseBillID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
                                                         <i class="fa fa-eye"></i>

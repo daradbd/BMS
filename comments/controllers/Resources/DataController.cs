@@ -21,6 +21,7 @@ namespace BMS.Controllers.Resources
             string Message, fileName, actualFileName;
             Message = fileName = actualFileName = string.Empty;
             bool flag = false; long FileID=0;
+            UploadFile upF = new UploadFile();
             if (Request.Files != null)
             {
                 var file = Request.Files[0];
@@ -35,7 +36,7 @@ namespace BMS.Controllers.Resources
                     UploadFile f = new UploadFile
                     {
                         UploadFileName = actualFileName,
-                        UploadFilePath = fileName,
+                        UploadFilePath = "UploadedFiles/"+fileName,
                         Remarks = description
                     };
 
@@ -44,7 +45,7 @@ namespace BMS.Controllers.Resources
                         Message = "File uploaded successfully";
                         flag = true;
                    FileID = f.UploadFileID;
-                    
+                   upF = f;
                 }
                 catch (Exception)
                 {
@@ -52,7 +53,7 @@ namespace BMS.Controllers.Resources
                 }
 
             }
-            return new JsonResult { Data = new { Message = Message, Status = flag, FileID = FileID } };
+            return new JsonResult { Data = new { Message = Message, Status = flag, File = upF } };
         }
 
     }

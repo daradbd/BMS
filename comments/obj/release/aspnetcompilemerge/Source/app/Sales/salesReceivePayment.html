@@ -70,7 +70,7 @@
                                             name="cmbCustomer"
                                             ng-model="vm.cmbCustomer"
                                             ng-options="Customer.Name for Customer in vm.collaborators track by Customer.CollaboratorID "
-                                            ng-change="vm.salesReceivePayment.CustomerID=vm.cmbCustomer.CollaboratorID"></select>
+                                            ng-change="vm.GetBalance(vm.cmbCustomer.CustomerCOAID)"></select>
                                 </div>
                                 <div class="form-group"
                                      ng-class="{'has-error':salesReceivePaymentForm.cmbPaymentMethod.$invalid
@@ -201,9 +201,7 @@
                                            required>
                                 </div>
 
-                                <div class="form-group"
-                                     ng-class="{'has-error':salesReceivePaymentForm.txtCreditAmount.$invalid
-                                         && salesReceivePaymentForm.txtCreditAmount.$dirty}">
+                                <div class="form-group">
 
                                     <label for="txtCreditAmount">
                                         CreditAmount
@@ -213,8 +211,14 @@
                                            id="txtCreditAmount"
                                            name="txtCreditAmount"
                                            ng-model="vm.salesReceivePayment.CreditAmount"
-                                           placeholder="Enter CreditAmount"
-                                           required>
+                                           placeholder="Enter CreditAmount">
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtCreditAmount">
+                                        Balance
+                                    </label>
+                                    <pre>{{vm.Balance}}</pre>
                                 </div>
                             </div>
                         </div>
@@ -226,96 +230,89 @@
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-6 animated fadeInRight">
-                                <div class="form-group"
-                                     ng-class="{'has-error':salesReceivePaymentForm.cmbCustomer.$invalid
-                                        && salesReceivePaymentForm.cmbCustomer.$dirty}">
+                                <div class="form-group">
 
                                     <label for="cmbCustomer">
                                         Customer
                                     </label>
-                                    <select class="form-control"
-                                            id="cmbCustomer"
-                                            name="cmbCustomer"
-                                            ng-model="vm.cmbCustomer"
-                                            ng-options="Customer.Name for Customer in vm.collaborators track by Customer.CollaboratorID "
-                                            ng-change="vm.salesReceivePayment.CustomerID=vm.cmbCustomer.CollaboratorID"></select>
+                                    <pre>{{vm.salesReceivePayment.Collaborator.Name}}</pre>
                                 </div>
-                                <div class="form-group"
-                                     ng-class="{'has-error':salesReceivePaymentForm.cmbPaymentMethod.$invalid
-                                        && salesReceivePaymentForm.cmbPaymentMethod.$dirty}">
+                                <div class="form-group">
 
                                     <label for="cmbPaymentMethod">
                                         Payment Methods
                                     </label>
-                                    <select class="form-control"
-                                            id="cmbPaymentMethod"
-                                            name="cmbPaymentMethod"
-                                            ng-model="vm.cmbPaymentMethod"
-                                            ng-options="PaymentMethod.PaymentMethodName for PaymentMethod in vm.paymentMethods track by PaymentMethod.PaymentMethodID "
-                                            ng-change="vm.salesReceivePayment.PaymentMethodID=vm.cmbPaymentMethod.PaymentMethodID"></select>
-                                </div>
-
-                                <div class="form-group"
-                                     ng-class="{'has-error':salesReceivePaymentForm.txtPaymentTotal.$invalid
-                                         && salesReceivePaymentForm.txtPaymentTotal.$dirty}">
-
-                                    <label for="txtPaymentTotal">
-                                        Payment Total
-                                    </label>
-                                    <input type="text"
-                                           class="form-control"
-                                           id="txtPaymentTotal"
-                                           name="txtPaymentTotal"
-                                           ng-model="vm.salesReceivePayment.PaymentTotal"
-                                           placeholder="Enter PaymentTotal"
-                                           required>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group"
-                                     ng-class="{'has-error':salesReceivePaymentForm.cmbProject.$invalid
-                                             && salesReceivePaymentForm.cmbProject.$dirty}">
-
-                                    <label for="cmbProject">
-                                        Project
-                                    </label>
-                                    <select class="form-control"
-                                            id="cmbProject"
-                                            name="cmbProject"
-                                            ng-model="vm.cmbProject"
-                                            ng-options="Project.ProjectName for Project in vm.Projects track by Project.ProjectID "
-                                            ng-change="vm.salesReceivePayment.ProjectID=vm.cmbProject.ProjectID"></select>
+                                    <pre>{{vm.salesReceivePayment.PaymentMethod.PaymentMethodName}}</pre>
                                 </div>
                                 <div class="form-group">
-                                    <label for="txtMemo">
-                                        Memo
-                                    </label>
-                                    <textarea class="form-control"
-                                              id="txtMemo"
-                                              name="txtMemo"
-                                              ng-model="vm.salesReceivePayment.Memo"
-                                              rows=" 3"></textarea>
-                                </div>
-                                <div class="form-group"
-                                     ng-class="{'has-error':salesReceivePaymentForm.txtCreditAmount.$invalid
-                                         && salesReceivePaymentForm.txtCreditAmount.$dirty}">
 
-                                    <label for="txtCreditAmount">
-                                        CreditAmount
+                                    <label for="cmbDepositTo">
+                                        Deposit To
                                     </label>
-                                    <input type="text"
-                                           class="form-control"
-                                           id="txtCreditAmount"
-                                           name="txtCreditAmount"
-                                           ng-model="vm.salesReceivePayment.CreditAmount"
-                                           placeholder="Enter CreditAmount"
-                                           required>
+                                    <pre>{{vm.salesReceivePayment.DepositHead.COAName}}</pre>
+
                                 </div>
 
+
+                                    <div class="form-group">
+
+                                        <label for="txtChequeNO">
+                                            {{vm.salesReceivePayment.PaymentMethod.RefText}}
+                                        </label>
+                                        <pre>{{vm.salesReceivePayment.ChequeNO}}</pre>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtMemo">
+                                            Memo
+                                        </label>
+                                        <pre>{{vm.salesReceivePayment.Memo}}</pre>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="txtPaymentTotal">
+                                            Payment Total
+                                        </label>
+                                        <pre>{{vm.salesReceivePayment.PaymentTotal}}</pre>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="txtReferenceNo">
+                                            Reference No
+                                        </label>
+                                        <pre>{{vm.salesReceivePayment.ReferenceNo}}</pre>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="txtTranDate">
+                                            Data:
+                                        </label>
+                                        <div class="form-group">
+                                            <pre>{{vm.salesReceivePayment.Date}}</pre>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="cmbProject">
+                                            Project
+                                        </label>
+                                        <pre>{{vm.salesReceivePayment.ProjectSetup.ProjectName}}</pre>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label for="txtCreditAmount">
+                                            CreditAmount
+                                        </label>
+                                        <pre>{{vm.salesReceivePayment.CreditAmount}}</pre>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+                   
 
                     <div class="col-lg-12 box " ng-show="vm.ListView">
                         <div class="box-header with-border">
@@ -355,7 +352,7 @@
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="salesReceivePayment in vm.salesReceivePayments|filter:searchText| itemsPerPage: vm.num">
+                                            <tr dir-paginate="salesReceivePayment in vm.salesReceivePayments|orderBy:'-SalesReceivePaymentID'|filter:searchText| itemsPerPage: vm.num">
                                                 <td>{{salesReceivePayment.SalesReceivePaymentCode  | uppercase}}</td>
                                                 <td>{{salesReceivePayment.Collaborator.Name}}</td>
                                                 <td>{{salesReceivePayment.Date| date:'dd-MM-yyyy'}}</td>

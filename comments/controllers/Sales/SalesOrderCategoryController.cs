@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using BMS.Models.Production;
+using BMS.Models.Sales;
 using BMS.Models;
 
 namespace BMS.Controllers.Sales
@@ -16,6 +16,7 @@ namespace BMS.Controllers.Sales
     public class SalesOrderCategoryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesOrderCategory
         public IEnumerable<SalesOrderCategory> GetSalesOrderCategories()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Sales
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            salesordercategory.UpdateBy = loginUser.UserID;
             db.Entry(salesordercategory).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
+                salesordercategory.InsertBy = loginUser.UserID;
                 db.SalesOrderCategories.Add(salesordercategory);
                 db.SaveChanges();
 

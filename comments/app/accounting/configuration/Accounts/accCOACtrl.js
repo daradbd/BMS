@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("accCOACtrl", ["accTypeResource", "accCOAResource", accCOACtrl]);
-    function accCOACtrl(accTypeResource,accCOAResource) {
+        .controller("accCOACtrl", ["accTypeResource", "accCOAResource", "appAuth", accCOACtrl]);
+    function accCOACtrl(accTypeResource, accCOAResource, appAuth) {
         var vm = this;
         vm.accCOAs = [];
         vm.accCOA = [];
@@ -22,7 +22,7 @@
         vm.ParentCOAIDs = [];
         vm.accCOATree = [];
         vm.json = [];
-
+        appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;

@@ -14,8 +14,8 @@
 
     angular
         .module("companyManagement")
-        .controller("bankAccountCtrl", ["bankAccountOwnerTypeResource", "bankAccountTypeResource", "bankResource", "bankBranchResource", "bankAccountResource", bankAccountCtrl]);
-    function bankAccountCtrl(bankAccountOwnerTypeResource, bankAccountTypeResource,bankResource, bankBranchResource, bankAccountResource)
+        .controller("bankAccountCtrl", ["bankAccountOwnerTypeResource", "bankAccountTypeResource", "bankResource", "bankBranchResource", "bankAccountResource", "appAuth", bankAccountCtrl]);
+    function bankAccountCtrl(bankAccountOwnerTypeResource, bankAccountTypeResource, bankResource, bankBranchResource, bankAccountResource, appAuth)
     {
         var vm = this;
         vm.bankAccounts = [];
@@ -23,11 +23,12 @@
         vm.bankBranchs = [];
         vm.bankAccountTypes = [];
         vm.bankAccountOwnerTypes = [];
-
+        vm.isModal = false;
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -44,6 +45,7 @@
             if (activeMode == 1)//Form View Mode
             {
                 vm.bankAccount = null;
+                refreshForm();
                 vm.FromView = true;
                 vm.ListView = false;
                 vm.DetailsView = false;
@@ -59,7 +61,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = false;
 
 
@@ -74,7 +76,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -88,7 +90,7 @@
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
 
@@ -102,6 +104,14 @@
 
         var DispayButton = function ()
         {
+
+        }
+
+        function refreshForm() {
+            vm.bankAccounts = null;
+            vm.cmbBankAccountTypes = null;
+            vm.cmbBankBranchs = null;
+            vm.cmbBanks = null;
 
         }
         GetBankList();
@@ -180,6 +190,8 @@
                     {
                         GetList();
                         vm.bankAccount = null;
+                        refreshForm();
+                        vm.ViewMode(2);
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -201,6 +213,9 @@
             bankAccountResource.get({ 'ID': id }).$promise.then(function (bankAccount)
             {
                 vm.bankAccount = bankAccount;
+                vm.cmbBankAccountTypes = { BankAccountTypeID: vm.bankAccount.BankAccountTypeID };
+                vm.cmbBanks = { BankID: vm.bankAccount.BankID };
+                vm.cmbBankBranchs = { BankBranchID: vm.bankAccount.BankBranchID };
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
             }, function (error) {
@@ -239,6 +254,7 @@
                 // success handler
                 toastr.success("Data Delete Successfully!");
                 GetList();
+                vm.ViewMode(2);
             }, function (error) {
                 // error handler
                 toastr.error("Data Delete Failed!");

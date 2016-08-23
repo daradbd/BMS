@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class MaintainPurchaseQuotationController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/MaintainPurchaseQuotation
         public IEnumerable<MaintainPurchaseQuotation> GetMaintainPurchaseQuotations()

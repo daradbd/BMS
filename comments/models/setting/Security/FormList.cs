@@ -69,6 +69,8 @@
         [StringLength(10)]
         public string DeletePC { get; set; }
 
+        public virtual Module Module { get; set; }
+
 
     }
 }

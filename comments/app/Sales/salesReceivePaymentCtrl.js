@@ -13,13 +13,15 @@
 
     angular
         .module("companyManagement")
-        .controller("salesReceivePaymentCtrl", ["paymentMethodResource", "projectSetupResource", "collaboratorResource", "salesReceivePaymentResource", salesReceivePaymentCtrl]);
-    function salesReceivePaymentCtrl(paymentMethodResource,projectSetupResource, collaboratorResource, salesReceivePaymentResource) {
+        .controller("salesReceivePaymentCtrl", ["ledgerSheetResource", "paymentMethodResource", "projectSetupResource", "collaboratorResource", "salesReceivePaymentResource", "appAuth", salesReceivePaymentCtrl]);
+    function salesReceivePaymentCtrl(ledgerSheetResource, paymentMethodResource, projectSetupResource, collaboratorResource, salesReceivePaymentResource, appAuth) {
         var vm = this;
         vm.paymentMethods = [];
         vm.salesReceivePayments = [];
         vm.collaborators = [];
         vm.Projects = [];
+        vm.Balance = 0.00;
+        appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -135,6 +137,24 @@
 
         }
 
+        vm.GetBalance = function (COAID) {
+
+            ledgerSheetResource.query({ 'id': COAID, 'ReportType': 2 }).$promise.then(function (data) {
+                vm.Balance = data[2];
+                //vm.ViewMode(3);
+                //toastr.success("Data Load Successful", "Form Load");
+                // console.log(JSON.stringify(vm.ledgerSheets));
+            }, function (error) {
+                if (error.status == 500) {
+                    toastr.error("No Data Found!");
+                }
+                else {
+                    toastr.error("Data Load Failed!");
+                }
+                // error handler
+
+            });
+        }
 
         GetPaymentMethod();
         function GetPaymentMethod() {
@@ -165,6 +185,7 @@
         //Save salesReceivePayment
         vm.Save = function (isValid) {
             if (isValid) {
+                vm.salesReceivePayment.CustomerID = vm.cmbCustomer.CollaboratorID;
                 salesReceivePaymentResource.save(vm.salesReceivePayment).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
@@ -219,6 +240,7 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
+                vm.salesReceivePayment.CustomerID = vm.cmbCustomer.CollaboratorID;
                 salesReceivePaymentResource.update({ 'ID': vm.salesReceivePayment.SalesReceivePaymentID }, vm.salesReceivePayment).$promise.then(function () {
                 vm.salesReceivePayments = null;
                 vm.ViewMode(3);

@@ -34,36 +34,36 @@ namespace BMS.Controllers.Accounting.Transaction
         public HttpResponseMessage Get(int id)
         {
             var voucherList = db.VoucherLists.Where(v => v.COAID == id).Select(v=>v.VoucherNo);
-            var resultList = (from vl in db.VoucherLists.Where(a => a.AccCOA.HasChild == false && a.DrCr == true && a.COAID!=id && voucherList.Contains(a.VoucherNo)).DefaultIfEmpty()
+            var resultList = (from vl in db.VoucherLists.Where(a => a.AccCOA.HasChild == false && a.DrCr == true && a.COAID != id && voucherList.Contains(a.VoucherNo) && a.DrCr.HasValue).DefaultIfEmpty()
                           select new
                           {
-                              VoucherID=vl.VoucherID,
+                              VoucherID = (long?)vl.VoucherID,
                               Account = vl.AccCOA.COAName,
-                              COAID=vl.COAID,
+                              COAID = vl.COAID,
                               TranDate= vl.TranDate,
-                              Debit = (decimal)0.00,
-                              Credit = (decimal)vl.Amount,
-                              Amount=(decimal)vl.Amount*(-1),
-                              bType = (bool)vl.AccCOA.BalanceType
+                              Debit =(decimal?)0.00,
+                              Credit = (decimal?)vl.Amount,
+                              Amount = (decimal?)vl.Amount * (-1),
+                              bType = (bool?)vl.AccCOA.BalanceType
 
                           }).Concat
-                     (from vl in db.VoucherLists.Where(a => a.AccCOA.HasChild == false && a.DrCr == false && a.COAID != id && voucherList.Contains(a.VoucherNo)).DefaultIfEmpty()
+                     (from vl in db.VoucherLists.Where(a => a.AccCOA.HasChild == false && a.DrCr == false && a.COAID != id && voucherList.Contains(a.VoucherNo) && a.Amount > 0).DefaultIfEmpty()
                                  select new
                                  {
-                                     VoucherID=vl.VoucherID,
+                                     VoucherID = (long?)vl.VoucherID,
                                      Account = vl.AccCOA.COAName,
                                     COAID= vl.COAID,
                                     TranDate= vl.TranDate,
-                                     Debit = (decimal)vl.Amount,
-                                     Credit = (decimal)0.00,
-                                     Amount = (decimal)vl.Amount,
-                                     bType = (bool)vl.AccCOA.BalanceType
+                                     Debit = (decimal?)vl.Amount,
+                                     Credit = (decimal?)0.00,
+                                     Amount = (decimal?)vl.Amount,
+                                     bType = (bool?)vl.AccCOA.BalanceType
 
                                  });
             //decimal currentTotal = 0;
 
 
-            var query = from lg in resultList orderby(lg.VoucherID)
+            var query = from lg in resultList.Where(x=>x.COAID>0) orderby(lg.VoucherID)
                                    select new
                                    {
 
@@ -75,7 +75,7 @@ namespace BMS.Controllers.Accounting.Transaction
                                        lg.Credit,
                                        lg.Amount,
                                        lg.bType,
-                                       balance=resultList.Where(b=>b.VoucherID<=lg.VoucherID).Sum(a=>a.Amount)
+                                       balance=resultList.Where(b=>b.VoucherID<=lg.VoucherID ).Sum(a=>a.Amount)
 
                                    };
 
@@ -89,12 +89,33 @@ namespace BMS.Controllers.Accounting.Transaction
 
             return Request.CreateResponse(HttpStatusCode.OK, query);
         }
-
-        public HttpResponseMessage Get(int id, string name,int ReportType)
+        
+        public HttpResponseMessage Get(long id, int ReportType)
         {
+            decimal TotalCredit = (decimal)0.00;
+            decimal TotalDeposit = (decimal)0.00;
+            decimal Balance =(decimal)0.00;
+           
+            if(ReportType==1)
+            {
+                TotalCredit = db.VoucherLists.Where(v => v.COAID == id && v.DrCr == false).Sum(a => a.Amount).GetValueOrDefault();
+                TotalDeposit = db.VoucherLists.Where(v => v.COAID == id && v.DrCr == true).Sum(a => a.Amount).GetValueOrDefault();
+                Balance = TotalCredit - TotalDeposit;
+                
+              
 
-            string[] result={"1","2","3","4","5","6","7","8","98"};
-            return Request.CreateResponse(HttpStatusCode.OK, result.ToList());
+            }
+            else if (ReportType == 2)
+            {
+                TotalCredit = db.VoucherLists.Where(v => v.COAID == id && v.DrCr == false).Sum(a => a.Amount).GetValueOrDefault();
+                TotalDeposit = db.VoucherLists.Where(v => v.COAID == id && v.DrCr == true).Sum(a => a.Amount).GetValueOrDefault();
+                Balance = TotalDeposit-TotalCredit;
+                 
+                
+            
+            }
+             decimal[] arr = { TotalCredit, TotalDeposit, Balance };
+             return Request.CreateResponse(HttpStatusCode.OK, arr.ToList());
         }
 
 

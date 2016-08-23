@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Security
     public class WorkFlowConfigController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/WorkFlowConfig
         public IEnumerable<WorkFlowConfig> GetWorkFlowConfigs()
@@ -47,6 +48,7 @@ namespace BMS.Controllers.Setting.Security
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            workflowconfig.UpdateBy = loginUser.UserID;
 
             db.Entry(workflowconfig).State = EntityState.Modified;
 
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Setting.Security
         {
             if (ModelState.IsValid)
             {
+                workflowconfig.InsertBy = loginUser.UserID;
                 db.WorkFlowConfigs.Add(workflowconfig);
                 db.SaveChanges();
 

@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class PurchaseDeliveryReceiveController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/PurchaseDeliveryReceive
         public IEnumerable<PurchaseDeliveryReceive> GetPurchaseDeliveryReceives()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Purchase
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            purchasedeliveryreceive.UpdateBy = loginUser.UserID;
             db.Entry(purchasedeliveryreceive).State = EntityState.Modified;
 
             try
@@ -67,6 +69,13 @@ namespace BMS.Controllers.Purchase
         {
             if (ModelState.IsValid)
             {
+                string CustomCode = "PB-" + DateTime.Now.ToString("yyyyMMdd");
+
+                int? MaxCode = Convert.ToInt32((db.PurchaseDeliveryReceives.Where(r => r.PurchaseDeliveryReceiveCode.StartsWith(CustomCode)).Select(r => r.PurchaseDeliveryReceiveCode.Substring(CustomCode.Length, 4)).ToList()).Max());
+                string PRCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
+                purchasedeliveryreceive.PurchaseDeliveryReceiveCode = PRCode;
+
+                purchasedeliveryreceive.InsertBy = loginUser.UserID;
                 db.PurchaseDeliveryReceives.Add(purchasedeliveryreceive);
                 db.SaveChanges();
 

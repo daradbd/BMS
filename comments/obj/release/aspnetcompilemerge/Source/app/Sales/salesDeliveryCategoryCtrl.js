@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("salesDeliveryCategoryCtrl", ["salesDeliveryCategoryResource", salesDeliveryCategoryCtrl]);
-    function salesDeliveryCategoryCtrl(salesDeliveryCategoryResource) {
+        .controller("salesDeliveryCategoryCtrl", ["salesDeliveryCategoryResource", "appAuth", salesDeliveryCategoryCtrl]);
+    function salesDeliveryCategoryCtrl(salesDeliveryCategoryResource, appAuth) {
         var vm = this;
         vm.salesDeliveryCategorys = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

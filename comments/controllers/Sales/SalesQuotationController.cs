@@ -10,12 +10,16 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Production;
 using BMS.Models;
+using BMS.Models.Accounting.Configuration.Periods;
+using BMS.Models.HR;
+using System.Data.Objects;
 
 namespace BMS.Controllers.Sales
 {
     public class SalesQuotationController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesQuotation
         public IEnumerable<SalesQuotation> GetSalesQuotations()
@@ -51,6 +55,7 @@ namespace BMS.Controllers.Sales
 
             salesquotation.Collaborator = null;
             salesquotation.ProcesStatus = null;
+            salesquotation.UpdateBy = loginUser.UserID;
             db.Entry(salesquotation).State = EntityState.Modified;
 
             try
@@ -70,11 +75,16 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
-                string CustomCode = "SQ-" + DateTime.Now.ToString("yyyyMMdd");
-                int? MaxCode = Convert.ToInt32((db.SalesQuotations.Where(r => r.SalesQuotationCode.StartsWith(CustomCode)).Select(r => r.SalesQuotationCode.Substring(CustomCode.Length, 4)).ToList()).Max());
-                string SQCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
+                FiscalYear fiscalYear = db.FiscalYears.Where(f =>( EntityFunctions.TruncateTime(f.StartDate) <= DateTime.Now) && (EntityFunctions.TruncateTime(f.EndDate) >= DateTime.Now)).SingleOrDefault();
+                SalesQuotationCategory salesQuotationCategory = db.SalesQuotationCategories.Where(sq => sq.SalesQuotationCategoryID == salesquotation.SalesQuotationCategoryID).SingleOrDefault();
+                Collaborator custormer = db.Collaborators.Where(c => c.CollaboratorID == salesquotation.CustomerID).Include(c => c.CustomerType).SingleOrDefault();
+
+                string CustomCode = salesQuotationCategory.SalesQuotationCategoryCode + "/" + custormer.CustomerType.CustomerTypeID.ToString().PadLeft(3, '0') + "/" + fiscalYear.FiscalYearName + "/" + custormer.CollaboratorCode + "-";
+                int? MaxCode = Convert.ToInt32((db.SalesQuotations.Where(r => r.SalesQuotationCode.StartsWith(CustomCode)).Select(r => r.SalesQuotationCode.Substring(CustomCode.Length, 8)).ToList()).Max());
+                string SQCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(8, '0');
 
                 salesquotation.SalesQuotationCode = SQCode;
+                salesquotation.InsertBy = loginUser.UserID;
 
                 db.SalesQuotations.Add(salesquotation);
 

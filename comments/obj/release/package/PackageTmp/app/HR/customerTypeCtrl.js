@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("customerTypeCtrl", ["customerTypeResource", customerTypeCtrl]);
-    function customerTypeCtrl(customerTypeResource) {
+        .controller("customerTypeCtrl", ["customerTypeResource", "appAuth", customerTypeCtrl]);
+    function customerTypeCtrl(customerTypeResource, appAuth) {
         var vm = this;
         vm.customerTypes = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -115,7 +115,7 @@
         //Save customerType
         vm.Save = function (isValid) {
             if (isValid) {
-                customerTypeResource.save().$promise.then(vm.customerType,
+                customerTypeResource.save(vm.customerType).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.customerType = null;

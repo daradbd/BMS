@@ -17,6 +17,7 @@ namespace BMS.Controllers.Purchase
     public class RequisitionDeliveryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/RequisitionDelivery
         public IEnumerable<RequisitionDelivery> GetRequisitionDeliveries(ODataQueryOptions Options)
@@ -50,6 +51,7 @@ namespace BMS.Controllers.Purchase
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            requisitiondelivery.UpdateBy = loginUser.UserID;
             db.Entry(requisitiondelivery).State = EntityState.Modified;
 
             try
@@ -74,8 +76,11 @@ namespace BMS.Controllers.Purchase
                 int? MaxCode = Convert.ToInt32((db.RequisitionDeliveries.Where(r => r.RequisitionDeliveryCode.StartsWith(CustomCode)).Select(r => r.RequisitionDeliveryCode.Substring(CustomCode.Length, 4)).ToList()).Max());
                 string RDCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
                 requisitiondelivery.RequisitionDeliveryCode = RDCode;
+                requisitiondelivery.InsertBy = loginUser.UserID;
+
                 db.RequisitionDeliveries.Add(requisitiondelivery);
                 db.SaveChanges();
+
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, requisitiondelivery);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = requisitiondelivery.RequisitionDeliveryID }));

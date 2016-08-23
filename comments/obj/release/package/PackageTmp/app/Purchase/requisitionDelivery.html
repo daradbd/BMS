@@ -81,11 +81,9 @@
                                         <label for=" inputCitycode">
                                             Date
                                         </label>
-                                        <pre>{{vm.purchaseRequisition.Date}}</pre>
+                                        <pre>{{vm.purchaseRequisition.Date| date:"dd-MMM-yyyy"}}</pre>
                                     </div>
-                                    <div class="form-group"
-                                         ng-class="{'has-error':requisitionDeliveryForm.cmbProject.$invalid
-                                             && requisitionDeliveryForm.cmbProject.$dirty}">
+                                    <div class="form-group">
 
                                         <label for="cmbProject">
                                             Project
@@ -132,7 +130,7 @@
                                                     <th>Quantity</th>
                                                     <th>DeliveredQty</th>
                                                     <th>DeliveryQty</th>
-                                                    <th></th>
+                                                    <th>Stock</th>
                                                 </tr>
                                                 <tr ng:repeat="item in vm.PurchaseRequisitionDescription.purchaseRequisitionDesc" class="animated fadeInRight">
 
@@ -146,7 +144,7 @@
                                                     </td>
                                                     <td>
                                                         <p class="input-group">
-                                                            {{item.ScheduleDate}}
+                                                            {{item.ScheduleDate| date:"dd-MMM-yyyy"}}
                                                         </p>
                                                     </td>
                                                     <td>
@@ -157,15 +155,15 @@
                                                         {{item.Quantity}}
                                                     </td>
                                                     <td>
-                                                        {{item.DeliveredQuantity}}
+                                                        {{item.DeliveredQuantity | isNull:0}}
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" ng-init="item.DeliveryQuantity=(item.Quantity-item.DeliveredQuantity)" ng:model="item.DeliveryQuantity" value="0" ng:required ng:validate="number" size="6">
+                                                        <input class="form-control"  ng:model="item.DeliveryQuantity" value="0" ng:required ng:validate="number" size="6">
                                                     </td>
                                                     <td>
-                                                        {{item.StockQuantity}}
+                                                        {{item.Product.CurrentStock| isNull:0}}
                                                     </td>
-                                                    <td></td>
+                                                    
                                                 </tr>
                                                 <tr>
 
@@ -175,7 +173,7 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td></td>
+                                                    <td>{{vm.TotalQty()}}</td>
                                                     <td></td>
                                                 </tr>
                                             </table>
@@ -194,11 +192,40 @@
                         <div class="box-body">
                                 <div class="col-lg-12">
                                     <div class="col-lg-6 animated fadeInRight">
+                                        <div class="form-group">
+                                            <label for=" inputCitycode">
+                                                Requisition Code
+                                            </label>
+                                            <pre>{{vm.requisitionDelivery.RequisitionCode}}</pre>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for=" inputCitycode">
+                                                Requisition By
+                                            </label>
+                                            <pre>{{vm.requisitionDelivery.Collaborator.Name}}</pre>
+                                        </div>
+                                        <div class="form-group">
 
+                                            <label for="cmbWorkPlantID">
+                                                Work Station
+                                            </label>
+                                            <pre>{{vm.requisitionDelivery.ProjectSetup.ProjectName}}</pre>
+                                        </div>
 
                                     </div>
                                     <div class="col-lg-6">
-
+                                        <div class="form-group">
+                                            <label for=" inputCitycode">
+                                                Requisition DeliveryCode
+                                            </label>
+                                            <pre>{{vm.requisitionDelivery.RequisitionDeliveryCode}}</pre>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for=" inputDate">
+                                                Delivery Date
+                                            </label>
+                                            <pre>{{vm.requisitionDelivery.Date| date:"dd-MMM-yyyy"}}</pre>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -225,7 +252,7 @@
                                             </td>
                                             <td>
                                                 <p class="input-group">
-                                                    {{item.ScheduleDate}}
+                                                    {{item.ScheduleDate| date:"dd-MMM-yyyy"}}
                                                 </p>
                                             </td>
                                             <td>
@@ -303,10 +330,10 @@
 
                                                 </thead>
                                                 <tbody>
-                                                    <tr dir-paginate="purchaseRequisition in vm.purchaseRequisitions|filter:searchText| itemsPerPage: vm.num">
+                                                    <tr dir-paginate="purchaseRequisition in vm.purchaseRequisitions|orderBy:'-PurchaseRequisitionID'|filter:searchText| itemsPerPage: vm.num" pagination-id="purReq">
                                                         <td>{{purchaseRequisition.PurchaseRequisitionCode  | uppercase}}</td>
                                                         <td>{{purchaseRequisition.Collaborator.Name}}</td>
-                                                        <td>{{purchaseRequisition.Date}}</td>
+                                                        <td>{{purchaseRequisition.Date| date:"dd-MMM-yyyy"}}</td>
                                                         <td>{{purchaseRequisition.ProcesStatus.ProcesStatusName}}</td>
                                                         <td class="noPrint">
                                                             <button type="button" ng-click="vm.GetPurchaseRequisition(purchaseRequisition.PurchaseRequisitionID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
@@ -316,7 +343,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                            <dir-pagination-controls pagination-id="purReq" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
                                         </div>
                                     </div>
                                 </div>
@@ -359,7 +386,7 @@
 
                                                 </thead>
                                                 <tbody>
-                                                    <tr dir-paginate="requisitionDelivery in vm.requisitionDeliverys|filter:searchTextc| itemsPerPage: vm.numc">
+                                                    <tr dir-paginate="requisitionDelivery in vm.requisitionDeliverys|filter:searchTextc| itemsPerPage: vm.numc" pagination-id="reqDelivery">
                                                         <td>{{requisitionDelivery.RequisitionDeliveryCode  | uppercase}}</td>
                                                         <td>{{requisitionDelivery.RequisitionCode}}</td>
                                                         <td>{{requisitionDelivery.Date}}</td>
@@ -371,7 +398,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                            <dir-pagination-controls pagination-id="reqDelivery" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
                                         </div>
                                     </div>
                                 </div>

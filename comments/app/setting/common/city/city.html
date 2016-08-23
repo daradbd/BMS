@@ -142,6 +142,7 @@
                                     <table class="table table-bordered table-striped" id="printThisElement">
                                         <thead>
                                             <tr>
+                                                <th>SL</th>
                                                 <th>Code</th>
                                                 <th>City</th>
                                                 <th>Country</th>
@@ -150,7 +151,8 @@
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="city in vm.citys|filter:searchText|  itemsPerPage: vm.num">
+                                            <tr dir-paginate="city in vm.citys|filter:searchText|  itemsPerPage: vm.num" >
+                                                <td>{{$index+vm.serial}}</td>
                                                 <td>{{city.CityCode  | uppercase}}</td>
                                                 <td>{{city.CityName}}</td>
                                                 <td>{{city.Country.CountryName}}</td>
@@ -164,7 +166,7 @@
                                         </tbody>
 
                                     </table>
-                                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                    <dir-pagination-controls boundary-links="true" on-page-change="vm.indexCount(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
 
                                 </div>
                             </div>

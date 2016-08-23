@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("departmentCtrl", ["departmentResource", departmentCtrl]);
-    function departmentCtrl(departmentResource) {
+        .controller("departmentCtrl", ["departmentResource", "appAuth", departmentCtrl]);
+    function departmentCtrl(departmentResource, appAuth) {
         var vm = this;
         vm.departments = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -115,7 +115,7 @@
         //Save department
         vm.Save = function (isValid) {
             if (isValid) {
-                departmentResource.save().$promise.then(vm.department,
+                departmentResource.save(vm.department).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.department = null;

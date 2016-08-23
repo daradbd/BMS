@@ -8,6 +8,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity;
+    using BMS.Models.Project;
 
     [Table("Sales_SalesReceivePayment")]
     public partial class SalesReceivePayment
@@ -87,5 +88,10 @@
 
 
         public virtual PaymentMethod PaymentMethod { get; set; }
+
+        public virtual ProjectSetup ProjectSetup { get; set; }
+
+        [ForeignKey("DepositTo")]
+        public virtual AccCOA DepositHead { get; set; }
     }
 }

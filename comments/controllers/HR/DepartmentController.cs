@@ -16,10 +16,15 @@ namespace BMS.Controllers.HR
     public class DepartmentController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Department
         public IEnumerable<Department> GetDepartments()
         {
+            ////var myCookie = new HttpCookie("DARADERP");
+            ////myCookie["BranchID"] = "420";
+
+            //HttpContext.Current.Response.Cookies.Add(myCookie);
             return db.Departments.AsEnumerable();
         }
 
@@ -47,6 +52,7 @@ namespace BMS.Controllers.HR
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            department.UpdateBy = loginUser.UserID;
 
             db.Entry(department).State = EntityState.Modified;
 
@@ -67,6 +73,7 @@ namespace BMS.Controllers.HR
         {
             if (ModelState.IsValid)
             {
+                department.InsertBy = loginUser.UserID;
                 db.Departments.Add(department);
                 db.SaveChanges();
 

@@ -17,6 +17,7 @@ namespace BMS.Controllers.Purchase
     public class RequestForQuotationDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/RequestForQuotationDescription
         public IEnumerable<RequestForQuotationDescription> GetRequestForQuotationDescriptions(ODataQueryOptions Options)
@@ -49,6 +50,7 @@ namespace BMS.Controllers.Purchase
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            requestforquotationdescription.UpdateBy = loginUser.UserID;
 
             db.Entry(requestforquotationdescription).State = EntityState.Modified;
 
@@ -69,6 +71,7 @@ namespace BMS.Controllers.Purchase
         {
             if (ModelState.IsValid)
             {
+                requestforquotationdescription.InsertBy = loginUser.UserID;
                 db.RequestForQuotationDescriptions.Add(requestforquotationdescription);
                 db.SaveChanges();
 

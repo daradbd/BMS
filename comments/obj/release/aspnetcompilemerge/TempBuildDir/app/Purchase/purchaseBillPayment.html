@@ -70,7 +70,7 @@
                                             name="cmbSupplier"
                                             ng-model="vm.cmbSupplier"
                                             ng-options="Supplier.Name for Supplier in vm.collaborators track by Supplier.CollaboratorID "
-                                            ng-change="vm.purchaseBillPayment.SupplierID=vm.cmbSupplier.CollaboratorID"></select>
+                                            ng-change="vm.GetBalance(vm.cmbSupplier.SupplierCOAID)"></select>
                                 </div>
                                 <div class="form-group"
                                      ng-class="{'has-error':purchaseBillPaymentForm.cmbPaymentMethod.$invalid
@@ -91,7 +91,7 @@
                                         && purchaseBillPaymentForm.cmbCreditTo.$dirty}">
 
                                     <label for="cmbCreditTo">
-                                        Deposit To
+                                        Payment From
                                     </label>
                                     <select class="form-control"
                                             id="cmbCreditTo"
@@ -195,25 +195,26 @@
                                            class="form-control"
                                            id="txtPaymentTotal"
                                            name="txtPaymentTotal"
+                                           ng-change="vm.setCredit()"
                                            ng-model="vm.purchaseBillPayment.PaymentTotal"
                                            placeholder="Enter PaymentTotal"
                                            required>
                                 </div>
 
-                                <div class="form-group"
-                                     ng-class="{'has-error':purchaseBillPaymentForm.txtCreditAmount.$invalid
-                                         && purchaseBillPaymentForm.txtCreditAmount.$dirty}">
+                                <div class="form-group">
 
                                     <label for="txtCreditAmount">
                                         CreditAmount
                                     </label>
-                                    <input type="text"
-                                           class="form-control"
-                                           id="txtCreditAmount"
-                                           name="txtCreditAmount"
-                                           ng-model="vm.purchaseBillPayment.CreditAmount"
-                                           placeholder="Enter CreditAmount"
-                                           required>
+                                   <pre>{{vm.purchaseBillPayment.CreditAmount}}</pre> 
+                                           
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtCreditAmount">
+                                        Balance
+                                    </label>
+                                    <pre>{{vm.Balance}}</pre>
                                 </div>
                             </div>
                         </div>
@@ -225,14 +226,95 @@
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-6 animated fadeInRight">
+                                    <div class="form-group">
+
+                                        <label for="cmbSupplier">
+                                            Supplier
+                                        </label>
+                                        <pre>{{vm.purchaseBillPayment.Collaborator.Name}}</pre>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="cmbPaymentMethod">
+                                            Payment Methods
+                                        </label>
+                                        <pre>{{vm.purchaseBillPayment.PaymentMethod.PaymentMethodName}}</pre>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="cmbCreditTo">
+                                            Payment From
+                                        </label>
+                                        <pre>{{vm.purchaseBillPayment.CreditHead.COAName}}</pre>
+                                    </div>
 
 
-                            </div>
-                            <div class="col-lg-6">
 
+
+                                    <div class="form-group">
+
+                                        <label for="txtChequeNO">
+                                            {{vm.purchaseBillPayment.PaymentMethod.RefText}}
+                                        </label>
+                                        <pre>{{vm.purchaseBillPayment.ChequeNO}}</pre>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtMemo">
+                                            Memo
+                                        </label>
+                                        <pre>{{vm.purchaseBillPayment.Memo}}</pre>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label for="txtReferenceNo">
+                                            Reference No
+                                        </label>
+                                        <pre>{{vm.purchaseBillPayment.ReferenceNo}}</pre>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="txtTranDate">
+                                            Data:
+                                        </label>
+                                        <div class="form-group">
+                                            <pre>{{vm.purchaseBillPayment.Date| date:"dd-MMM-yyyy"}}</pre>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label ng-if="vm.purchaseBillPayment.ProjectSetup" for="cmbProject">
+                                            Project
+                                        </label>
+                                        <pre>{{vm.purchaseBillPayment.ProjectSetup.ProjectName}}</pre>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="txtPaymentTotal">
+                                            Payment Total
+                                        </label>
+                                        <pre>{{vm.purchaseBillPayment.PaymentTotal}}</pre>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label for="txtCreditAmount">
+                                            CreditAmount
+                                        </label>
+                                        <pre>{{vm.purchaseBillPayment.CreditAmount}}</pre>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="txtCreditAmount">
+                                            Balance
+                                        </label>
+                                        <pre>{{vm.Balance}}</pre>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                   
 
                     <div class="col-lg-12 box " ng-show="vm.ListView">
                         <div class="box-header with-border">
@@ -265,15 +347,17 @@
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
-                                                <th>Remarks</th>
+                                                <th>Supplier</th>
+                                                <th>Date</th>
                                                 <th class="noPrint">Preview</th>
                                             </tr>
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="purchaseBillPayment in vm.purchaseBillPayments|filter:searchText| itemsPerPage: vm.num">
+                                            <tr dir-paginate="purchaseBillPayment in vm.purchaseBillPayments|orderBy:'-PurchaseBillPaymentID'|filter:searchText| itemsPerPage: vm.num">
                                                 <td>{{purchaseBillPayment.PurchaseBillPaymentCode  | uppercase}}</td>
-                                                <td>{{purchaseBillPayment.Remarks}}</td>
+                                                <td>{{purchaseBillPayment.Collaborator.Name}}</td>
+                                                <td>{{purchaseBillPayment.Date| date:"dd-MMM-yyyy"}}</td>
                                                 <td class="noPrint">
                                                     <button type="button" ng-click="vm.Get(purchaseBillPayment.PurchaseBillPaymentID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
                                                         <i class="fa fa-eye"></i>

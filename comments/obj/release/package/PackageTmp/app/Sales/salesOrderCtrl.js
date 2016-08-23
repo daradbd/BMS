@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("salesOrderCtrl", ["salesOrderCategoryResource", "unitOfMeasureResource", "Util", "currencyResource", "languageResource", "countryResource", "cityResource", "projectSideResource", "projectSetupResource", "salesQuotationDescriptionResource", "$rootScope", "$state", "salesOrderDescriptionResource", "productResource", "collaboratorResource", "salesOrderResource", "$uibModal", salesOrderCtrl]);
-    function salesOrderCtrl(salesOrderCategoryResource, unitOfMeasureResource, Util, currencyResource, languageResource, countryResource, cityResource, projectSideResource, projectSetupResource, salesQuotationDescriptionResource, $rootScope, $state, salesOrderDescriptionResource, productResource, collaboratorResource, salesOrderResource, $uibModal) {
+        .controller("salesOrderCtrl", ["companyBranchResource", "salesOrderCategoryResource", "unitOfMeasureResource", "Util", "currencyResource", "languageResource", "countryResource", "cityResource", "projectSideResource", "projectSetupResource", "salesQuotationDescriptionResource", "$rootScope", "$state", "salesOrderDescriptionResource", "productResource", "collaboratorResource", "salesOrderResource", "$uibModal", "appAuth", salesOrderCtrl]);
+    function salesOrderCtrl(companyBranchResource,salesOrderCategoryResource, unitOfMeasureResource, Util, currencyResource, languageResource, countryResource, cityResource, projectSideResource, projectSetupResource, salesQuotationDescriptionResource, $rootScope, $state, salesOrderDescriptionResource, productResource, collaboratorResource, salesOrderResource, $uibModal, appAuth) {
         var vm = this;
 
         vm.Totaltax = 0.00;
@@ -26,8 +26,11 @@
         vm.salesOrderCategorys = [];
         vm.collaborators = [];
         vm.products = [];
-        vm.companyBranch = [];
-       
+        vm.companyBranch = {};
+        vm.projectSetup = {};
+        appAuth.checkPermission();
+
+
         vm.isLoad = true;
 
         vm.SalesOrderDescription = { salesOrderDesc: [{ SalesSectionID: 1, SalesSectionName: '', ProductID: 0, Description: "",MOUID:0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
@@ -528,54 +531,57 @@
         }
 
 
-        function SaveProjectSide( ) {
-            vm.projectSide.CountryID = vm.cmbcountrys.CountryID;
-            vm.projectSide.CityID = vm.cmbCitys.CityID;
-            vm.projectSide.LanguageID = vm.cmbLanguages.LanguageID;
-            vm.projectSide.CurrencyID = vm.cmbCurrencys.CurrencyID;
+        //function SaveProjectSide( ) {
+        //    vm.projectSide.CountryID = vm.cmbcountrys.CountryID;
+        //    vm.projectSide.CityID = vm.cmbCitys.CityID;
+        //    vm.projectSide.LanguageID = vm.cmbLanguages.LanguageID;
+        //    vm.projectSide.CurrencyID = vm.cmbCurrencys.CurrencyID;
 
-            projectSideResource.save(vm.projectSide).$promise.then(
-                        function (data, responseHeaders) {
-                            vm.projectSide = data;
-                            vm.projectSetup.ProjectSideID = vm.projectSide.ProjectSideID;
-                            SaveProjectSetup();
-                        }, function (error) {
-                            // error handler
-                            toastr.error("Data Load Failed!");
-                        });
-
-
-
-        };
-
-        //vm.SaveProjectSideBranch = function (isValid) {
-        //    if (isValid) {
-        //        vm.companyBranch.CompanyID = vm.cmbCompany.CompanyID;
-        //        vm.companyBranch.ParentBranchID = vm.cmbParentBranch.CompanyBranchID;
-        //        vm.companyBranch.CompanyBranchTypeID = vm.cmbCompanyBranchTypes.CompanyBranchTypeID;
-        //        vm.companyBranch.CompanyBranchCategoryID = 5;
-        //        vm.companyBranch.CountryID = vm.cmbcountrys.CountryID;
-        //        vm.companyBranch.CityID = vm.cmbCitys.CityID;
-        //        vm.companyBranch.LanguageID = vm.cmbLanguages.LanguageID;
-        //        vm.companyBranch.CurrencyID = vm.cmbCurrencys.CurrencyID;
-
-        //        companyBranchResource.save(vm.companyBranch).$promise.then(
-        //            function (data, responseHeaders) {
-        //                GetList();
-        //                vm.companyBranch = null;
-        //                toastr.success("Save Successful");
-        //            }, function (error) {
-        //                // error handler
-        //                toastr.error("Data Save Failed!");
-        //            });
-        //    }
-        //    else {
-
-        //        toastr.error("Form is not valid");
-        //    }
+        //    projectSideResource.save(vm.projectSide).$promise.then(
+        //                function (data, responseHeaders) {
+        //                    vm.projectSide = data;
+        //                    vm.projectSetup.ProjectSideID = vm.projectSide.ProjectSideID;
+        //                    SaveProjectSetup();
+        //                }, function (error) {
+        //                    // error handler
+        //                    toastr.error("Data Load Failed!");
+        //                });
 
 
-        //}
+
+        //};
+
+         function SaveProjectSide(isValid) {
+            if (isValid) {
+                //vm.companyBranch.CompanyID = vm.cmbCompany.CompanyID;
+                //vm.companyBranch.ParentBranchID = vm.cmbParentBranch.CompanyBranchID;
+                //vm.companyBranch.CompanyBranchTypeID = vm.cmbCompanyBranchTypes.CompanyBranchTypeID;
+                vm.companyBranch.CompanyBranchCategoryID = 5;
+                vm.companyBranch.CountryID = vm.cmbcountrys.CountryID;
+                vm.companyBranch.CityID = vm.cmbCitys.CityID;
+                vm.companyBranch.LanguageID = vm.cmbLanguages.LanguageID;
+                vm.companyBranch.CurrencyID = vm.cmbCurrencys.CurrencyID;
+
+                companyBranchResource.save(vm.companyBranch).$promise.then(
+                    function (data, responseHeaders) {
+                       
+                        vm.companyBranch = data;
+                        vm.projectSetup.ProjectSideID = vm.companyBranch.CompanyBranchID;
+                        SaveProjectSetup();
+
+                        toastr.success("Save Successful");
+                    }, function (error) {
+                        // error handler
+                        toastr.error("Data Save Failed!");
+                    });
+            }
+            else {
+
+                toastr.error("Form is not valid");
+            }
+
+
+        }
 
 
         //Get Single Record
@@ -630,15 +636,18 @@
 
         //Get Single Record
         vm.GetProjectSide = function (id) {
-            projectSideResource.get({ 'ID': id }).$promise.then(function (projectSide) {
-                vm.projectSide = projectSide;
-                vm.cmbcountrys = { CountryID: vm.projectSide.CountryID };
-                vm.selectCity(vm.projectSide.CountryID);
-                vm.cmbCitys = { CityID: vm.companyBranch.CityID };
-                vm.cmbLanguages = { LanguageID: vm.projectSide.LanguageID };
-                vm.cmbCurrencys = { CurrencyID: vm.projectSide.CurrencyID };
+            companyBranchResource.get({ 'ID': id }).$promise.then(function (companyBranch) {
+                vm.companyBranch = companyBranch;
+                vm.cmbcountrys = vm.companyBranch.Country;
+                vm.selectCity(vm.companyBranch.CountryID).then(function () {
+                     vm.cmbCitys = vm.companyBranch.City;
+                     vm.cmbLanguages =vm.companyBranch.Language;
+                     vm.cmbCurrencys = vm.companyBranch.Currency;   
+                }
+               );
+                
 
-                vm.ViewMode(3);
+               // vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
             }, function (error) {
                 // error handler

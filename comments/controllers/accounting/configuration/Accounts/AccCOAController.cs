@@ -17,12 +17,45 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
     public class AccCOAController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/AccCOA
         public IEnumerable<AccCOA> GetAccCOAs(ODataQueryOptions Options)
         {
             //return db.AccCOAs.AsEnumerable();
            return Options.ApplyTo(db.AccCOAs as IQueryable) as IEnumerable<AccCOA>;
+        }
+
+        public HttpResponseMessage Get(long id, int FilterType)//Bank=1,Customer=3,Supplier=4,Contra
+        {
+            long PCOAID=0;
+            if (FilterType == 1)
+            {
+                 var query =( from x in db.AccCOAMappings
+                        from y in db.AccCOAs
+                        .Where(p =>(p.COAID == x.AccCOAID))
+                        .DefaultIfEmpty()
+                              select new { x.AccCOAID,  y.BalanceType, y.AccTypeID, y.CompanyID, y.CompanyBranchID, x.AccCOAConfigID }).Where(c => c.AccCOAConfigID == id && c.CompanyID == loginUser.CompanyID).SingleOrDefault();
+                PCOAID = (long)query.AccCOAID;
+                 
+            }
+            var result = from a in db.AccCOAs.Where(c => c.ParentCOAID == PCOAID).DefaultIfEmpty()
+                select new
+                {
+                    a.COAID,
+                    a.COACode,
+                    a.COAName,
+                    a.AccType,
+                    a.ParentCOAID,
+                    a.BalanceType,
+                    DrAmount = db.VoucherLists.Where(v => v.COAID == a.COAID && v.DrCr == false).Sum(b => b.Amount),
+                    CrAmount = db.VoucherLists.Where(v => v.COAID == a.COAID && v.DrCr == true).Sum(b => b.Amount),
+                    
+
+                };
+                
+            return Request.CreateResponse(HttpStatusCode.OK, result.ToList());
+            
         }
 
         // GET api/AccCOA/5
@@ -50,6 +83,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            acccoa.UpdateBy = loginUser.UserID;
             db.Entry(acccoa).State = EntityState.Modified;
 
             try
@@ -69,6 +103,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
         {
             if (ModelState.IsValid)
             {
+                acccoa.InsertBy = loginUser.UserID;
                 db.AccCOAs.Add(acccoa);
                 db.SaveChanges();
 

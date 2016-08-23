@@ -17,6 +17,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
     public class BankBranchController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/BankBranch
         public IEnumerable<BankBranch> GetBankBranches(ODataQueryOptions Options)
@@ -40,6 +41,8 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
         // PUT api/BankBranch/5
         public HttpResponseMessage PutBankBranch(long id, BankBranch bankbranch)
         {
+            bankbranch.City = null;
+            bankbranch.Country = null;
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
@@ -49,7 +52,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-
+            bankbranch.UpdateBy = loginUser.UserID;
             db.Entry(bankbranch).State = EntityState.Modified;
 
             try
@@ -69,6 +72,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
         {
             if (ModelState.IsValid)
             {
+                bankbranch.InsertBy = loginUser.UserID;
                 db.BankBranches.Add(bankbranch);
                 db.SaveChanges();
 

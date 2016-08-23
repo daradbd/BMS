@@ -13,18 +13,20 @@
 
     angular
         .module("companyManagement")
-        .controller("bankBranchCtrl", ["countryResource", "cityResource", "bankResource", "bankBranchResource", bankBranchCtrl]);
-    function bankBranchCtrl(countryResource, cityResource, bankResource, bankBranchResource) {
+        .controller("bankBranchCtrl", ["countryResource", "cityResource", "bankResource", "bankBranchResource", "appAuth", bankBranchCtrl]);
+    function bankBranchCtrl(countryResource, cityResource, bankResource, bankBranchResource, appAuth) {
         var vm = this;
         vm.bankBranchs = [];
         vm.banks = [];
         vm.countrys = [];
         vm.citys = [];
+        vm.isModal = false;
+        appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -41,6 +43,8 @@
             if (activeMode == 1)//Form View Mode
             {
                 vm.bankBranch = null;
+                refreshForm();
+
                 vm.FromView = true;
                 vm.ListView = false;
                 vm.DetailsView = false;
@@ -56,7 +60,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = false;
 
 
@@ -71,7 +75,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -85,7 +89,7 @@
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
 
@@ -98,6 +102,14 @@
         }
 
         var DispayButton = function () {
+
+        }
+
+        function refreshForm() {
+            vm.bankBranchs = null;
+            vm.cmbBanks = null;
+            vm.cmbcountrys = null;
+            vm.cmbCitys= null;
 
         }
 
@@ -158,8 +170,11 @@
 
                 bankBranchResource.save(vm.bankBranch).$promise.then(
                     function (data, responseHeaders) {
-                        GetList();
                         vm.bankBranch = null;
+                        refreshForm();
+                        GetList();
+                        vm.ViewMode(2);
+                        
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler

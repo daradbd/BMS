@@ -10,17 +10,19 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Project;
 using BMS.Models;
+using System.Web.Http.OData.Query;
 
 namespace BMS.Controllers.Project
 {
     public class ProjectSetupController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProjectSetup
-        public IEnumerable<ProjectSetup> GetProjectSetups()
+        public IEnumerable<ProjectSetup> GetProjectSetups(ODataQueryOptions Options)
         {
-            return db.ProjectSetups.AsEnumerable();
+            return Options.ApplyTo(db.ProjectSetups.AsQueryable()) as IEnumerable<ProjectSetup>;
         }
 
         // GET api/ProjectSetup/5
@@ -47,6 +49,7 @@ namespace BMS.Controllers.Project
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            projectsetup.UpdateBy = loginUser.UserID;
 
             db.Entry(projectsetup).State = EntityState.Modified;
 
@@ -68,6 +71,7 @@ namespace BMS.Controllers.Project
             if (ModelState.IsValid)
             {
                 //db.ProjectSetups.Add(projectsetup);
+                projectsetup.InsertBy = loginUser.UserID;
                 db.Entry(projectsetup).State = projectsetup.ProjectID == 0 ?
                 EntityState.Added : EntityState.Modified;
                 db.SaveChanges();

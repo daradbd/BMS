@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("ledgerSheetCtrl", ["$filter", "Util", "ledgerSheetResource", ledgerSheetCtrl]);
-    function ledgerSheetCtrl($filter,Util, ledgerSheetResource) {
+        .controller("ledgerSheetCtrl", ["$filter", "Util", "ledgerSheetResource", "appAuth", ledgerSheetCtrl]);
+    function ledgerSheetCtrl($filter, Util, ledgerSheetResource, appAuth) {
         var vm = this;
         vm.ledgerSheets = [];
         vm.ledgerList = [];
@@ -22,11 +22,11 @@
         vm.totalCR = 0;
         vm.totalDR = 0;
         vm.balance = 0;
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -34,10 +34,11 @@
         vm.EditButton = false;
         vm.UpdateButton = false;
         vm.DeleteButton = false;
+        vm.CancelButton = false;
         //vm.fromdate = new Date();
         var todate=new Date();
         vm.ToDate = $filter('date')(todate, "yyyy-MM-dd");
-
+        vm.FromDate=$filter('date')(todate, "yyyy-MM-dd");
         vm.ViewMode = function (activeMode) {
             GetList();
             if (activeMode == 1)//Form View Mode
@@ -52,12 +53,13 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = true;
             }
             if (activeMode == 2) //List View Mode
             {
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = false;
 
 
@@ -65,13 +67,14 @@
                 vm.EditButton = false;
                 vm.UpdateButton = false;
                 vm.DeleteButton = false;
+                vm.CancelButton = false;
             }
 
             if (activeMode == 3)//Details View Mode
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -79,12 +82,13 @@
                 vm.EditButton = true;
                 vm.UpdateButton = false;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
             if (activeMode == 4)//Edit View Mode
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
 
@@ -92,6 +96,7 @@
                 vm.EditButton = false;
                 vm.UpdateButton = true;
                 vm.DeleteButton = true;
+                vm.CancelButton = true;
             }
         }
 
@@ -119,17 +124,18 @@
         vm.dateFilter = function () {
 
             return function (item) {
-                var result=false
+
+                var result = false;
                 var DataDate = $filter('date')(item['TranDate'], "yyyy-MM-dd"); //new Date(item['TranDate']);
                 var FromDate = $filter('date')(vm.FromDate, "yyyy-MM-dd"); //new Date(vm.FromDate);
                 var ToDate = $filter('date')(vm.ToDate, "yyyy-MM-dd");//new Date(vm.ToDate);
                 if (DataDate <= ToDate && DataDate >= FromDate)
                 {
-
+                    
                     result= true;
                 }
                 else {
-                    result = false
+                    result = false;
                 }
                
                 
@@ -141,6 +147,8 @@
         vm.subTotal= function (Credit) {
             vm.totalCR = vm.totalCR + Credit;
         }
+
+       
 
         GetList();
 
@@ -180,17 +188,26 @@
         //Get Single Record
         vm.Get = function (ledgers) {
             vm.ledgerSheets = null;
-            var param = { 'ID': ledgers.COAID};
-            ledgerSheetResource.query().$promise.then(param, function (data) {
+          //  var param = { 'ID': ledgers.COAID};
+            //ledgerSheetResource.query().$promise.then(param, function (data) {
+            ledgerSheetResource.query({ 'ID': ledgers.COAID }).$promise.then(function (data) {
                 vm.ledgerSheets = data;
                 vm.cmbAccCOA = ledgers;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
                 console.log(JSON.stringify(vm.ledgerSheets));
             }, function (error) {
-                // error handler
-                toastr.error("Data Load Failed!");
-            });
+               if (error.status==500)
+                {
+                   toastr.error("No Data Found!");
+                }
+                else
+                {
+                    toastr.error("Data Load Failed!");
+                }
+                    // error handler
+               
+                });
         }
 
        

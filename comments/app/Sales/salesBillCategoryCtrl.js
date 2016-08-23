@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("salesBillCategoryCtrl", ["salesBillCategoryResource", salesBillCategoryCtrl]);
-    function salesBillCategoryCtrl(salesBillCategoryResource) {
+        .controller("salesBillCategoryCtrl", ["salesBillCategoryResource", "appAuth", salesBillCategoryCtrl]);
+    function salesBillCategoryCtrl(salesBillCategoryResource, appAuth) {
         var vm = this;
         vm.salesBillCategorys = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -120,6 +120,7 @@
                     function (data, responseHeaders) {
                         GetList();
                         vm.salesBillCategory = null;
+                        vm.ViewMode(2);
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -154,6 +155,7 @@
                 vm.salesBillCategorys = null;
                 vm.ViewMode(3);
                 GetList();
+                vm.ViewMode(2);
                 toastr.success("Data Update Successful", "Form Update");
                 }, function (error) {
                     // error handler
@@ -170,6 +172,7 @@
            // vm.salesBillCategory.$delete({ 'ID': vm.salesBillCategory.SalesBillCategoryID });
             salesBillCategoryResource.delete({ 'ID': vm.salesBillCategory.SalesBillCategoryID }).$promise.then(function (data) {
                 // success handler
+                vm.ViewMode(2);
                 toastr.success("Data Delete Successfully!");
                 GetList();
             }, function (error) {

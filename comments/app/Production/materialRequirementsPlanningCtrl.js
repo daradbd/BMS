@@ -13,10 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("materialRequirementsPlanningCtrl", ["unitOfMeasureResource", "billofMaterialDescriptionResource", "salesQuotationDescriptionResource", "productResource", "productionTypeResource", "billofMaterialResource", materialRequirementsPlanningCtrl]);
-    function materialRequirementsPlanningCtrl(unitOfMeasureResource,billofMaterialDescriptionResource, salesQuotationDescriptionResource, productResource, productionTypeResource, billofMaterialResource) {
+        .controller("materialRequirementsPlanningCtrl", ["unitOfMeasureResource", "billofMaterialDescriptionResource", "salesQuotationDescriptionResource", "productResource", "productionTypeResource", "billofMaterialResource", "appAuth", materialRequirementsPlanningCtrl]);
+    function materialRequirementsPlanningCtrl(unitOfMeasureResource, billofMaterialDescriptionResource, salesQuotationDescriptionResource, productResource, productionTypeResource, billofMaterialResource, appAuth) {
         var vm = this;
         vm.billofMaterials = [];
+        appAuth.checkPermission();
 
         vm.isLoad = true;
 
@@ -172,7 +173,7 @@
         GetProductList();
         //Get All Data List
         function GetProductList() {
-            productResource.query().$promise.then(function (data) {
+            productResource.query({ '$filter': 'IsRawmaterial eq true' }).$promise.then(function (data) {
                 vm.products = data;
 
 
@@ -210,12 +211,14 @@
                         vm.isLoad = false;
                     }, function (error) {
                         // error handler
+                        vm.isLoad = false;
                         toastr.error("Data Load Failed!");
                     });
             }
             else {
 
                 toastr.error("Form is not valid");
+                vm.isLoad = false;
             }
 
 
@@ -258,6 +261,7 @@
                     vm.isLoad = false;
                 }, function (error) {
                     // error handler
+                    vm.isLoad = false;
                     toastr.error("Data Save Failed!");
                 });
             })
@@ -330,10 +334,12 @@
                 vm.isLoad = false;
                 }, function (error) {
                     // error handler
+                    vm.isLoad = false;
                     toastr.error("Data Update Failed!");
                 });
                 }
             else {
+                vm.isLoad = false;
                 toastr.error("Form is not valid");
             }
         }

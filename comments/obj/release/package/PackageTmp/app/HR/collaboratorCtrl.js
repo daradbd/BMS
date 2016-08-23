@@ -14,15 +14,15 @@
 
     angular
         .module("companyManagement")
-        .controller("collaboratorCtrl", ["currencyResource", "languageResource", "countryResource", "cityResource", "collaboratorResource", "collaboratorType", collaboratorCtrl]);
-    function collaboratorCtrl(currencyResource, languageResource, countryResource, cityResource, collaboratorResource, collaboratorType) {
+        .controller("collaboratorCtrl", ["currencyResource", "languageResource", "countryResource", "cityResource", "collaboratorResource", "collaboratorType", "appAuth", collaboratorCtrl]);
+    function collaboratorCtrl(currencyResource, languageResource, countryResource, cityResource, collaboratorResource, collaboratorType, appAuth) {
         var vm = this;
         vm.collaborators = [];
         vm.Languages = [];
         vm.Currencys = [];
         vm.countrys = [];
         vm.citys = [];
-
+        appAuth.checkPermission();
         
         if (collaboratorType == 1)
         {

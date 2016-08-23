@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseOrderCategoryCtrl", ["accCOAResource", "purchaseOrderCategoryResource", purchaseOrderCategoryCtrl]);
-    function purchaseOrderCategoryCtrl(accCOAResource,purchaseOrderCategoryResource) {
+        .controller("purchaseOrderCategoryCtrl", ["accCOAResource", "purchaseOrderCategoryResource", "appAuth", purchaseOrderCategoryCtrl]);
+    function purchaseOrderCategoryCtrl(accCOAResource, purchaseOrderCategoryResource, appAuth) {
         var vm = this;
         vm.purchaseOrderCategorys = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -133,6 +133,7 @@
                     function (data, responseHeaders) {
                         GetList();
                         vm.purchaseOrderCategory = null;
+                        vm.ViewMode(2);
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -166,7 +167,7 @@
                 vm.purchaseOrderCategory.COAID = vm.cmbCOAID.COAID;
                 purchaseOrderCategoryResource.update({ 'ID': vm.purchaseOrderCategory.PurchaseOrderCategoryID }, vm.purchaseOrderCategory).$promise.then(function () {
                 vm.purchaseOrderCategorys = null;
-                vm.ViewMode(3);
+                vm.ViewMode(2);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
                 }, function (error) {
@@ -184,6 +185,7 @@
             //vm.purchaseOrderCategory.$delete({ 'ID':  });
             purchaseOrderCategoryResource.delete({ 'ID': vm.purchaseOrderCategory.PurchaseOrderCategoryID }).$promise.then(function (data) {
                 // success handler
+                vm.ViewMode(2);
                 toastr.success("Data Delete Successfully!");
                 GetList();
             }, function (error) {

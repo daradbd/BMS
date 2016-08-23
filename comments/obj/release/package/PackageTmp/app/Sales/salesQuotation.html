@@ -116,6 +116,20 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group"
+                                         ng-class="{'has-error':salesQuotationForm.cmbSalesQuotationCategory.$invalid
+                                        && salesQuotationForm.cmbSalesQuotationCategory.$dirty}">
+
+                                        <label for="cmbSalesQuotationCategory">
+                                            SalesOrderCategory
+                                        </label>
+                                        <select class="form-control"
+                                                id="cmbSalesQuotationCategory"
+                                                name="cmbSalesQuotationCategory"
+                                                ng-model="vm.cmbSalesQuotationCategory"
+                                                ng-options="SalesQuotationCategory.SalesQuotationCategoryName for SalesQuotationCategory in vm.salesQuotationCategorys track by SalesQuotationCategory.SalesQuotationCategoryID "
+                                                ng-change="vm.salesQuotation.SalesQuotationCategoryID=vm.cmbSalesQuotationCategory.SalesQuotationCategoryID"></select>
+                                    </div>
+                                    <div class="form-group"
                                          ng-class="{'has-error':salesQuotationForm.txtReferenceNo.$invalid
                                          && salesQuotationForm.txtReferenceNo.$dirty}">
 
@@ -199,7 +213,7 @@
                                             <input class="form-control" ng:model="item.Section.SectionName" value="" ng:required ng:validate="number" size="6">
                                         </td>-->
                                                             <td>
-                                                                <div class="input-group">
+                                                                <div class="input-group" >
                                                                     <select class="form-control" ng-model="item.cmbProductID"
                                                                             ng-init="item.cmbProductID={ProductID:item.ProductID}"
                                                                             ng-options="product.ProductName for product in vm.products track by product.ProductID"
@@ -212,7 +226,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div class="input-group">
+                                                                <div class="input-group" style="min-width:200px;">
 
                                                                     <textarea class="form-control" ng-model="item.Description" rows=" 1"></textarea>
                                                                 </div>
@@ -236,16 +250,24 @@
                                                             </td>
 
                                                             <td>
-                                                                <input class="form-control" ng:model="item.Quantity" value="0" ng:required ng:validate="number" size="6">
+                                                                <div class="input-group">
+                                                                    <input class="form-control" ng:model="item.Quantity" value="0" ng:required ng:validate="number" style="min-width:90px;" size="6">
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <input class="form-control" ng:model="item.UnitPrice" value="0.00" ng:required ng:validate="number" size="6">
+                                                                <div class="input-group">
+                                                                    <input class="form-control" ng:model="item.UnitPrice" value="0.00" ng:required ng:validate="number" style="min-width:120px;" size="6">
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <input class="form-control" ng:model="item.Taxes" type="number" value="0.00" ng:required ng:validate="number" size="6">
+                                                                <div class="input-group">
+                                                                    <input class="form-control" ng:model="item.Taxes" type="number" style="min-width:90px;" value="0.00" ng:required ng:validate="number" size="6">
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <input class="form-control" ng:model="item.Discount" type="number" value="0.00" ng:required ng:validate="number" size="6">
+                                                                <div class="input-group">
+                                                                    <input class="form-control" ng:model="item.Discount" type="number" value="0.00" ng:required ng:validate="number" style="min-width:90px;" size="6">
+                                                                </div>
                                                             </td>
                                                             <td>
                                                                 {{item.FinalMRP|currency: " " : 2}}
@@ -288,7 +310,12 @@
                                                                 <td style="text-align:right;padding-right:20px;">{{vm.QuotationSubTotal()|currency: " " : 2}}</td>
                                                             </tr>
                                                             <tr>
-                                                                <th>Discount:</th>
+                                                                <th>Discount %:
+                                                                    <input type="number"
+                                                                           style="max-width:70px;"
+                                                                           ng-change="vm.UpdateDiscount(vm.DiscountPercentage,'Discount')"
+                                                                           ng-model="vm.DiscountPercentage">
+                                                                </th>
                                                                 <td style="text-align:right;padding-right:20px;">
                                                                     <input type="number"
                                                                            class="form-control"
@@ -299,9 +326,10 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <th>Tax :<input type="number"
-                                                                           ng-change="vm.UpdatePercentage(vm.TaxPercentage,'Taxes')"
-                                                                           ng-model="vm.TaxPercentage">
+                                                                <th>Tax %:<input type="number"
+                                                                   style="max-width:70px;"
+                                                                   ng-change="vm.UpdatePercentage(vm.TaxPercentage,'Taxes')"
+                                                                   ng-model="vm.TaxPercentage">
                                                                 </th>
                                                                 <td style="text-align:right;padding-right:20px;">
                                                                     <input type="number"

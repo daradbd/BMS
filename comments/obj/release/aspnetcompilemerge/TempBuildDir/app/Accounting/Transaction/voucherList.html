@@ -1,14 +1,14 @@
 ﻿    <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Voucher
+        {{ vm.VoucherName}}
         <small>Form</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Accounting</a></li>
         <li><a href="#">Transaction</a></li>
-        <li class="active">Voucher</li>
+        <li class="active">{{ vm.VoucherName}}</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -54,8 +54,8 @@
                 <div class="box box-primary">
                     <div class="entry-form" ng-show="vm.FromView">
                         <div class="box-header with-border">
-                            <h3 class="box-title" ng-if="vm.SaveButton">Add New Voucher</h3>
-                            <h3 class="box-title" ng-if="vm.UpdateButton">Edit Voucher</h3>
+                            <h3 class="box-title" ng-if="vm.SaveButton">Add New {{ vm.VoucherName}}</h3>
+                            <h3 class="box-title" ng-if="vm.UpdateButton">Edit {{ vm.VoucherName}}</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-12">
@@ -127,10 +127,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group"
-                                         ng-class="{'has-error':vm.DrCRisNotEqual }">
+                                         ng-class="{'has-error':vm.TotalDrCr() }">
 
                                         <label for="txtTotalDebit">
-                                            Total Debit
+                                            Total Debit:
                                         </label>
                                         <input type="text"
                                                class="form-control"
@@ -152,7 +152,7 @@
                                                ng-model="vm.Credit"
                                                required>
                                     </div>
-                                    <span ng-show="vm.DrCRisNotEqual">Dr and CR is Not Equal</span>
+                                    <span ng-show="vm.DrCRisNotEqual">Debit and Credit is Not Equal</span>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -169,7 +169,7 @@
                                             <select class="form-control"
                                                     ng-init="item.cmbCOAID={COAID:item.COAID}"
                                                     ng-model="item.cmbCOAID"
-                                                    ng-options="ACOAID.COAName for ACOAID in vm.accCOAs track by ACOAID.COAID"
+                                                    ng-options="'['+ACOAID.COACode +']'+ACOAID.COAName+'-'+ ACOAID.AccType.AccTypeName group by ACOAID.AccType.AccTypeName for ACOAID in vm.accCOAs track by ACOAID.COAID"
                                                     ng-change="item.COAID=item.cmbCOAID.COAID"></select>
                                         </td>
 
@@ -199,7 +199,7 @@
 
                     <div class="view-form" ng-show="vm.DetailsView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Voucher Details</h3>
+                            <h3 class="box-title">{{ vm.VoucherName}} Details</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-6 animated fadeInRight">
@@ -214,7 +214,7 @@
 
                     <div class="col-lg-12 box " ng-show="vm.ListView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Voucher List</h3>
+                            <h3 class="box-title">{{ vm.VoucherName}} List</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="row">
@@ -251,8 +251,8 @@
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="voucherList in vm.voucherLists|filter:searchText| itemsPerPage: vm.num">
-                                                <td>{{voucherList.voucherListCode  | uppercase}}</td>
+                                            <tr dir-paginate="voucherList in vm.voucherLists|orderBy:'-VoucherID'|filter:searchText| itemsPerPage: vm.num">
+                                                <td>{{voucherList.VoucherCode  | uppercase}}</td>
                                                 <td>{{voucherList.VoucherNo}}</td>
                                                 <td>{{voucherList.TranDate}}</td>
                                                 <td>{{voucherList.Remarks}}</td>

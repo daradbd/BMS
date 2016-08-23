@@ -10,17 +10,18 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Setting.Companys;
 using BMS.Models;
+using System.Web.Http.OData.Query;
 
 namespace BMS.Controllers.Setting.Companys
 {
     public class CompanyBranchController : ApiController
     {
         private UsersContext db = new UsersContext();
-
+        private LoginUser loginUser = new LoginUser();
         // GET api/CompanyBranch
-        public IEnumerable<CompanyBranch> GetCompanyBranches()
+        public IEnumerable<CompanyBranch> GetCompanyBranches(ODataQueryOptions Options)
         {
-            return db.CompanyBranches.AsEnumerable();
+            return Options.ApplyTo(db.CompanyBranches) as IEnumerable<CompanyBranch>;
         }
 
         // GET api/CompanyBranch/5
@@ -62,6 +63,7 @@ namespace BMS.Controllers.Setting.Companys
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            companybranch.UpdateBy = loginUser.UserID;
             db.Entry(companybranch).State = EntityState.Modified;
 
             try
@@ -81,6 +83,7 @@ namespace BMS.Controllers.Setting.Companys
         {
             if (ModelState.IsValid)
             {
+                companybranch.InsertBy = loginUser.UserID;
                 db.CompanyBranches.Add(companybranch);
                 db.SaveChanges();
 

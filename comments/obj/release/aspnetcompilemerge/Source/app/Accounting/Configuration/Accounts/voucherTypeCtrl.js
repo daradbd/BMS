@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("voucherTypeCtrl", ["voucherTypeResource", voucherTypeCtrl]);
-    function voucherTypeCtrl(voucherTypeResource) {
+        .controller("voucherTypeCtrl", ["voucherTypeResource", "appAuth", voucherTypeCtrl]);
+    function voucherTypeCtrl(voucherTypeResource, appAuth) {
         var vm = this;
         vm.voucherTypes = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -150,7 +150,7 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                voucherTypeResource.update({ 'ID': vm.voucherType.voucherTypeID }, vm.voucherType).$promise.then(function () {
+                voucherTypeResource.update({ 'ID': vm.voucherType.VoucherTypeID }, vm.voucherType).$promise.then(function () {
                 vm.voucherTypes = null;
                 vm.ViewMode(3);
                 GetList();
@@ -168,7 +168,7 @@
         //Data Delete
         vm.Delete = function () {
            // vm.voucherType.$delete({ 'ID': vm.voucherType.voucherTypeID });
-            voucherTypeResource.delete({ 'ID': vm.voucherType.voucherTypeID }).$promise.then(function (data) {
+            voucherTypeResource.delete({ 'ID': vm.voucherType.VoucherTypeID }).$promise.then(function (data) {
                 // success handler
                 toastr.success("Data Delete Successfully!");
                 GetList();

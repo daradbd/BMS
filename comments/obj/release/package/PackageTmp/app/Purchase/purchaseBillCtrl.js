@@ -14,8 +14,8 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseBillCtrl", ["unitOfMeasureResource", "projectSetupResource", "purchaseOrderDescriptionResource", "purchaseBillDescriptionResource", "productResource", "collaboratorResource", "purchaseOrderResource", "purchaseBillResource", "$rootScope", purchaseBillCtrl]);
-    function purchaseBillCtrl(unitOfMeasureResource,projectSetupResource, purchaseOrderDescriptionResource, purchaseBillDescriptionResource, productResource, collaboratorResource, purchaseOrderResource, purchaseBillResource, $rootScope)
+        .controller("purchaseBillCtrl", [ "purchaseDeliveryReceiveDescriptionResource", "purchaseDeliveryReceiveResource", "unitOfMeasureResource", "projectSetupResource", "purchaseOrderDescriptionResource", "purchaseBillDescriptionResource", "productResource", "collaboratorResource", "purchaseOrderResource", "purchaseBillResource", "$rootScope", "appAuth", purchaseBillCtrl]);
+    function purchaseBillCtrl(purchaseDeliveryReceiveDescriptionResource, purchaseDeliveryReceiveResource, unitOfMeasureResource, projectSetupResource, purchaseOrderDescriptionResource, purchaseBillDescriptionResource, productResource, collaboratorResource, purchaseOrderResource, purchaseBillResource, $rootScope, appAuth)
     {
         var vm = this;
         vm.purchaseBills = [];
@@ -24,7 +24,9 @@
         vm.purchaseOrders = [];
         vm.Suppliers = [];
         vm.products = [];
+        vm.purchaseReceive = {};
         vm.GrandTotal = 0.00;
+        appAuth.checkPermission();
 
         vm.PurchaseBillDescription = { PurchaseBillDesc: [{ ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
 
@@ -116,10 +118,10 @@
             }
         }
 
-        if ($rootScope.POrderID > 0)
+        if ($rootScope.PReceiveID > 0)
         {
-            GetPurchaseOrder($rootScope.POrderID);
-            $rootScope.POrderID = 0;
+            GetPurchaseReceive($rootScope.PReceiveID);
+            $rootScope.PReceiveID = 0;
         }
 
         vm.dtopen = function ($event) {
@@ -164,6 +166,7 @@
 
         }
 
+       
         GetUnitOfMeasures();
         function GetUnitOfMeasures() {
             unitOfMeasureResource.query().$promise.then(function (data) {
@@ -178,7 +181,7 @@
         //Get All Data List
         function GetProductList()
         {
-            productResource.query().$promise.then(function (data)
+            productResource.query({ '$filter': 'IsRawmaterial eq true' }).$promise.then(function (data)
             {
                 vm.products = data;
                 //toastr.success("Data Load Successful", "Form Load");
@@ -242,10 +245,14 @@
             {
 
                 vm.purchaseBill.GrandTotal = vm.GrandTotal;
-               // vm.purchaseBill = vm.cmbSupplier.CollaboratorID;
+                vm.purchaseBill.SupplierID = vm.cmbSupplier.CollaboratorID;
+                vm.purchaseBill.ProjectID = vm.cmbProject.ProjectID;
+                vm.purchaseBill.IsApproved = false;
+
                 purchaseBillResource.save(vm.purchaseBill).$promise.then(
                     function (data, responseHeaders)
                     {
+                        vm.purchaseBill = data;
                         vm.SavePurchaseBill();
                        // GetList();
                         vm.purchaseBill = null;
@@ -322,6 +329,41 @@
             });
         }
 
+        //Get Single Record
+        function GetPurchaseReceive(id)
+        {
+            purchaseDeliveryReceiveResource.get({ 'ID': id }).$promise.then(function (purchaseReceive)
+            {
+                vm.purchaseReceive = purchaseReceive;
+               // vm.cmbSupplier = { CollaboratorID: vm.purchaseOrder.SupplierID };
+                vm.cmbProject = { ProjectID: vm.purchaseReceive.ProjectID };
+                vm.cmbSupplier = vm.purchaseReceive.Collaborator;
+                vm.cmbProject = vm.purchaseReceive.ProjectSetup;
+                vm.purchaseBill.PurchaseDeliveryReceiveID = vm.purchaseReceive.PurchaseDeliveryReceiveID,
+                vm.purchaseBill.PurchaseOrderID = vm.purchaseReceive.PurchaseOrderID,
+                //    vm.purchaseBill =
+                //    vm.purchaseBill =
+                //    vm.purchaseBill=
+                vm.GetPurchaseReceiveDescription(vm.purchaseReceive.PurchaseDeliveryReceiveID);
+                vm.ViewMode(1);
+
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
+
+        vm.GetPurchaseReceiveDescription = function (PurchaseDeliveryReceiveID) {
+
+            purchaseDeliveryReceiveDescriptionResource.query({ '$filter': 'PurchaseDeliveryReceiveID eq ' + PurchaseDeliveryReceiveID }).$promise.then(function (data) {
+                vm.PurchaseBillDescription.PurchaseBillDesc = data;
+                // toastr.success("Data function Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            })
+        }
 
         //Get Single Record
         function GetPurchaseOrder(id)

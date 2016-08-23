@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("employeeExpensesDescriptionCtrl", ["employeeExpensesDescriptionResource", employeeExpensesDescriptionCtrl]);
-    function employeeExpensesDescriptionCtrl(employeeExpensesDescriptionResource) {
+        .controller("employeeExpensesDescriptionCtrl", ["employeeExpensesDescriptionResource", "appAuth", employeeExpensesDescriptionCtrl]);
+    function employeeExpensesDescriptionCtrl(employeeExpensesDescriptionResource, appAuth) {
         var vm = this;
         vm.employeeExpensesDescriptions = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -137,6 +137,7 @@
         vm.Get = function (id) {
             employeeExpensesDescriptionResource.get({ 'ID': id }).$promise.then(function (employeeExpensesDescription) {
                 vm.employeeExpensesDescription = employeeExpensesDescription;
+
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
             }, function (error) {

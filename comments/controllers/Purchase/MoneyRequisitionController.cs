@@ -16,6 +16,7 @@ namespace BMS.Controllers.Purchase
     public class MoneyRequisitionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/MoneyRequisition
         public IEnumerable<MoneyRequisition> GetMoneyRequisitions()
@@ -49,6 +50,7 @@ namespace BMS.Controllers.Purchase
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            moneyrequisition.UpdateBy = loginUser.UserID;
             db.Entry(moneyrequisition).State = EntityState.Modified;
 
             try
@@ -71,6 +73,7 @@ namespace BMS.Controllers.Purchase
                 var xy = db.MoneyRequisitions.Where(x => x.MoneyRequisitionRequestID == moneyrequisition.MoneyRequisitionRequestID).Select(x => x.MoneyRequisitionRequestID).FirstOrDefault();
                 moneyrequisition.MoneyRequisitionID =Convert.ToInt64( xy);
                // db.MoneyRequisitions.Add(moneyrequisition);
+                moneyrequisition.InsertBy = loginUser.UserID;
                 db.Entry(moneyrequisition).State = moneyrequisition.MoneyRequisitionID == 0 ?
                     EntityState.Added : EntityState.Modified;
                 db.SaveChanges();

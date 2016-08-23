@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("companyCtrl", ["currencyResource", "languageResource", "companyTypeResource", "companyCategoryResource", "countryResource", "cityResource", "companyResource", companyCtrl]);
-    function companyCtrl(currencyResource, languageResource, companyTypeResource, companyCategoryResource, countryResource, cityResource, companyResource) {
+        .controller("companyCtrl", ["currencyResource", "languageResource", "companyTypeResource", "companyCategoryResource", "countryResource", "cityResource", "companyResource", "appAuth", companyCtrl]);
+    function companyCtrl(currencyResource, languageResource, companyTypeResource, companyCategoryResource, countryResource, cityResource, companyResource, appAuth) {
         var vm = this;
         vm.companys = [];
         vm.countrys = [];
@@ -25,7 +25,7 @@
         vm.Languages = [];
         vm.Currencys = [];
         vm.company = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

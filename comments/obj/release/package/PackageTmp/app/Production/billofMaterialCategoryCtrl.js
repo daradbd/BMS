@@ -14,10 +14,10 @@
     angular
         .module("companyManagement")
         .controller("billofMaterialCategoryCtrl", ["billofMaterialCategoryResource", billofMaterialCategoryCtrl]);
-    function billofMaterialCategoryCtrl(billofMaterialCategoryResource) {
+    function billofMaterialCategoryCtrl(billofMaterialCategoryResource, appAuth) {
         var vm = this;
         vm.billofMaterialCategorys = [];
-
+       // appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

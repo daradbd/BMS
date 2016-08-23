@@ -17,13 +17,15 @@ namespace BMS.Controllers.Sales
     public class SalesReceivePaymentController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
+
         List<AccCOA> AccCOAList = new List<AccCOA>();
 
         // GET api/SalesReceivePayment
         public IEnumerable<SalesReceivePayment> GetSalesReceivePayments()
         {
 
-            var salesreceivepayments = db.SalesReceivePayments.Include(s => s.Collaborator).Include(s => s.ProcesStatus).Include(p=>p.PaymentMethod);
+            var salesreceivepayments = db.SalesReceivePayments.Include(s => s.Collaborator).Include(s => s.ProcesStatus).Include(p => p.PaymentMethod).Include(p => p.ProjectSetup).Include(d => d.DepositHead);
             return salesreceivepayments.AsEnumerable();
         }
 

@@ -1,5 +1,6 @@
 ﻿namespace BMS.Models.Expenses
 {
+    using BMS.Models.Project;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -16,6 +17,8 @@
 
         [StringLength(250)]
         public string EmployeesExpensesDescriptionName { get; set; }
+
+        public long? EmployeesExpensesID { get; set; }
 
         public long? ExpensesTypeID { get; set; }
 
@@ -38,25 +41,31 @@
         [StringLength(10)]
         public string IsDeleted { get; set; }
 
-        public int? InsertBy { get; set; }
+        public long? InsertBy { get; set; }
 
         public DateTime? InsertDate { get; set; }
 
         [StringLength(50)]
         public string InsertPC { get; set; }
 
-        public int? UpdateBy { get; set; }
+        public long? UpdateBy { get; set; }
 
         public DateTime? UpdateDate { get; set; }
 
         [StringLength(50)]
         public string UpdatePC { get; set; }
 
-        public int? DeleteBy { get; set; }
+        public long? DeleteBy { get; set; }
 
         public DateTime? DeleteDate { get; set; }
 
         [StringLength(10)]
         public string DeletePC { get; set; }
+
+        [ForeignKey("ExpensesTypeID")]
+        public virtual ExpensesType ExpensesType { get; set; }
+
+        [ForeignKey("ProjectID")]
+        public virtual ProjectSetup Project { get; set; }
     }
 }

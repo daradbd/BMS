@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("billofMaterialDescriptionCtrl", ["billofMaterialDescriptionResource", billofMaterialDescriptionCtrl]);
-    function billofMaterialDescriptionCtrl(billofMaterialDescriptionResource) {
+        .controller("billofMaterialDescriptionCtrl", ["billofMaterialDescriptionResource", "appAuth", billofMaterialDescriptionCtrl]);
+    function billofMaterialDescriptionCtrl(billofMaterialDescriptionResource, appAuth) {
         var vm = this;
         vm.billofMaterialDescriptions = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

@@ -16,6 +16,7 @@ namespace BMS.Controllers.Production
     public class ProductCostingController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProductCosting
         public IEnumerable<ProductCosting> GetProductCostings()
@@ -51,6 +52,7 @@ namespace BMS.Controllers.Production
             productcosting.Collaborator = null;
             productcosting.ProcesStatus = null;
             productcosting.ProjectSetup = null;
+            productcosting.UpdateBy = loginUser.UserID;
 
             db.Entry(productcosting).State = EntityState.Modified;
 
@@ -86,7 +88,8 @@ namespace BMS.Controllers.Production
 
                      productcosting.SalesQuotationID = sq.SalesQuotationID;
                      productcosting.CustomerID = sq.CustomerID;
-                     productcosting.CompanyID = sq.CompanyID; 
+                     productcosting.CompanyID = sq.CompanyID;
+                     productcosting.InsertBy = loginUser.UserID;
 
                      db.ProductCostings.Add(productcosting);
                      db.SaveChanges();
@@ -99,10 +102,15 @@ namespace BMS.Controllers.Production
 
                 foreach (var item in SalesQuotationDescription.ToList())
                 {
-                    ProductCostingDescription productCostingDescription = new ProductCostingDescription();
-                                        
-                    productCostingDescription = db.ProductCostingDescriptions.Where(a => (a.SalesQuotationID == item.SalesQuotationID) && (a.ProductID == item.ProductID) && (a.SalesSectionID == item.SalesSectionID) && (a.SalesSectionName == item.SalesSectionName)).SingleOrDefault();
-                             
+                     ProductCostingDescription productCostingDescription = new ProductCostingDescription();
+
+                    ProductCostingDescription PCD = db.ProductCostingDescriptions.Where(a => (a.SalesQuotationID == item.SalesQuotationID) && (a.ProductID == item.ProductID) && (a.SalesSectionID == item.SalesSectionID) && (a.SalesSectionName == item.SalesSectionName)).SingleOrDefault();
+                    if (PCD != null)
+                    {
+                        productCostingDescription = PCD;
+                    
+                    }
+
                     productCostingDescription.CustomerID = item.CustomerID;
                     productCostingDescription.SalesQuotationID = item.SalesQuotationID;
                     productCostingDescription.Description = item.Description;

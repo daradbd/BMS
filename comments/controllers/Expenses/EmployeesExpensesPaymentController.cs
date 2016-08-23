@@ -16,6 +16,7 @@ namespace BMS.Controllers.Expenses
     public class EmployeesExpensesPaymentController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/EmployeesExpensesPayment
         public IEnumerable<EmployeesExpensesPayment> GetEmployeesExpensesPayments()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Expenses
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            employeesexpensespayment.UpdateBy = loginUser.UserID;
             db.Entry(employeesexpensespayment).State = EntityState.Modified;
 
             try
@@ -67,9 +69,15 @@ namespace BMS.Controllers.Expenses
         {
             if (ModelState.IsValid)
             {
+                employeesexpensespayment.InsertBy = loginUser.UserID;
                 db.EmployeesExpensesPayments.Add(employeesexpensespayment);
                 db.SaveChanges();
-
+                var TotalPayment = (db.EmployeesExpensesPayments.Where(r => (r.EmployeesExpensesID == employeesexpensespayment.EmployeesExpensesID) && (r.EmployeeID == employeesexpensespayment.EmployeeID)).Select(r => r.PaymentAmount)).ToList().Sum();
+                EmployeesExpenses employeesexpenses = db.EmployeesExpenses.Find(employeesexpensespayment.EmployeesExpensesID);
+                employeesexpenses.PaymentAmount = (decimal)TotalPayment;
+                employeesexpenses.DueAmount =employeesexpenses.ApproveAmount- (decimal)TotalPayment;
+                db.Entry(employeesexpenses).State = EntityState.Modified;
+                db.SaveChanges();
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, employeesexpensespayment);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = employeesexpensespayment.EmployeesExpensesPaymentID }));
                 return response;

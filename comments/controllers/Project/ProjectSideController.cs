@@ -16,6 +16,7 @@ namespace BMS.Controllers.Project
     public class ProjectSideController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProjectSide
         public IEnumerable<ProjectSide> GetProjectSides()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Project
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            projectside.UpdateBy = loginUser.UserID;
             db.Entry(projectside).State = EntityState.Modified;
 
             try
@@ -68,6 +70,7 @@ namespace BMS.Controllers.Project
             if (ModelState.IsValid)
             {
                 //db.ProjectSides.Add(projectside);
+                projectside.InsertBy = loginUser.UserID;
                 db.Entry(projectside).State = projectside.ProjectSideID == 0 ?
                 EntityState.Added : EntityState.Modified;
                 db.SaveChanges();

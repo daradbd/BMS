@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Common
     public class LanguageController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Language
         public IEnumerable<Language> GetLanguages()
@@ -47,7 +48,7 @@ namespace BMS.Controllers.Setting.Common
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-
+            language.UpdateBy = loginUser.UserID;
             db.Entry(language).State = EntityState.Modified;
 
             try
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Setting.Common
         {
             if (ModelState.IsValid)
             {
+                language.InsertBy = loginUser.UserID;
                 db.Languages.Add(language);
                 db.SaveChanges();
 

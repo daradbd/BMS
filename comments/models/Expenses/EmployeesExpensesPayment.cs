@@ -1,5 +1,6 @@
 ﻿namespace BMS.Models.Expenses
 {
+    using BMS.Models.Accounting.Configuration.Accounts;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -20,12 +21,14 @@
 
         public DateTime PaymentDate { get; set; }
         public decimal PaymentAmount { get; set; }
-        public long? PaymentMethod { get; set; }
+        public long? PaymentMethodID { get; set; }
 
         public long? CreditTo { get; set; }
 
-        public string CheckNO { get; set; }
-        public DateTime ReceiveDate { get; set; }
+        public string ChequeNO { get; set; }
+
+        public string Memo { get; set; }
+        public DateTime? ReceiveDate { get; set; }
 
         public long? ReceiveBy { get; set; }
 
@@ -37,25 +40,29 @@
         [StringLength(10)]
         public string IsDeleted { get; set; }
 
-        public int? InsertBy { get; set; }
+        public long? InsertBy { get; set; }
 
         public DateTime? InsertDate { get; set; }
 
         [StringLength(50)]
         public string InsertPC { get; set; }
 
-        public int? UpdateBy { get; set; }
+        public long? UpdateBy { get; set; }
 
         public DateTime? UpdateDate { get; set; }
 
         [StringLength(50)]
         public string UpdatePC { get; set; }
 
-        public int? DeleteBy { get; set; }
+        public long? DeleteBy { get; set; }
 
         public DateTime? DeleteDate { get; set; }
 
         [StringLength(10)]
         public string DeletePC { get; set; }
+        public virtual PaymentMethod PaymentMethod { get; set; }
+
+        [ForeignKey("CreditTo")]
+        public virtual AccCOA CreditHead { get; set; }
     }
 }

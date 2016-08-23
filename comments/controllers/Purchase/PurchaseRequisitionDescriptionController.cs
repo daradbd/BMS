@@ -18,6 +18,7 @@ namespace BMS.Controllers.Purchase
     public class PurchaseRequisitionDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/PurchaseRequisitionDescription
         public IEnumerable<PurchaseRequisitionDescription> GetPurchaseRequisitionDescriptions(ODataQueryOptions Options)
@@ -54,6 +55,7 @@ namespace BMS.Controllers.Purchase
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            purchaserequisitiondescription.UpdateBy = loginUser.UserID;
 
             db.Entry(purchaserequisitiondescription).State = EntityState.Modified;
 
@@ -74,6 +76,7 @@ namespace BMS.Controllers.Purchase
         {
             if (ModelState.IsValid)
             {
+                purchaserequisitiondescription.InsertBy = loginUser.UserID;
                 db.Entry(purchaserequisitiondescription).State = purchaserequisitiondescription.PurchaseRequisitionDescriptionID == 0 ? EntityState.Added : EntityState.Modified;
                 db.SaveChanges();
 

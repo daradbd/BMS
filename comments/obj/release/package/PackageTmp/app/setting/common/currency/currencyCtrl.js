@@ -2,12 +2,12 @@
     "use strict";
     angular
         .module("companyManagement")
-        .controller("currencyCtrl", ["currencyResource", currencyCtrl]);
+        .controller("currencyCtrl", ["currencyResource", "appAuth", currencyCtrl]);
 
-    function currencyCtrl(currencyResource) {
+    function currencyCtrl(currencyResource,appAuth) {
         var vm = this;
         vm.currencys = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

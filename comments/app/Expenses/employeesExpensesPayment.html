@@ -59,9 +59,128 @@
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-6 animated fadeInRight">
+                                <div class="form-group"
+                                     ng-class="{'has-error':employeesExpensesPaymentForm.cmbSupplier.$invalid
+                                        && employeesExpensesPaymentForm.cmbSupplier.$dirty}">
 
+                                    <label for="cmbEmployee">
+                                        Employee
+                                    </label>
+                                    <pre>{{vm.employeesExpenses.Employee.Name}}</pre>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':employeesExpensesPaymentForm.cmbPaymentMethod.$invalid
+                                        && employeesExpensesPaymentForm.cmbPaymentMethod.$dirty}">
+
+                                    <label for="cmbPaymentMethod">
+                                        Payment Methods
+                                    </label>
+                                    <select class="form-control"
+                                            id="cmbPaymentMethod"
+                                            name="cmbPaymentMethod"
+                                            ng-model="vm.cmbPaymentMethod"
+                                            ng-options="PaymentMethod.PaymentMethodName for PaymentMethod in vm.paymentMethods track by PaymentMethod.PaymentMethodID "
+                                            ng-change="vm.employeesExpensesPayment.PaymentMethodID=vm.cmbPaymentMethod.PaymentMethodID"></select>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':employeesExpensesPaymentForm.cmbCreditTo.$invalid
+                                        && employeesExpensesPaymentForm.cmbCreditTo.$dirty}">
+
+                                    <label for="cmbCreditTo">
+                                        Credit To
+                                    </label>
+                                    <select class="form-control"
+                                            id="cmbCreditTo"
+                                            name="cmbCreditTo"
+                                            ng-model="vm.cmbCreditTo"
+                                            ng-options="DepositHead.COAName for DepositHead in vm.cmbPaymentMethod.AccCOAID track by DepositHead.COAID "
+                                            ng-change="vm.employeesExpensesPayment.CreditTo=vm.cmbCreditTo.COAID"></select>
+                                </div>
+
+
+
+
+                                <div class="form-group" ng-show="vm.cmbPaymentMethod"
+                                     ng-class="{'has-error':employeesExpensesPaymentForm.txtChequeNO.$invalid
+                                         && employeesExpensesPaymentForm.txtChequeNO.$dirty}">
+
+                                    <label for="txtChequeNO">
+                                        {{vm.cmbPaymentMethod.RefText}}
+                                    </label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="txtChequeNO"
+                                           name="txtChequeNO"
+                                           ng-model="vm.employeesExpensesPayment.ChequeNO"
+                                           placeholder="Enter {{vm.cmbPaymentMethod.RefText}}"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtMemo">
+                                        Memo
+                                    </label>
+                                    <textarea class="form-control"
+                                              id="txtMemo"
+                                              name="txtMemo"
+                                              ng-model="vm.employeesExpensesPayment.Memo"
+                                              rows=" 3"></textarea>
+                                </div>
                             </div>
                             <div class="col-lg-6">
+                               
+                                <div class="form-group">
+
+                                    <label for="txtTranDate">
+                                        Data:
+                                    </label>
+                                    <div class="form-group">
+                                        <p class="input-group">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtDate"
+                                                   name="txtDate"
+                                                   ng-model="vm.employeesExpensesPayment.PaymentDate"
+                                                   datepicker-popup="MMM dd, yyyy "
+                                                   is-open="vm.dtopened"
+                                                   required>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default"
+                                                        ng-click="vm.dtopen($event)">
+                                                    <i class="glyphicon glyphicon-calendar" />
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtApproveAmount">
+                                        Approve Amount
+                                    </label>
+                                    <pre>{{vm.employeesExpenses.ApproveAmount}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtDueAmount">
+                                        Due Amount
+                                    </label>
+                                    <pre>{{vm.employeesExpenses.DueAmount}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtPaymentTotal">
+                                        Payment Amount
+                                    </label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="txtPaymentTotal"
+                                           name="txtPaymentTotal"
+                                           ng-change="vm.checkLimit()"
+                                           ng-model="vm.employeesExpensesPayment.PaymentAmount"
+                                           placeholder="Enter PaymentTotal"
+                                           required>
+                                </div>
+                               
 
                             </div>
                         </div>
@@ -73,67 +192,186 @@
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-6 animated fadeInRight">
+                                <div class="form-group">
+
+                                    <label for="cmbEmployee">
+                                        Employee
+                                    </label>
+                                    <pre>{{vm.employeesExpenses.Employee.Name}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="cmbPaymentMethod">
+                                        Payment Methods
+                                    </label>
+                                    <pre>{{vm.employeesExpensesPayment.PaymentMethod.PaymentMethodName}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="cmbCreditTo">
+                                        Credit To
+                                    </label>
+                                    <pre>{{vm.employeesExpensesPayment.CreditHead.COAName}}</pre>
+                                   
+                                </div>
 
 
+
+
+                                <div class="form-group" ng-show="vm.cmbPaymentMethod">
+
+                                    <label for="txtChequeNO">
+                                        {{vm.cmbPaymentMethod.RefText}}
+                                    </label>
+                                    <pre>{{vm.employeesExpensesPayment.ChequeNO}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtMemo">
+                                        Memo
+                                    </label>
+                                    <pre>{{vm.employeesExpensesPayment.Memo}}</pre>
+                                </div>
                             </div>
                             <div class="col-lg-6">
+                                
+                                <div class="form-group">
 
+                                    <label for="txtTranDate">
+                                        Data:
+                                    </label>
+                                    <div class="form-group">
+                                        <pre>{{vm.employeesExpensesPayment.PaymentDate | date:"dd-MMM-yyyy"}}</pre>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="txtPaymentAmount">
+                                        Payment Amount
+                                    </label>
+                                    <pre>{{vm.employeesExpensesPayment.PaymentAmount}}</pre>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-12 box " ng-show="vm.ListView">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Employees Expenses Payment List</h3>
-                        </div><!-- /.box-header -->
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="dataTables_length" id="example1_length">
-                                        <label>
-                                            Show <select ng-init="vm.num=5" ng-model="vm.num" class="form-control input-sm">
-                                                <option value="5">5</option>
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select> entries
-                                        </label>
+                        <tabset>
+                            <tab heading="Requisition Delivery Pending List" active="true">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Purchase Requisition List</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="dataTables_length" id="example1_length">
+                                                <label>
+                                                    Show <select ng-init="vm.num=5" ng-model="vm.num" class="form-control input-sm">
+                                                        <option value="5">5</option>
+                                                        <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
+                                                    </select> entries
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div id="example1_filter" class="dataTables_filter">
+                                                <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="searchText"></label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div id="example1_filter" class="dataTables_filter">
-                                        <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="searchText"></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 animated fadeInRight">
-                                <div class="table-responsive">
-                                    <table class="table table-hover" id="printThisElement">
-                                        <thead>
-                                            <tr>
-                                                <th>Code</th>
-                                                <th>Remarks</th>
-                                                <th class="noPrint">Preview</th>
-                                            </tr>
+                                    <div class="col-lg-12 animated fadeInRight">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="printThisElement">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Code</th>
+                                                        <th>Expenses</th>
+                                                        <th>Remarks</th>
+                                                        <th class="noPrint">Preview</th>
+                                                    </tr>
 
-                                        </thead>
-                                        <tbody>
-                                            <tr dir-paginate="employeesExpensesPayment in vm.employeesExpensesPayments|filter:searchText| itemsPerPage: vm.num">
-                                                <td>{{employeesExpensesPayment.EmployeesExpensesPaymentCode  | uppercase}}</td>
-                                                <td>{{employeesExpensesPayment.Remarks}}</td>
-                                                <td class="noPrint">
-                                                    <button type="button" ng-click="" data-skin="skin-blue" class="btn btn-primary btn-xs">
-                                                        <i class="fa fa-eye"></i>
-                                                    </button>	
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                                </thead>
+                                                <tbody>
+                                                    <tr dir-paginate="employeesExpenses in vm.employeesExpensess|orderBy:'-EmployeesExpensesID'|filter:searchText| itemsPerPage: vm.num" pagination-id="empExp">
+                                                        <td>{{employeesExpenses.EmployeesExpensesCode  | uppercase}}</td>
+                                                        <td>{{employeesExpenses.Employee.Name}}</td>
+                                                        <td>{{employeesExpenses.EmployeesExpensesName}}</td>
+                                                        <td>{{employeesExpenses.Remarks}}</td>
+                                                        <td class="noPrint">
+
+                                                            <button type="button" ng-click="vm.GetExpenses(employeesExpenses.EmployeesExpensesID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                                                <i class="fa fa-eye"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <dir-pagination-controls pagination-id="empExp" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </tab>
+                            <tab heading="Employees Expenses Payment List">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Employees Expenses Payment List</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="dataTables_length" id="example1_length">
+                                                <label>
+                                                    Show <select ng-init="vm.numc=5" ng-model="vm.numc" class="form-control input-sm">
+                                                        <option value="5">5</option>
+                                                        <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
+                                                    </select> entries
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div id="example1_filter" class="dataTables_filter">
+                                                <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="searchTextc"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 animated fadeInRight">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="printThisElement">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Code</th>
+                                                        <th>RequisitionCode</th>
+                                                        <th>Date</th>
+                                                        <th class="noPrint">Preview</th>
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                    <tr dir-paginate="employeesExpensesPayment in vm.employeesExpensesPayments|filter:searchText| itemsPerPage: vm.num" pagination-id="empExpPay">
+                                                        <td>{{employeesExpensesPayment.EmployeesExpensesPaymentCode  | uppercase}}</td>
+                                                        <td>{{employeesExpensesPayment.Remarks}}</td>
+                                                        <td>{{employeesExpensesPayment.Date}}</td>
+                                                        <td class="noPrint">
+                                                            <button type="button" ng-click="vm.Get(employeesExpensesPayment.EmployeesExpensesPaymentID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                                                <i class="fa fa-eye"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <dir-pagination-controls pagination-id="empExpPay" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tab>
+                        </tabset>
+                      
                     </div>
                 </div>
             </div>

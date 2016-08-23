@@ -16,6 +16,7 @@ namespace BMS.Controllers.Accounting.Configuration.Others
     public class TaxController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Tax
         public IEnumerable<Tax> GetTaxes()
@@ -47,7 +48,7 @@ namespace BMS.Controllers.Accounting.Configuration.Others
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-
+            tax.UpdateBy = loginUser.UserID;
             db.Entry(tax).State = EntityState.Modified;
 
             try
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Accounting.Configuration.Others
         {
             if (ModelState.IsValid)
             {
+                tax.InsertBy = loginUser.UserID;
                 db.Taxes.Add(tax);
                 db.SaveChanges();
 

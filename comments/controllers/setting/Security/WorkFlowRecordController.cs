@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Security
     public class WorkFlowRecordController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/WorkFlowRecord
         public IEnumerable<WorkFlowRecord> GetWorkFlowRecords()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Setting.Security
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            workflowrecord.UpdateBy = loginUser.UserID;
             db.Entry(workflowrecord).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Setting.Security
         {
             if (ModelState.IsValid)
             {
+                workflowrecord.InsertBy = loginUser.UserID;
                 db.WorkFlowRecords.Add(workflowrecord);
                 db.SaveChanges();
 

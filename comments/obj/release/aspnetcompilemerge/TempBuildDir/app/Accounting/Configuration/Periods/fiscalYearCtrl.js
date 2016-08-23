@@ -13,12 +13,12 @@
 
     angular
         .module("companyManagement")
-        .controller("fiscalYearCtrl", ["Util", "fiscalYearResource", fiscalYearCtrl]);
-    function fiscalYearCtrl(Util,fiscalYearResource) {
+        .controller("fiscalYearCtrl", ["Util", "fiscalYearResource", "appAuth", fiscalYearCtrl]);
+    function fiscalYearCtrl(Util, fiscalYearResource, appAuth) {
         var vm = this;
         vm.helpers = Util.helpers;
         vm.fiscalYears = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -170,9 +170,9 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                vm.fiscalYear.StartDate = Util.offsetTime(vm.fiscalYear.StartDate).$promise.then(function () {
+                vm.fiscalYear.StartDate = Util.offsetTime(vm.fiscalYear.StartDate);
                 vm.fiscalYear.EndDate = Util.offsetTime(vm.fiscalYear.EndDate);
-                fiscalYearResource.update({ 'ID': vm.fiscalYear.FiscalYearID }, vm.fiscalYear);
+                fiscalYearResource.update({ 'ID': vm.fiscalYear.FiscalYearID }, vm.fiscalYear).$promise.then(function () {
                 vm.fiscalYears = null;
                 vm.ViewMode(3);
                 GetList();
@@ -190,7 +190,7 @@
         //Data Delete
         vm.Delete = function () {
            // vm.fiscalYear.$delete({ 'ID': vm.fiscalYear.fiscalYearID });
-            fiscalYearResource.delete({ 'ID': vm.fiscalYear.fiscalYearID }).$promise.then(function (data) {
+            fiscalYearResource.delete({ 'ID': vm.fiscalYear.FiscalYearID }).$promise.then(function (data) {
                 // success handler
                 toastr.success("Data Delete Successfully!");
                 GetList();

@@ -18,6 +18,7 @@ namespace BMS.Controllers.Production
     public class ProductionOrderDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProductionOrderDescription
         public IEnumerable<ProductionOrderDescription> GetProductionOrderDescriptions(ODataQueryOptions Options)
@@ -52,6 +53,7 @@ namespace BMS.Controllers.Production
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            productionorderdescription.UpdateBy = loginUser.UserID;
             db.Entry(productionorderdescription).State = EntityState.Modified;
 
             try
@@ -72,6 +74,7 @@ namespace BMS.Controllers.Production
             if (ModelState.IsValid)
             {
                 //db.ProductionOrderDescriptions.Add(productionorderdescription);
+                productionorderdescription.InsertBy = loginUser.UserID;
                 db.Entry(productionorderdescription).State = productionorderdescription.ProductionOrderDescriptionID == 0 ?
                 EntityState.Added : EntityState.Modified;
                 db.SaveChanges();

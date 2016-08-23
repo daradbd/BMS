@@ -16,6 +16,7 @@ namespace BMS.Controllers.Expenses
     public class EmployeesExpensesController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/EmployeesExpenses
         public IEnumerable<EmployeesExpenses> GetEmployeesExpenses()
@@ -47,7 +48,9 @@ namespace BMS.Controllers.Expenses
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            employeesexpenses.Employee = null;
 
+            employeesexpenses.UpdateBy = loginUser.UserID;
             db.Entry(employeesexpenses).State = EntityState.Modified;
 
             try
@@ -67,6 +70,12 @@ namespace BMS.Controllers.Expenses
         {
             if (ModelState.IsValid)
             {
+                string CustomCode = "EE-" + DateTime.Now.ToString("yyyyMMdd");
+                int? MaxCode = Convert.ToInt32((db.EmployeesExpenses.Where(r => r.EmployeesExpensesCode.StartsWith(CustomCode)).Select(r => r.EmployeesExpensesCode.Substring(CustomCode.Length, 4)).ToList()).Max());
+                string PBCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
+                employeesexpenses.EmployeesExpensesCode = PBCode;
+                employeesexpenses.SubmitDate = DateTime.Now;
+                employeesexpenses.InsertBy = loginUser.UserID;
                 db.EmployeesExpenses.Add(employeesexpenses);
                 db.SaveChanges();
 

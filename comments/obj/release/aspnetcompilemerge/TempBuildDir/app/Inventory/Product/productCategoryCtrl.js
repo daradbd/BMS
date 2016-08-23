@@ -13,12 +13,14 @@
 
     angular
         .module("companyManagement")
-        .controller("productCategoryCtrl", ["productCategoryResource", productCategoryCtrl]);
-    function productCategoryCtrl(productCategoryResource) {
+        .controller("productCategoryCtrl", ["productCategoryResource", "appAuth", productCategoryCtrl]);
+    function productCategoryCtrl(productCategoryResource, appAuth) {
         var vm = this;
         vm.productCategorys = [];
         vm.productCategory = [];
         vm.cmbproductCategory = [];
+
+        appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;

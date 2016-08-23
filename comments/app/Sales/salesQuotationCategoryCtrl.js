@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("salesQuotationCategoryCtrl", ["salesQuotationCategoryResource", salesQuotationCategoryCtrl]);
-    function salesQuotationCategoryCtrl(salesQuotationCategoryResource) {
+        .controller("salesQuotationCategoryCtrl", ["salesQuotationCategoryResource", "appAuth", salesQuotationCategoryCtrl]);
+    function salesQuotationCategoryCtrl(salesQuotationCategoryResource, appAuth) {
         var vm = this;
         vm.salesQuotationCategorys = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -117,6 +117,7 @@
                     function (data, responseHeaders) {
                         GetList();
                         vm.salesQuotationCategory = null;
+                        vm.ViewMode(2);
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -149,7 +150,7 @@
             if (isValid) {
                 salesQuotationCategoryResource.update({ 'ID': vm.salesQuotationCategory.SalesQuotationCategoryID }, vm.salesQuotationCategory).$promise.then(function () {
                 vm.salesQuotationCategorys = null;
-                vm.ViewMode(3);
+                vm.ViewMode(2);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
                 }, function (error) {
@@ -167,6 +168,7 @@
            // vm.salesQuotationCategory.$delete({ 'ID': vm.salesQuotationCategory.SalesQuotationCategoryID });
             salesQuotationCategoryResource.delete({ 'ID': vm.salesQuotationCategory.SalesQuotationCategoryID }).$promise.then(function (data) {
                 // success handler
+                vm.ViewMode(2);
                 toastr.success("Data Delete Successfully!");
                 GetList();
             }, function (error) {

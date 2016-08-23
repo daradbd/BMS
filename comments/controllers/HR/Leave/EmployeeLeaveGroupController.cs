@@ -16,6 +16,7 @@ namespace BMS.Controllers.HR.Leave
     public class EmployeeLeaveGroupController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/EmployeeLeaveGroup
         public IEnumerable<EmployeeLeaveGroup> GetEmployeeLeaveGroups()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.HR.Leave
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            employeeleavegroup.UpdateBy = loginUser.UserID;
             db.Entry(employeeleavegroup).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.HR.Leave
         {
             if (ModelState.IsValid)
             {
+                employeeleavegroup.InsertBy = loginUser.UserID;
                 db.EmployeeLeaveGroups.Add(employeeleavegroup);
                 db.SaveChanges();
 

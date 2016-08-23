@@ -28,7 +28,7 @@
                     Save & Close
                 </button>
                 <button type="button" ng-if="vm.isModal" ng-show="vm.EditButton" ng-click="vm.SelectClose()" class="btn btn-app btn-default ">
-                    <span class="glyphicon glyphicon-arrow-down aria-hidden=" true"></span>
+                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
                     Select & Close
                 </button>
                 <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-app btn-default ">
@@ -72,12 +72,10 @@
                         <div class="box-body">
                             <div class="col-lg-12">
 
-                                <div class="col-lg-6 animated fadeInRight">
-                                    <div class="form-group"
-                                         ng-class="{'has-error':collaboratorForm.txtCollabaratorCode.$invalid
-                                         && collaboratorForm.txtCollabaratorCode.$dirty}">
+                                <div class="col-lg-6  animated fadeinright">
+                                    <div class="form-group">
 
-                                        <label for="txtCollabaratorCode">
+                                        <!--<label for="txtCollabaratorCode">
                                             Code
                                         </label>
                                         <input type="text"
@@ -86,9 +84,15 @@
                                                name="txtCollabaratorCode"
                                                ng-model="vm.collaborator.CollaboratorCode"
                                                placeholder="Enter CollaboratorCode"
-                                               required>
+                                               >-->
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" ng-model="vm.collaborator.IsCompany" ng-value="false"> Individual
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" ng-model="vm.collaborator.IsCompany" ng-value="true"> Company
+                                        </label>
                                     </div>
-                                    <div class="form-group"
+                                    <div class=" form-horizontal form-group"
                                          ng-class="{'has-error':collaboratorForm.txtName.$invalid
                                          && collaboratorForm.txtName.$dirty}">
 
@@ -103,9 +107,32 @@
                                                placeholder="Enter Name"
                                                required>
                                     </div>
+                                    <div ng-if="vm.collaborator.IsCompany==false" class="form-group">
+
+                                        <label for="cmbCompany">
+                                            Company
+                                        </label>
+                                        <select class="form-control form-control-sm"
+                                                id="cmbCompany"
+                                                name="cmbCompany"
+                                                ng-model="vm.cmbCompany"
+                                                ng-options="company.Name for company in vm.collaborators| filter:{ IsCompany :true} track by company.CollaboratorID "
+                                                ng-change="vm.collaborator.ParentID=vm.cmbCompany.CollaboratorID"></select>
+                                    </div>
+                                    <div ng-if="vm.collaborator.IsCompany==false" class="form-group">
+
+                                        <label>
+                                            Designation
+                                        </label>
+                                        <select class="form-control form-control-sm"
+                                                ng-model="vm.cmbDesignations"
+                                                ng-options="designation.DesignationName for designation in vm.designations track by designation.DesignationID "
+                                                ng-change="vm.collaborator.DesignationID=vm.cmbDesignations.DesignationID"></select>
+                                    </div>
+
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group"
+                                    <div ng-if="vm.collaborator.IsCompany==false" class="form-group"
                                          ng-class="{'has-error':collaboratorForm.txtTitle.$invalid
                                          && collaborator.txtTitle.$dirty}">
 
@@ -113,7 +140,7 @@
                                             Title
                                         </label>
                                         <input type="text"
-                                               class="form-control"
+                                               class="form-control form-control-sm"
                                                id="txtTitle"
                                                name="txtTitle"
                                                ng-model="vm.collaborator.Title"
@@ -122,27 +149,60 @@
                                     </div>
                                     <div class="form-group">
 
-                                        <label for="cmbCustomerType">
+                                        <label>
                                             CustomerType
                                         </label>
-                                        <select class="form-control"
+                                        <select class="form-control form-control-sm"
                                                 ng-model="vm.cmbCustomerTypes"
                                                 ng-options="customerType.CustomerTypeName for customerType in vm.CustomerTypes track by customerType.CustomerTypeID "></select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
+                            <!-- ReSharper disable once Html.TagNotResolved -->
                                 <tabset>
-                                    <tab heading="Address" active="true">
+                                <!-- ReSharper disable once Html.TagNotResolved -->
+                                    <tab active="true" heading="Contact Person">
+                                        <div class="col-lg-12">
+
+                                            <div class="form-group">
+                                                <button type="button" class="btn bg-primary" ng-click="vm.ShowontactsPerson()"><span class="fa  fa-user-plus" aria-hidden="true"></span></button>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-12">
+
+                                            <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="contactPerons in vm.contactsPersons">
+                                                <div class="info-box">
+                                                    
+                                                    <span class="fa-stack fa-3x pull-left">
+                                                        <i class="fa fa-circle fa-stack-2x text-light-blue"></i>
+                                                        <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">{{contactPerons.Name}}</span>
+                                                        <span ng-if="contactPerons.Designation" class="info-box-text"><small>({{contactPerons.Designation.DesignationName}})</small></span>
+                                                        <span class="info-box-text"><i class="fa fa-phone margin-r-5"></i><small>{{contactPerons.Mobile}}</small></span>
+                                                    <span class="info-box-text"><i class="fa fa-envelope margin-r-5"></i><small>{{contactPerons.EmailID}}</small></span>
+                                                    </div><!-- /.info-box-content -->
+                                                </div><!-- /.info-box -->
+                                            </div>
+
+
+                                        </div>
+                                    </tab>
+                                    <tab heading="Address">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="txtStreet">
                                                     Street
                                                 </label>
-                                                <textarea class="form-control"
+                                                <textarea class="form-control form-control-sm"
                                                           id="txtStreet"
                                                           name="txtStreet"
                                                           ng-model="vm.collaborator.Street"
+                                                          placeholder="Street..."
                                                           rows=" 3"></textarea>
                                             </div>
 
@@ -154,7 +214,7 @@
                                                     POBox
                                                 </label>
                                                 <input type="text"
-                                                       class="form-control"
+                                                       class="form-control form-control-sm"
                                                        id="txtPOBox"
                                                        name="txtPOBox"
                                                        ng-model="vm.collaborator.POBox"
@@ -179,7 +239,7 @@
                                                 <label for="cmbCountry">
                                                     Country
                                                 </label>
-                                                <select class="form-control"
+                                                <select class="form-control form-control-sm"
                                                         ng-model="vm.cmbcountrys"
                                                         ng-options="country.CountryName for country in vm.countrys track by country.CountryID "
                                                         ng-change="vm.selectCity(vm.cmbcountrys.CountryID)"></select>
@@ -189,7 +249,7 @@
                                                 <label for="cmbCity">
                                                     City
                                                 </label>
-                                                <select class="form-control"
+                                                <select class="form-control form-control-sm"
                                                         ng-model="vm.cmbCitys"
                                                         ng-options="city.CityName for city in vm.citys track by city.CityID "></select>
                                             </div>
@@ -199,15 +259,13 @@
 
                                     <tab heading="Contact Info">
                                         <div class="col-lg-6">
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtNID.$invalid
-                                         && collaboratorForm.txtID.$dirty}">
+                                            <div class="form-group">
 
                                                 <label for="txtNID">
                                                     National ID
                                                 </label>
                                                 <input type="text"
-                                                       class="form-control"
+                                                       class="form-control form-control-sm"
                                                        id="txtNID"
                                                        name="txtNID"
                                                        ng-model="vm.collaborator.NID"
@@ -222,7 +280,7 @@
                                                     EmailID
                                                 </label>
                                                 <input type="text"
-                                                       class="form-control"
+                                                       class="form-control form-control-sm"
                                                        id="txtEmailID"
                                                        name="txtEmailID"
                                                        ng-model="vm.collaborator.EmailID"
@@ -237,22 +295,20 @@
                                                     Phone
                                                 </label>
                                                 <input type="text"
-                                                       class="form-control"
+                                                       class="form-control form-control-sm"
                                                        id="txtPhone"
                                                        name="txtPhone"
                                                        ng-model="vm.collaborator.Phone"
                                                        placeholder="Enter Phone"
                                                        required>
                                             </div>
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtFaxNo.$invalid
-                                         && collaboratorForm.txtFaxNo.$dirty}">
+                                            <div class="form-group">
 
                                                 <label for="txtFaxNo">
-                                                    FaxNo
+                                                    Fax-No
                                                 </label>
                                                 <input type="text"
-                                                       class="form-control"
+                                                       class="form-control form-control-sm"
                                                        id="txtFaxNo"
                                                        name="txtFaxNo"
                                                        ng-model="vm.collaborator.FaxNo"
@@ -261,30 +317,26 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtTINNO.$invalid
-                                         && collaboratorForm.txtTINNO.$dirty}">
+                                            <div class="form-group">
 
                                                 <label for="txtTINNO">
-                                                    TINNO
+                                                    TIN-NO
                                                 </label>
                                                 <input type="text"
-                                                       class="form-control"
+                                                       class="form-control form-control-sm"
                                                        id="txtTINNO"
                                                        name="txtTINNO"
                                                        ng-model="vm.collaborator.TINNO"
                                                        placeholder="Enter TINNO"
                                                        required>
                                             </div>
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtFBPage.$invalid
-                                         && collaboratorForm.txtFBPage.$dirty}">
+                                            <div class="form-group">
 
                                                 <label for="txtFBPage">
                                                     FBPage
                                                 </label>
                                                 <input type="text"
-                                                       class="form-control"
+                                                       class="form-control form-control-sm"
                                                        id="txtFBPage"
                                                        name="txtFBPage"
                                                        ng-model="vm.collaborator.FBPage"
@@ -299,28 +351,67 @@
                                                     Mobile
                                                 </label>
                                                 <input type="text"
-                                                       class="form-control"
+                                                       class="form-control form-control-sm"
                                                        id="txtMobile"
                                                        name="txtMobile"
                                                        ng-model="vm.collaborator.Mobile"
                                                        placeholder="Enter Mobile"
                                                        required>
                                             </div>
-                                            <div class="form-group"
-                                                 ng-class="{'has-error':collaboratorForm.txtWebsite.$invalid
-                                         && collaboratorForm.txtWebsite.$dirty}">
+                                            <div class="form-group">
 
                                                 <label for="txtWebsite">
                                                     Website
                                                 </label>
                                                 <input type="text"
-                                                       class="form-control"
+                                                       class="form-control form-control-sm"
                                                        id="txtWebsite"
                                                        name="txtWebsite"
                                                        ng-model="vm.collaborator.Website"
                                                        placeholder="Enter Website"
                                                        required>
                                             </div>
+                                        </div>
+                                    </tab>
+                                    <tab heading="Bank Accounts">
+                                        <div class="col-lg-12">
+
+                                            <div class="form-group">
+                                                <button type="button" class="btn bg-primary" ng-click="vm.ShowBankAccount()"><span class="fa  fa-user-plus" aria-hidden="true"></span></button>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <table class="table table-hover" id="printThisElement">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Bank</th>
+                                                        <th>Branch</th>
+                                                        <th>Account Name</th>
+                                                        <th>Account Number</th>
+                                                        <!--<th class="noPrint">Preview</th>-->
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    <tr dir-paginate="bankAccount in vm.bankAccounts|orderBy:'-BankAccountID'|filter:searchText| itemsPerPage: vm.num " pagination-id="pgBankAccounts">
+                                                        <td>{{bankAccount.Bank.BankName  | uppercase}}</td>
+                                                        <td>{{bankAccount.BankBranch.BankBranchName}}</td>
+                                                        <td>{{bankAccount.BankAccountName}}</td>
+                                                        <td>{{bankAccount.BankAccountNumber}}</td>
+
+                                                        <!--<td class="noPrint">
+                            <button type="button" ng-click="vm.Get(bankAccount.BankAccountID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>-->
+                                                        <dir-pagination-controls pagination-id="pgBankAccounts" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+
                                         </div>
                                     </tab>
                                     <tab heading="Others">
@@ -331,7 +422,7 @@
                                                 <label for="cmbLanguage">
                                                     Language
                                                 </label>
-                                                <select class="form-control"
+                                                <select class="form-control form-control-sm"
                                                         ng-model="vm.cmbLanguages"
                                                         ng-options="language.LanguageName for language in vm.Languages track by language.LanguageID "></select>
                                             </div>
@@ -342,10 +433,45 @@
                                                 <label for="cmbCurrency">
                                                     Currency
                                                 </label>
-                                                <select class="form-control"
+                                                <select class="form-control form-control-sm"
                                                         ng-model="vm.cmbCurrencys"
                                                         ng-options="currency.CurrencyName for currency in vm.Currencys track by currency.CurrencyID "></select>
                                             </div>
+                                        </div>
+                                    </tab>
+                                    
+                                    <tab heading="Document">
+                                        <div class="col-lg-12">
+
+                                            <div class="form-group">
+                                                <button type="button" class="btn bg-primary" ng-click="vm.openUploadAttachFile()"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></button>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6 col-sm-6 col-xs-12" ng-repeat="attachFile in vm.attachFiles">
+                                                <div class="info-box bg-yellow">
+                                                    <div class="box-tools pull-right">
+                                                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                                    </div>
+
+                                                    <span class="info-box-icon">
+                                                        <i ng-if="vm.fileType(attachFile.AttachFilePath)=='pdf'" class="fa fa-file-pdf-o"></i>
+                                                        <i ng-if="vm.fileType(attachFile.AttachFilePath)=='doc'||vm.fileType(attachFile.AttachFilePath)=='docx'" class="fa fa-file-word-o"></i>
+                                                        <i ng-if="vm.fileType(attachFile.AttachFilePath)=='xls'||vm.fileType(attachFile.AttachFilePath)=='xlsx'" class="fa fa-file-excel-o"></i>
+
+                                                        <i ng-if="vm.fileType(attachFile.AttachFilePath)=='png'||vm.fileType(attachFile.AttachFilePath)=='jpeg'||vm.fileType(attachFile.AttachFilePath)=='gif'||vm.fileType(attachFile.AttachFilePath)=='jpg'" class="fa fa-file-image-o"></i>
+                                                    </span>
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">{{attachFile.AttachFileName}}</span>
+                                                        <span class="info-box-number">{{vm.fileType(attachFile.AttachFilePath)}}</span>
+
+                                                    </div><!-- /.info-box-content -->
+
+                                                </div><!-- /.info-box -->
+                                            </div>
+
                                         </div>
                                     </tab>
                                 </tabset>
@@ -395,6 +521,29 @@
                             </div>
                             <div class="col-lg-12">
                                 <tabset>
+                                    <tab ng-if="vm.contactsPersons.length>0" active="true" heading="Contact Person">
+
+                                        <div class="col-lg-12">
+
+                                            <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="contactPerons in vm.contactsPersons">
+                                                <div class="info-box">
+
+                                                    <span class="fa-stack fa-3x pull-left">
+                                                        <i class="fa fa-circle fa-stack-2x text-light-blue"></i>
+                                                        <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">{{contactPerons.Name}}</span>
+                                                        <span ng-if="contactPerons.Designation" class="info-box-text"><small>({{contactPerons.Designation.DesignationName}})</small></span>
+                                                        <span class="info-box-text"><i class="fa fa-phone margin-r-5"></i><small>{{contactPerons.Mobile}}</small></span>
+                                                        <span class="info-box-text"><i class="fa fa-envelope margin-r-5"></i><small>{{contactPerons.EmailID}}</small></span>
+                                                    </div><!-- /.info-box-content -->
+                                                </div><!-- /.info-box -->
+                                            </div>
+
+
+                                        </div>
+                                    </tab>
                                     <tab heading="Address" active="true">
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -498,6 +647,41 @@
                                             </div>
                                         </div>
                                     </tab>
+                                    <tab ng-if="vm.bankAccounts.length>0" heading="Bank Accounts">
+
+                                        <div class="col-lg-12">
+                                            <table class="table table-hover" id="printThisElement">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Bank</th>
+                                                        <th>Branch</th>
+                                                        <th>Account Name</th>
+                                                        <th>Account Number</th>
+                                                        <!--<th class="noPrint">Preview</th>-->
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    <tr dir-paginate="bankAccount in vm.bankAccounts|orderBy:'-BankAccountID'|filter:searchText| itemsPerPage: vm.num " pagination-id="pgBankAccounts">
+                                                        <td>{{bankAccount.Bank.BankName  | uppercase}}</td>
+                                                        <td>{{bankAccount.BankBranch.BankBranchName}}</td>
+                                                        <td>{{bankAccount.BankAccountName}}</td>
+                                                        <td>{{bankAccount.BankAccountNumber}}</td>
+
+                                                        <!--<td class="noPrint">
+                            <button type="button" ng-click="vm.Get(bankAccount.BankAccountID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>-->
+                                                        <dir-pagination-controls pagination-id="pgBankAccounts" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+
+
+                                        </div>
+                                    </tab>
                                     <tab heading="Others">
                                         <div class="col-lg-6">
 
@@ -517,6 +701,31 @@
                                                 </label>
                                                 <pre>{{vm.collaborator.Currency.CurrencyName}}</pre>
                                             </div>
+                                        </div>
+                                    </tab>
+                                    <tab ng-if="vm.attachFiles.length>0" heading="Document">
+                                        <div class="col-lg-12">
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6 col-sm-6 col-xs-12" ng-repeat="attachFile in vm.attachFiles">
+                                                <div class="info-box bg-yellow">
+                                                    <a href="{{attachFile.AttachFilePath}}" download="{{attachFile.AttachFileName}}" target="_blank">
+                                                        <span class="info-box-icon">
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='pdf'" class="fa fa-file-pdf-o"></i>
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='doc'||vm.fileType(attachFile.AttachFilePath)=='docx'" class="fa fa-file-word-o"></i>
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='xls'||vm.fileType(attachFile.AttachFilePath)=='xlsx'" class="fa fa-file-excel-o"></i>
+
+                                                            <i ng-if="vm.fileType(attachFile.AttachFilePath)=='png'||vm.fileType(attachFile.AttachFilePath)=='jpeg'||vm.fileType(attachFile.AttachFilePath)=='gif'||vm.fileType(attachFile.AttachFilePath)=='jpg'" class="fa fa-file-image-o"></i>
+                                                        </span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">{{attachFile.AttachFileName}}</span>
+                                                            <span class="info-box-number">{{vm.fileType(attachFile.AttachFilePath)}}</span>
+
+                                                        </div><!-- /.info-box-content -->
+                                                    </a>
+                                                </div><!-- /.info-box -->
+                                            </div>
+
                                         </div>
                                     </tab>
                                 </tabset>
@@ -541,11 +750,16 @@
                                                 <option value="100">100</option>
                                             </select> entries
                                         </label>
+                                        
                                     </div>
+                                   
                                 </div>
                                 <div class="col-sm-6">
                                     <div id="example1_filter" class="dataTables_filter">
-                                        <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="searchText"></label>
+                                        <label><input type="search" class="form-control" placeholder="Search.." ng-model="searchText"></label>
+                                        <button type="button" ng-click="vm.ListSarch= !vm.ListSarch" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                            <i ng-if="!vm.ListSarch" class="fa fa-search-plus"></i><i ng-if="vm.ListSarch" class="fa fa-search-minus"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -556,23 +770,72 @@
                                             <tr>
                                                 <th>Code</th>
                                                 <th>Name</th>
+                                                <th>Type</th>
                                                 <th>Phone</th>
                                                 <th>Address</th>
+                                                <th ng-if="vm.ListSarch">SalesAssociate</th>
+                                                <th ng-if="vm.ListSarch">Department</th>
+                                                <th ng-if="vm.ListSarch">Branch</th>
                                                 <th class="noPrint">Preview</th>	
                                             </tr>
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="collaborator in vm.collaborators|filter:searchText| itemsPerPage: vm.num">
+                                            <tr ng-if="vm.ListSarch">
+                                                <td><input type="text" class="form-control" ng-model="vm.CollaboratorCodeF" placeholder="Enter Code"></td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="vm.NameF" placeholder="Enter Name">
+                                                </td>
+                                                <td style="max-width: 200px;">
+                                                    <select class="form-control" ng-model="vm.cmbCustomerTypesF"
+                                                            ng-options="customerType.CustomerTypeName for customerType in vm.CustomerTypes track by customerType.CustomerTypeID  ">
+                                                        <option></option>
+                                                    </select>
+                                                </td>
+                                                
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="vm.MobileF" placeholder="Enter Mobile">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="vm.CityF" placeholder="Enter Address">
+                                                </td>
+                                                
+                                                <td ng-if="vm.ListSarch" style="max-width: 200px;">
+                                                    <select class="form-control"
+                                                            ng-init="vm.cmbEmployeeF={}"
+                                                            ng-model="vm.cmbEmployeeF"
+                                                            ng-options="employee.Name| uppercase for employee in vm.Employees">
+                                                        <option></option>
+                                                    </select>
+                                                </td>
+                                                <td ng-if="vm.ListSarch" style="max-width: 200px;">
+                                                    <select class="form-control" ng-model="vm.cmbDepartmentsF"
+                                                            ng-options="department.DepartmentName for department in vm.departments track by department.DepartmentID ">
+                                                        <option></option>
+                                                    </select>
+                                                </td>
+                                                <td ng-if="vm.ListSarch" style="max-width: 200px;">
+                                                    <select class="form-control"
+                                                            ng-model="vm.cmbCompanyBranchF"
+                                                            ng-options="companyBranch.CompanyBranchName for companyBranch in vm.companyBranchs track by companyBranch.CompanyBranchID">
+                                                        <option></option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr dir-paginate="collaborator in vm.collaborators|orderBy:'-CollaboratorID'|filterBy: ['CollaboratorCode']: vm.CollaboratorCodeF|filterBy: ['Name']: vm.NameF|filterBy: ['Mobile']: vm.MobileF|filterBy: ['City.CityName']: vm.CityF|filterBy: ['CustomerType.CustomerTypeName']: vm.cmbCustomerTypesF.CustomerTypeName|filterBy: ['SalesAssociate.Name']: vm.cmbEmployeeF.Name|filterBy: ['SalesAssociate.Department.DepartmentName']: vm.cmbDepartmentsF.DepartmentName|filterBy: ['SalesAssociate.CompanyBranch.CompanyBranchName']: vm.cmbCompanyBranchF.CompanyBranchName|filter:searchText| itemsPerPage: vm.num">
                                                 <td>{{collaborator.CollaboratorCode  | uppercase}}</td>
                                                 <td>{{collaborator.Name}}</td>
+                                                <td>{{collaborator.CustomerType.CustomerTypeName}}</td>
                                                 <td>{{collaborator.Mobile}}</td>
-                                                <td>{{collaborator.Street}},{{collaborator.City.CityName}}</td>
+                                                <td>{{collaborator.City.CityName}}</td>
+                                                <td ng-if="vm.ListSarch">{{collaborator.SalesAssociate.Name}}</td>
+                                                <td ng-if="vm.ListSarch">{{collaborator.SalesAssociate.Department.DepartmentName}}</td>
+                                                <td ng-if="vm.ListSarch">{{collaborator.SalesAssociate.CompanyBranch.CompanyBranchName}}</td>
                                                 <td class="noPrint">
-                                                    
+
                                                     <button type="button" ng-click="vm.Get(collaborator.CollaboratorID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
                                                         <i class="fa fa-eye"></i>
-                                                    </button>	
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </tbody>

@@ -13,10 +13,14 @@
 
     angular
         .module("companyManagement")
-        .controller("voucherListCtrl", ["accCOAResource", "voucherListResource", voucherListCtrl]);
-    function voucherListCtrl(accCOAResource,voucherListResource) {
+        .controller("voucherListCtrl", ["accCOAResource", "voucherListResource", "param", "appAuth", voucherListCtrl]);
+    function voucherListCtrl(accCOAResource, voucherListResource, param, appAuth) {
         var vm = this;
+        vm.VoucherTypeID = param.VoucherTypeID;
+        vm.VoucherName = param.VoucherTypeName;
         vm.voucherLists = [];
+       // appAuth.checkPermission();
+       
         vm.voucher = { voucherL: [{ COAID: 0, DrCr: true, Amount: 0.0 }] };
         vm.TotalDebit=0;
         // View Mode Control Variable // 
@@ -69,7 +73,8 @@
               
             }
             vm.Credit = TotalCredit;
-            return TotalDebit;
+            vm.TotalDebit = TotalDebit;
+            return vm.DrCRisNotEqual;
         }
 
         vm.ViewMode = function (activeMode) {
@@ -137,12 +142,25 @@
 
         }
 
+        GetBankCOAList();
+
+                //Get All Data List
+        function GetBankCOAList() {
+            accCOAResource.query({ 'id': 3, 'FilterType': 1 }).$promise.then(function (data) {
+                vm.accCOAs = data;
+                //toastr.success("Data Load Successful", "Form Load");
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
 
         GetaccCOAList();
 
         //Get All Data List
         function GetaccCOAList() {
-            accCOAResource.query().$promise.then(function (data) {
+            accCOAResource.query({ '$filter': 'HasChild eq false' }).$promise.then(function (data) {
                 vm.accCOAs = data;
                 //toastr.success("Data Load Successful", "Form Load");
 
@@ -156,7 +174,7 @@
 
         //Get All Data List
         function GetList() {
-            voucherListResource.query().$promise.then(function (data) {
+            voucherListResource.query({ '$filter': 'VoucherTypeID eq ' + vm.VoucherTypeID }).$promise.then(function (data) {
                 vm.voucherLists = data;
                 toastr.success("Data Load Successful", "Form Load");
 
@@ -173,6 +191,7 @@
                     var TDate = new Date(vm.voucherList.TranDate);
                     
                     var VoucherInfo = {
+                        VoucherTypeID:vm.VoucherTypeID,
                         COAID: value.COAID,
                         Amount: value.Amount,
                         VoucherNo: vm.voucherList.VoucherNo,

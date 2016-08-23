@@ -13,10 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("accCOAMappingCtrl", ["accCOAResource", "accCOAMappingResource", accCOAMappingCtrl]);
-    function accCOAMappingCtrl(accCOAResource, accCOAMappingResource) {
+        .controller("accCOAMappingCtrl", ["accCOAResource", "accCOAMappingResource", "appAuth", accCOAMappingCtrl]);
+    function accCOAMappingCtrl(accCOAResource, accCOAMappingResource, appAuth) {
         var vm = this;
         vm.accCOAMappings = [];
+        appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;

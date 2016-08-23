@@ -16,6 +16,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
     public class VoucherTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/VoucherType
         public IEnumerable<VoucherType> GetVoucherTypes()
@@ -48,6 +49,8 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            vouchertype.UpdateBy = loginUser.UserID;
+
             db.Entry(vouchertype).State = EntityState.Modified;
 
             try
@@ -67,6 +70,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
         {
             if (ModelState.IsValid)
             {
+                vouchertype.InsertBy = loginUser.UserID;
                 db.VoucherTypes.Add(vouchertype);
                 db.SaveChanges();
 

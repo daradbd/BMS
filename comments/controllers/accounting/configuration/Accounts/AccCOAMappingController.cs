@@ -16,6 +16,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
     public class AccCOAMappingController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/AccCOAMapping
         public HttpResponseMessage GetAccCOAMappings()
@@ -64,6 +65,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            acccoamapping.UpdateBy = loginUser.UserID;
             db.Entry(acccoamapping).State = EntityState.Modified;
 
             try
@@ -83,6 +85,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
         {
             if (ModelState.IsValid)
             {
+                acccoamapping.InsertBy = loginUser.UserID;
                 db.Entry(acccoamapping).State = acccoamapping.COAMappingID == 0 ?
                   EntityState.Added : EntityState.Modified;
                 //db.AccCOAMappings.Add(acccoamapping);

@@ -14,16 +14,17 @@
 
     angular
         .module("companyManagement")
-        .controller("bankAccountOwnerTypeCtrl", ["bankAccountOwnerTypeResource", bankAccountOwnerTypeCtrl]);
-    function bankAccountOwnerTypeCtrl(bankAccountOwnerTypeResource)
+        .controller("bankAccountOwnerTypeCtrl", ["bankAccountOwnerTypeResource", "appAuth", bankAccountOwnerTypeCtrl]);
+    function bankAccountOwnerTypeCtrl(bankAccountOwnerTypeResource, appAuth)
     {
         var vm = this;
         vm.bankAccountOwnerTypes = [];
+        appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -55,7 +56,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = false;
 
 
@@ -70,7 +71,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -84,7 +85,7 @@
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
 
@@ -123,11 +124,12 @@
         {
             if (isValid)
             {
-                bankAccountOwnerTypeResource.save().$promise.then(vm.bankAccountOwnerType,
+                bankAccountOwnerTypeResource.save(vm.bankAccountOwnerType).$promise.then(
                     function (data, responseHeaders)
                     {
                         GetList();
                         vm.bankAccountOwnerType = null;
+                        vm.ViewMode(2);
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -187,6 +189,7 @@
                 // success handler
                 toastr.success("Data Delete Successfully!");
                 GetList();
+                vm.ViewMode(2);
             }, function (error) {
                 // error handler
                 toastr.error("Data Delete Failed!");

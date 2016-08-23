@@ -16,6 +16,7 @@ namespace BMS.Controllers.Sales
     public class SalesBillCategoryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesBillCategory
         public IEnumerable<SalesBillCategory> GetSalesBillCategories()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Sales
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            salesbillcategory.UpdateBy = loginUser.UserID;
             db.Entry(salesbillcategory).State = EntityState.Modified;
 
             try
@@ -68,6 +70,7 @@ namespace BMS.Controllers.Sales
             if (ModelState.IsValid)
             {
                 //db.SalesBillCategories.Add(salesbillcategory);
+                salesbillcategory.InsertBy = loginUser.UserID;
                 db.Entry(salesbillcategory).State = salesbillcategory.SalesBillCategoryID == 0 ?
                 EntityState.Added : EntityState.Modified;
                 db.SaveChanges();

@@ -17,6 +17,7 @@ namespace BMS.Controllers.Accounting.Transaction
     public class VoucherListController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/VoucherList
         public IEnumerable<VoucherList> GetVoucherLists(ODataQueryOptions Options)
@@ -49,6 +50,8 @@ namespace BMS.Controllers.Accounting.Transaction
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            voucherlist.UpdateBy = loginUser.UserID;
+
 
             db.Entry(voucherlist).State = EntityState.Modified;
 
@@ -69,6 +72,7 @@ namespace BMS.Controllers.Accounting.Transaction
         {
             if (ModelState.IsValid)
             {
+                voucherlist.InsertBy = loginUser.UserID;
                 db.VoucherLists.Add(voucherlist);
                 db.SaveChanges();
 

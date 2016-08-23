@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("requisitionReceiveCtrl", ["unitOfMeasureResource", "companyBranchResource", "requestForQuotationResource", "requisitionDeliveryDescriptionResource", "purchaseRequisitionDescriptionResource", "productResource", "projectSetupResource", "collaboratorResource", "purchaseRequisitionResource", "requisitionDeliveryResource", requisitionReceiveCtrl]);
-    function requisitionReceiveCtrl(unitOfMeasureResource, companyBranchResource, requestForQuotationResource,requisitionDeliveryDescriptionResource, purchaseRequisitionDescriptionResource, productResource, projectSetupResource, collaboratorResource, purchaseRequisitionResource, requisitionDeliveryResource) {
+        .controller("requisitionReceiveCtrl", ["unitOfMeasureResource", "companyBranchResource", "requestForQuotationResource", "requisitionDeliveryDescriptionResource", "purchaseRequisitionDescriptionResource", "productResource", "projectSetupResource", "collaboratorResource", "purchaseRequisitionResource", "requisitionDeliveryResource", "appAuth", requisitionReceiveCtrl]);
+    function requisitionReceiveCtrl(unitOfMeasureResource, companyBranchResource, requestForQuotationResource, requisitionDeliveryDescriptionResource, purchaseRequisitionDescriptionResource, productResource, projectSetupResource, collaboratorResource, purchaseRequisitionResource, requisitionDeliveryResource, appAuth) {
         var vm = this;
         vm.requisitionDeliverys = [];
         vm.purchaseRequisitions = [];
@@ -22,7 +22,7 @@
         vm.PurchaseRequisitionDescription = { purchaseRequisitionDesc: [] };
         vm.requisitionDelivery = {};
         vm.products = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -102,6 +102,22 @@
 
         var DispayButton = function () {
 
+        }
+
+        vm.TotalQty = function () {
+            var total = 0.00;
+            angular.forEach(vm.requisitionDeliveryDescription.requisitionDeliveryDesc, function (item, key) {
+
+                if ((item.Quantity) < $filter('isNull')(item.ReceivedQuantity, 0) ) {
+                    item.ReceivedQuantity = "";
+                }
+                total += ($filter('isNull')(item.ReceivedQuantity, 0));
+
+
+
+
+            });
+            return total;
         }
 
         vm.dtopen = function ($event) {
@@ -243,6 +259,7 @@
                 var RequisitionDeliveryInfo = {
                     RequisitionDeliveryDescriptionID: value.RequisitionDeliveryDescriptionID,
                     RequisitionDeliveryID: vm.requisitionDelivery.RequisitionDeliveryID,
+                    PurchaseRequisitionID: vm.requisitionDelivery.PurchaseRequisitionID,
                     ProductID: value.ProductID,
                     Description: value.Description,
                     UOMID: value.UOMID,

@@ -16,6 +16,7 @@ namespace BMS.Controllers.HR.Holiday
     public class HolidayTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/HolidayType
         public IEnumerable<HolidayType> GetHolidayTypes()
@@ -47,6 +48,7 @@ namespace BMS.Controllers.HR.Holiday
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            holidaytype.UpdateBy = loginUser.UserID;
 
             db.Entry(holidaytype).State = EntityState.Modified;
 
@@ -67,6 +69,7 @@ namespace BMS.Controllers.HR.Holiday
         {
             if (ModelState.IsValid)
             {
+                holidaytype.InsertBy = loginUser.UserID;
                 db.HolidayTypes.Add(holidaytype);
                 db.SaveChanges();
 

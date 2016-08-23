@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("unitOfMeasureCtrl", ["unitOfMeasureResource", unitOfMeasureCtrl]);
-    function unitOfMeasureCtrl(unitOfMeasureResource) {
+        .controller("unitOfMeasureCtrl", ["unitOfMeasureResource", "appAuth", unitOfMeasureCtrl]);
+    function unitOfMeasureCtrl(unitOfMeasureResource, appAuth) {
         var vm = this;
         vm.unitOfMeasures = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

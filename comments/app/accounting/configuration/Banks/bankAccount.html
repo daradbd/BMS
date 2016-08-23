@@ -24,6 +24,14 @@
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     Save
                 </button>
+                <button type="button" ng-if="vm.isModal" ng-show="vm.SaveButton" ng-click="vm.SaveClose(collaboratorForm.$valid)" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    Save & Close
+                </button>
+                <button type="button" ng-if="vm.isModal" ng-show="vm.EditButton" ng-click="vm.SelectClose()" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                    Select & Close
+                </button>
                 <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-app btn-default ">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     Edit
@@ -43,6 +51,10 @@
                 <button type="button" ng-show="vm.CancelButton" ng-click="vm.ViewMode(2)" class="btn btn-app btn-primary">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     Cancel
+                </button>
+                <button type="button" ng-if="vm.isModal" ng-click="vm.mClose()" class="btn btn-app btn-primary">
+                    <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                    Close
                 </button>
             </div>
         </div>
@@ -64,7 +76,7 @@
                                          && bankAccountForm.txtBankAccountName.$dirty}">
 
                                     <label for="txtBankAccountName">
-                                        BankAccountName
+                                        Bank Account Name
                                     </label>
                                     <input type="text"
                                            class="form-control"
@@ -79,7 +91,7 @@
                                          && bankAccountForm.txtBankAccountNumber.$dirty}">
 
                                     <label for="txtBankAccountNumber">
-                                        BankAccountNumber
+                                        Bank Account Number
                                     </label>
                                     <input type="text"
                                            class="form-control"
@@ -146,7 +158,7 @@
                                             id="cmbBankBranch"
                                             name="cmbBankBranch"
                                             ng-model="vm.cmbBankBranchs"
-                                            ng-options="BankBranch.BankBranchName for BankBranch in vm.bankBranchs track by BankBranch.BankBranchID "
+                                            ng-options="BankBranch.BankBranchName for BankBranch in (vm.bankBranchs|filterBy:['BankID']: vm.cmbBanks.BankID) track by BankBranch.BankBranchID"
                                             ng-change="vm.bankAccount.BankBranchID=vm.cmbBankBranchs.BankBranchID"></select>
                                 </div>
                             </div>
@@ -231,22 +243,24 @@
                                         <table class="table table-hover" id="printThisElement">
                                             <thead>
                                                 <tr>
-                                                    <th>Code</th>
-                                                    <th>Remarks</th>
+                                                    <th>Bank</th>
+                                                    <th>Branch</th>
+                                                    <th>Account Name</th><th>Account Number</th>
                                                     <th class="noPrint">Preview</th>
                                                 </tr>
 
                                             </thead>
                                             <tbody>
-                                                <tr dir-paginate="bankAccount in vm.bankAccounts|filter:searchText| itemsPerPage: vm.num">
-                                                    <td>{{bankAccount.BankAccountCode  | uppercase}}</td>
+                                                <tr dir-paginate="bankAccount in vm.bankAccounts|orderBy:'-BankAccountID'|filter:searchText| itemsPerPage: vm.num ">
+                                                    <td>{{bankAccount.Bank.BankName  | uppercase}}</td>
+                                                    <td>{{bankAccount.BankBranch.BankBranchName}}</td>
                                                     <td>{{bankAccount.BankAccountName}}</td>
                                                     <td>{{bankAccount.BankAccountNumber}}</td>
-                                                    <td>{{bankAccount.Remarks}}</td>
+
                                                     <td class="noPrint">
                                                         <button type="button" ng-click="vm.Get(bankAccount.BankAccountID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
                                                             <i class="fa fa-eye"></i>
-                                                        </button>	
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             </tbody>

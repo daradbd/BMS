@@ -17,6 +17,7 @@ namespace BMS.Controllers.Setting.Common
     public class CityController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/City
         public IEnumerable<City> GetCities(ODataQueryOptions Options)
@@ -53,6 +54,7 @@ namespace BMS.Controllers.Setting.Common
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
             city.Country = null;
+            city.UpdateBy=loginUser.UserID;
             db.Entry(city).State = EntityState.Modified;
 
             try
@@ -73,6 +75,7 @@ namespace BMS.Controllers.Setting.Common
             if (ModelState.IsValid)
             {
                 db.Cities.Add(city);
+                city.InsertBy = loginUser.UserID;
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, city);

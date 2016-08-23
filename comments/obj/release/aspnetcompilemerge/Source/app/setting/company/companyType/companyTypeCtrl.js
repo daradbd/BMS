@@ -2,10 +2,11 @@
     "use strict";
     angular
         .module("companyManagement")
-        .controller("companyTypeCtrl", ["companyTypeResource", companyTypeCtrl]);
-    function companyTypeCtrl(companyTypeResource) {
+        .controller("companyTypeCtrl", ["companyTypeResource", "appAuth", companyTypeCtrl]);
+    function companyTypeCtrl(companyTypeResource, appAuth) {
         var vm = this;
         vm.companyTypes = [];
+        appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;

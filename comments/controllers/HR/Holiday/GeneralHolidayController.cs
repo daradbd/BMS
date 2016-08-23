@@ -16,6 +16,7 @@ namespace BMS.Controllers.HR.Holiday
     public class GeneralHolidayController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/GeneralHoliday
         public IEnumerable<GeneralHoliday> GetGeneralHolidays()

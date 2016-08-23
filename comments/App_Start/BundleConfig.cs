@@ -42,11 +42,12 @@ namespace BMS
 
 
             bundles.Add(new StyleBundle("~/Style/css").Include(
+            "~/Content/css/jquery-ui.css",
             "~/Content/css/toastr.css",
              "~/Content/css/treeview.css",
             "~/Content/css/animate.css",
-            "~/Content/css/printStyle.css",
-            "~/Content/css/style.css"));
+             "~/Content/css/printStyle.css",
+             "~/Content/css/style.css"));
 
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
@@ -67,6 +68,8 @@ namespace BMS
 
             bundles.Add(new ScriptBundle("~/Library/Scripts").Include(
                         "~/Content/js/jquery/jquery.js",
+                        "~/Content/js/jquery/jquery-ui.js",
+
                         "~/Content/js/angularjs/angular.js",
                         "~/Content/js/angularjs/angular-route.js",
                         "~/Content/js/angularjs/angular-resource.js",
@@ -95,6 +98,12 @@ namespace BMS
                        "~/app/setting/company/companyBranchType/companyBranchTypeCtrl.js",
                        "~/app/setting/company/companyName/company.js",
                        "~/app/setting/company/companyBranch/companyBranchCtrl.js",
+                       "~/app/setting/Security/formListCtrl.js",
+                       "~/app/setting/Security/formUserPermissionCtrl.js",
+                       "~/app/setting/Security/moduleCtrl.js",
+                       "~/app/Dashboard/dashboardCtrl.js",
+
+
                        "~/app/Accounting/Configuration/Accounts/accTypeCtrl.js",
                        "~/app/Accounting/Configuration/Accounts/voucherTypeCtrl.js",
                        "~/app/Accounting/Configuration/Banks/bankCtrl.js",
@@ -102,6 +111,13 @@ namespace BMS
                        "~/app/Accounting/Configuration/Banks/bankAccountOwnerTypeCtrl.js",
 
                        "~/app/Accounting/Configuration/Banks/bankAccountCtrl.js",
+                       "~/app/Accounting/Configuration/Banks/bankAccountModalCtrl.js",
+
+                       "~/app/Accounting/Configuration/Banks/bankLoanTypeCtrl.js",
+                       "~/app/Accounting/Configuration/Banks/bankLoanCtrl.js",
+                       "~/app/Accounting/Configuration/Banks/bankLoanTransactionCtrl.js",
+
+
                        "~/app/Accounting/Configuration/Periods/fiscalYearCtrl.js",
                        "~/app/Accounting/Configuration/Banks/bankBranchCtrl.js",
                        "~/app/Accounting/Configuration/Accounts/accCOACtrl.js",
@@ -112,15 +128,32 @@ namespace BMS
                        "~/app/Accounting/Transaction/voucherListCtrl.js",
                        "~/app/Accounting/Transaction/Report/trialBalanceCtrl.js",
                        "~/app/Accounting/Transaction/Report/ledgerSheetCtrl.js",
+                        "~/app/Accounting/Transaction/Report/customLedgerSheetCtrl.js",
+
+                        "~/app/Accounting/Reports/Customers/customerFileCtrl.js",
+                        "~/app/Accounting/Reports/Suppliers/supplierFileCtrl.js",
+
+                        "~/app/Accounting/Approval/purchaseBillApprovalCtrl.js",
+
+                        "~/app/Accounting/PayOrders/payOrderCategoryCtrl.js",
+                        "~/app/Accounting/PayOrders/payOrderCtrl.js",
+
+
+                       
 
                        "~/app/Inventory/Product/productCategoryCtrl.js",
+                       "~/app/Inventory/Product/productBrandCtrl.js",
+                       "~/app/Inventory/Product/productSpecificationCtrl.js",
                        "~/app/Inventory/Product/productCtrl.js",
+                       "~/app/Inventory/Product/productModalCtrl.js",
                        "~/app/Inventory/Product/unitOfMeasureCtrl.js",
                        "~/app/Inventory/Product/productReceiveDeliveryCtrl.js",
 
                        "~/app/HR/collaboratorCtrl.js",
                        "~/app/HR/customerCtrl.js",
                        "~/app/HR/customerModalCtrl.js",
+                       "~/app/HR/contactsPersonCtrl.js",
+
                        "~/app/HR/supplierCtrl.js",
                        "~/app/HR/employeeCtrl.js",
                        "~/app/HR/customerTypeCtrl.js",
@@ -128,6 +161,15 @@ namespace BMS
                        "~/app/HR/employeeTypeCtrl.js",
                        "~/app/HR/departmentCtrl.js",
                        "~/app/HR/designationCtrl.js",
+
+
+                       "~/app/Payroll/salaryComponentsCtrl.js",
+                       "~/app/Payroll/attendanceAuditCtrl.js",
+                       "~/app/Payroll/salaryComponentMappingCtrl.js",
+                       "~/app/Payroll/salaryComponentConfigCtrl.js",
+                       "~/app/Payroll/payrollProcessCtrl.js",
+
+
                        "~/app/Purchase/MoneyRequisitionRequestCtrl.js",
                        "~/app/Purchase/MoneyRequisitionCtrl.js",
                        "~/app/Purchase/purchaseRequisitionCtrl.js",
@@ -181,10 +223,14 @@ namespace BMS
 
             bundles.Add(new ScriptBundle("~/directive/Scripts").Include(
                 "~/common/filter/ngGroup.js",
+                "~/common/filter/timeago.js",
                 "~/common/filter/angular-filter.js",
+                "~/common/filter/custom-filter.js",
                 "~/common/directive/dirPagination.js",
                 "~/common/directive/dirContextMenu.js",
                 "~/common/directive/dirSplitter.js",
+                "~/common/directive/dirAutocomplete.js",
+
                 "~/common/directive/dirRTCurrency.js",
                 "~/common/directive/ng-file-upload-all.js",
                 "~/common/directive/dirPrint.js"));
@@ -192,6 +238,7 @@ namespace BMS
 
             bundles.Add(new ScriptBundle("~/Services/Scripts").Include(
                         "~/common/services/common.services.js",
+                        "~/common/others/appAuth.js",
                         "~/common/services/modalServices.js",
                         "~/common/services/commentResource.js",
                         "~/common/services/companyCategoryResource.js",
@@ -210,11 +257,24 @@ namespace BMS
                         "~/common/services/bankBranchResource.js",
                         "~/common/services/bankAccountResource.js",
 
+
+
                         "~/common/services/bankAccountTypeResource.js",
                         "~/common/services/bankAccountOwnerTypeResource.js",
+
+
+                        "~/common/services/bankLoanTypeResource.js",
+                        "~/common/services/bankLoanResource.js",
+                        "~/common/services/bankLoanTransactionResource.js",
+                        
+
+
                         "~/common/services/fiscalYearResource.js",
                         "~/common/services/companyBranchResource.js",
                         "~/common/services/productCategoryResource.js",
+                        "~/common/services/productBrandResource.js",
+                        "~/common/services/productSpecificationResource.js",
+                        "~/common/services/ProductSpecificationDescriptionResource.js",
                         "~/common/services/productResource.js",
                         "~/common/services/ProductReceiveDeliveryResource.js",
                         "~/common/services/ProductReceiveDeliveryDescriptionResource.js",
@@ -226,6 +286,14 @@ namespace BMS
                         "~/common/services/voucherListResource.js",
                         "~/common/services/trialBalanceResource.js",
                         "~/common/services/ledgerSheetResource.js",
+
+                        "~/common/services/payOrderCategoryResource.js",
+                        "~/common/services/payOrderResource.js",
+
+
+                         "~/common/services/supplierFileResource.js",
+                         "~/common/services/customerFileResource.js",
+                         
 
 
                         "~/common/services/unitOfMeasureResource.js",
@@ -249,6 +317,7 @@ namespace BMS
 
 
                         "~/common/services/uploadFileResource.js",
+                        "~/common/services/attachFileResource.js",
 
 
                         "~/common/services/purchaseDeliveryReceiveResource.js",
@@ -284,11 +353,13 @@ namespace BMS
                         "~/common/services/projectSideResource.js",
 
                         "~/common/services/taxResource.js",
+                        "~/common/services/moduleResource.js",
                         "~/common/services/formGroupPermissionResource.js",
                         "~/common/services/formListResource.js",
                         "~/common/services/formUserPermissionResource.js",
                         "~/common/services/WorkFlowResource.js",
                         "~/common/services/workFlowConfigResource.js",
+
                         "~/common/services/employeeLeaveTypeResource.js",
                         "~/common/services/employeeLeaveGroupResource.js",
                         "~/common/services/employeeLeaveApplicationResource.js",
@@ -296,6 +367,21 @@ namespace BMS
                         "~/common/services/employeesExpensesResource.js",
                         "~/common/services/employeeExpensesDescriptionResource.js",
                         "~/common/services/employeesExpensesPaymentResource.js",
+                        "~/common/services/employeeDetailsResource.js",
+                        "~/common/services/todoListResource.js",
+
+
+                        "~/common/services/calculationTypeResource.js",
+                        "~/common/services/payTypesResource.js",
+                        "~/common/services/salaryComponentResource.js",
+                        "~/common/services/salaryComponentDescriptionResource.js",
+                        "~/common/services/attendanceAuditResource.js",
+                        "~/common/services/salaryComponentMappingResource.js",
+                        "~/common/services/salaryComponentConfigResource.js",
+                        "~/common/services/payrollProcessResource.js",
+                        "~/common/services/payrollProcessDescriptionResource.js",
+
+
 
                         "~/common/services/billofMaterialCategoryResource.js",
                         "~/common/services/billofMaterialResource.js",

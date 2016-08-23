@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("designationCtrl", ["designationResource", designationCtrl]);
-    function designationCtrl(designationResource) {
+        .controller("designationCtrl", ["designationResource", "appAuth", designationCtrl]);
+    function designationCtrl(designationResource, appAuth) {
         var vm = this;
         vm.designations = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

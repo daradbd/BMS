@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("salesQuotationCtrl", ["unitOfMeasureResource", "Util", "billofMaterialResource", "salesOrderResource", "salesQuotationDescriptionResource", "productResource", "collaboratorResource", "salesQuotationResource", "$uibModal", salesQuotationCtrl]);
-    function salesQuotationCtrl(unitOfMeasureResource, Util,billofMaterialResource, salesOrderResource, salesQuotationDescriptionResource, productResource, collaboratorResource, salesQuotationResource,$uibModal) {
+        .controller("salesQuotationCtrl", ["salesQuotationCategoryResource", "unitOfMeasureResource", "Util", "billofMaterialResource", "salesOrderResource", "salesQuotationDescriptionResource", "productResource", "collaboratorResource", "salesQuotationResource", "$uibModal", "appAuth", salesQuotationCtrl]);
+    function salesQuotationCtrl(salesQuotationCategoryResource,unitOfMeasureResource, Util, billofMaterialResource, salesOrderResource, salesQuotationDescriptionResource, productResource, collaboratorResource, salesQuotationResource, $uibModal, appAuth) {
 
         var vm = this;
         vm.Totaltax = 0.00;
@@ -27,7 +27,7 @@
         vm.salesQuotationDescriptionItem = [];
         vm.collaborators = [];
         vm.products = [];
-
+        appAuth.checkPermission();
         vm.isLoad = true;
        // vm.salesQuotation.TaxAmount = 0.00;
         vm.SalesQuotationDescription = { salesQuotationDesc: [{ SalesSectionID: 1, SalesSectionName: '' ,ProductID: 0, Description: "",MOUID:0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
@@ -222,13 +222,34 @@
             });
 
         }
+        vm.UpdateDiscount = function (Value, KeyName) {
+            angular.forEach(vm.SalesQuotationDescription.salesQuotationDesc, function (item, key) {
 
+                item[KeyName] = item.UnitPrice  * Value*0.01;
+
+
+            });
+
+        }
         vm.ShowProductForm = function (item) {
-                    $uibModal.open({
+                 var ProductForm=   $uibModal.open({
                         templateUrl: "app/Inventory/Product/product.html",
                         size: 'lg',
-                        controller: "productCtrl as vm"
-                    });
+                        controller: "productModalCtrl as vm"
+                 });
+                 ProductForm.result.then(function (selectedItem) {
+                    // vm.isLoad = true;
+                     productResource.query().$promise.then(function (data) {
+                         vm.products = data;
+                         //toastr.success("Data Load Successful", "Form Load");
+                         item.cmbProductID = selectedItem;
+                        // vm.isLoad = false;
+                     }, function (error) {
+                         // error handler
+                         toastr.error("Data Load Failed!");
+                     });
+
+                 });
                 }
 
 
@@ -274,6 +295,17 @@
             });
         }
 
+        GetSalesQuotationCateagorys();
+        function GetSalesQuotationCateagorys() {
+            salesQuotationCategoryResource.query().$promise.then(function (data) {
+                vm.salesQuotationCategorys = data;
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
+
         GetUnitOfMeasures();
         function GetUnitOfMeasures() {
             unitOfMeasureResource.query().$promise.then(function (data) {
@@ -288,7 +320,7 @@
         GetProductList();
         //Get All Data List
         function GetProductList() {
-            productResource.query().$promise.then(function (data) {
+            productResource.query({ '$filter': 'IsRawmaterial eq false' }).$promise.then(function (data) {
                 vm.products = data;
                 //toastr.success("Data Load Successful", "Form Load");
 
@@ -342,12 +374,13 @@
                        // GetList();
                         vm.salesQuotation = data;
                         vm.SaveQuotation();
+                        vm.ViewMode(2);
                         toastr.success("Save Successful");
-                        vm.ViewMode(3);
                         vm.isLoad = false;
                     }, function (error) {
                         // error handler
-                        toastr.error("Data Load Failed!");
+                        toastr.error("Data Save Failed!");
+                        vm.isLoad = false;
                     });
             }
             else {
@@ -373,7 +406,6 @@
                     GrandTotal: vm.salesQuotation.GrandTotal,
                     SalesPersonID:vm.salesQuotation.SalesPersonID,
                     ProcesStatusID: 14,
-
                 };
                 salesOrderResource.save(requestForOrder).$promise.then(
                         function (data, responseHeaders) {
@@ -447,7 +479,7 @@
             };
             billofMaterialResource.save(BOMRequest).$promise.then(
                    function (data, responseHeaders) {
-                       vm.ViewMode(3);
+                       vm.ViewMode(2);
                        toastr.success("BOM Request Successful Send", "Form Load");
                        vm.isLoad = false;
                    }, function (error) {
@@ -499,7 +531,7 @@
                 vm.SaveQuotation();
                 vm.salesQuotations = null;
                 GetList();
-                vm.ViewMode(3);
+                vm.ViewMode(2);
                 toastr.success("Data Update Successful", "Form Update");
                 vm.isLoad = false;
                 }, function (error) {
@@ -518,6 +550,7 @@
            // vm.salesQuotationDescriptionItem.$delete({ 'ID': SalesQuotationDescriptionID });
             salesQuotationDescriptionResource.delete({ 'ID':SalesQuotationDescriptionID  }).$promise.then(function (data) {
                 // success handler
+                vm.ViewMode(2);
                 toastr.success("Data Delete Successfully!");
                 GetList();
                 vm.isLoad = false;

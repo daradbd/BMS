@@ -13,13 +13,14 @@
 
     angular
         .module("companyManagement")
-        .controller("productionOrderDeliveryCtrl", ["projectSetupResource","productionOrderDescriptionResource", "salesOrderResource", "salesOrderDescriptionResource", "$rootScope", "companyBranchResource", "productionOrderResource", productionOrderDeliveryCtrl]);
-    function productionOrderDeliveryCtrl(projectSetupResource,productionOrderDescriptionResource,salesOrderResource, salesOrderDescriptionResource, $rootScope, companyBranchResource, productionOrderResource) {
+        .controller("productionOrderDeliveryCtrl", ["projectSetupResource", "productionOrderDescriptionResource", "salesOrderResource", "salesOrderDescriptionResource", "$rootScope", "companyBranchResource", "productionOrderResource", "appAuth", productionOrderDeliveryCtrl]);
+    function productionOrderDeliveryCtrl(projectSetupResource, productionOrderDescriptionResource, salesOrderResource, salesOrderDescriptionResource, $rootScope, companyBranchResource, productionOrderResource, appAuth) {
         var vm = this;
         vm.warning = 'tblWarning';
         vm.productionOrder = [];
         vm.productionOrders = [];
-        vm.projectSetup =[];
+        vm.projectSetup = [];
+        appAuth.checkPermission();
         vm.SalesOrderDescription = { salesOrderDesc: [] };
         vm.productionOrderDescription = { productionOrderDesc: [{ SalesSectionID: 1, SalesSectionName:"", ProductID: 0, OfferDate: "", Oopened: false, ScheduleDate: "", sopened: false, Quantity:0,POrderQuantity:0,IsClaim:false,ClaimParentID:0 }] };
         // View Mode Control Variable // 
@@ -232,7 +233,8 @@
                     ProductionOrderID: vm.productionOrder.ProductionOrderID,
                     CustomerID: vm.productionOrder.CustomerID,
                     Quantity: value.Quantity,
-                    POrderQuantity:value.POrderQuantity,
+                    POrderQuantity: value.POrderQuantity,
+                    DeliveryQty: value.DeliveryQty,
                     SalesSectionID: value.SalesSectionID,
                     SalesSectionName: value.SalesSectionName,
                     ProductID: value.ProductID,
@@ -339,7 +341,8 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                productionOrderResource.update({ 'ID': vm.productionOrder.productionOrderID }, vm.productionOrder).$promise.then(function () {
+                productionOrderResource.update({ 'ID': vm.productionOrder.ProductionOrderID }, vm.productionOrder).$promise.then(function () {
+                vm.SaveproductionOrderDescriptionResource();
                 vm.productionOrders = null;
                 vm.ViewMode(3);
                 GetList();
@@ -356,7 +359,7 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.productionOrder.$delete({ 'ID': vm.productionOrder.productionOrderID });
+            vm.productionOrder.$delete({ 'ID': vm.productionOrder.ProductionOrderID });
             productionOrderResource.delete({ 'ID': vm.productionOrder.productionOrderID }).$promise.then(function (data) {
                 // success handler
                 toastr.success("Data Delete Successfully!");

@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Common
     public class CurrencyController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Currency
         public IEnumerable<Currency> GetCurrencies()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Setting.Common
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            currency.UpdateBy = loginUser.UserID;
             db.Entry(currency).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Setting.Common
         {
             if (ModelState.IsValid)
             {
+                currency.InsertBy = loginUser.UserID;
                 db.Currencies.Add(currency);
                 db.SaveChanges();
 

@@ -13,12 +13,13 @@
 
     angular
         .module("companyManagement")
-        .controller("salesBillCtrl", ["salesBillCategoryResource","unitOfMeasureResource", "currencyResource", "languageResource", "countryResource", "cityResource", "projectSideResource", "projectSetupResource", "salesQuotationDescriptionResource", "$rootScope", "$state", "salesOrderDescriptionResource", "productResource", "collaboratorResource", "salesOrderResource", "salesBillDescriptionResource", "salesBillResource", salesBillCtrl]);
-    function salesBillCtrl(salesBillCategoryResource,unitOfMeasureResource, currencyResource, languageResource, countryResource, cityResource, projectSideResource, projectSetupResource, salesQuotationDescriptionResource, $rootScope, $state, salesOrderDescriptionResource, productResource, collaboratorResource, salesOrderResource, salesBillDescriptionResource, salesBillResource) {
+        .controller("salesBillCtrl", ["salesBillCategoryResource", "unitOfMeasureResource", "currencyResource", "languageResource", "countryResource", "cityResource", "projectSideResource", "projectSetupResource", "salesQuotationDescriptionResource", "$rootScope", "$state", "salesOrderDescriptionResource", "productResource", "collaboratorResource", "salesOrderResource", "salesBillDescriptionResource", "salesBillResource", "appAuth", salesBillCtrl]);
+    function salesBillCtrl(salesBillCategoryResource, unitOfMeasureResource, currencyResource, languageResource, countryResource, cityResource, projectSideResource, projectSetupResource, salesQuotationDescriptionResource, $rootScope, $state, salesOrderDescriptionResource, productResource, collaboratorResource, salesOrderResource, salesBillDescriptionResource, salesBillResource, appAuth) {
 
         var vm = this;
 
         vm.Totaltax = 0.00;
+        vm.TotalVAT = 0.00;
         vm.TotlaDiscount = 0.00;
         vm.GTotal = 0.00;
         vm.Shipping = 0.00;
@@ -31,6 +32,7 @@
         vm.products = [];
         vm.companyBranch = [];
         vm.salesBill = {};
+        appAuth.checkPermission();
 
         vm.SalesBillDescription = { salesBillDesc: [{ SalesSectionID: 1, SalesSectionName: '', ProductID: 0, Description: "", MOUID: 0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
 
@@ -130,6 +132,7 @@
         vm.QuotationSubTotal = function () {
             var total = 0.00;
             var Totaltax = 0.00;
+            var Totalvat = 0.00;
             var TotlaDiscount = 0.00;
 
             angular.forEach(vm.SalesBillDescription.salesBillDesc, function (item, key) {
@@ -138,14 +141,20 @@
                     Totaltax += ((item.Quantity * (item.UnitPrice - item.Discount)) * (item.Taxes) * 0.01);
 
                 }
+                if (item.Taxes > 0) {
+                    Totalvat += ((item.Quantity * (item.UnitPrice - item.Discount)) * (item.VAT) * 0.01);
+
+                }
                 if (item.Discount > 0) {
                     TotlaDiscount += (item.Quantity * item.Discount);
                 }
 
             });
             vm.Totaltax = Totaltax;
+            vm.TotalVAT= Totalvat;
+
             vm.TotlaDiscount = TotlaDiscount;
-            vm.GTotal = (total + vm.Totaltax + vm.Shipping) - vm.TotlaDiscount;
+            vm.GTotal = (total + vm.Totaltax + vm.Shipping + vm.TotalVAT) - vm.TotlaDiscount;
             return total;
         }
 

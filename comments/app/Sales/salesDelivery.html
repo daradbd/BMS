@@ -91,6 +91,20 @@
                                 </div>
                             <div class="col-lg-6">
                                 <div class="form-group"
+                                     ng-class="{'has-error':salesDeliveryForm.cmbSalesOrderCategory.$invalid
+                                        && salesDeliveryForm.cmbSalesOrderCategory.$dirty}">
+
+                                    <label for="cmbSalesDeliveryCategory">
+                                        Sales Delivery Category
+                                    </label>
+                                    <select class="form-control"
+                                            id="cmbSalesDeliveryCategory"
+                                            name="cmbSalesDeliveryCategory"
+                                            ng-model="vm.cmbSalesDeliveryCategory"
+                                            ng-options="SalesDeliveryCategory.SalesDeliveryCategoryName for SalesDeliveryCategory in vm.salesDeliveryCategorys track by SalesDeliveryCategory.SalesDeliveryCategoryID "
+                                            ng-change="vm.salesDelivery.SalesDeliveryCategoryID=vm.cmbSalesDeliveryCategory.SalesDeliveryCategoryID"></select>
+                                </div>
+                                <div class="form-group"
                                      ng-class="{'has-error':salesDeliveryForm.txtReferenceNo.$invalid
                                          && salesDeliveryForm.txtReferenceNo.$dirty}">
 
@@ -254,7 +268,7 @@
                             <table id="testTable" width="642">
                                 <tbody>
                                     <tr>
-                                        <td colspan="4" width="693">Dated &nbsp;&nbsp; :{{vm.salesDelivery.Date}}</td>
+                                        <td colspan="4" width="693">Dated &nbsp;&nbsp; :{{vm.salesDelivery.Date| date:"dd-MMM-yyyy"}}</td>
                                         <td width="69">&nbsp;</td>
                                         <td width="80">&nbsp;</td>
                                     </tr>
@@ -527,15 +541,17 @@
                                             <thead>
                                                 <tr>
                                                     <th>Code</th>
-                                                    <th>Remarks</th>
+                                                    <th>Customer</th>
+                                                    <th>Date</th>
                                                     <th class="noPrint">Preview</th>	
                                                 </tr>
 
                                             </thead>
                                             <tbody>
-                                                <tr dir-paginate="salesDelivery in vm.salesDeliverys|filter:searchText| itemsPerPage: vm.num">
+                                                <tr dir-paginate="salesDelivery in vm.salesDeliverys|orderBy:'-SalesDeliveryID'|filter:searchText| itemsPerPage: vm.num">
                                                     <td>{{salesDelivery.SalesDeliveryCode  | uppercase}}</td>
-                                                    <td>{{salesDelivery.Remarks}}</td>
+                                                    <td>{{salesDelivery.Collaborator.Name}}</td>
+                                                    <td>{{salesDelivery.Date| date:"dd-MMM-yyyy"}}</td>
                                                     <td class="noPrint">
                                                         <button type="button" ng-click="vm.Get(salesDelivery.SalesDeliveryID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
                                                             <i class="fa fa-eye"></i>

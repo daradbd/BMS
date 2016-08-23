@@ -187,16 +187,16 @@
                                                                             ng-change="item.ProductionTypeID = item.cmbProductionTypes.ProductionTypeID"></select>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" ng:model="item.Height" value="0" ng:required ng:validate="number" size="6">
+                                                                    <input class="form-control" style="min-width:75px" ng:model="item.Height" value="0" ng:required ng:validate="number" size="6">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" ng:model="item.Length" value="0" ng:required ng:validate="number" size="6">
+                                                                    <input class="form-control" style="min-width:75px" ng:model="item.Length" value="0" ng:required ng:validate="number" size="6">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" ng:model="item.Width" value="0" ng:required ng:validate="number" size="6">
+                                                                    <input class="form-control" style="min-width:75px" ng:model="item.Width" value="0" ng:required ng:validate="number" size="6">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" ng:model="item.ProductQuantity" value="0" ng:required ng:validate="number" size="6">
+                                                                    <input class="form-control" style="min-width:75px" ng:model="item.ProductQuantity" value="0" ng:required ng:validate="number" size="6">
                                                                 </td>
                                                                 <td>
                                                                     <div class="input-group">
@@ -215,7 +215,7 @@
                                                                     </div>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" ng:model="item.RawMaterialQuantity" value="0" ng:required ng:validate="number" size="6">
+                                                                    <input class="form-control" style="min-width:175px"  ng:model="item.RawMaterialQuantity" value="0" ng:required ng:validate="number" size="6">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" ng:model="item.Wastage" value="0" ng:required ng:validate="number" size="6">
@@ -398,6 +398,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
+                                                <th>Code</th>
                                                 <th>Status</th>
                                                 <th class="noPrint">Preview</th>
                                             </tr>
@@ -406,6 +407,8 @@
                                         <tbody>
                                             <tr dir-paginate="billofMaterial in vm.billofMaterials|orderBy:'-BillofMaterialID'|filter:searchText| itemsPerPage: vm.num">
                                                 <td>{{billofMaterial.BillofMaterialCode  | uppercase}}</td>
+                                                <td>{{billofMaterial.BillofMaterialName}}</td>
+                                                <td>{{billofMaterial.Date| date:"dd-MMM-yyyy"}}</td>
                                                 <td><span ng-if="billofMaterial.IsMRP==true" class="label label-success">Complete</span><span ng-if="billofMaterial.IsMRP==false" class="label label-warning">Pending</span></td>
 
                                                 <td class="noPrint">

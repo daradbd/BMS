@@ -13,12 +13,13 @@
 
     angular
         .module("companyManagement")
-        .controller("salesDeliveryCtrl", ["unitOfMeasureResource", "salesDeliveryDescriptionResource", "salesOrderDescriptionResource", "$rootScope", "salesOrderResource", "salesDeliveryResource", salesDeliveryCtrl]);
+        .controller("salesDeliveryCtrl", ["salesDeliveryCategoryResource", "unitOfMeasureResource", "salesDeliveryDescriptionResource", "salesOrderDescriptionResource", "$rootScope", "salesOrderResource", "salesDeliveryResource", "appAuth", salesDeliveryCtrl]);
 
-    function salesDeliveryCtrl(unitOfMeasureResource, salesDeliveryDescriptionResource, salesOrderDescriptionResource, $rootScope, salesOrderResource, salesDeliveryResource) {
+    function salesDeliveryCtrl(salesDeliveryCategoryResource, unitOfMeasureResource, salesDeliveryDescriptionResource, salesOrderDescriptionResource, $rootScope, salesOrderResource, salesDeliveryResource, appAuth) {
         var vm = this;
         vm.salesDeliverys = [];
         vm.salesDelivery = {};
+        appAuth.checkPermission();
 
         vm.SalesDeliveryDescription = { salesDeliveryDesc: [{ ProductID: 0, Description: "", MOUID: 0, ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
         
@@ -122,6 +123,17 @@
         vm.CheckMax = function (item)
         {
             item.RDQuantity = (item.Quantity - item.DeliveredQuantity) < item.RDQuantity ? (item.Quantity - item.DeliveredQuantity) : item.RDQuantity;
+        }
+
+        GetSalesDeliveryCateagorys();
+        function GetSalesDeliveryCateagorys() {
+            salesDeliveryCategoryResource.query().$promise.then(function (data) {
+                vm.salesDeliveryCategorys = data;
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
         }
 
 

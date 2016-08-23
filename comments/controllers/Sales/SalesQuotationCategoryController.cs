@@ -16,6 +16,7 @@ namespace BMS.Controllers.Sales
     public class SalesQuotationCategoryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesQuotationCategory
         public IEnumerable<SalesQuotationCategory> GetSalesQuotationCategories()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Sales
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            salesquotationcategory.UpdateBy = loginUser.UserID;
             db.Entry(salesquotationcategory).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
+                salesquotationcategory.InsertBy = loginUser.UserID;
                 db.SalesQuotationCategories.Add(salesquotationcategory);
                 db.SaveChanges();
 

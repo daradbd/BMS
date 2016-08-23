@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
 using System.Web;
@@ -23,34 +24,43 @@ namespace BMS.Models
         private UsersContext db = new UsersContext();
         public LoginUser()
         {
-            
-            long userID = WebSecurity.CurrentUserId;
-            Collaborator collabarator = db.Collaborators.Include(c=>c.Designation).Where(u => u.UserID == userID).SingleOrDefault();
-           // Designation designation = db.Designations.Where(d => d.DesignationID == collabarator.DesignationID).SingleOrDefault();
-            Company company = db.Companies.Where(c=>c.CompanyID==collabarator.CompanyID).SingleOrDefault();
-            this.UserID = collabarator.UserID;
-            this.UserName = collabarator.Name;
-            this.CompanyID = collabarator.CompanyID;
-            this.CompanyBranchID = collabarator.CompanyBranchID;
-            this.ReportToID = collabarator.ReportToID;
-            if(collabarator.DesignationID!=null)
-            {
-                this.Designation = collabarator.Designation.DesignationName;
-            }
-            else
-            {
-                this.Designation = "";
-            }
-            
-            this.CompanyName = company.CompanyName;
-            //this.CompanyBranchName = collabarator.CompanyBranchName;
-            this.EmailID = collabarator.EmailID;
-            this.Phone = collabarator.Phone;
-            this.IsEmployee = collabarator.IsEmployee;
-            this.IsSupplier = collabarator.IsSupplier;
-            this.IsSupplier = collabarator.IsSupplier;
-            this.IsCustomer = collabarator.IsCustomer;
 
+            try
+            {
+                long userID = WebSecurity.CurrentUserId;
+                Collaborator collabarator = db.Collaborators.Include(c => c.Designation).Where(u => u.UserID == userID).SingleOrDefault();
+                // Designation designation = db.Designations.Where(d => d.DesignationID == collabarator.DesignationID).SingleOrDefault();
+                Company company = db.Companies.Where(c => c.CompanyID == collabarator.CompanyID).SingleOrDefault();
+                Debug.Assert(collabarator != null, "collabarator != null");
+                this.UserID = collabarator.UserID;
+                this.UserName = collabarator.Name;
+                this.CompanyID = collabarator.CompanyID;
+                this.CompanyBranchID = collabarator.CompanyBranchID;
+                this.ReportToID = collabarator.ReportToID;
+                if (collabarator.DesignationID != null)
+                {
+                    this.Designation = collabarator.Designation.DesignationName;
+                }
+                else
+                {
+                    this.Designation = "";
+                }
+
+                this.CompanyName = company.CompanyName;
+                //this.CompanyBranchName = collabarator.CompanyBranchName;
+                this.EmailID = collabarator.EmailID;
+                this.Phone = collabarator.Phone;
+                this.IsEmployee = collabarator.IsEmployee;
+                this.IsSupplier = collabarator.IsSupplier;
+                this.IsSupplier = collabarator.IsSupplier;
+                this.IsCustomer = collabarator.IsCustomer;
+
+            }
+            catch (Exception e)
+            {
+
+               
+            }
         }
 
         public long? UserID { get; set; }

@@ -16,6 +16,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
     public class BankAccountTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/BankAccountType
         public IEnumerable<BankAccountType> GetBankAccountTypes()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            bankaccounttype.UpdateBy = loginUser.UserID;
             db.Entry(bankaccounttype).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Accounting.Configuration.Banks
         {
             if (ModelState.IsValid)
             {
+                bankaccounttype.InsertBy = loginUser.UserID;
                 db.BankAccountTypes.Add(bankaccounttype);
                 db.SaveChanges();
 

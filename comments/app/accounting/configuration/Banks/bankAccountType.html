@@ -176,7 +176,7 @@
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="bankAccountType in vm.bankAccountTypes|filter:searchText| itemsPerPage: vm.num">
+                                            <tr dir-paginate="bankAccountType in vm.bankAccountTypes|filter:searchText| itemsPerPage: vm.num |orderBy:'-BankAccountTypeID'">
                                                 <td>{{bankAccountType.BankAccountTypeCode  | uppercase}}</td>
                                                 <td>{{bankAccountType.BankAccountTypeName}}</td>
                                                 <td>{{bankAccountType.Remarks}}</td>

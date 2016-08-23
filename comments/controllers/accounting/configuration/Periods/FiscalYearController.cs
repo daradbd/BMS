@@ -16,6 +16,7 @@ namespace BMS.Controllers.Accounting.Configuration.Periods
     public class FiscalYearController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/FiscalYear
         public IEnumerable<FiscalYear> GetFiscalYears()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Accounting.Configuration.Periods
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            fiscalyear.UpdateBy = loginUser.UserID;
             db.Entry(fiscalyear).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Accounting.Configuration.Periods
         {
             if (ModelState.IsValid)
             {
+                fiscalyear.InsertBy = loginUser.UserID;
                 db.FiscalYears.Add(fiscalyear);
                 db.SaveChanges();
 

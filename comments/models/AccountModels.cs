@@ -17,15 +17,17 @@ using BMS.Models.Inventory;
 using BMS.Models.Accounting.Transaction;
 using BMS.Models.Purchase;
 using BMS.Models.Production;
+using BMS.Models.Sales;
 using BMS.Models.Project;
 using BMS.Models.Setting.Security;
 using BMS.Models.Accounting.Configuration.Others;
 using BMS.Models.HR.Leave;
 using BMS.Models.Expenses;
-using BMS.Models.Production;
 using BMS.Models.HR.Holiday;
 using BMS.Models.Holiday.GeneralHoliday;
 using BMS.Models.Resources;
+using BMS.Models.Payroll;
+using BMS.Models.Accounting.PayOrders;
 
 namespace BMS.Models
 {
@@ -234,6 +236,48 @@ namespace BMS.Models
         public DbSet<PurchasePermit> PurchasePermits { get; set; }
 
         public DbSet<PurchasePermitDescription> PurchasePermitDescriptions { get; set; }
+
+        public DbSet<Module> Modules { get; set; }
+
+        public DbSet<ProductBrand> ProductBrands { get; set; }
+
+        public DbSet<ProductSpecification> ProductSpecifications { get; set; }
+
+        public DbSet<ProductSpecificationDescription> ProductSpecificationDescriptions { get; set; }
+
+        public DbSet<AttachFile> AttachFiles { get; set; }
+
+        public DbSet<CalculationType> CalculationTypes { get; set; }
+
+        public DbSet<PayType> PayTypes { get; set; }
+
+        public DbSet<SalaryComponent> SalaryComponents { get; set; }
+
+        public DbSet<SalaryComponentDescription> SalaryComponentDescriptions { get; set; }
+
+        public DbSet<AttendanceAudit> AttendanceAudits { get; set; }
+
+        public DbSet<SalaryComponentConfig> SalaryComponentConfigs { get; set; }
+
+        public DbSet<SalaryComponentMapping> SalaryComponentMappings { get; set; }
+
+        public DbSet<PayrollProcess> PayrollProcesses { get; set; }
+
+        public DbSet<PayrollProcessDescription> PayrollProcessDescriptions { get; set; }
+
+        public DbSet<EmployeeDetails> EmployeeDetails { get; set; }
+
+        public DbSet<TodoList> TodoLists { get; set; }
+
+        public DbSet<PayOrderCategory> PayOrderCategories { get; set; }
+
+        public DbSet<PayOrder> PayOrders { get; set; }
+
+        public DbSet<BankLoan> BankLoans { get; set; }
+
+        public DbSet<BankLoanType> BankLoanTypes { get; set; }
+
+        public DbSet<BankLoanTransaction> BankLoanTransactions { get; set; }
 
     }
 

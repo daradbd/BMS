@@ -10,17 +10,38 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Inventory;
 using BMS.Models;
+using System.Web.Http.OData.Query;
 
 namespace BMS.Controllers.Inventory
 {
     public class ProductController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/Product
-        public IEnumerable<Product> GetProducts()
+        public IEnumerable<Product> GetProducts(ODataQueryOptions Options)
         {
-            return db.Products.AsEnumerable();
+
+            var products = Options.ApplyTo(db.Products) as IEnumerable<Product>;
+            var productDetails = from p in db.Products select new
+            {
+                ProductID=p.ProductID,
+                ProductCode=p.ProductCode,
+                ProductName=p.ProductName,
+                ProductSpecificationDescription=db.ProductSpecificationDescriptions.Where(s=>s.ProductID==p.ProductID).Select(s=>s.SpecificationValue)
+
+            };
+
+            var result2 = (from a in productDetails.ToList()
+                           select new
+                           {
+                               ProductID = a.ProductID,
+                               ProductCode = a.ProductCode,
+                               ProductName = a.ProductName,
+                               ProductSpecificationDescription = String.Join(", ", a.ProductSpecificationDescription.ToArray())
+                           });
+            return products.AsEnumerable();
         }
 
         // GET api/Product/5
@@ -48,6 +69,7 @@ namespace BMS.Controllers.Inventory
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            product.UpdateBy = loginUser.UserID;
             db.Entry(product).State = EntityState.Modified;
 
             try
@@ -67,6 +89,7 @@ namespace BMS.Controllers.Inventory
         {
             if (ModelState.IsValid)
             {
+                product.InsertBy = loginUser.UserID;
                 db.Products.Add(product);
                 db.SaveChanges();
 

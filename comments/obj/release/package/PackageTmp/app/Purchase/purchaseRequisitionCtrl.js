@@ -13,19 +13,19 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseRequisitionCtrl", ["unitOfMeasureResource", "companyBranchResource", "requestForQuotationResource", "purchaseRequisitionDescriptionResource", "productResource", "projectSetupResource", "collaboratorResource", "purchaseRequisitionResource", purchaseRequisitionCtrl]);
-    function purchaseRequisitionCtrl(unitOfMeasureResource, companyBranchResource, requestForQuotationResource, purchaseRequisitionDescriptionResource, productResource, projectSetupResource, collaboratorResource, purchaseRequisitionResource) {
+        .controller("purchaseRequisitionCtrl", ["unitOfMeasureResource", "companyBranchResource", "requestForQuotationResource", "purchaseRequisitionDescriptionResource", "productResource", "projectSetupResource", "collaboratorResource", "purchaseRequisitionResource", "appAuth", purchaseRequisitionCtrl]);
+    function purchaseRequisitionCtrl(unitOfMeasureResource, companyBranchResource, requestForQuotationResource, purchaseRequisitionDescriptionResource, productResource, projectSetupResource, collaboratorResource, purchaseRequisitionResource, appAuth) {
         var vm = this;
         vm.purchaseRequisitions = [];
        // vm.requestForQuotation = [];
         vm.products = [];
-
+        appAuth.checkPermission();
        
 
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -92,7 +92,7 @@
                 vm.PurchaseRequisitionDescription = { purchaseRequisitionDesc: [] };
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = false;
 
 
@@ -108,7 +108,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -123,7 +123,7 @@
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = (vm.purchaseRequisition.ProcesStatusID == 1 ? true : false);
 
 
@@ -136,17 +136,7 @@
             }
         }
 
-        //vm.SentToQuotationShow = function () {
 
-        //    if(vm.SentToQuotationButton == true)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
         var DispayButton = function () {
 
         }
@@ -188,7 +178,7 @@
         GetProductList();
         //Get All Data List
         function GetProductList() {
-            productResource.query().$promise.then(function (data) {
+            productResource.query({ '$filter': 'IsRawmaterial eq true' }).$promise.then(function (data) {
                 vm.products = data;
                 toastr.success("Data Load Successful", "Form Load");
 
@@ -278,11 +268,6 @@
                     Quantity: value.Quantity,
                     ScheduleDate: value.ScheduleDate,
                 };
-                //alert(angular.toJson(VoucherInfo));
-                //alert(value.COAID);
-                //vm.voucherList.COAID = value.COAID;
-                //vm.voucherList.Amount = value.Amount;
-                //vm.voucherList.DrCr = value.DrCr;
 
                 purchaseRequisitionDescriptionResource.save(purchaseRequisitionInfo).$promise.then(
                 function (data, responseHeaders) {

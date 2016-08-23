@@ -16,6 +16,7 @@ namespace BMS.Controllers.HR
     public class CustomerTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/CustomerType
         public IEnumerable<CustomerType> GetCustomerTypes()
@@ -47,6 +48,7 @@ namespace BMS.Controllers.HR
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+            customertype.UpdateBy = loginUser.UserID;
 
             db.Entry(customertype).State = EntityState.Modified;
 
@@ -67,6 +69,7 @@ namespace BMS.Controllers.HR
         {
             if (ModelState.IsValid)
             {
+                customertype.InsertBy = loginUser.UserID;
                 db.CustomerTypes.Add(customertype);
                 db.SaveChanges();
 

@@ -14,13 +14,13 @@
 
     angular
         .module("companyManagement")
-        .controller("moneyRequisitionRequestCtrl", ["moneyRequisitionResource", "projectSetupResource", "collaboratorResource", "moneyRequisitionRequestResource", moneyRequisitionRequestCtrl]);
-    function moneyRequisitionRequestCtrl(moneyRequisitionResource,projectSetupResource, collaboratorResource, moneyRequisitionRequestResource)
+        .controller("moneyRequisitionRequestCtrl", ["moneyRequisitionResource", "projectSetupResource", "collaboratorResource", "moneyRequisitionRequestResource", "appAuth", moneyRequisitionRequestCtrl]);
+    function moneyRequisitionRequestCtrl(moneyRequisitionResource, projectSetupResource, collaboratorResource, moneyRequisitionRequestResource, appAuth)
     {
         var vm = this;
         vm.moneyRequisitionRequests = [];
         vm.moneyRequisition = {};
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

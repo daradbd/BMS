@@ -17,6 +17,7 @@ namespace BMS.Controllers.Production
     public class ProductionOrderController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProductionOrder
         public IEnumerable<ProductionOrder> GetProductionOrders()
@@ -49,6 +50,7 @@ namespace BMS.Controllers.Production
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            productionorder.UpdateBy = loginUser.UserID;
             db.Entry(productionorder).State = EntityState.Modified;
 
             try
@@ -74,6 +76,8 @@ namespace BMS.Controllers.Production
                 string ProOCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
                 productionorder.ProductionOrderCode = ProOCode;
                 productionorder.Date = DateTime.Now.ToLocalTime();
+                productionorder.InsertBy = loginUser.UserID;
+
                 db.ProductionOrders.Add(productionorder);
                 db.SaveChanges();
 

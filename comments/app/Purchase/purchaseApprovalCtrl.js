@@ -13,14 +13,15 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseApprovalCtrl", ["collaboratorResource", "purchasePermitResource", "purchasePermitDescriptionResource", "purchaseOrderResource", "purchaseOrderDescriptionResource", purchaseApprovalCtrl]);
-    function purchaseApprovalCtrl(collaboratorResource, purchasePermitResource, purchasePermitDescriptionResource, purchaseOrderResource, purchaseOrderDescriptionResource) {
+        .controller("purchaseApprovalCtrl", ["collaboratorResource", "purchasePermitResource", "purchasePermitDescriptionResource", "purchaseOrderResource", "purchaseOrderDescriptionResource", "appAuth", purchaseApprovalCtrl]);
+    function purchaseApprovalCtrl(collaboratorResource, purchasePermitResource, purchasePermitDescriptionResource, purchaseOrderResource, purchaseOrderDescriptionResource, appAuth) {
         var vm = this;
         vm.purchaseOrders = [];
         vm.purchasePermits = [];
         vm.purchasePermit = {};
         vm.PurchaseOrderDescription = [];
         vm.purchasePermitDescription = [];
+        appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;

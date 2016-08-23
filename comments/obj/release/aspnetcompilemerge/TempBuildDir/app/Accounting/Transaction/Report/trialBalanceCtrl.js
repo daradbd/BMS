@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("trialBalanceCtrl", ["trialBalanceResource", trialBalanceCtrl]);
-    function trialBalanceCtrl(trialBalanceResource) {
+        .controller("trialBalanceCtrl", ["trialBalanceResource", "appAuth", trialBalanceCtrl]);
+    function trialBalanceCtrl(trialBalanceResource, appAuth) {
         var vm = this;
         vm.trialBalances = [];
 
@@ -23,7 +23,7 @@
         vm.ListView = true;
         vm.DetailsView = false
         vm.EditView = false;
-
+        appAuth.checkPermission();
         // Action Button Control Variable //
         vm.SaveButton = false;
         vm.EditButton = false;

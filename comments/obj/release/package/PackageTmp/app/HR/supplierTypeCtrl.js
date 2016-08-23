@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("supplierTypeCtrl", ["supplierTypeResource", supplierTypeCtrl]);
-    function supplierTypeCtrl(supplierTypeResource) {
+        .controller("supplierTypeCtrl", ["supplierTypeResource", "appAuth", supplierTypeCtrl]);
+    function supplierTypeCtrl(supplierTypeResource, appAuth) {
         var vm = this;
         vm.supplierTypes = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -166,7 +166,7 @@
 
         //Data Delete
         vm.Delete = function () {
-            vm.supplierType.$delete({ 'ID': vm.supplierType.SupplierTypeID });
+           
             supplierTypeResource.delete({ 'ID': vm.supplierType.SupplierTypeID }).$promise.then(function (data) {
                 // success handler
                 toastr.success("Data Delete Successfully!");

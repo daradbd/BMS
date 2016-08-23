@@ -22,7 +22,7 @@
         })()
 </script>
 
-    <div ng-controller="userAuthenticationCtrl as userAuthentication" class="wrapper">
+    <div ng-controller="userAuthenticationCtrl as mm" class="wrapper">
         <header class="main-header">
             <!-- Logo -->
             <a href="#" class="logo">
@@ -119,7 +119,7 @@
                         </li>
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown notifications-menu">
-                            <a  class="dropdown-toggle" data-toggle="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
                                 <span class="label label-warning">10</span>
                             </a>
@@ -265,7 +265,8 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Sign out</a>
+                                        @*<a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Sign out</a>*@
+                                        <a href="#" ng-click="mm.logout()" class="btn btn-default btn-flat">Logout</a>
                                     </div>
                                 </li>
                             </ul>
@@ -399,8 +400,35 @@
                                     </li>
                                 </ul>
                             </li>
-                        </ul>
-                    </li>
+                            <li>
+                                <a>
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-lock"></span>
+                                    <span class="sidebar-nav-item">Security</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a ui-sref="module">
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                            Module
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ui-sref="formList">
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                            Form List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ui-sref="formUserPermission">
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                            User Permission
+                                        </a>
+                                    </li>
+                                </ul>
+                             </li>
+                           </ul>
+                            </li>
                     <li class="treeview">
                         <a>
                             <i class="fa fa-suitcase"></i>
@@ -421,103 +449,93 @@
                                             OrderCategory
                                         </a>
                                     </li>
+                                    <li>
+                                        <a ui-sref="supplierType">
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                            Supplier Type
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
                         <ul class="treeview-menu">
                             <li>
-                                <a ui-sref="supplierType">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Supplier Type
+                                <a>
+                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                    <span class="sidebar-nav-item">Operation</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
                                 </a>
-                            </li>
-                            <li>
-                                <a ui-sref="suppliers">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Suppliers
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="moneyRequisitionRequest">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    MoneyRequisitionRequest
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="moneyRequisition">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    MoneyRequisition
-                                </a>
-                            </li>
+                                <ul class="treeview-menu">
 
-                            <li>
-                                <a ui-sref="purchaseRequisition">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Purchase Requisition
-                                </a>
+                                    <li>
+                                        <a ui-sref="suppliers">
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                            Suppliers
+                                        </a>
+                                    </li>
+                                    @*<li>
+                            <a ui-sref="moneyRequisitionRequest">
+                                <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                MoneyRequisitionRequest
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="moneyRequisition">
+                                <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                MoneyRequisition
+                            </a>
+                        </li>*@
+
+
+                                    <li>
+                                        <a ui-sref="requisitionDelivery">
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                            Requisition Delivery
+                                        </a>
+                                    </li>
+
+                                    @*<li>
+                            <a ui-sref="requestForQuotation">
+                                <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                Request For Quotation
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="maintainPurchaseQuotation">
+                                <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                Maintain Purchase Quotation
+                            </a>
+                        </li>*@
+                                    <li>
+                                        <a ui-sref="purchaseOrder">
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                            Purchase Order
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ui-sref="purchaseOrderList">
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                            Create OrderList
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a ui-sref="purchaseBill">
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                            Purchase Bill
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ui-sref="purchaseDeliveryReceive">
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                            Purchase Receive
+                                        </a>
+                                    </li>
+
+                                </ul> @*End Operation*@
+                                </li>
+                            </ul>
                             </li>
-                            <li>
-                                <a ui-sref="requisitionDelivery">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Requisition Delivery
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="requisitionReceive">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Requisition Receive
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="requestForQuotation">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Request For Quotation
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="maintainPurchaseQuotation">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Maintain Purchase Quotation
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="purchaseOrder">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Purchase Order
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="purchaseOrderList">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Create OrderList
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="purchaseApproval">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    OrderList Approval
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="purchaseBill">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Purchase Bill
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="purchaseDeliveryReceive">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Purchase Delivery Receive
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="purchaseBillPayment">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Purchase Bill Payment
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="treeview">
                         <a>
                             <i class="fa fa-tags"></i>
@@ -556,369 +574,653 @@
                                             Bill Category
                                         </a>
                                     </li>
+                                    <li>
+                                        <a ui-sref="customerType">
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                            Customer Type
+                                        </a>
+                                    </li>
                                 </ul>
 
                             </li>
                         </ul>
                         <ul class="treeview-menu">
                             <li>
-                                <a ui-sref="customerType">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Customer Type
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="customers">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Customers
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="salesQuotation">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    sales Quotation
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="salesOrder">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    sales Order
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="salesDelivery">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Sales Delivery
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="salesBill">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Sales Bill
-                                </a>
-                            </li>
-                            <li>
-                                <a ui-sref="salesReceivePayment">
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                    Sales Receive Payment
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a>
-                             <i class="fa fa-files-o"></i>
-                            <span class="sidebar-nav-item">Accounting</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
                                 <a>
                                     <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
-                                    <span class="sidebar-nav-item">Configuration</span>
+                                    <span class="sidebar-nav-item">Operation</span>
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </a>
                                 <ul class="treeview-menu">
+
                                     <li>
-                                        <a ui-sref="fiscalYear">
+                                        <a ui-sref="customers">
                                             <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Fiscal Year
+                                            Customers
                                         </a>
                                     </li>
                                     <li>
-                                        <a ui-sref="accType">
+                                        <a ui-sref="salesQuotation">
                                             <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Account Type
+                                            sales Quotation
                                         </a>
                                     </li>
                                     <li>
-                                        <a ui-sref="paymentMethod">
+                                        <a ui-sref="salesOrder">
                                             <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Payment Method
+                                            sales Order
                                         </a>
                                     </li>
                                     <li>
-                                        <a ui-sref="voucherType">
+                                        <a ui-sref="salesDelivery">
                                             <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Voucher Type
+                                            Sales Delivery
                                         </a>
                                     </li>
                                     <li>
-                                        <a ui-sref="accCOA">
+                                        <a ui-sref="salesBill">
                                             <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            COA
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="accCOAConfig">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            COA Config
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="accCOAMapping">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            COA Mapping
+                                            Sales Bill
                                         </a>
                                     </li>
 
-                                    <li>
-                                        <a ui-sref="bank">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Bank
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="bankBranch">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Bank Branch
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="bankAccountOwnerType">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Account Owner Type
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="bankAccountType">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Bank Account Type
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="bankAccount">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Bank Account
-                                        </a>
-                                    </li>
-                                </ul>
+                                </ul> @*End Operation*@
+                                </li>
+                            </ul>
                             </li>
-                            <li>
+                            <li class="treeview">
                                 <a>
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
-                                    <span class="sidebar-nav-item">Transaction</span>
+                                    <i class="fa fa-files-o"></i>
+                                    <span class="sidebar-nav-item">Accounting</span>
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li>
-                                        <a ui-sref="voucherList">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Voucher
-                                        </a>
+                                <li>
+                                    <a>
+                                        <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                        <span class="sidebar-nav-item">Bank</span>
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li>
+                                            <a>
+                                                <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                                <span class="sidebar-nav-item">Bank Setup</span>
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                <li>
+                                                    <a ui-sref="bank">
+                                                        <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                        Bank
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ui-sref="bankBranch">
+                                                        <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                        Bank Branch
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ui-sref="bankAccountOwnerType">
+                                                        <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                        Account Owner Type
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ui-sref="bankAccountType">
+                                                        <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                        Bank Account Type
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ui-sref="bankAccount">
+                                                        <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                        Bank Account
+                                                    </a>
+                                                </li>
+                                                
+                                                
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                     <ul class="treeview-menu">
+                                            <li>
+                                                <a>
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                                    <span class="sidebar-nav-item">Bank Loan</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li>
+                                                        <a ui-sref="bankLoanType">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Bank Loan Type
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="bankLoan">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Bank Loan
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="bankLoanTransaction">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Bank Loan Transaction
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                              </li>
+                                        </ul>
+                                    
+                                        <ul class="treeview-menu">
+                                            <li>
+                                            <a>
+                                                <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                                <span class="sidebar-nav-item">Bank Report</span>
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </a>
+                                                <ul class="treeview-menu">
+                                                    <li>
+                                                        <a ui-sref="bankLedger">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Bank Ledger
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                              </li>
+                                        </ul>
                                     </li>
+                                            
+                             
                                     <li>
-                                        <a ui-sref="trialBalance">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Trial Balance
+                                        <a>
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                            <span class="sidebar-nav-item">Configuration</span>
+                                            <i class="fa fa-angle-left pull-right"></i>
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="ledgerSheet">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Ledger Sheet
-                                        </a>
-                                    </li>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a ui-sref="fiscalYear">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Fiscal Year
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="accType">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Account Type
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="paymentMethod">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Payment Method
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="voucherType">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Voucher Type
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="accCOA">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    COA
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="accCOAConfig">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    COA Config
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="accCOAMapping">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    COA Mapping
+                                                </a>
+                                            </li>
 
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a>
-                            <i class="fa fa-puzzle-piece"></i>
-                            <span class="sidebar-nav-item">Production</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a>
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
-                                    <span class="sidebar-nav-item">MRP</span>
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a ui-sref="productionType">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Production Type
-                                        </a>
-                                    </li>
 
-                                    <li>
-                                        <a ui-sref="productionOrderCategory">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            productionOrderCategory
-                                        </a>
+
+                                        </ul>
                                     </li>
                                     <li>
-                                        <a ui-sref="billofMaterialCategory">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            billofMaterialCategory
+                                        <a>
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                            <span class="sidebar-nav-item">Approval</span>
+                                            <i class="fa fa-angle-left pull-right"></i>
                                         </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a ui-sref="purchaseApproval">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Purchase Order Approval
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="purchaseBillApproval">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Purchase Bill Approval
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="employeesExpensesApprovel">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Expenses Approvel
+                                                </a>
+                                            </li>
+
+                                        </ul>
                                     </li>
                                     <li>
-                                        <a ui-sref="materialRequirementsPlanning">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            MRP
+                                        <a>
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                            <span class="sidebar-nav-item">Pay Order</span>
+                                            <i class="fa fa-angle-left pull-right"></i>
                                         </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a ui-sref="payOrderCategory">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Pay Order Category
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="payOrder">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    PayOrder
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
                                     <li>
-                                        <a ui-sref="billofMaterial">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Bill of Material
+                                        <a>
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                            <span class="sidebar-nav-item">Transaction</span>
+                                            <i class="fa fa-angle-left pull-right"></i>
                                         </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a ui-sref="debitVoucher">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Debit Voucher
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="creditVoucher">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Credit Voucher
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="journalVoucher">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Journal Voucher
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="contraVoucher">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Contra Voucher
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="salesReceivePayment">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Sales Receive Payment
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="purchaseBillPayment">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Purchase Bill Payment
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
                                     <li>
-                                        <a ui-sref="productCosting" ng-click="vm.CloseMenu()">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Product Costing
+                                        <a>
+                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                            <span class="sidebar-nav-item">Report</span>
+                                            <i class="fa fa-angle-left pull-right"></i>
                                         </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a>
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                                    <span class="sidebar-nav-item">Customer</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                    <ul class="treeview-menu">
+                                                        <li>
+                                                            <a ui-sref="customerFile">
+                                                                <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                                Customer File
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a ui-sref="supplierFile">
+                                                                <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                                Supplier File
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                            <ul class="treeview-menu">
+                                                <li>
+                                                    <a ui-sref="trialBalance">
+                                                        <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                        Trial Balance
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ui-sref="ledgerSheet">
+                                                        <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                        Ledger Sheet
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ui-sref="customerLedger">
+                                                        <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                        Customer Ledger
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ui-sref="supplierLedger">
+                                                        <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                        Supplier Ledger
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        </ul>
                                     </li>
-                                    <li>
-                                        <a ui-sref="productionOrder">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Production Order
+                                    <li class="treeview">
+                                        <a>
+                                            <i class="fa fa-puzzle-piece"></i>
+                                            <span class="sidebar-nav-item">Production</span>
+                                            <i class="fa fa-angle-left pull-right"></i>
                                         </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a>
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                                    <span class="sidebar-nav-item">Raw material</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li>
+                                                        <a ui-sref="purchaseRequisition">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Raw material Requisition
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="requisitionReceive">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Raw material Receive
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                                    <span class="sidebar-nav-item">MRP</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li>
+                                                        <a ui-sref="productionType">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Production Type
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a ui-sref="productionOrderCategory">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            production Order Category
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="billofMaterialCategory">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Bill of Material Category
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="materialRequirementsPlanning">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            MRP
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="billofMaterial">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Bill of Material
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="productCosting" ng-click="vm.CloseMenu()">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Product Costing
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="productionOrder">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Production Order
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="productionOrderDelivery">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Production OrderDelivery
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     </li>
-                                    <li>
-                                        <a ui-sref="productionOrderDelivery">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Production OrderDelivery
+                                    <li class="treeview">
+                                        <a>
+                                            <i class="fa fa-cubes"></i>
+                                            <span class="sidebar-nav-item">Inventory</span>
+                                            <i class="fa fa-angle-left pull-right"></i>
                                         </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a>
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                                    <span class="sidebar-nav-item">Product</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li>
+                                                        <a ui-sref="productCategory">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Product Category
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="productBrand">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Product Brand
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="productSpecification">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Product Specification
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="unitOfMeasure">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Unit Of Measure
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="product">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Product
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="productForSales">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Product for Sales
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="rawMaterials">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Raw Materials
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a>
+                                            <i class="fa fa-users"></i>
+                                            <span class="sidebar-nav-item">HR</span>
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a>
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                                    <span class="sidebar-nav-item">Leave</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li>
+                                                        <a ui-sref="employeeLeaveType">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Leave Type
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="employeeLeaveGroup">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Leave Group
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="employeeLeaveApplication">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Leave Application
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                                    <span class="sidebar-nav-item">Employees</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li>
+                                                        <a ui-sref="department">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Department
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="designation">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            designation
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="employees">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Employees
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
+                                                    <span class="sidebar-nav-item">Employees Expenses</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li>
+                                                        <a ui-sref="expensesType">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Expenses Type
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="employeesExpenses">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            Expenses
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ui-sref="employeesExpensesPayment">
+                                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                            ExpensesPayment
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a>
+                                            <i class="fa fa-users"></i>
+                                            <span class="sidebar-nav-item">PayRoll</span>
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a ui-sref="salaryComponents">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Salary Component
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="salaryComponentConfig">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Salary Component Config
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="salaryComponentMapping">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    SalaryComponentMapping
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a ui-sref="attendanceAudit">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Attendance Audit
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ui-sref="payrollProcess">
+                                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
+                                                    Payroll Process
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a>
-                            <i class="fa fa-cubes"></i>
-                            <span class="sidebar-nav-item">Inventory</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a>
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
-                                    <span class="sidebar-nav-item">Product</span>
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a ui-sref="productCategory">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Product Category
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="unitOfMeasure">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Unit Of Measure
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="product">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Product
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a>
-                            <i class="fa fa-users"></i>
-                            <span class="sidebar-nav-item">HR</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a>
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
-                                    <span class="sidebar-nav-item">Leave</span>
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a ui-sref="employeeLeaveType">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Leave Type
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="employeeLeaveGroup">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Leave Group
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="employeeLeaveApplication">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Leave Application
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a>
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
-                                    <span class="sidebar-nav-item">Employees</span>
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a ui-sref="department">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Department
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="designation">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            designation
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="employees">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Employees
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a>
-                                    <span class="sidebar-nav-item-icon glyphicon glyphicon-th-list"></span>
-                                    <span class="sidebar-nav-item">Employees Expenses</span>
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a ui-sref="expensesType">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Expenses Type
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="employeesExpenses">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            Expenses
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ui-sref="employeesExpensesPayment">
-                                            <span class="sidebar-nav-item-icon glyphicon glyphicon-hand-right"></span>
-                                            ExpensesPayment
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
+                        </section>
             <!-- /.sidebar -->
         </aside>
 

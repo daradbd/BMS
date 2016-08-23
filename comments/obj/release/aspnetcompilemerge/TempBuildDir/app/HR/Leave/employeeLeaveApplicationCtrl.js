@@ -13,14 +13,14 @@
 
     angular
         .module("companyManagement")
-        .controller("employeeLeaveApplicationCtrl", ["collaboratorResource", "Util", "employeeLeaveGroupResource", "employeeLeaveTypeResource", "employeeLeaveApplicationResource", employeeLeaveApplicationCtrl]);
-    function employeeLeaveApplicationCtrl(collaboratorResource, Util, employeeLeaveGroupResource, employeeLeaveTypeResource, employeeLeaveApplicationResource) {
+        .controller("employeeLeaveApplicationCtrl", ["collaboratorResource", "Util", "employeeLeaveGroupResource", "employeeLeaveTypeResource", "employeeLeaveApplicationResource", "appAuth", employeeLeaveApplicationCtrl]);
+    function employeeLeaveApplicationCtrl(collaboratorResource, Util, employeeLeaveGroupResource, employeeLeaveTypeResource, employeeLeaveApplicationResource, appAuth) {
         var vm = this;
         vm.helpers = Util.helpers;
         vm.employeeLeaveApplications = [];
         vm.EmployeeLeaveTypes = [];
         vm.EmployeeLeaveGroups = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

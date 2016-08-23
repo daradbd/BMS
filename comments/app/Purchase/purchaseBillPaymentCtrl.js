@@ -13,13 +13,17 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseBillPaymentCtrl", ["paymentMethodResource", "projectSetupResource", "collaboratorResource", "purchaseBillPaymentResource", purchaseBillPaymentCtrl]);
-    function purchaseBillPaymentCtrl(paymentMethodResource, projectSetupResource, collaboratorResource, purchaseBillPaymentResource) {
+        .controller("purchaseBillPaymentCtrl", ["ledgerSheetResource", "paymentMethodResource", "projectSetupResource", "collaboratorResource", "purchaseBillPaymentResource", "appAuth", purchaseBillPaymentCtrl]);
+    function purchaseBillPaymentCtrl(ledgerSheetResource, paymentMethodResource, projectSetupResource, collaboratorResource, purchaseBillPaymentResource, appAuth) {
         var vm = this;
         vm.purchaseBillPayments = [];
         vm.paymentMethods = [];
         vm.collaborators = [];
         vm.Projects = [];
+        vm.ledgerSheets = [];
+        vm.Balance = 0.00;
+        appAuth.checkPermission();
+
 
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -109,7 +113,33 @@
 
         }
 
+        vm.GetBalance = function (COAID) {
 
+            ledgerSheetResource.query({ 'id': COAID, 'ReportType': 1 }).$promise.then(function (data) {
+                vm.Balance = data[2];
+                //vm.ViewMode(3);
+                //toastr.success("Data Load Successful", "Form Load");
+               // console.log(JSON.stringify(vm.ledgerSheets));
+            }, function (error) {
+                if (error.status == 500) {
+                    toastr.error("No Data Found!");
+                }
+                else {
+                    toastr.error("Data Load Failed!");
+                }
+                // error handler
+
+            });
+        }
+
+        vm.setCredit = function () {
+            if (vm.Balance < vm.purchaseBillPayment.PaymentTotal) {
+                vm.purchaseBillPayment.CreditAmount = 0.00;
+            }
+            else {
+                vm.purchaseBillPayment.CreditAmount = (vm.purchaseBillPayment.PaymentTotal - vm.purchaseBillPayment.CreditAmount);
+            }
+        }
 
         GetProjectList();
         //Get All Data List
@@ -168,10 +198,12 @@
         //Save purchaseBillPayment
         vm.Save = function (isValid) {
             if (isValid) {
+                vm.purchaseBillPayment.SupplierID = vm.cmbSupplier.CollaboratorID;
                 purchaseBillPaymentResource.save(vm.purchaseBillPayment).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
                         vm.purchaseBillPayment = null;
+                        vm.ViewMode(2);
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -217,9 +249,10 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
+                vm.purchaseBillPayment.SupplierID = vm.cmbSupplier.CollaboratorID;
                 purchaseBillPaymentResource.update({ 'ID': vm.purchaseBillPayment.PurchaseBillPaymentID }, vm.purchaseBillPayment).$promise.then(function () {
                 vm.purchaseBillPayments = null;
-                vm.ViewMode(3);
+                vm.ViewMode(2);
                 GetList();
                 toastr.success("Data Update Successful", "Form Update");
                 }, function (error) {
@@ -237,6 +270,7 @@
             //vm.purchaseBillPayment.$delete({ 'ID': vm.purchaseBillPayment.PurchaseBillPaymentID });
             purchaseBillPaymentResource.delete({ 'ID': vm.purchaseBillPayment.PurchaseBillPaymentID }).$promise.then(function (data) {
                 // success handler
+                vm.ViewMode(2);
                 toastr.success("Data Delete Successfully!");
                 GetList();
             }, function (error) {

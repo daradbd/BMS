@@ -31,8 +31,13 @@ namespace BMS.Models.Accounting.Configuration.Banks
         public string POBox { get; set; }
 
         [StringLength(50)]
-        public string PostalCode { get; set; }
+        public string PostalCode { get; set; } 
+        
+        [StringLength(250)]
+        public string Phone { get; set; }
 
+        [StringLength(250)]
+        public string Fax { get; set; }
         public long? CountryID { get; set; }
 
         public long? CityID { get; set; }
@@ -52,21 +57,21 @@ namespace BMS.Models.Accounting.Configuration.Banks
         [StringLength(10)]
         public string IsDeleted { get; set; }
 
-        public int? InsertBy { get; set; }
+        public long? InsertBy { get; set; }
 
         public DateTime? InsertDate { get; set; }
 
         [StringLength(50)]
         public string InsertPC { get; set; }
 
-        public int? UpdateBy { get; set; }
+        public long? UpdateBy { get; set; }
 
         public DateTime? UpdateDate { get; set; }
 
         [StringLength(50)]
         public string UpdatePC { get; set; }
 
-        public int? DeleteBy { get; set; }
+        public long? DeleteBy { get; set; }
 
         public DateTime? DeleteDate { get; set; }
 

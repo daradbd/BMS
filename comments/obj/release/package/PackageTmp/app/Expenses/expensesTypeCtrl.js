@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("expensesTypeCtrl", ["expensesTypeResource", expensesTypeCtrl]);
-    function expensesTypeCtrl(expensesTypeResource) {
+        .controller("expensesTypeCtrl", ["expensesTypeResource", "appAuth", expensesTypeCtrl]);
+    function expensesTypeCtrl(expensesTypeResource, appAuth) {
         var vm = this;
         vm.expensesTypes = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

@@ -11,12 +11,14 @@ using System.Web.Http;
 using BMS.Models.Purchase;
 using BMS.Models;
 using System.Web.Http.OData.Query;
+using BMS.Models.Inventory;
 
 namespace BMS.Controllers.Purchase
 {
     public class RequisitionDeliveryDescriptionController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/RequisitionDeliveryDescription
         public IEnumerable<RequisitionDeliveryDescription> GetRequisitionDeliveryDescriptions(ODataQueryOptions Options)
@@ -52,6 +54,7 @@ namespace BMS.Controllers.Purchase
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            requisitiondeliverydescription.UpdateBy = loginUser.UserID;
             db.Entry(requisitiondeliverydescription).State = EntityState.Modified;
 
             try
@@ -69,11 +72,31 @@ namespace BMS.Controllers.Purchase
         // POST api/RequisitionDeliveryDescription
         public HttpResponseMessage PostRequisitionDeliveryDescription(RequisitionDeliveryDescription requisitiondeliverydescription)
         {
+           // long RequisitionID=(long)db.RequisitionDeliveries.Where(r=>r.RequisitionDeliveryID==requisitiondeliverydescription.RequisitionDeliveryID).Select(s=>s.PurchaseRequisitionID).SingleOrDefault();
+            PurchaseRequisitionDescription purchaseRequisitionDescription = db.PurchaseRequisitionDescriptions.Where(r => (r.PurchaseRequisitionID == requisitiondeliverydescription.PurchaseRequisitionID) && (r.ProductID == requisitiondeliverydescription.ProductID)).SingleOrDefault();
             if (ModelState.IsValid)
             {
                 db.Entry(requisitiondeliverydescription).State = requisitiondeliverydescription.RequisitionDeliveryDescriptionID == 0 ? EntityState.Added : EntityState.Modified;
                 //db.RequisitionDeliveryDescriptions.Add(requisitiondeliverydescription);
+                requisitiondeliverydescription.InsertBy = loginUser.UserID;
                 db.SaveChanges();
+
+                var DeliveredQty = (db.RequisitionDeliveryDescriptions.Where(r => (r.ProductID == requisitiondeliverydescription.ProductID) && (r.PurchaseRequisitionID == requisitiondeliverydescription.PurchaseRequisitionID)).Select(r => r.Quantity)).ToList().Sum();
+                var ReceivedQuantity = (db.RequisitionDeliveryDescriptions.Where(r => (r.ProductID == requisitiondeliverydescription.ProductID) && (r.PurchaseRequisitionID == requisitiondeliverydescription.PurchaseRequisitionID)).Select(r => r.ReceivedQuantity)).ToList().Sum();
+                purchaseRequisitionDescription.DeliveredQuantity = (float)DeliveredQty;
+                purchaseRequisitionDescription.ReceivedQuantity = (float)ReceivedQuantity;
+
+                db.Entry(purchaseRequisitionDescription).State = EntityState.Modified;
+                db.SaveChanges();
+
+                if (requisitiondeliverydescription.ReceivedQuantity > 0)
+                {
+                    Product product = db.Products.Where(p => p.ProductID == requisitiondeliverydescription.ProductID).SingleOrDefault();
+                    product.CurrentStock -= requisitiondeliverydescription.ReceivedQuantity;
+                    db.Entry(product).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                }
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, requisitiondeliverydescription);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = requisitiondeliverydescription.RequisitionDeliveryDescriptionID }));

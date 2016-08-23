@@ -13,7 +13,7 @@ namespace BMS.Controllers
     //[Authorize]
     public class CommentsController : ApiController 
     {
-        string loginuser = "";
+        //string loginuser = "";
         ICommentRepository repository;
 
         public CommentsController(ICommentRepository repository) 

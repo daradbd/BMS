@@ -16,6 +16,7 @@ namespace BMS.Controllers.Setting.Companys
     public class CompanyTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/CompanyType
         public IEnumerable<CompanyType> GetCompanyTypes()

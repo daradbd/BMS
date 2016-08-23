@@ -30,4 +30,99 @@ a:hover {
   background: rgba(0, 0, 0, 0.5);
 }
 
+/**Darad style*/
+/*input[type=number],*/
+input[type=text],
+input[type=password],
+input[type=search],
+textarea {
+    border: 1px solid #cfcfcf;
+    border-top-style: none !important;
+    border-right-style: none !important;
+    border-left-style: none !important;
+    width: 100%;
+    outline: 0;
+    display: block
+}
 
+select {
+    cursor: pointer;
+    background-color: transparent;
+    min-width: 50px;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    color: transparent;
+    text-shadow: 0 0 0 #666
+}
+
+select>option {
+    color: #666
+}
+
+::-webkit-input-placeholder {
+    color: #8f8f8f;
+    opacity: .5
+}
+
+::-moz-placeholder {
+    color: #8f8f8f;
+    opacity: .5
+}
+
+:-ms-input-placeholder {
+    color: #8f8f8f;
+    opacity: .5
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    /* margin-bottom: 5px; */
+    font-size: 16px;
+    font-weight: 300;
+}
+
+pre {
+    display: block;
+     padding:0px !important; 
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    padding-left:5px;
+    background-color:  transparent !important; 
+    border:none !important; 
+    border-radius: 0px !important; 
+}
+
+.content-header>h1 {
+   color: #8f8f8f;
+   font-size: 18px !important;
+}
+
+.circle-icon {
+    background: #c0c0c0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 100px;
+    vertical-align: middle;
+    padding: 30px;
+}
+
+.task-list>.offline {
+    border: 2px solid #cfcfcf;
+}
+.task-list>.offline:hover {
+    border: 2px solid #FFFFFF;
+}
+.task-list>img {
+    width: 40px;
+    height: 40px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+}

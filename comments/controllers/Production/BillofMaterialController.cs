@@ -17,6 +17,7 @@ namespace BMS.Controllers.Production
     public class BillofMaterialController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/BillofMaterial
         public IEnumerable<BillofMaterial> GetBillofMaterials(ODataQueryOptions Options)
@@ -45,12 +46,16 @@ namespace BMS.Controllers.Production
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
+            billofmaterial.Collaborator = null;
+            billofmaterial.ProjectSetup = null;
+            billofmaterial.ProcesStatus = null;
 
             if (id != billofmaterial.BillofMaterialID)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            billofmaterial.UpdateBy = loginUser.UserID;
             db.Entry(billofmaterial).State = EntityState.Modified;
 
             try
@@ -76,6 +81,8 @@ namespace BMS.Controllers.Production
                 int? MaxCode = Convert.ToInt32((db.BillofMaterials.Where(r => r.BillofMaterialCode.StartsWith(CustomCode)).Select(r => r.BillofMaterialCode.Substring(CustomCode.Length, 4)).ToList()).Max());
                 string BOMCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
                 billofmaterial.BillofMaterialCode = BOMCode;
+                billofmaterial.InsertBy = loginUser.UserID;
+
                 db.BillofMaterials.Add(billofmaterial);
                 db.SaveChanges();
                 

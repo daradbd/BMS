@@ -13,11 +13,14 @@
 
     angular
         .module("companyManagement")
-        .controller("employeesExpensesPaymentCtrl", ["employeesExpensesPaymentResource", employeesExpensesPaymentCtrl]);
-    function employeesExpensesPaymentCtrl(employeesExpensesPaymentResource) {
+        .controller("employeesExpensesPaymentCtrl", ["paymentMethodResource", "employeesExpensesResource", "employeesExpensesPaymentResource", "appAuth", employeesExpensesPaymentCtrl]);
+    function employeesExpensesPaymentCtrl(paymentMethodResource,employeesExpensesResource, employeesExpensesPaymentResource, appAuth) {
         var vm = this;
         vm.employeesExpensesPayments = [];
+        vm.employeesExpensess = [];
+        vm.employeesExpensesPayment = {};
 
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
@@ -36,7 +39,7 @@
             GetList();
             if (activeMode == 1)//Form View Mode
             {
-                vm.employeesExpensesPayment = null;
+               // vm.employeesExpensesPayment = null;
                 vm.FromView = true;
                 vm.ListView = false;
                 vm.DetailsView = false;
@@ -93,10 +96,51 @@
             }
         }
 
+        vm.dtopen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.dtopened = !vm.dtopened;
+
+        }
+
         var DispayButton = function () {
 
         }
 
+        vm.checkLimit = function() {
+            if (vm.employeesExpenses.DueAmount < vm.employeesExpensesPayment.PaymentAmount)
+            {
+                vm.employeesExpensesPayment.PaymentAmount = "";
+            }
+        }
+
+        GetPaymentMethod();
+        function GetPaymentMethod() {
+            paymentMethodResource.query().$promise.then(function (data) {
+                vm.paymentMethods = data;
+                // toastr.success("Data Load Successful", "Form Load");
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
+
+
+        GetExpensesList();
+
+        //Get All Data List
+        function GetExpensesList() {
+            employeesExpensesResource.query().$promise.then(function (data) {
+                vm.employeesExpensess = data;
+                toastr.success("Data Load Successful", "Form Load");
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
 
         GetList();
 
@@ -112,14 +156,19 @@
             });
         }
 
+
+
         //Save employeesExpensesPayment
         vm.Save = function (isValid) {
             if (isValid) {
-                employeesExpensesPaymentResource.save().$promise.then(vm.employeesExpensesPayment,
+                employeesExpensesPaymentResource.save(vm.employeesExpensesPayment).$promise.then(
                     function (data, responseHeaders) {
-                        GetList();
+                        
                         vm.employeesExpensesPayment = null;
+                        vm.employeesExpenses = null;
                         toastr.success("Save Successful");
+                        GetList();
+                        vm.ViewMode(4);
                     }, function (error) {
                         // error handler
                         toastr.error("Data Save Failed!");
@@ -134,11 +183,53 @@
         }
 
         //Get Single Record
+        vm.GetExpenses = function (id) {
+            vm.employeesExpensesPayment = {};
+            GetEmpExpenses(id);
+            vm.ViewMode(1);
+        }
+
+        function GetEmpExpenses(id) {
+           
+            employeesExpensesResource.get({ 'ID': id }).$promise.then(function (employeesExpenses) {
+                vm.employeesExpenses = employeesExpenses;
+                vm.employeesExpensesPayment.EmployeeID = vm.employeesExpenses.Employee.CollaboratorID;
+                vm.employeesExpensesPayment.EmployeesExpensesID = vm.employeesExpenses.EmployeesExpensesID;
+
+                //vm.cmbEmployee = vm.employeesExpenses.Employee;
+                //vm.GetExpensesDesc(vm.employeesExpenses.EmployeesExpensesID);
+               
+                toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
+
+        //Get Single Record
         vm.Get = function (id) {
+            vm.employeesExpensesPayment = {};
             employeesExpensesPaymentResource.get({ 'ID': id }).$promise.then(function (employeesExpensesPayment) {
                 vm.employeesExpensesPayment = employeesExpensesPayment;
+                GetEmpExpenses(vm.employeesExpensesPayment.EmployeesExpensesID);
+               // vm.cmbSupplier = vm.purchaseBillPayment.Collaborator;
+               
+                vm.GetPaymentMethod(vm.employeesExpensesPayment.PaymentMethodID);
+                vm.cmbCreditTo = { COAID: vm.employeesExpensesPayment.CreditTo };
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
+
+        vm.GetPaymentMethod = function (id) {
+            paymentMethodResource.get({ 'ID': id }).$promise.then(function (paymentMethod) {
+                vm.paymentMethod = paymentMethod;
+                vm.cmbPaymentMethod = vm.paymentMethod;
+                //vm.ViewMode(3);
+                //toastr.success("Data Load Successful", "Form Load");
             }, function (error) {
                 // error handler
                 toastr.error("Data Load Failed!");

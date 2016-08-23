@@ -2,17 +2,19 @@
     "use strict";
     angular
         .module("companyManagement")
-        .controller("cityCtrl", ["countryResource", "cityResource", cityCtrl]);
-    function cityCtrl(countryResource, cityResource) {
+        .controller("cityCtrl", ["countryResource", "cityResource", "appAuth", cityCtrl]);
+    function cityCtrl(countryResource, cityResource, appAuth) {
         var vm = this;
         vm.citys = [];
         vm.city = [];
         vm.countrys = [];
-  
+        vm.serial = 1;
+        vm.num = 5;
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -21,6 +23,11 @@
         vm.UpdateButton = false;
         vm.DeleteButton = false;
         vm.CancelButton = false;
+
+        vm.indexCount = function (newPageNumber) {
+            vm.serial = 1;
+            vm.serial = newPageNumber * vm.num - (vm.num-1);
+        }
         GetcountrysList();
         function GetcountrysList() {
             countryResource.query().$promise.then(function (data) {
@@ -140,6 +147,7 @@
                         GetList();
                        
                         vm.city = null;
+                        vm.ViewMode(2);
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler

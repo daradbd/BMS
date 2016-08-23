@@ -16,10 +16,13 @@ namespace BMS.Controllers.HR
     public class EmployeeTypeController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/EmployeeType
         public IEnumerable<EmployeeType> GetEmployeeTypes()
         {
+
+            
             return db.EmployeeTypes.AsEnumerable();
         }
 
@@ -47,7 +50,7 @@ namespace BMS.Controllers.HR
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-
+            employeetype.UpdateBy = loginUser.UserID;
             db.Entry(employeetype).State = EntityState.Modified;
 
             try
@@ -67,6 +70,7 @@ namespace BMS.Controllers.HR
         {
             if (ModelState.IsValid)
             {
+                employeetype.InsertBy = loginUser.UserID;
                 db.EmployeeTypes.Add(employeetype);
                 db.SaveChanges();
 

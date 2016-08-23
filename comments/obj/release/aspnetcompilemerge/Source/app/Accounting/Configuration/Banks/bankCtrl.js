@@ -13,15 +13,16 @@
 
     angular
         .module("companyManagement")
-        .controller("bankCtrl", ["bankResource", bankCtrl]);
-    function bankCtrl(bankResource) {
+        .controller("bankCtrl", ["bankResource", "appAuth", bankCtrl]);
+    function bankCtrl(bankResource, appAuth) {
         var vm = this;
         vm.banks = [];
-
+        vm.isModal = false;
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -52,7 +53,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = false;
 
 
@@ -67,7 +68,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -81,7 +82,7 @@
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
 
@@ -119,6 +120,7 @@
                     function (data, responseHeaders) {
                         GetList();
                         vm.bank = null;
+                        vm.ViewMode(2);
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -171,6 +173,7 @@
                 // success handler
                 toastr.success("Data Delete Successfully!");
                 GetList();
+                vm.ViewMode(2);
             }, function (error) {
                 // error handler
                 toastr.error("Data Delete Failed!");

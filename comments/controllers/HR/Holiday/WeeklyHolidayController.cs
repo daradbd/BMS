@@ -16,6 +16,7 @@ namespace BMS.Controllers.HR.Holiday
     public class WeeklyHolidayController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/WeeklyHoliday
         public IEnumerable<WeeklyHoliday> GetWeeklyHolidays()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.HR.Holiday
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            weeklyholiday.UpdateBy = loginUser.UserID;
             db.Entry(weeklyholiday).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.HR.Holiday
         {
             if (ModelState.IsValid)
             {
+                weeklyholiday.InsertBy = loginUser.UserID;
                 db.WeeklyHolidays.Add(weeklyholiday);
                 db.SaveChanges();
 

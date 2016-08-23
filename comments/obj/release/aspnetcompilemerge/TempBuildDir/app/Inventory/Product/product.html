@@ -1,14 +1,14 @@
 ﻿    <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Product
+        {{vm.pName}}
         <small>Form</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Inventory</a></li>
         <li><a href="#">Product</a></li>
-        <li class="active">Product</li>
+        <li class="active">{{vm.pName}}</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -23,6 +23,14 @@
                 <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(productForm.$valid)" class="btn btn-app btn-default ">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     Save
+                </button>
+                <button type="button" ng-if="vm.isModal" ng-show="vm.SaveButton" ng-click="vm.SaveClose(productForm.$valid)" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    Save & Close
+                </button>
+                <button type="button" ng-if="vm.isModal" ng-show="vm.EditButton" ng-click="vm.SelectClose()" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-arrow-down aria-hidden=" true"></span>
+                    Select & Close
                 </button>
                 <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-app btn-default ">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
@@ -44,6 +52,10 @@
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     Cancel
                 </button>
+                <button type="button" ng-if="vm.isModal" ng-click="vm.mClose()" class="btn btn-app btn-primary">
+                    <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                    Close
+                </button>
             </div>
         </div>
 
@@ -54,12 +66,21 @@
                 <div class="box box-primary">
                     <div class="entry-form" ng-show="vm.FromView">
                         <div class="box-header with-border">
-                            <h3 class="box-title" ng-if="vm.SaveButton">Add New Product</h3>
-                            <h3 class="box-title" ng-if="vm.UpdateButton">Edit Product</h3>
+                            <h3 class="box-title" ng-if="vm.SaveButton">Add New {{vm.pName}}</h3>
+                            <h3 class="box-title" ng-if="vm.UpdateButton">Edit {{vm.pName}}</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-12">
                                 <div class="col-lg-6 animated fadeInRight">
+                                    <div class="form-group">
+
+                                        <img ng-if="vm.product.Image" ng-src="{{vm.product.Image}}" style="width:150px;height:150px;margin:2px">
+                                    </div> 
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-default" ng-click="vm.openUpload()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload</button>
+                                       
+                                    </div>
+                               
                                     <div class="form-group"
                                          ng-class="{'has-error':productForm.txtProductCode.$invalid
                                          && productForm.txtProductCode.$dirty}">
@@ -80,7 +101,7 @@
                                          && productForm.txtProductName.$dirty}">
 
                                         <label for="txtProductName">
-                                            ProductName
+                                            Product Name
                                         </label>
                                         <input type="text"
                                                class="form-control"
@@ -93,8 +114,22 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group"
+                                         ng-class="{'has-error':productForm.cmbProductBrand.$invalid
+                                                                && productForm.cmbProductBrand.$dirty}">
+
+                                        <label for="cmbProductBrand">
+                                            Product Brand
+                                        </label>
+                                        <select class="form-control"
+                                                id="cmbProductBrand"
+                                                name="cmbProductBrand"
+                                                ng-model="vm.cmbProductBrand"
+                                                ng-options="ProductBrand.ProductBrandName for ProductBrand in vm.productBrands track by ProductBrand.ProductBrandID "
+                                                ng-change="vm.product.ProductBrandID=vm.cmbProductBrand.ProductBrandID"></select>
+                                    </div>
+                                    <div class="form-group"
                                          ng-class="{'has-error':productForm.cmbProductCategory.$invalid
-                && cityForm.cmbProductCategory.$dirty}">
+                                                        && productForm.cmbProductCategory.$dirty}">
 
                                         <label for="cmbProductCategory">
                                             Product Category
@@ -108,7 +143,7 @@
                                     </div>
                                     <div class="form-group"
                                          ng-class="{'has-error':productForm.cmbUnitOfMeasure.$invalid
-                && cityForm.cmbUnitOfMeasure.$dirty}">
+                                                        && productForm.cmbUnitOfMeasure.$dirty}">
 
                                         <label for="cmbUnitOfMeasure">
                                             Unit Of Measure
@@ -118,72 +153,124 @@
                                                 name="cmbUnitOfMeasure"
                                                 ng-model="vm.cmbUnitOfMeasure"
                                                 ng-options="UnitOfMeasure.UnitOfMeasureCode for UnitOfMeasure in vm.UnitOfMeasures track by UnitOfMeasure.UnitOfMeasureID "
-                                                ng-change="vm.product.MOUID=vm.cmbUnitOfMeasure.UnitOfMeasureID"></select>
+                                                ng-change="vm.product.UOMID=vm.cmbUnitOfMeasure.UnitOfMeasureID"></select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <tabset>
-                                    <tab heading="Address" active="true">
+                                    <tab heading="Specification" active="true">
+                                        <div class="col-lg-12 animated fadeInRight">
+                                            <table class="table table-hover">
+                                                <tr>
+                                                    <th>Specification</th>
+                                                    <th>Show in Title</th>
+                                                    <th>Value</th>
+                                                </tr>
+                                                <tr ng:repeat="item in vm.ProductSpecificationDescription.producttSpecificationnDesc" class="animated fadeInRight">
+
+                                                    <td>
+                                                        <select class="form-control" ng-model="item.cmbProductSpecification"
+                                                                ng-init="item.cmbProductSpecification={ProductSpecificationID:item.ProductSpecificationID}"
+                                                                ng-options="productSpecification.ProductSpecificationName for productSpecification in vm.productSpecifications track by productSpecification.ProductSpecificationID"
+                                                                ng-change="item.ProductSpecificationID=item.cmbProductSpecification.ProductSpecificationID"></select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="checkbox"
+                                                               ng-model="item.IsShowInTitle">
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        <input class="form-control" ng:model="item.SpecificationValue" value="" >
+                                                    </td>
+                                                    <td><button type="button" ng-really-message="Are you sure ?" ng-really-click="vm.removeItem(item)" item="item" class="btn btn-flat btn-danger btn-xs" aria-label="Close"><i class="fa fa-minus-square"></i></button></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td></td>
+                                                    <td></td>
+                                                   
+                                                </tr>
+                                            </table>
+                                            <button type="button" ng-click="vm.PushItem()" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </div>
+
+                                    </tab>
+                                    <tab heading="Product info">
                                         <div class="col-lg-6">
                                             <div class="form-group"
-                                                 ng-class="{'has-error':productForm.txtSalePrice.$invalid
-                                         && productForm.txtSalePrice.$dirty}">
+                                                    ng-class="{'has-error':productForm.txtSalePrice.$invalid
+                                                                                && productForm.txtSalePrice.$dirty}">
 
                                                 <label for="txtSalePrice">
                                                     SalePrice
                                                 </label>
                                                 <input type="text"
-                                                       class="form-control"
-                                                       id="txtSalePrice"
-                                                       name="txtSalePrice"
-                                                       ng-model="vm.product.SalePrice"
-                                                       placeholder="Enter SalePrice"
-                                                       required>
+                                                        class="form-control"
+                                                        id="txtSalePrice"
+                                                        name="txtSalePrice"
+                                                        ng-model="vm.product.SalePrice"
+                                                        placeholder="Enter SalePrice"
+                                                        required>
                                             </div>
                                             <div class="form-group"
-                                                 ng-class="{'has-error':productForm.txtCostPrice.$invalid
-                                         && productForm.txtCostPrice.$dirty}">
+                                                    ng-class="{'has-error':productForm.txtCostPrice.$invalid
+                                                                                && productForm.txtCostPrice.$dirty}">
 
                                                 <label for="txtCostPrice">
                                                     CostPrice
                                                 </label>
                                                 <input type="text"
-                                                       class="form-control"
-                                                       id="txtCostPrice"
-                                                       name="txtCostPrice"
-                                                       ng-model="vm.product.CostPrice"
-                                                       placeholder="Enter CostPrice"
-                                                       required>
+                                                        class="form-control"
+                                                        id="txtCostPrice"
+                                                        name="txtCostPrice"
+                                                        ng-model="vm.product.CostPrice"
+                                                        placeholder="Enter CostPrice"
+                                                        required>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label for="txtCostPrice">
+                                                    Is Rawmaterial
+                                                </label>
+                                                <input type="checkbox"
+                                                       id="txtIsRawmaterial"
+                                                       name="txtIsRawmaterial"
+                                                       ng-model="vm.product.IsRawmaterial">
                                             </div>
                                             <div class="form-group">
                                                 <label for="txtDescription">
                                                     Description
                                                 </label>
                                                 <textarea class="form-control"
-                                                          id="txtDescription"
-                                                          name="txtDescription"
-                                                          ng-model="vm.product.Description"
-                                                          rows=" 3"></textarea>
+                                                            id="txtDescription"
+                                                            name="txtDescription"
+                                                            ng-model="vm.product.Description"
+                                                            rows=" 3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
 
                                         </div>
                                     </tab>
-                                </tabset>
+                            </tabset>
                             </div>
                         </div>
                     </div>
                     <div class="view-form" ng-show="vm.DetailsView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Product Details</h3>
+                            <h3 class="box-title">{{vm.pName}} Details</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="col-lg-12">
 
 
                                 <div class="col-lg-6 animated fadeInRight">
+                                    <div class="form-group">
+                                        <img ng-if="vm.product.Image" ng-src="{{vm.product.Image}}" style="width:150px;height:150px;margin:2px">
+                                    </div>
                                     <div class="form-group">
                                         <label for=" inputProductCode">
                                             ProductCode
@@ -199,24 +286,69 @@
 
                                 </div>
                                 <div class="col-lg-6">
-
+                                    <div class="form-group">
+                                        <label for="inputProductBrandName">
+                                            Brand Name
+                                        </label>
+                                        <pre>{{vm.product.ProductBrand.ProductBrandName}}</pre>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=" inputProductName">
+                                            Category
+                                        </label>
+                                        <pre>{{vm.product.ProductCategory.ProductCategoryName}}</pre>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=" inputProductName">
+                                            UOM
+                                        </label>
+                                        <pre>{{vm.product.UOM.UnitOfMeasureName}}</pre>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <tabset>
-                                    <tab heading="Address" active="true">
+                                    <tab heading="Specification" active="true">
+                                        <div class="col-lg-12 animated fadeInRight">
+                                            <table class="table table-hover">
+                                                <tr>
+                                                    <th>Specification</th>
+                                                    <th>Value</th>
+                                                </tr>
+                                                <tr ng:repeat="item in vm.ProductSpecificationDescription.producttSpecificationnDesc" class="animated fadeInRight">
+
+                                                    <td>
+                                                        {{item.ProductSpecification.ProductSpecificationName}}
+                                                    </td>
+                                                    <td>
+                                                        {{item.SpecificationValue}}
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td></td>
+                                                    <td></td>
+
+                                                </tr>
+                                            </table>
+                                            
+                                        </div>
+
+                                    </tab>
+                                    <tab heading="ProductInfo">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for=" inputSalePrice">
                                                     SalePrice
                                                 </label>
-                                                <pre>{{vm.product.SalePrice}}</pre>
+                                                <pre>{{vm.product.SalePrice|currency: " " : 2}}</pre>
                                             </div>
                                             <div class="form-group">
                                                 <label for=" inputCostPrice">
                                                     CostPrice
                                                 </label>
-                                                <pre>{{vm.product.CostPrice}}</pre>
+                                                <pre>{{vm.product.CostPrice|currency: " " : 2}}</pre>
                                             </div>
                                             <div class="form-group">
                                                 <label for=" inputDescription">
@@ -234,7 +366,7 @@
                     </div>
                     <div class="col-lg-12 box " ng-show="vm.ListView">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Product List</h3>
+                            <h3 class="box-title">{{vm.pName}} List</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="row">
@@ -263,6 +395,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
+                                                <th>Image</th>
                                                 <th>ProductName</th>
                                                 <th>SalePrice</th>
                                                 <th class="noPrint">Preview</th>
@@ -272,8 +405,9 @@
                                         <tbody>
                                             <tr dir-paginate="product in vm.products|filter:searchText| itemsPerPage: vm.num">
                                                 <td>{{product.ProductCode  | uppercase}}</td>
+                                                <td><img ng-if="product.Image" ng-src="{{product.Image}}" class="img-thumbnail" style="width:32px;height:32px;margin:1px"></td>
                                                 <td>{{product.ProductName}}</td>
-                                                <td>{{product.SalePrice}}</td>
+                                                <td>{{product.SalePrice|currency: " " : 2}}</td>
                                                 <td class="noPrint">
                                                     <button type="button" ng-click="vm.Get(product.ProductID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
                                                         <i class="fa fa-eye"></i>

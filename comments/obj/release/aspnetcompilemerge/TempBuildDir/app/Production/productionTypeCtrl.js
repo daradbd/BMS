@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("productionTypeCtrl", ["productionTypeResource", productionTypeCtrl]);
-    function productionTypeCtrl(productionTypeResource) {
+        .controller("productionTypeCtrl", ["productionTypeResource", "appAuth", productionTypeCtrl]);
+    function productionTypeCtrl(productionTypeResource, appAuth) {
         var vm = this;
         vm.productionTypes = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

@@ -2,10 +2,11 @@
     "use strict";
     angular
         .module("companyManagement")
-        .controller("languageCtrl", ["languageResource", languageCtrl]);
-    function languageCtrl(languageResource) {
+        .controller("languageCtrl", ["languageResource", "appAuth", languageCtrl]);
+    function languageCtrl(languageResource, appAuth) {
         var vm = this;
         vm.languages = [];
+        appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;

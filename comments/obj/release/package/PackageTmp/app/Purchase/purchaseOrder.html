@@ -49,7 +49,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         <!--<li><a href="" ng-click="vm.ProductionOrder(vm.purchaseOrder.PurchaseOrderID)"><span class="glyphicon glyphicon-align-right" aria-hidden="true"> Production Order</a></li>-->
-                        <li><a href="" ng-click="vm.PurchaseReceived(vm.purchaseOrder.PurchaseOrderID)">Purchase Received</a></li>
+                        <!--<li><a href="" ng-click="vm.PurchaseReceived(vm.purchaseOrder.PurchaseOrderID)">Purchase Received</a></li>-->
                         <li><a href="" ng-click="vm.PurchaseBill(vm.purchaseOrder.PurchaseOrderID)">Purchase Bill</a></li>
                     </ul>
                 </div>
@@ -83,7 +83,7 @@
                                                 ng-options="Supplier.Name for Supplier in vm.Suppliers track by Supplier.CollaboratorID "
                                                 ng-change="vm.purchaseOrder.SupplierID=vm.cmbSupplier.CollaboratorID"></select>
                                     </div>
-                                    <div class="form-group">
+                                    <div ng-if="vm.cmbSupplier.Street" class="form-group">
                                         <label for="txtRemarks">
                                             Address:
                                         </label>
@@ -196,7 +196,7 @@
                                                         <th>Quantity</th>
                                                         <!--<th>Tax</th>
                 <th>Discount</th>-->
-                                                        <th>UnitPrice</th>
+                                                        <th>Approx Price</th>
                                                         <th>Total</th>
                                                         <th></th>
                                                     </tr>
@@ -250,7 +250,7 @@
                                                             <input class="form-control" ng:model="item.UnitPrice" value="0.00" ng:required ng:validate="number" size="6">
                                                         </td>
                                                         <td>
-                                                            {{item.UnitPrice*item.Quantity}}
+                                                            {{(item.UnitPrice*item.Quantity)|currency: " " : 2	}}
                                                         </td>
                                                         <td></td>
                                                     </tr>
@@ -264,9 +264,10 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td>
-                                                            {{vm.QuotationSubTotal()|currency}}
+                                                            {{vm.QuotationSubTotal()|currency: " " : 2	}}
 
                                                         </td>
+                                                        <td><button type="button" ng-really-message="Are you sure ?" ng-really-click="vm.removeItem(item)" item="item" class="btn btn-flat btn-danger btn-xs" aria-label="Close"><i class="fa fa-minus-square"></i></button></td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -360,7 +361,7 @@
                                                     <th>Quantity</th>
                                                     <th>Tax</th>
                                                     <th>Discount</th>
-                                                    <th>UnitPrice</th>
+                                                    <th>Approx Price</th>
                                                     <th>Total</th>
                                                     <th></th>
                                                 </tr>
@@ -386,10 +387,10 @@
                                                         {{item.Discount}}
                                                     </td>
                                                     <td>
-                                                        {{item.UnitPrice}}
+                                                        {{item.UnitPrice|currency: " " : 2	}}
                                                     </td>
                                                     <td>
-                                                        {{item.UnitPrice*item.Quantity}}
+                                                        {{(item.UnitPrice*item.Quantity)|currency: " " : 2	}}
                                                     </td>
                                                     <td></td>
                                                 </tr>
@@ -402,7 +403,7 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td>{{vm.QuotationSubTotal()|currency}}</td>
+                                                    <td>{{vm.QuotationSubTotal()|currency: " " : 2	}}</td>
                                                 </tr>
                                             </table>
 
@@ -452,7 +453,7 @@
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="purchaseOrder in vm.purchaseOrders|filter:searchText| itemsPerPage: vm.num">
+                                            <tr dir-paginate="purchaseOrder in vm.purchaseOrders|orderBy:'-PurchaseOrderID'|filter:searchText| itemsPerPage: vm.num">
                                                 <td>{{purchaseOrder.PurchaseOrderCode  | uppercase}}</td>
                                                 <td>
                                                     {{purchaseOrder.Collaborator.Name}}

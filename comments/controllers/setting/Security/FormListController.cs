@@ -38,6 +38,7 @@ namespace BMS.Controllers.Setting.Security
         // PUT api/FormList/5
         public HttpResponseMessage PutFormList(long id, FormList formlist)
         {
+            formlist.Module = null;
             if (!ModelState.IsValid)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);

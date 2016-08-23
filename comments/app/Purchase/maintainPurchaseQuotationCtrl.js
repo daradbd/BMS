@@ -13,12 +13,13 @@
 
     angular
         .module("companyManagement")
-        .controller("maintainPurchaseQuotationCtrl", ["purchaseOrderResource", "projectSetupResource", "requestForQuotationDescriptionResource", "maintainPurchaseQuotationDescriptionResource", "productResource", "collaboratorResource", "maintainPurchaseQuotationResource", maintainPurchaseQuotationCtrl]);
-    function maintainPurchaseQuotationCtrl(purchaseOrderResource, projectSetupResource, requestForQuotationDescriptionResource, maintainPurchaseQuotationDescriptionResource, productResource, collaboratorResource, maintainPurchaseQuotationResource) {
+        .controller("maintainPurchaseQuotationCtrl", ["purchaseOrderResource", "projectSetupResource", "requestForQuotationDescriptionResource", "maintainPurchaseQuotationDescriptionResource", "productResource", "collaboratorResource", "maintainPurchaseQuotationResource", "appAuth", maintainPurchaseQuotationCtrl]);
+    function maintainPurchaseQuotationCtrl(purchaseOrderResource, projectSetupResource, requestForQuotationDescriptionResource, maintainPurchaseQuotationDescriptionResource, productResource, collaboratorResource, maintainPurchaseQuotationResource, appAuth) {
         var vm = this;
         vm.maintainPurchaseQuotations = [];
         vm.Suppliers = [];
         vm.products = [];
+        appAuth.checkPermission();
 
         vm.MaintainPurchaseQuotationDescription = { MaintainPurchaseQuotationDesc: [{ ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
 

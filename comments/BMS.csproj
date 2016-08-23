@@ -22,6 +22,13 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -214,8 +221,15 @@
     <Compile Include="Controllers\Accounting\Configuration\Banks\BankAccountTypeController.cs" />
     <Compile Include="Controllers\Accounting\Configuration\Banks\BankBranchController.cs" />
     <Compile Include="Controllers\Accounting\Configuration\Banks\BankController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Banks\BankLoanController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Banks\BankLoanTransactionController.cs" />
+    <Compile Include="Controllers\Accounting\Configuration\Banks\BankLoanTypeController.cs" />
     <Compile Include="Controllers\Accounting\Configuration\Others\TaxController.cs" />
     <Compile Include="Controllers\Accounting\Configuration\Periods\FiscalYearController.cs" />
+    <Compile Include="Controllers\Accounting\PayOrders\PayOrderCategoryController.cs" />
+    <Compile Include="Controllers\Accounting\PayOrders\PayOrderController.cs" />
+    <Compile Include="Controllers\Accounting\Reports\Customers\CustomerFileController.cs" />
+    <Compile Include="Controllers\Accounting\Reports\Suppliers\SupplierFileController.cs" />
     <Compile Include="Controllers\Accounting\Transaction\GLedgerController.cs" />
     <Compile Include="Controllers\Accounting\Configuration\Accounts\PaymentMethodController.cs" />
     <Compile Include="Controllers\Accounting\Transaction\LedgerSheetController.cs" />
@@ -233,6 +247,7 @@
     <Compile Include="Controllers\HR\CustomerTypeController.cs" />
     <Compile Include="Controllers\HR\DepartmentController.cs" />
     <Compile Include="Controllers\HR\DesignationController.cs" />
+    <Compile Include="Controllers\HR\EmployeeDetailsController.cs" />
     <Compile Include="Controllers\HR\EmployeeTypeController.cs" />
     <Compile Include="Controllers\HR\Holiday\GeneralHolidayController.cs" />
     <Compile Include="Controllers\HR\Holiday\HolidayTypeController.cs" />
@@ -241,10 +256,23 @@
     <Compile Include="Controllers\HR\Leave\EmployeeLeaveGroupController.cs" />
     <Compile Include="Controllers\HR\Leave\EmployeeLeaveTypeController.cs" />
     <Compile Include="Controllers\HR\SupplierTypeController.cs" />
+    <Compile Include="Controllers\HR\TodoListController.cs" />
+    <Compile Include="Controllers\Inventory\ProductBrandController.cs" />
     <Compile Include="Controllers\Inventory\ProductCategoryController.cs" />
     <Compile Include="Controllers\Inventory\ProductController.cs" />
     <Compile Include="Controllers\Inventory\ProductReceiveDeliveryController.cs" />
+    <Compile Include="Controllers\Inventory\ProductSpecificationController.cs" />
+    <Compile Include="Controllers\Inventory\ProductSpecificationDescriptionController.cs" />
     <Compile Include="Controllers\Inventory\UnitOfMeasureController.cs" />
+    <Compile Include="Controllers\Payroll\AttendanceAuditController.cs" />
+    <Compile Include="Controllers\Payroll\CalculationTypesController.cs" />
+    <Compile Include="Controllers\Payroll\PayrollProcessController.cs" />
+    <Compile Include="Controllers\Payroll\PayrollProcessDescriptionController.cs" />
+    <Compile Include="Controllers\Payroll\PayTypesController.cs" />
+    <Compile Include="Controllers\Payroll\SalaryComponentConfigController.cs" />
+    <Compile Include="Controllers\Payroll\SalaryComponentDescriptionController.cs" />
+    <Compile Include="Controllers\Payroll\SalaryComponentMappingController.cs" />
+    <Compile Include="Controllers\Payroll\SalaryComponentsController.cs" />
     <Compile Include="Controllers\Production\BillofMaterialCategoryController.cs" />
     <Compile Include="Controllers\Production\BillofMaterialController.cs" />
     <Compile Include="Controllers\Production\BillofMaterialDescriptionController.cs" />
@@ -276,6 +304,7 @@
     <Compile Include="Controllers\Purchase\RequestForQuotationDescriptionController.cs" />
     <Compile Include="Controllers\Purchase\RequisitionDeliveryController.cs" />
     <Compile Include="Controllers\Purchase\RequisitionDeliveryDescriptionController.cs" />
+    <Compile Include="Controllers\Resources\AttachFileController.cs" />
     <Compile Include="Controllers\Resources\DataController.cs" />
     <Compile Include="Controllers\Resources\UploadFileController.cs" />
     <Compile Include="Controllers\Sales\SalesBillCategoryController.cs" />
@@ -306,6 +335,7 @@
     <Compile Include="Controllers\Setting\Security\FormGroupPermissionController.cs" />
     <Compile Include="Controllers\Setting\Security\FormListController.cs" />
     <Compile Include="Controllers\Setting\Security\FormUserPermissionController.cs" />
+    <Compile Include="Controllers\Setting\Security\ModuleController.cs" />
     <Compile Include="Controllers\Setting\Security\WorkFlowConfigController.cs" />
     <Compile Include="Controllers\Setting\Security\WorkFlowController.cs" />
     <Compile Include="Controllers\Setting\Security\WorkFlowRecordController.cs" />
@@ -327,7 +357,12 @@
     <Compile Include="Models\Accounting\Configuration\Accounts\AccType.cs" />
     <Compile Include="Models\Accounting\Configuration\Accounts\VoucherType.cs" />
     <Compile Include="Models\Accounting\Configuration\Banks\BankAccountOwnerType.cs" />
+    <Compile Include="Models\Accounting\Configuration\Banks\BankLoan.cs" />
+    <Compile Include="Models\Accounting\Configuration\Banks\BankLoanTransaction.cs" />
+    <Compile Include="Models\Accounting\Configuration\Banks\BankLoanType.cs" />
     <Compile Include="Models\Accounting\Configuration\Others\Tax.cs" />
+    <Compile Include="Models\Accounting\PayOrders\PayOrder.cs" />
+    <Compile Include="Models\Accounting\PayOrders\PayOrderCategory.cs" />
     <Compile Include="Models\Accounting\Transaction\GLedger.cs" />
     <Compile Include="Models\Accounting\Configuration\Accounts\PaymentMethod.cs" />
     <Compile Include="Models\Accounting\Transaction\VoucherList.cs" />
@@ -342,6 +377,7 @@
     <Compile Include="Models\HR\CustomerType.cs" />
     <Compile Include="Models\HR\Departments.cs" />
     <Compile Include="Models\HR\Designation.cs" />
+    <Compile Include="Models\HR\EmployeeDetails.cs" />
     <Compile Include="Models\HR\EmployeeType.cs" />
     <Compile Include="Models\HR\Holiday\GeneralHoliday.cs" />
     <Compile Include="Models\HR\Holiday\HolidayType.cs" />
@@ -350,14 +386,27 @@
     <Compile Include="Models\HR\Leave\EmployeeLeaveType.cs" />
     <Compile Include="Models\HR\Leave\EmployeeLeaveApplication.cs" />
     <Compile Include="Models\HR\SupplierType.cs" />
+    <Compile Include="Models\HR\TodoList.cs" />
     <Compile Include="Models\ICommentRepository.cs" />
     <Compile Include="Models\InitialData.cs" />
     <Compile Include="Models\Inventory\Product.cs" />
+    <Compile Include="Models\Inventory\ProductBrand.cs" />
     <Compile Include="Models\Inventory\ProductCategory.cs" />
     <Compile Include="Models\Inventory\ProductReceiveDelivery.cs" />
     <Compile Include="Models\Inventory\ProductReceiveDeliveryDescription.cs" />
+    <Compile Include="Models\Inventory\ProductSpecification.cs" />
+    <Compile Include="Models\Inventory\ProductSpecificationDescription.cs" />
     <Compile Include="Models\Inventory\UnitOfMeasure.cs" />
     <Compile Include="Models\LoginUser.cs" />
+    <Compile Include="Models\Payroll\AttendanceAudit.cs" />
+    <Compile Include="Models\Payroll\CalculationTypes.cs" />
+    <Compile Include="Models\Payroll\PayrollProcess.cs" />
+    <Compile Include="Models\Payroll\PayrollProcessDescription.cs" />
+    <Compile Include="Models\Payroll\PayTypes.cs" />
+    <Compile Include="Models\Payroll\SalaryComponentConfig.cs" />
+    <Compile Include="Models\Payroll\SalaryComponentDescription.cs" />
+    <Compile Include="Models\Payroll\SalaryComponentMapping.cs" />
+    <Compile Include="Models\Payroll\SalaryComponents.cs" />
     <Compile Include="Models\Production\BillofMaterial.cs" />
     <Compile Include="Models\Production\BillofMaterialCategory.cs" />
     <Compile Include="Models\Production\BillofMaterialDescription.cs" />
@@ -389,6 +438,7 @@
     <Compile Include="Models\Purchase\RequestForQuotationDescription.cs" />
     <Compile Include="Models\Purchase\RequisitionDelivery.cs" />
     <Compile Include="Models\Purchase\RequisitionDeliveryDescription.cs" />
+    <Compile Include="Models\Resources\AttachFile.cs" />
     <Compile Include="Models\Resources\UploadFile.cs" />
     <Compile Include="Models\Sales\SalesBillCategory.cs" />
     <Compile Include="Models\Sales\SalesDelivery.cs" />
@@ -423,12 +473,15 @@
     <Compile Include="Models\Setting\Security\FormGroupPermission.cs" />
     <Compile Include="Models\Setting\Security\FormList.cs" />
     <Compile Include="Models\Setting\Security\FormUserPermission.cs" />
+    <Compile Include="Models\Setting\Security\Module.cs" />
     <Compile Include="Models\Setting\Security\WorkFlow.cs" />
     <Compile Include="Models\Setting\Security\WorkFlowConfig.cs" />
     <Compile Include="Models\Setting\Security\WorkFlowRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\Accounting\Approval\purchaseBillApproval.html" />
+    <Content Include="app\Accounting\Approval\purchaseBillApprovalCtrl.js" />
     <Content Include="app\Accounting\Configuration\Accounts\accCOA.html" />
     <Content Include="app\Accounting\Configuration\Accounts\accCOAConfig.html" />
     <Content Include="app\Accounting\Configuration\Accounts\accCOAConfigCtrl.js" />
@@ -443,6 +496,7 @@
     <Content Include="app\Accounting\Configuration\Accounts\voucherTypeCtrl.js" />
     <Content Include="app\Accounting\Configuration\Banks\bank.html" />
     <Content Include="app\Accounting\Configuration\Banks\bankAccount.html" />
+    <Content Include="app\Accounting\Configuration\Banks\bankAccountModalCtrl.js" />
     <Content Include="app\Accounting\Configuration\Banks\bankAccountCtrl.js" />
     <Content Include="app\Accounting\Configuration\Banks\bankAccountOwnerType.html" />
     <Content Include="app\Accounting\Configuration\Banks\bankAccountOwnerTypeCtrl.js" />
@@ -451,11 +505,27 @@
     <Content Include="app\Accounting\Configuration\Banks\bankBranch.html" />
     <Content Include="app\Accounting\Configuration\Banks\bankBranchCtrl.js" />
     <Content Include="app\Accounting\Configuration\Banks\bankCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Banks\bankLoan.html" />
+    <Content Include="app\Accounting\Configuration\Banks\bankLoanCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Banks\bankLoanTransaction.html" />
+    <Content Include="app\Accounting\Configuration\Banks\bankLoanTransactionCtrl.js" />
+    <Content Include="app\Accounting\Configuration\Banks\bankLoanType.html" />
+    <Content Include="app\Accounting\Configuration\Banks\bankLoanTypeCtrl.js" />
     <Content Include="app\Accounting\Configuration\Periods\fiscalYear.html" />
     <Content Include="app\Accounting\Configuration\Periods\fiscalYearCtrl.js" />
+    <Content Include="app\Accounting\PayOrders\payOrder.html" />
+    <Content Include="app\Accounting\PayOrders\payOrderCategory.html" />
+    <Content Include="app\Accounting\PayOrders\payOrderCategoryCtrl.js" />
+    <Content Include="app\Accounting\PayOrders\payOrderCtrl.js" />
+    <Content Include="app\Accounting\Reports\Customers\customerFile.html" />
+    <Content Include="app\Accounting\Reports\Customers\customerFileCtrl.js" />
+    <Content Include="app\Accounting\Reports\Suppliers\supplierFile.html" />
+    <Content Include="app\Accounting\Reports\Suppliers\supplierFileCtrl.js" />
     <Content Include="app\Accounting\Transaction\gLedger.html" />
     <Content Include="app\Accounting\Transaction\gLedgerCtrl.js" />
-    <Content Include="app\Accounting\Transaction\Report\ledgerSheet.html" />
+    <Content Include="app\Accounting\Transaction\Report\ledgerSheet .html" />
+    <Content Include="app\Accounting\Transaction\Report\customLedgerSheet.html" />
+    <Content Include="app\Accounting\Transaction\Report\customLedgerSheetCtrl.js" />
     <Content Include="app\Accounting\Transaction\Report\ledgerSheetCtrl.js" />
     <Content Include="app\Accounting\Transaction\Report\trialBalance.html" />
     <Content Include="app\Accounting\Transaction\Report\trialBalanceCtrl.js" />
@@ -465,6 +535,8 @@
     <Content Include="app\Authentication\UserAuthentication\companyManagement.UserAuthentication.js" />
     <Content Include="app\Authentication\UserAuthentication\userAuthentication.js" />
     <Content Include="app\Authentication\UserAuthentication\userAuthenticationService.js" />
+    <Content Include="app\Dashboard\dashboard.html" />
+    <Content Include="app\Dashboard\dashboardCtrl.js" />
     <Content Include="app\Expenses\employeeExpensesDescription.html" />
     <Content Include="app\Expenses\employeeExpensesDescriptionCtrl.js" />
     <Content Include="app\Expenses\employeesExpenses.html" />
@@ -473,7 +545,9 @@
     <Content Include="app\Expenses\employeesExpensesPaymentCtrl.js" />
     <Content Include="app\Expenses\expensesType.html" />
     <Content Include="app\Expenses\expensesTypeCtrl.js" />
+    <Content Include="app\HR\contactsPersonCtrl.js" />
     <Content Include="app\HR\customerModalCtrl.js" />
+    <Content Include="app\HR\contactsPerson.html" />
     <Content Include="app\HR\Leave\employeeLeaveApplication.html" />
     <Content Include="app\HR\Leave\employeeLeaveApplicationCtrl.js" />
     <Content Include="app\HR\Leave\employeeLeaveGroup.html" />
@@ -499,13 +573,28 @@
     <Content Include="app\HR\supplierType.html" />
     <Content Include="app\HR\supplierTypeCtrl.js" />
     <Content Include="app\Inventory\Product\product.html" />
+    <Content Include="app\Inventory\Product\productBrand.html" />
+    <Content Include="app\Inventory\Product\productBrandCtrl.js" />
     <Content Include="app\Inventory\Product\productCategory.html" />
     <Content Include="app\Inventory\Product\productCategoryCtrl.js" />
+    <Content Include="app\Inventory\Product\productModalCtrl.js" />
     <Content Include="app\Inventory\Product\productCtrl.js" />
     <Content Include="app\Inventory\Product\productReceiveDelivery.html" />
     <Content Include="app\Inventory\Product\productReceiveDeliveryCtrl.js" />
+    <Content Include="app\Inventory\Product\productSpecification.html" />
+    <Content Include="app\Inventory\Product\productSpecificationCtrl.js" />
     <Content Include="app\Inventory\Product\unitOfMeasure.html" />
     <Content Include="app\Inventory\Product\unitOfMeasureCtrl.js" />
+    <Content Include="app\Payroll\attendanceAudit.html" />
+    <Content Include="app\Payroll\attendanceAuditCtrl.js" />
+    <Content Include="app\Payroll\payrollProcess.html" />
+    <Content Include="app\Payroll\payrollProcessCtrl.js" />
+    <Content Include="app\Payroll\salaryComponentConfig.html" />
+    <Content Include="app\Payroll\salaryComponentConfigCtrl.js" />
+    <Content Include="app\Payroll\salaryComponentMapping.html" />
+    <Content Include="app\Payroll\salaryComponentMappingCtrl.js" />
+    <Content Include="app\Payroll\salaryComponents.html" />
+    <Content Include="app\Payroll\salaryComponentsCtrl.js" />
     <Content Include="app\Production\billofMaterial.html" />
     <Content Include="app\Production\billofMaterialCategory.html" />
     <Content Include="app\Production\billofMaterialCategoryCtrl.js" />
@@ -596,9 +685,16 @@
     <Content Include="app\setting\company\companyName\company.js" />
     <Content Include="app\setting\company\companyType\companyType.html" />
     <Content Include="app\setting\company\companyType\companyTypeCtrl.js" />
+    <Content Include="app\setting\Security\formList.html" />
+    <Content Include="app\setting\Security\formListCtrl.js" />
+    <Content Include="app\setting\Security\formUserPermission.html" />
+    <Content Include="app\setting\Security\formUserPermissionCtrl.js" />
+    <Content Include="app\setting\Security\module.html" />
+    <Content Include="app\setting\Security\moduleCtrl.js" />
     <Content Include="app\TestModule\commentListCtrl.js" />
     <Content Include="app\TestModule\Comments.html" />
     <Content Include="app\TestModule\TestTemplate.html" />
+    <Content Include="common\directive\dirAutocomplete.js" />
     <Content Include="common\directive\dirConfirmMsg.js" />
     <Content Include="common\directive\dirContextMenu.js" />
     <Content Include="common\directive\dirDatetimepicker.js" />
@@ -612,20 +708,29 @@
     <Content Include="common\directive\ng-file-upload-all.js" />
     <Content Include="common\factory\Excel.js" />
     <Content Include="common\filter\angular-filter.js" />
+    <Content Include="common\filter\custom-filter.js" />
     <Content Include="common\filter\ngGroup.js" />
+    <Content Include="common\filter\timeago.js" />
+    <Content Include="common\others\appAuth.js" />
     <Content Include="common\others\authenticate.js" />
+    <Content Include="common\others\fileUplode.js" />
     <Content Include="common\services\accCOAConfigResource.js" />
     <Content Include="common\services\accCOAMappingResource.js" />
     <Content Include="common\services\accCOAResource.js" />
     <Content Include="common\services\accTypeResource.js" />
+    <Content Include="common\services\attachFileResource.js" />
+    <Content Include="common\services\attendanceAuditResource.js" />
     <Content Include="common\services\bankAccountOwnerTypeResource.js" />
     <Content Include="common\services\bankAccountResource.js" />
     <Content Include="common\services\bankAccountTypeResource.js" />
     <Content Include="common\services\bankBranchResource.js" />
+    <Content Include="common\services\bankLoanTransactionResource.js" />
+    <Content Include="common\services\bankLoanTypeResource.js" />
     <Content Include="common\services\bankResource.js" />
     <Content Include="common\services\billofMaterialCategoryResource.js" />
     <Content Include="common\services\billofMaterialDescriptionResource.js" />
     <Content Include="common\services\billofMaterialResource.js" />
+    <Content Include="common\services\calculationTypeResource.js" />
     <Content Include="common\services\CityResource.js" />
     <Content Include="common\services\collaboratorResource.js" />
     <Content Include="common\services\commentResource.js" />
@@ -638,9 +743,11 @@
     <Content Include="common\services\CompanyTypeResource.js" />
     <Content Include="common\services\CountryResource.js" />
     <Content Include="common\services\CurrencyResource.js" />
+    <Content Include="common\services\customerFileResource.js" />
     <Content Include="common\services\customerTypeResource.js" />
     <Content Include="common\services\departmentResource.js" />
     <Content Include="common\services\designationResource.js" />
+    <Content Include="common\services\employeeDetailsResource.js" />
     <Content Include="common\services\employeeExpensesDescriptionResource.js" />
     <Content Include="common\services\employeeLeaveApplicationResource.js" />
     <Content Include="common\services\employeeLeaveGroupResource.js" />
@@ -660,9 +767,16 @@
     <Content Include="common\services\maintainPurchaseQuotationResource.js" />
     <Content Include="common\services\maintainPurchaseQuotationDescriptionResource.js" />
     <Content Include="common\services\modalServices.js" />
+    <Content Include="common\services\moduleResource.js" />
     <Content Include="common\services\moneyRequisitionRequestResource.js" />
     <Content Include="common\services\moneyRequisitionResource.js" />
     <Content Include="common\services\paymentMethodResource.js" />
+    <Content Include="common\services\payOrderCategoryResource.js" />
+    <Content Include="common\services\payOrderResource.js" />
+    <Content Include="common\services\payrollProcessDescriptionResource.js" />
+    <Content Include="common\services\payrollProcessResource.js" />
+    <Content Include="common\services\payTypesResource.js" />
+    <Content Include="common\services\productBrandResource.js" />
     <Content Include="common\services\productCategoryResource.js" />
     <Content Include="common\services\productCostingDescriptionResource.js" />
     <Content Include="common\services\productCostingResource.js" />
@@ -673,6 +787,8 @@
     <Content Include="common\services\productReceiveDeliveryDescriptionResource.js" />
     <Content Include="common\services\ProductReceiveDeliveryResource.js" />
     <Content Include="common\services\productResource.js" />
+    <Content Include="common\services\productSpecificationDescriptionResource.js" />
+    <Content Include="common\services\productSpecificationResource.js" />
     <Content Include="common\services\projectSetupResource.js" />
     <Content Include="common\services\projectSideResource.js" />
     <Content Include="common\services\purchaseBillDescriptionResource.js" />
@@ -691,6 +807,10 @@
     <Content Include="common\services\requestForQuotationResource.js" />
     <Content Include="common\services\requisitionDeliveryDescriptionResource.js" />
     <Content Include="common\services\requisitionDeliveryResource.js" />
+    <Content Include="common\services\salaryComponentConfigResource.js" />
+    <Content Include="common\services\salaryComponentDescriptionResource.js" />
+    <Content Include="common\services\salaryComponentMappingResource.js" />
+    <Content Include="common\services\salaryComponentResource.js" />
     <Content Include="common\services\salesBillCategoryResource.js" />
     <Content Include="common\services\salesBillDescriptionResource.js" />
     <Content Include="common\services\salesBillResource.js" />
@@ -704,8 +824,10 @@
     <Content Include="common\services\salesQuotationDescriptionResource.js" />
     <Content Include="common\services\salesQuotationResource.js" />
     <Content Include="common\services\salesReceivePaymentResource.js" />
+    <Content Include="common\services\supplierFileResource.js" />
     <Content Include="common\services\supplierTypeResource.js" />
     <Content Include="common\services\taxResource.js" />
+    <Content Include="common\services\todoListResource.js" />
     <Content Include="common\services\trialBalanceResource.js" />
     <Content Include="common\services\unitOfMeasureResource.js" />
     <Content Include="common\services\uploadFileResource.js" />
@@ -720,6 +842,7 @@
     <Content Include="Content\css\ContextMenu.css" />
     <Content Include="Content\css\ionicons.css" />
     <Content Include="Content\css\ionicons.min.css" />
+    <Content Include="Content\css\jquery-ui.css" />
     <Content Include="Content\fonts\ionicons.svg" />
     <Content Include="Content\css\jqxsummer.css" />
     <Content Include="Content\css\ngDatepicker.css" />
@@ -750,6 +873,7 @@
     <Content Include="Content\js\angularjs\ui-bootstrap-tpls-0.11.0.js" />
     <Content Include="Content\js\angularjs\ui-utils.js" />
     <Content Include="Content\js\jquery\bootstrap.js" />
+    <Content Include="Content\js\jquery\jquery-ui.js" />
     <Content Include="Content\js\jquery\jquery.js" />
     <Content Include="Content\js\jquery\jqxbuttons.js" />
     <Content Include="Content\js\jquery\jqxcore.js" />

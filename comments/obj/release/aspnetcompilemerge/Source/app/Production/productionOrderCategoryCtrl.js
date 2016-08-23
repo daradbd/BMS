@@ -13,10 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("productionOrderCategoryCtrl", ["productionOrderCategoryResource", productionOrderCategoryCtrl]);
-    function productionOrderCategoryCtrl(productionOrderCategoryResource) {
+        .controller("productionOrderCategoryCtrl", ["productionOrderCategoryResource", "appAuth", productionOrderCategoryCtrl]);
+    function productionOrderCategoryCtrl(productionOrderCategoryResource, appAuth) {
         var vm = this;
         vm.productionOrderCategorys = [];
+        appAuth.checkPermission();
 
         // View Mode Control Variable // 
         vm.FromView = false;

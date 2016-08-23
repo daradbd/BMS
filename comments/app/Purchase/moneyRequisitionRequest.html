@@ -117,34 +117,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 bg-info">
-                                <div class="form-group">
-
-                                    <label for="cmbEmployee">
-                                        Employee:
-                                    </label>
-                                    {{vm.cmbEmployee.Collaborator.Name}}
-                                </div>
-                                <div class="form-group">
-
-                                    <label for="cmbProject">
-                                        Project:
-                                    </label>
-                                    {{ vm.moneyRequisitionRequest.ProjectSetup.ProjectName}}
-                                </div>
-                                <div class="form-group">
-
-                                    <label for="txtRequestAmount">
-                                        RequestAmount :
-                                    </label>
-                                    {{vm.moneyRequisitionRequest.RequestAmount}}
-                                </div>
-                                <div class="form-group">
-                                    <label for="txtRemarks">
-                                        Remarks :
-                                    </label>
-                                    {{vm.moneyRequisitionRequest.Remarks}}
-                                </div>
-
+                               
                             </div>
 
                         </div>
@@ -168,7 +141,7 @@
                                     <label for="txtRequestAmount">
                                         RequestAmount
                                     </label>
-                                    <pre>{{vm.moneyRequisitionRequest.RequestAmount}}</pre>
+                                    <pre>{{vm.moneyRequisitionRequest.RequestAmount|currency: " " : 2}}</pre>
                                 </div>
                                 <div class="form-group">
                                     <label for="txtRemarks">
@@ -229,10 +202,10 @@
 
                                         </thead>
                                         <tbody>
-                                            <tr dir-paginate="moneyRequisitionRequest in vm.moneyRequisitionRequests|filter:searchText| itemsPerPage: vm.num">
+                                            <tr dir-paginate="moneyRequisitionRequest in vm.moneyRequisitionRequests|orderBy:'-MoneyRequisitionRequestID'|filter:searchText| itemsPerPage: vm.num">
                                                 <td>{{moneyRequisitionRequest.MoneyRequisitionRequestCode  | uppercase}}</td>
                                                 <td>{{moneyRequisitionRequest.Collaborator.Name}}</td>
-                                                <td>{{moneyRequisitionRequest.RequestAmount}}</td>
+                                                <td>{{moneyRequisitionRequest.RequestAmount|currency: " " : 2}}</td>
                                                 <td>{{moneyRequisitionRequest.ProjectSetup.ProjectName}}</td>
                                                 <td class="noPrint">
                                                     <button type="button" ng-click="vm.Get(moneyRequisitionRequest.MoneyRequisitionRequestID)" data-skin="skin-blue" class="btn btn-primary btn-xs">

@@ -13,11 +13,12 @@
 
     angular
         .module("companyManagement")
-        .controller("productReceiveDeliveryCtrl", ["purchaseRequisitionDescriptionResource", "purchaseRequisitionResource", "salesOrderDescriptionResource", "$rootScope", "salesOrderResource", "productReceiveDeliveryResource", productReceiveDeliveryCtrl]);
-    function productReceiveDeliveryCtrl(purchaseRequisitionDescriptionResource, purchaseRequisitionResource, salesOrderDescriptionResource, $rootScope, salesOrderResource, productReceiveDeliveryResource) {
+        .controller("productReceiveDeliveryCtrl", ["purchaseRequisitionDescriptionResource", "purchaseRequisitionResource", "salesOrderDescriptionResource", "$rootScope", "salesOrderResource", "productReceiveDeliveryResource", "appAuth", productReceiveDeliveryCtrl]);
+    function productReceiveDeliveryCtrl(purchaseRequisitionDescriptionResource, purchaseRequisitionResource, salesOrderDescriptionResource, $rootScope, salesOrderResource, productReceiveDeliveryResource, appAuth) {
         var vm = this;
         vm.productReceiveDeliverys = [];
         vm.productReceiveDelivery = {};
+        appAuth.checkPermission();
 
         vm.ReceiveDeliveryDescription = { ReceiveDeliveryDesc: [] };
 

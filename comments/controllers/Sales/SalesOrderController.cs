@@ -9,13 +9,18 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using BMS.Models.Production;
+using BMS.Models.Sales;
 using BMS.Models;
+using BMS.Models.HR;
+using BMS.Models.Accounting.Configuration.Periods;
+using System.Data.Objects;
 
 namespace BMS.Controllers.Sales
 {
     public class SalesOrderController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/SalesOrder
         public IEnumerable<SalesOrder> GetSalesOrders()
@@ -49,6 +54,19 @@ namespace BMS.Controllers.Sales
             }
             salesorder.Collaborator = null;
             salesorder.ProcesStatus = null;
+            if (salesorder.SalesOrderCode ==null)
+            {
+                FiscalYear fiscalYear = db.FiscalYears.Where(f => (EntityFunctions.TruncateTime(f.StartDate) <= DateTime.Now) && (EntityFunctions.TruncateTime(f.EndDate) >= DateTime.Now)).SingleOrDefault();
+                SalesOrderCategory salesOrderCategory = db.SalesOrderCategories.Where(so => so.SalesOrderCategoryID == salesorder.SalesOrderCategoryID).SingleOrDefault();
+                Collaborator custormer = db.Collaborators.Where(c => c.CollaboratorID == salesorder.CustomerID).Include(c => c.CustomerType).SingleOrDefault();
+
+                string CustomCode = salesOrderCategory.SalesOrderCategoryCode + "/" + custormer.CustomerType.CustomerTypeID.ToString().PadLeft(3, '0') + "/" + fiscalYear.FiscalYearName + "/" + custormer.CollaboratorCode + "-";
+                //string CustomCode = "SO-" + DateTime.Now.ToString("yyyyMMdd");
+
+                int? MaxCode = Convert.ToInt32((db.SalesOrders.Where(r => r.SalesOrderCode.StartsWith(CustomCode)).Select(r => r.SalesOrderCode.Substring(CustomCode.Length, 8)).ToList()).Max());
+                string SOCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(8, '0');
+                salesorder.SalesOrderCode = SOCode;
+            }
 
             db.Entry(salesorder).State = EntityState.Modified;
 
@@ -69,11 +87,20 @@ namespace BMS.Controllers.Sales
         {
             if (ModelState.IsValid)
             {
-                string CustomCode = "SO-" + DateTime.Now.ToString("yyyyMMdd");
+                if(salesorder.SalesOrderCategoryID>0)
+                {
+                    FiscalYear fiscalYear = db.FiscalYears.Where(f => (EntityFunctions.TruncateTime(f.StartDate) <= DateTime.Now) && (EntityFunctions.TruncateTime(f.EndDate) >= DateTime.Now)).SingleOrDefault();
+                    SalesOrderCategory salesOrderCategory = db.SalesOrderCategories.Where(so => so.SalesOrderCategoryID == salesorder.SalesOrderCategoryID).SingleOrDefault();
+                    Collaborator custormer = db.Collaborators.Where(c => c.CollaboratorID == salesorder.CustomerID).Include(c => c.CustomerType).SingleOrDefault();
 
-                int? MaxCode = Convert.ToInt32((db.SalesOrders.Where(r => r.SalesOrderCode.StartsWith(CustomCode)).Select(r => r.SalesOrderCode.Substring(CustomCode.Length, 4)).ToList()).Max());
-                string SOCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(4, '0');
-                salesorder.SalesOrderCode = SOCode;
+                    string CustomCode = salesOrderCategory.SalesOrderCategoryCode + "/" + custormer.CustomerType.CustomerTypeID.ToString().PadLeft(3, '0') + "/" + fiscalYear.FiscalYearName + "/" + custormer.CollaboratorCode + "-";
+                    //string CustomCode = "SO-" + DateTime.Now.ToString("yyyyMMdd");
+
+                    int? MaxCode = Convert.ToInt32((db.SalesOrders.Where(r => r.SalesOrderCode.StartsWith(CustomCode)).Select(r => r.SalesOrderCode.Substring(CustomCode.Length, 8)).ToList()).Max());
+                    string SOCode = CustomCode + ((MaxCode + 1).ToString()).PadLeft(8, '0');
+                    salesorder.SalesOrderCode = SOCode;
+                }
+                
                 salesorder.Date = DateTime.Now.ToLocalTime();
                 db.SalesOrders.Add(salesorder);
                 db.SaveChanges();

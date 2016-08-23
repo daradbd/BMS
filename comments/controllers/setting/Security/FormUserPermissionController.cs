@@ -18,21 +18,57 @@ namespace BMS.Controllers.Setting.Security
         private UsersContext db = new UsersContext();
 
         // GET api/FormUserPermission
-        public IEnumerable<FormUserPermission> GetFormUserPermissions()
+        public HttpResponseMessage GetFormUserPermissions()
         {
-            return db.FormUserPermissions.AsEnumerable();
+            LoginUser loginUser = new LoginUser();
+
+            long id = (long)loginUser.UserID;
+            var useperm = db.FormUserPermissions.Where(u => u.UserID == id);
+            var result = from x in db.FormLists
+                         join y in useperm on x.FormID equals y.FormID into userPermission
+                         from xy in userPermission.DefaultIfEmpty()
+
+                         select new
+                         {
+                             FormUserPermissionID = xy.FormUserPermissionID == null ? 0 : xy.FormUserPermissionID,
+                             UserID = id,
+                             FormUserPermissionCode = xy.FormUserPermissionCode,
+                             state=x.state,
+                             FormID = x.FormID,
+                             View = xy.View == null ? false : xy.View,
+                             Insert = xy.Insert == null ? false : xy.Insert,
+                             Update = xy.Update == null ? false : xy.Update,
+                             Delete = xy.Delete == null ? false : xy.Delete,
+                             FormName = x.FormName,
+                             ModuleName = x.Module.ModuleName
+                         };
+            //return db.AccCOAMappings.AsEnumerable();
+            return Request.CreateResponse(HttpStatusCode.OK, result.ToList());
         }
 
         // GET api/FormUserPermission/5
-        public FormUserPermission GetFormUserPermission(long id)
+        public HttpResponseMessage GetFormUserPermission(long id)
         {
-            FormUserPermission formuserpermission = db.FormUserPermissions.Find(id);
-            if (formuserpermission == null)
-            {
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
-            }
+            var useperm = db.FormUserPermissions.Where(u => u.UserID == id);
+            var result = from x in db.FormLists
+                         join y in useperm on x.FormID equals y.FormID into userPermission
+                         from xy in userPermission.DefaultIfEmpty()
 
-            return formuserpermission;
+                         select new
+                         {
+                             FormUserPermissionID = xy.FormUserPermissionID == null ? 0 : xy.FormUserPermissionID,
+                             UserID=id,
+                             FormUserPermissionCode = xy.FormUserPermissionCode,
+                             FormID = x.FormID,
+                             View = xy.View == null ? false : xy.View,
+                             Insert = xy.Insert == null ? false : xy.Insert,
+                             Update = xy.Update == null ? false : xy.Update,
+                             Delete = xy.Delete == null ? false : xy.Delete,
+                             FormName = x.FormName,
+                             ModuleName = x.Module.ModuleName
+                         };
+            //return db.AccCOAMappings.AsEnumerable();
+            return Request.CreateResponse(HttpStatusCode.OK, result.ToList());
         }
 
         // PUT api/FormUserPermission/5
@@ -68,6 +104,8 @@ namespace BMS.Controllers.Setting.Security
             if (ModelState.IsValid)
             {
                 db.FormUserPermissions.Add(formuserpermission);
+                db.Entry(formuserpermission).State = formuserpermission.FormUserPermissionID == 0 ?
+               EntityState.Added : EntityState.Modified;
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, formuserpermission);

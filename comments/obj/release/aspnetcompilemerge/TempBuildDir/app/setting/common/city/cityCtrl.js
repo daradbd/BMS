@@ -2,17 +2,17 @@
     "use strict";
     angular
         .module("companyManagement")
-        .controller("cityCtrl", ["countryResource", "cityResource", cityCtrl]);
-    function cityCtrl(countryResource, cityResource) {
+        .controller("cityCtrl", ["countryResource", "cityResource", "appAuth", cityCtrl]);
+    function cityCtrl(countryResource, cityResource, appAuth) {
         var vm = this;
         vm.citys = [];
         vm.city = [];
         vm.countrys = [];
-  
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //

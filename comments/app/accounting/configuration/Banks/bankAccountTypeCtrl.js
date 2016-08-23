@@ -13,15 +13,15 @@
 
     angular
         .module("companyManagement")
-        .controller("bankAccountTypeCtrl", ["bankAccountTypeResource", bankAccountTypeCtrl]);
-    function bankAccountTypeCtrl(bankAccountTypeResource) {
+        .controller("bankAccountTypeCtrl", ["bankAccountTypeResource", "appAuth", bankAccountTypeCtrl]);
+    function bankAccountTypeCtrl(bankAccountTypeResource, appAuth) {
         var vm = this;
         vm.bankAccountTypes = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;
-        vm.DetailsView = false
+        vm.DetailsView = false;
         vm.EditView = false;
 
         // Action Button Control Variable //
@@ -53,7 +53,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = true;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = false;
 
 
@@ -68,7 +68,7 @@
             {
                 vm.FromView = false;
                 vm.ListView = false;
-                vm.DetailsView = true
+                vm.DetailsView = true;
                 vm.EditView = false;
 
 
@@ -82,7 +82,7 @@
             {
                 vm.FromView = true;
                 vm.ListView = false;
-                vm.DetailsView = false
+                vm.DetailsView = false;
                 vm.EditView = true;
 
 
@@ -120,6 +120,7 @@
                     function (data, responseHeaders) {
                         GetList();
                         vm.bankAccountType = null;
+                        vm.ViewMode(2);
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -150,7 +151,7 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                bankAccountTypeResource.update({ 'ID': vm.bankAccountType.bankAccountTypeID }, vm.bankAccountType).$promise.then(function () {
+                bankAccountTypeResource.update({ 'ID': vm.bankAccountType.BankAccountTypeID }, vm.bankAccountType).$promise.then(function () {
                 vm.bankAccountTypes = null;
                 vm.ViewMode(3);
                 GetList();
@@ -172,6 +173,7 @@
                 // success handler
                 toastr.success("Data Delete Successfully!");
                 GetList();
+                vm.ViewMode(2);
             }, function (error) {
                 // error handler
                 toastr.error("Data Delete Failed!");

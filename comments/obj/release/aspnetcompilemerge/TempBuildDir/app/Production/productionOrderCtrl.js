@@ -13,12 +13,13 @@
 
     angular
         .module("companyManagement")
-        .controller("productionOrderCtrl", ["unitOfMeasureResource", "projectSetupResource", "productionOrderDescriptionResource", "salesOrderResource", "salesOrderDescriptionResource", "$rootScope", "companyBranchResource", "productionOrderResource", productionOrderCtrl]);
-    function productionOrderCtrl(unitOfMeasureResource, projectSetupResource, productionOrderDescriptionResource, salesOrderResource, salesOrderDescriptionResource, $rootScope, companyBranchResource, productionOrderResource) {
+        .controller("productionOrderCtrl", ["unitOfMeasureResource", "projectSetupResource", "productionOrderDescriptionResource", "salesOrderResource", "salesOrderDescriptionResource", "$rootScope", "companyBranchResource", "productionOrderResource", "appAuth", productionOrderCtrl]);
+    function productionOrderCtrl(unitOfMeasureResource, projectSetupResource, productionOrderDescriptionResource, salesOrderResource, salesOrderDescriptionResource, $rootScope, companyBranchResource, productionOrderResource, appAuth) {
         var vm = this;
         vm.productionOrder = [];
         vm.productionOrders = [];
-        vm.projectSetup =[];
+        vm.projectSetup = [];
+        appAuth.checkPermission();
         vm.SalesOrderDescription = { salesOrderDesc: [] };
         vm.productionOrderDescription = { productionOrderDesc: [{ SalesSectionID: 1, SalesSectionName: "", ProductID: 0, OfferDate: "", Oopened: false, MOUID: 0, ScheduleDate: "", sopened: false, Quantity: 0, POrderQuantity: 0 }] };
         // View Mode Control Variable // 

@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseOrderCategoryCtrl", ["accCOAResource", "purchaseOrderCategoryResource", purchaseOrderCategoryCtrl]);
-    function purchaseOrderCategoryCtrl(accCOAResource,purchaseOrderCategoryResource) {
+        .controller("purchaseOrderCategoryCtrl", ["accCOAResource", "purchaseOrderCategoryResource", "appAuth", purchaseOrderCategoryCtrl]);
+    function purchaseOrderCategoryCtrl(accCOAResource, purchaseOrderCategoryResource, appAuth) {
         var vm = this;
         vm.purchaseOrderCategorys = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

@@ -1,37 +1,37 @@
 ﻿<div class="modal-header">
-    <h3 class="modal-title">I'm a modal!</h3>
+    
 </div>
 <div class="modal-body">
-    <div>
-        <form novalidate name="f1" ng-submit="SaveFile()">
-            <div style="color: red">{{Message}}</div>
-            <table>
-                <tr>
-                    <td>Select File : </td>
-                    <td>
-                        <input type="file" name="file" accept="image/*" onchange="angular.element(this).scope().selectFileforUpload(this.files)" required />
-                        <span class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.file.$error.required">Image required!</span>
-                        <span class="error">{{FileInvalidMessage}}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Description : </td>
-                    <td>
-                        <input type="text" name="uFileDescription" ng-model="FileDescription" class="{{(IsFormSubmitted?'ng-dirty' + (f1.uFileDescription.$invalid?' ng-invalid':''):'')}}" autofocus />
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="submit" value="Upload File" />
-                    </td>
-                </tr>
-            </table>
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Upload File</h3>
+            
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <form novalidate name="f1" ng-submit="SaveFile()">
+                <div style="color: red">{{Message}}</div>
+                <div class="form-group">
+                    <label for=" selectfile">
+                        Select file
+                    </label>
+                    <input type="file" class="form-control" name="file" accept="image/*" onchange="angular.element(this).scope().selectFileforUpload(this.files)" required />
+                    <span class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.file.$error.required">Image required!</span>
+                    <span class="error">{{FileInvalidMessage}}</span>
+                </div> 
+                <div class="form-group">
+                    <label for=" description">
+                        Description
+                    </label>
+                    <input type="text" name="uFileDescription" ng-model="FileDescription" class="form-control {{(IsFormSubmitted?'ng-dirty' + (f1.uFileDescription.$invalid?' ng-invalid':''):'')}}" autofocus />
+                </div>                    
+                <input class="btn btn-default " type="submit" value="Upload File" />
 
-        </form>
-    </div>
+
+               </form>
+           </div>
+        </div>
     </div>
 <div class="modal-footer">
 
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-warning" type="button" ng-click="vm.mClose()">Cancel</button>
 </div>

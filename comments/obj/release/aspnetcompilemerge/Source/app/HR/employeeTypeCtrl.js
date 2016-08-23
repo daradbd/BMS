@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("employeeTypeCtrl", ["employeeTypeResource", employeeTypeCtrl]);
-    function employeeTypeCtrl(employeeTypeResource) {
+        .controller("employeeTypeCtrl", ["employeeTypeResource", "appAuth", employeeTypeCtrl]);
+    function employeeTypeCtrl(employeeTypeResource, appAuth) {
         var vm = this;
         vm.employeeTypes = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

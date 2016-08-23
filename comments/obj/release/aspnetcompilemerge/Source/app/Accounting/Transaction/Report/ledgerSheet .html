@@ -86,7 +86,7 @@
                                                 id="cmbAccCOA"
                                                 name="cmbAccCOA"
                                                 ng-model="vm.cmbAccCOA"
-                                                ng-options="ledgers.COAName for ledgers in vm.ledgerList track by ledgers.COAID "
+                                                ng-options="'['+ledgers.COACode +']'+ledgers.COAName+'-'+ ledgers.AccType.AccTypeName group by ledgers.AccType.AccTypeName for ledgers in vm.ledgerList track by ledgers.COAID "
                                                 ng-change="vm.Get(vm.cmbAccCOA)"></select>
                                     </div>
                                 </div>
@@ -161,7 +161,7 @@
 
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="ledgerSheet in vm.ledgerSheets| filter: vm.dateFilter( )" ng-init="vm.subTotal(ledgerSheet.Credit)">
+                                                <tr ng-repeat="ledgerSheet in vm.ledgerSheets| filter: vm.dateFilter( )">
                                                     <td>{{ledgerSheet.COAID  | uppercase}}</td>
                                                     <td>{{ledgerSheet.TranDate| date: "dd-MMM-yyyy"}}</td>
                                                     <td>{{ledgerSheet.Account}}</td>
@@ -169,14 +169,14 @@
                                                     <td>{{ledgerSheet.Credit| currency:"":2}}</td>
                                                     <td>{{ledgerSheet.balance| currency:"":2}}</td>
                                                 </tr>
-                                                <tr>
+                                                <!--<tr>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td>{{vm.totalDR}}</td>
                                                     <td>{{vm.totalCR}}</td>
                                                     <td>{{vm.balance}}</td>
-                                                </tr>
+                                                </tr>-->
                                             </tbody>
                                         </table>
                                     </div>

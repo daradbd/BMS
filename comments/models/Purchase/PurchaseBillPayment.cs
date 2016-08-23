@@ -1,11 +1,13 @@
 ﻿namespace BMS.Models.Purchase
 {
+    using BMS.Models.Accounting.Configuration.Accounts;
     using BMS.Models.HR;
     using BMS.Models.Setting.Common;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using BMS.Models.Project;
     using System.Data.Entity;
 
     [Table("Purchase_PurchaseBillPayment")]
@@ -81,5 +83,12 @@
         public virtual Collaborator Collaborator { get; set; }
 
         public virtual ProcesStatus ProcesStatus { get; set; }
+
+        public virtual PaymentMethod PaymentMethod { get; set; }
+
+        public virtual ProjectSetup ProjectSetup { get; set; }
+
+        [ForeignKey("CreditTo")]
+        public virtual AccCOA CreditHead { get; set; }
     }
 }

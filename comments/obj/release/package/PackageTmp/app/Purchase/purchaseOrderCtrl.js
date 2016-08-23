@@ -13,14 +13,15 @@
 
     angular
         .module("companyManagement")
-        .controller("purchaseOrderCtrl", ["purchaseOrderCategoryResource", "unitOfMeasureResource", "maintainPurchaseQuotationDescriptionResource", "projectSetupResource", "purchaseOrderDescriptionResource", "productResource", "collaboratorResource", "$rootScope", "$state", "purchaseOrderResource", purchaseOrderCtrl]);
-    function purchaseOrderCtrl(purchaseOrderCategoryResource,unitOfMeasureResource, maintainPurchaseQuotationDescriptionResource, projectSetupResource, purchaseOrderDescriptionResource, productResource, collaboratorResource, $rootScope, $state, purchaseOrderResource)
+        .controller("purchaseOrderCtrl", ["purchaseOrderCategoryResource", "unitOfMeasureResource", "maintainPurchaseQuotationDescriptionResource", "projectSetupResource", "purchaseOrderDescriptionResource", "productResource", "collaboratorResource", "$rootScope", "$state", "purchaseOrderResource", "appAuth", purchaseOrderCtrl]);
+    function purchaseOrderCtrl(purchaseOrderCategoryResource, unitOfMeasureResource, maintainPurchaseQuotationDescriptionResource, projectSetupResource, purchaseOrderDescriptionResource, productResource, collaboratorResource, $rootScope, $state, purchaseOrderResource, appAuth)
     {
         var vm = this;
         vm.purchaseOrders = [];
         vm.Suppliers = [];
         vm.products = [];
         vm.purchaseOrderCategorys  = [];
+        appAuth.checkPermission();
 
         vm.PurchaseOrderDescription = { PurchaseOrderDesc: [{ ProductID: 0, Description: "", ScheduleDate: "", sopened: false, Quantity: 1, UnitPrice: 0.0, Taxes: 0.0, Discount: 0.0 }] };
 
@@ -188,7 +189,7 @@
         GetProductList();
         //Get All Data List
         function GetProductList() {
-            productResource.query().$promise.then(function (data) {
+            productResource.query({ '$filter': 'IsRawmaterial eq true' }).$promise.then(function (data) {
                 vm.products = data;
                 //toastr.success("Data Load Successful", "Form Load");
 

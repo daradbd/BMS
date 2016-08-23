@@ -13,10 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("productCostingCtrl", ["unitOfMeasureResource", "productResource", "productCostingDescriptionResource", "productCostingResource","$window", productCostingCtrl]);
-    function productCostingCtrl(unitOfMeasureResource, productResource, productCostingDescriptionResource, productCostingResource, $window) {
+        .controller("productCostingCtrl", ["unitOfMeasureResource", "productResource", "productCostingDescriptionResource", "productCostingResource", "$window", "appAuth", productCostingCtrl]);
+    function productCostingCtrl(unitOfMeasureResource, productResource, productCostingDescriptionResource, productCostingResource, $window, appAuth) {
         var vm = this;
         vm.productCostings = [];
+        appAuth.checkPermission();
        // vm.productCostingDescription = [];
         vm.height=$window.innerHeight-180;
         // View Mode Control Variable // 
@@ -271,22 +272,28 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            productCostingResource.get({ 'ID': id }, function (productCosting) {
+            productCostingResource.get({ 'ID': id }).$promise.then(function (productCosting) {
                 vm.productCosting = productCosting;
                 GetProductCostingDescription(vm.productCosting.SalesQuotationID);
                 vm.ViewMode(3);
                // toastr.success(vm.SubTotal(), 'Total Amount:', { closeButton: true, timeOut: 0,extendedTimeout:0 });
                 //toastr.success("Data Load Successful", "Form Load");
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
             });
         }
 
         //Get Single Record
        function GetProductCostingDescription(salesQuotationID) {
 
-            productCostingDescriptionResource.query({ '$filter': 'SalesQuotationID eq ' + salesQuotationID }, function (data) {
+           productCostingDescriptionResource.query({ '$filter': 'SalesQuotationID eq ' + salesQuotationID }).$promise.then(function (data) {
                 vm.ProductCostingDescription.productCostingDesc = data;
 
-            });
+           }, function (error) {
+               // error handler
+               toastr.error("Data Load Failed!");
+           });
         }
         //Data Update
         vm.Update = function (isValid) {

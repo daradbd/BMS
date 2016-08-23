@@ -13,12 +13,12 @@
 
     angular
         .module("companyManagement")
-        .controller("paymentMethodCtrl", ["accCOAConfigResource", "paymentMethodResource", paymentMethodCtrl]);
-    function paymentMethodCtrl(accCOAConfigResource,paymentMethodResource) {
+        .controller("paymentMethodCtrl", ["accCOAConfigResource", "paymentMethodResource", "appAuth", paymentMethodCtrl]);
+    function paymentMethodCtrl(accCOAConfigResource, paymentMethodResource, appAuth) {
         var vm = this;
         vm.paymentMethods = [];
         vm.accCOAConfigs = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

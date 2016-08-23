@@ -16,6 +16,7 @@ namespace BMS.Controllers.Inventory
     public class ProductCategoryController : ApiController
     {
         private UsersContext db = new UsersContext();
+        private LoginUser loginUser = new LoginUser();
 
         // GET api/ProductCategory
         public IEnumerable<ProductCategory> GetProductCategories()
@@ -48,6 +49,7 @@ namespace BMS.Controllers.Inventory
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            productcategory.UpdateBy = loginUser.UserID;
             db.Entry(productcategory).State = EntityState.Modified;
 
             try
@@ -67,6 +69,7 @@ namespace BMS.Controllers.Inventory
         {
             if (ModelState.IsValid)
             {
+                productcategory.InsertBy = loginUser.UserID;
                 db.ProductCategories.Add(productcategory);
                 db.SaveChanges();
 

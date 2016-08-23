@@ -13,11 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("employeeLeaveGroupCtrl", ["employeeLeaveGroupResource", employeeLeaveGroupCtrl]);
-    function employeeLeaveGroupCtrl(employeeLeaveGroupResource) {
+        .controller("employeeLeaveGroupCtrl", ["employeeLeaveGroupResource", "appAuth", employeeLeaveGroupCtrl]);
+    function employeeLeaveGroupCtrl(employeeLeaveGroupResource, appAuth) {
         var vm = this;
         vm.employeeLeaveGroups = [];
-
+        appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
         vm.ListView = true;

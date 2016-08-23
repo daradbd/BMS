@@ -13,8 +13,8 @@
 
     angular
         .module("companyManagement")
-        .controller("companyBranchCtrl", ["companyBranchCategoryResource", "currencyResource", "languageResource", "companyBranchTypeResource", "countryResource", "cityResource", "companyResource", "companyBranchResource", companyBranchCtrl]);
-    function companyBranchCtrl(companyBranchCategoryResource,currencyResource, languageResource, companyBranchTypeResource, countryResource, cityResource, companyResource, companyBranchResource) {
+        .controller("companyBranchCtrl", ["companyBranchCategoryResource", "currencyResource", "languageResource", "companyBranchTypeResource", "countryResource", "cityResource", "companyResource", "companyBranchResource", "appAuth", companyBranchCtrl]);
+    function companyBranchCtrl(companyBranchCategoryResource, currencyResource, languageResource, companyBranchTypeResource, countryResource, cityResource, companyResource, companyBranchResource, appAuth) {
         var vm = this;
         vm.companyBranchs = [];
         vm.companys = [];
@@ -23,6 +23,7 @@
         vm.CompanyBranchTypes = [];
         vm.Languages = [];
         vm.Currencys = [];
+        appAuth.checkPermission();
         vm.cmbParentBranch={CompanyBranchID:0,CompanyBranchName:"Parent"};
 
         // View Mode Control Variable // 
@@ -181,7 +182,7 @@
 
         //Get All Data List
         function GetList() {
-            companyBranchResource.query().$promise.then(function (data) {
+            companyBranchResource.query({ '$filter': 'CompanyBranchCategoryID ne 5'}).$promise.then(function (data) {
                 vm.companyBranchs = data;
                 toastr.success("Data Load Successful", "Form Load");
 

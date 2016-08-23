@@ -16,7 +16,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
     public class AccCOAConfigController : ApiController
     {
         private UsersContext db = new UsersContext();
-
+        private LoginUser loginUser = new LoginUser();
         // GET api/AccCOAConfig
         public IEnumerable<AccCOAConfig> GetAccCOAConfigs()
         {
@@ -48,6 +48,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
+            acccoaconfig.UpdateBy = loginUser.UserID;
             db.Entry(acccoaconfig).State = EntityState.Modified;
 
             try
@@ -67,6 +68,7 @@ namespace BMS.Controllers.Accounting.Configuration.Accounts
         {
             if (ModelState.IsValid)
             {
+                acccoaconfig.InsertBy = loginUser.UserID;
                 db.AccCOAConfigs.Add(acccoaconfig);
                 db.SaveChanges();
 

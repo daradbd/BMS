@@ -13,7 +13,7 @@
 
     angular
         .module("companyManagement")
-        .controller("uploadFileCtrl", function ($scope, FileUploadService) {
+        .controller("uploadFileCtrl", function ($scope,$uibModalInstance, FileUploadService) {
             // Variables
             $scope.Message = "";
             $scope.FileInvalidMessage = "";
@@ -35,7 +35,8 @@
             $scope.ChechFileValid = function (file) {
                 var isValid = false;
                 if ($scope.SelectedFileForUpload != null) {
-                    if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif' || file.type == 'application/pdf' || file.type == 'application/msword' || file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') && file.size <= (512 * 1024)) {
+                    //&& file.size <= (512 * 1024)
+                    if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif' || file.type == 'application/pdf' || file.type == 'application/msword' || file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') ) {
                         $scope.FileInvalidMessage = "";
                         isValid = true;
                     }
@@ -62,7 +63,8 @@
                 $scope.ChechFileValid($scope.SelectedFileForUpload);
                 if ($scope.IsFormValid && $scope.IsFileValid) {
                     FileUploadService.UploadFile($scope.SelectedFileForUpload, $scope.FileDescription).then(function (d) {
-                        alert(d.FileID);
+                        //alert(d.FileID);
+                        $uibModalInstance.close(d);
                         ClearForm();
                     }, function (e) {
                         alert(e);
