@@ -94,6 +94,9 @@ namespace BMS
                        "~/app/setting/common/city/cityCtrl.js",
                        "~/app/setting/common/currency/currencyCtrl.js",
                        "~/app/setting/common/language/languageCtrl.js",
+                       "~/app/setting/common/TransactionReference/transactionReferenceTypeCtrl.js",
+                       "~/app/setting/common/TransactionReference/referenceTypeMappingCtrl.js",
+
                        "~/app/setting/common/menu/menuCtrl.js",
                        "~/app/setting/company/companyBranchType/companyBranchTypeCtrl.js",
                        "~/app/setting/company/companyName/company.js",
@@ -146,7 +149,9 @@ namespace BMS
                        "~/app/Inventory/Product/productSpecificationCtrl.js",
                        "~/app/Inventory/Product/productCtrl.js",
                        "~/app/Inventory/Product/productModalCtrl.js",
-                       "~/app/Inventory/Product/unitOfMeasureCtrl.js",
+                       "~/app/Inventory/Product/unitOfMeasureCtrl.js", 
+                       "~/app/Inventory/Product/uOMCategoryCtrl.js",
+
                        "~/app/Inventory/Product/productReceiveDeliveryCtrl.js",
 
                        "~/app/HR/collaboratorCtrl.js",
@@ -248,6 +253,10 @@ namespace BMS
                         "~/common/services/CityResource.js",
                         "~/common/services/CurrencyResource.js",
                         "~/common/services/languageResource.js",
+                        "~/common/services/transactionReferenceTypeResource.js",
+                        "~/common/services/referenceTypeMappingResource.js",
+
+
                         "~/common/services/companyBranchType.js",
                         "~/common/services/companyResource.js",
                         "~/common/services/accTypeResource.js",
@@ -295,7 +304,7 @@ namespace BMS
                          "~/common/services/customerFileResource.js",
                          
 
-
+                        "~/common/services/uOMCategoryResource.js",
                         "~/common/services/unitOfMeasureResource.js",
                         "~/common/services/collaboratorResource.js",
                         "~/common/services/customerTypeResource.js",

@@ -62,7 +62,7 @@
     && bankLoanForm.txtBankLoanCode.$dirty}">
 
                                     <label for="txtBankLoanCode">
-                                        BankLoanCode
+                                        Bank Loan Code
                                     </label>
                                     <input type="text"
                                            class="form-control"
@@ -77,7 +77,7 @@
      && bankLoanForm.txtBankLoanName.$dirty}">
 
                                     <label for="txtBankLoanName">
-                                        BankLoanName
+                                        Bank Loan Name
                                     </label>
                                     <input type="text"
                                            class="form-control"
@@ -85,6 +85,50 @@
                                            name="txtBankLoanName"
                                            ng-model="vm.bankLoan.BankLoanName"
                                            placeholder="Enter BankLoanName"
+                                           required>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':bankLoanForm.txtLoanAccountNumber.$invalid
+     && bankLoanForm.txtLoanAccountNumber.$dirty}">
+
+                                    <label for="txtLoanAccountNumber">
+                                        Loan Account Number
+                                    </label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="txtLoanAccountNumber"
+                                           name="txtLoanAccountNumber"
+                                           ng-model="vm.bankLoan.LoanAccountNumber"
+                                           placeholder="Enter Loan Account Number"
+                                           required>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':bankLoanForm.cmbBankLoanType.$invalid
+                                         && bankLoanForm.cmbBankLoanType.$dirty}">
+
+                                    <label for="cmbBank">
+                                        Bank Loan Type
+                                    </label>
+                                    <select class="form-control"
+                                            id="cmbBankLoanType"
+                                            name="cmbBankLoanType"
+                                            ng-model="vm.cmbBankLoanType"
+                                            ng-options="BankLoanType.BankLoanTypeName for BankLoanType in vm.bankLoanTypes track by BankLoanType.BankLoanTypeID "
+                                            ng-change="vm.bankLoan.BankLoanTypeID=vm.cmbBankLoanType.BankLoanTypeID"></select>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':bankLoanForm.txtTotalAmount.$invalid
+     && bankLoanForm.txtTotalAmount.$dirty}">
+
+                                    <label for="txtTotalAmount">
+                                        Total Amount
+                                    </label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="txtTotalAmount"
+                                           name="txtTotalAmount"
+                                           ng-model="vm.bankLoan.TotalAmount"
+                                           placeholder="Enter Loan Total Amount"
                                            required>
                                 </div>
                                 <div class="form-group">
@@ -97,10 +141,138 @@
                                               ng-model="vm.bankLoan.Remarks"
                                               rows=" 3"></textarea>
                                 </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':bankLoanForm.cmbDebitCoaid.$invalid
+     && bankLoanForm.cmbDebitCoaid.$dirty}">
+
+                                    <label for="txtTerms">
+                                        Debit CoaID
+                                    </label>
+
+                                    <select class="form-control"
+                                            ng-model="vm.cmbAssetCOAID"
+                                            ng-options="'['+ACOAID.COACode +']'+ACOAID.COAName+'-'+ ACOAID.AccType.AccTypeName group by ACOAID.AccType.AccTypeName for ACOAID in vm.accCOAs track by ACOAID.COAID"
+                                            ng-change="vm.bankLoan.AssetCOAID=vm.cmbAssetCOAID.COAID"></select>
+                                </div>
                             </div>
                             <div class="col-lg-6">
+                                <div class="form-group"
+                                     ng-class="{'has-error':bankLoanForm.cmbBank.$invalid
+                                         && bankLoanForm.cmbBank.$dirty}">
 
-                            </div>
+                                    <label for="cmbBank">
+                                        Bank
+                                    </label>
+                                    <select class="form-control"
+                                            id="cmbBank"
+                                            name="cmbBank"
+                                            ng-model="vm.cmbBanks"
+                                            ng-options="Bank.BankName for Bank in vm.banks track by Bank.BankID "
+                                            ng-change="vm.bankLoan.BankID=vm.cmbBanks.BankID"></select>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':bankLoanForm.cmbBankBranch.$invalid
+                                         && bankLoanForm.cmbBankBranch.$dirty}">
+
+                                    <label for="cmbBankBranch">
+                                        Bank Branch
+                                    </label>
+                                    <select class="form-control"
+                                            id="cmbBankBranch"
+                                            name="cmbBankBranch"
+                                            ng-model="vm.cmbBankBranchs"
+                                            ng-options="BankBranch.BankBranchName for BankBranch in (vm.bankBranchs|filterBy:['BankID']: vm.cmbBanks.BankID) track by BankBranch.BankBranchID"
+                                            ng-change="vm.bankLoan.BankBranchID=vm.cmbBankBranchs.BankBranchID"></select>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':bankLoanForm.txtInterestRate.$invalid
+     && bankLoanForm.txtInterestRate.$dirty}">
+
+                                    <label for="txtInterestRate">
+                                        APR / Interest Rate
+                                    </label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="txtInterestRate"
+                                           name="txtInterestRate"
+                                           ng-model="vm.bankLoan.InterestRate"
+                                           placeholder="Enter Loan InterestRate"
+                                           required>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':bankLoanForm.txtTerms.$invalid
+     && bankLoanForm.txtTerms.$dirty}">
+
+                                    <label for="txtTerms">
+                                        Terms
+                                    </label>
+                                    <input type="text"
+                                           class="form-control pull-left"
+                                           id="txtTerms"
+                                           name="txtTerms"
+                                           ng-model="vm.bankLoan.Terms"
+                                           placeholder="Enter  Terms"
+                                           required>
+                                    <select class="form-control pull-left"
+                                            id="cmbTermsUOMs"
+                                            name="cmbTermsUOMs"
+                                            ng-model="vm.cmbTermsUOMs"
+                                            ng-options="UOM.UnitOfMeasureName for UOM in vm.unitOfMeasures track by UOM.UnitOfMeasureID "
+                                            ng-change="vm.bankLoan.TermsUOMID=vm.cmbTermsUOMs.UnitOfMeasureID"></select>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':bankLoanForm.PaymentPeriodUOM.$invalid
+                                         && bankLoanForm.PaymentPeriodUOM.$dirty}">
+
+                                    <label for="cmbPaymentPeriodUOM">
+                                        Pay Every
+                                    </label>
+                                    <select class="form-control"
+                                            id="cmbPaymentPeriodUOM"
+                                            name="cmbPaymentPeriodUOM"
+                                            ng-model="vm.cmbPaymentPeriodUOMs"
+                                            ng-options="UOM.UnitOfMeasureName for UOM in vm.unitOfMeasures track by UOM.UnitOfMeasureID "
+                                            ng-change="vm.bankLoan.PaymentPeriodUOMID=vm.cmbPaymentPeriodUOMs.UnitOfMeasureID"></select>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtStartDate">
+                                       Start Data:
+                                    </label>
+                                    <div class="form-group">
+                                        <p class="input-group">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="txtSPaymentStartDate"
+                                                   name="txtPaymentStartDate"
+                                                   ng-model="vm.bankLoan.PaymentStartDate"
+                                                   datepicker-popup="MMM dd, yyyy "
+                                                   is-open="vm.dtopened"
+                                                   required>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default"
+                                                        ng-click="vm.dtopen($event)">
+                                                    <i class="glyphicon glyphicon-calendar" />
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':bankLoanForm.cmbLiabilityCOAID.$invalid
+     && bankLoanForm.cmbLiabilityCOAID.$dirty}">
+
+                                    <label for="txtTerms">
+                                        Credit CoaID
+                                    </label>
+
+                                    <select class="form-control"
+                                            ng-model="vm.cmbLiabilityCOAID"
+                                            ng-options="'['+ACOAID.COACode +']'+ACOAID.COAName+'-'+ ACOAID.AccType.AccTypeName group by ACOAID.AccType.AccTypeName for ACOAID in vm.accCOAs track by ACOAID.COAID"
+                                            ng-change="vm.bankLoan.LiabilityCOAID=vm.cmbLiabilityCOAID.COAID"></select>
+                                </div>
+
+                                </div>
                         </div>
                     </div>
 
@@ -112,16 +284,29 @@
                             <div class="col-lg-6 animated fadeInRight">
                                 <div class="form-group">
                                     <label for=" inputBankLoanCode">
-                                        BankLoanCode
+                                        Bank Loan Code
                                     </label>
 <pre>{{vm.bankLoan.BankLoanCode}}</pre>
                                 </div>
                                 <div class="form-group">
                                     <label for=" inputBankLoanName">
-                                        BankLoanName
+                                        Bank Loan Name
                                     </label>
 <pre>{{vm.bankLoan.BankLoanName}}</pre>
                                 </div>
+                                <div class="form-group">
+                                    <label for=" inputLoanAccountNumber">
+                                        Loan Account Number
+                                    </label>
+<pre>{{vm.bankLoan.LoanAccountNumber}}</pre>
+                                </div>
+                                <div class="form-group">
+                                    <label for=" inputTotalAmount">
+                                        Total Amount
+                                    </label>
+<pre>{{vm.bankLoan.TotalAmount}}</pre>
+                                </div>
+
                                 <div class="form-group">
                                     <label for=" inputRemarks">
                                         Remarks
@@ -167,7 +352,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
-                                                <th>BankLoanName</th>
+                                                <th>Bank Loan Name</th>
+                                                <th>Loan Account Number</th>
                                                 <th>Remarks</th>
                                                 <th class="noPrint">Preview</th>
                                             </tr>
@@ -177,6 +363,7 @@
                                             <tr dir-paginate="bankLoan in vm.bankLoans|filter:searchText| itemsPerPage: vm.num |orderBy:'-BankLoanID'">
                                                 <td>{{bankLoan.BankLoanCode  | uppercase}}</td>
                                                 <td>{{bankLoan.BankLoanName}}</td>
+                                                <td>{{bankLoan.LoanAccountNumber}}</td>
                                                 <td>{{bankLoan.Remarks}}</td>
                                                 <td class="noPrint">
                                                     <button type="button" ng-click="vm.Get(bankLoan.BankLoanID)" data-skin="skin-blue" class="btn btn-primary btn-xs">

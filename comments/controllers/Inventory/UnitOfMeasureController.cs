@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Http;
 using BMS.Models.Inventory;
 using BMS.Models;
+using System.Web.Http.OData.Query;
 
 namespace BMS.Controllers.Inventory
 {
@@ -19,9 +20,9 @@ namespace BMS.Controllers.Inventory
         private LoginUser loginUser = new LoginUser();
 
         // GET api/UnitOfMeasure
-        public IEnumerable<UnitOfMeasure> GetUnitOfMeasures()
+        public IEnumerable<UnitOfMeasure> GetUnitOfMeasures(ODataQueryOptions Options)
         {
-            return db.UnitOfMeasures.AsEnumerable();
+            return Options.ApplyTo(db.UnitOfMeasures) as IEnumerable<UnitOfMeasure>;
         }
 
         // GET api/UnitOfMeasure/5

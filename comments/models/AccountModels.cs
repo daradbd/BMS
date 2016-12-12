@@ -279,6 +279,12 @@ namespace BMS.Models
 
         public DbSet<BankLoanTransaction> BankLoanTransactions { get; set; }
 
+        public DbSet<UOMCategory> UOMCategories { get; set; }
+
+        public DbSet<TransactionReferenceType> TransactionReferenceTypes { get; set; }
+
+        public DbSet<ReferenceTypeMapping> ReferenceTypeMappings { get; set; }
+
     }
 
     [Table("UserProfile")]

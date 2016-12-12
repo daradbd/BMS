@@ -264,6 +264,7 @@
     <Compile Include="Controllers\Inventory\ProductSpecificationController.cs" />
     <Compile Include="Controllers\Inventory\ProductSpecificationDescriptionController.cs" />
     <Compile Include="Controllers\Inventory\UnitOfMeasureController.cs" />
+    <Compile Include="Controllers\Inventory\UOMCategoryController.cs" />
     <Compile Include="Controllers\Payroll\AttendanceAuditController.cs" />
     <Compile Include="Controllers\Payroll\CalculationTypesController.cs" />
     <Compile Include="Controllers\Payroll\PayrollProcessController.cs" />
@@ -326,6 +327,8 @@
     <Compile Include="Controllers\Setting\Common\CurrencyController.cs" />
     <Compile Include="Controllers\Setting\Common\LanguageController.cs" />
     <Compile Include="Controllers\Setting\Common\ProcesStatusController.cs" />
+    <Compile Include="Controllers\Setting\Common\ReferenceTypeMappingController.cs" />
+    <Compile Include="Controllers\Setting\Common\TransactionReferenceTypeController.cs" />
     <Compile Include="Controllers\Setting\Companys\CompanyBranchCategoryController.cs" />
     <Compile Include="Controllers\Setting\Companys\CompanyBranchController.cs" />
     <Compile Include="Controllers\Setting\Companys\CompanyBranchTypeController.cs" />
@@ -397,6 +400,7 @@
     <Compile Include="Models\Inventory\ProductSpecification.cs" />
     <Compile Include="Models\Inventory\ProductSpecificationDescription.cs" />
     <Compile Include="Models\Inventory\UnitOfMeasure.cs" />
+    <Compile Include="Models\Inventory\UOMCategory.cs" />
     <Compile Include="Models\LoginUser.cs" />
     <Compile Include="Models\Payroll\AttendanceAudit.cs" />
     <Compile Include="Models\Payroll\CalculationTypes.cs" />
@@ -459,6 +463,9 @@
     <Compile Include="Models\Setting\Common\Currency.cs" />
     <Compile Include="Models\Setting\Common\Language.cs" />
     <Compile Include="Models\Setting\Common\ProcesStatus.cs" />
+    <Compile Include="Models\Setting\Common\ReferenceTypeMapping.cs" />
+    <Compile Include="Models\Setting\Common\TransactionReferenceType.cs" />
+    <Compile Include="Models\Setting\Common\TransactionType.cs" />
     <Compile Include="Models\Setting\Companys\Company.cs" />
     <Compile Include="Models\Setting\Companys\CompanyBranch.cs" />
     <Compile Include="Models\Setting\Companys\CompanyBranchCategory.cs" />
@@ -585,6 +592,8 @@
     <Content Include="app\Inventory\Product\productSpecificationCtrl.js" />
     <Content Include="app\Inventory\Product\unitOfMeasure.html" />
     <Content Include="app\Inventory\Product\unitOfMeasureCtrl.js" />
+    <Content Include="app\Inventory\Product\uOMCategory.html" />
+    <Content Include="app\Inventory\Product\uOMCategoryCtrl.js" />
     <Content Include="app\Payroll\attendanceAudit.html" />
     <Content Include="app\Payroll\attendanceAuditCtrl.js" />
     <Content Include="app\Payroll\payrollProcess.html" />
@@ -672,6 +681,10 @@
     <Content Include="app\setting\common\menu\menu.html" />
     <Content Include="app\setting\common\menu\menuCtrl.js" />
     <Content Include="app\setting\common\template\dirPagination.tpl.html" />
+    <Content Include="app\setting\common\TransactionReference\referenceTypeMapping.html" />
+    <Content Include="app\setting\common\TransactionReference\referenceTypeMappingCtrl.js" />
+    <Content Include="app\setting\common\TransactionReference\transactionReferenceType.html" />
+    <Content Include="app\setting\common\TransactionReference\transactionReferenceTypeCtrl.js" />
     <Content Include="app\setting\company\companyBranchCategory\companyBranchCategory.html" />
     <Content Include="app\setting\company\companyBranchCategory\companyBranchCategoryCtrl.js" />
     <Content Include="app\setting\company\companyBranchType\companyBranchType.html" />
@@ -724,6 +737,7 @@
     <Content Include="common\services\bankAccountResource.js" />
     <Content Include="common\services\bankAccountTypeResource.js" />
     <Content Include="common\services\bankBranchResource.js" />
+    <Content Include="common\services\bankLoanResource.js" />
     <Content Include="common\services\bankLoanTransactionResource.js" />
     <Content Include="common\services\bankLoanTypeResource.js" />
     <Content Include="common\services\bankResource.js" />
@@ -803,6 +817,7 @@
     <Content Include="common\services\purchasePermitResource.js" />
     <Content Include="common\services\purchaseRequisitionDescriptionResource.js" />
     <Content Include="common\services\purchaseRequisitionResource.js" />
+    <Content Include="common\services\referenceTypeMappingResource.js" />
     <Content Include="common\services\requestForQuotationDescriptionResource.js" />
     <Content Include="common\services\requestForQuotationResource.js" />
     <Content Include="common\services\requisitionDeliveryDescriptionResource.js" />
@@ -828,8 +843,10 @@
     <Content Include="common\services\supplierTypeResource.js" />
     <Content Include="common\services\taxResource.js" />
     <Content Include="common\services\todoListResource.js" />
+    <Content Include="common\services\transactionReferenceTypeResource.js" />
     <Content Include="common\services\trialBalanceResource.js" />
     <Content Include="common\services\unitOfMeasureResource.js" />
+    <Content Include="common\services\uOMCategoryResource.js" />
     <Content Include="common\services\uploadFileResource.js" />
     <Content Include="common\services\userAuthorizeResource.js" />
     <Content Include="common\services\voucherListResource.js" />

@@ -93,20 +93,20 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group"
-                                         ng-class="{'has-error':unitOfMeasureForm.cmbParentUOM.$invalid
-                && cityForm.cmbParentUOM.$dirty}">
+                                         ng-class="{'has-error':unitOfMeasureForm.cmbUOMCategory.$invalid
+                && cityForm.cmbUOMCategory.$dirty}">
 
-                                        <label for="cmbParentUOM">
-                                            ParentUOM
+                                        <label for="cmbUOMCategory">
+                                            UOM Category
                                         </label>
                                         <select class="form-control"
-                                                id="cmbParentUOM"
-                                                name="cmbParentUOM"
-                                                ng-model="vm.cmbParentUOM"
-                                                ng-options="ParentUOM.UnitOfMeasureName for ParentUOM in vm.ParentUOMs track by ParentUOM.UnitOfMeasureID "
-                                                ng-change="vm.unitOfMeasure.ParentUOMID=vm.cmbunitOfMeasure.UnitOfMeasureID"></select>
+                                                id="cmbUOMCategory"
+                                                name="cmbUOMCategory"
+                                                ng-model="vm.cmbUOMCategory"
+                                                ng-options="UOMCategory.UOMCategoryName for UOMCategory in vm.uOMCategorys track by UOMCategory.UOMCategoryID "
+                                                ng-change="vm.unitOfMeasure.UOMCategoryID=vm.cmbUOMCategory.UOMCategoryID"></select>
                                     </div>
-                                    <div class="form-group"
+                                    <!--<div class="form-group"
                                          ng-class="{'has-error':unitOfMeasureForm.txtConversionValue.$invalid
                                          && unitOfMeasureForm.txtConversionValue.$dirty}">
 
@@ -120,7 +120,7 @@
                                                ng-model="vm.unitOfMeasure.ConversionValue"
                                                placeholder="Enter ConversionValue"
                                                required>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>

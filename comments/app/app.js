@@ -107,6 +107,16 @@
                             templateUrl: "app/setting/common/language/language.html",
                             controller: "languageCtrl as vm"
                         })
+                        .state("transactionReferenceType", {
+                        url: "transactionReferenceType",
+                        templateUrl: "app/setting/common/TransactionReference/transactionReferenceType.html",
+                        controller: "transactionReferenceTypeCtrl as vm"
+                        })
+                         .state("referenceTypeMapping", {
+                        url: "referenceTypeMapping",
+                        templateUrl: "app/setting/common/TransactionReference/referenceTypeMapping.html",
+                        controller: "referenceTypeMappingCtrl as vm"
+                        })
                         //companyBranchType    
                         .state("companyBranchType", {
                             url: "/companyBranchType",
@@ -301,10 +311,17 @@
 
                         //UnitOfMeasure
                         .state("unitOfMeasure", {
-                            url: "/product",
+                            url: "/unitOfMeasure",
                             templateUrl: "app/Inventory/Product/unitOfMeasure.html",
                             controller: "unitOfMeasureCtrl as vm"
                         })
+                        //UOMCategory
+                        .state("uOMCategory", {
+                        url: "/uOMCategory",
+                            templateUrl: "app/Inventory/Product/uOMCategory.html",
+                            controller: "uOMCategoryCtrl as vm"
+                        })
+
                         //ProductReceiveDelivery
                         .state("productReceiveDelivery", {
                             url: "/productReceiveDelivery",

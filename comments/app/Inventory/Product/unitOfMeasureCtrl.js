@@ -13,10 +13,11 @@
 
     angular
         .module("companyManagement")
-        .controller("unitOfMeasureCtrl", ["unitOfMeasureResource", "appAuth", unitOfMeasureCtrl]);
-    function unitOfMeasureCtrl(unitOfMeasureResource, appAuth) {
+        .controller("unitOfMeasureCtrl", ["uOMCategoryResource", "unitOfMeasureResource", "appAuth", unitOfMeasureCtrl]);
+    function unitOfMeasureCtrl(uOMCategoryResource, unitOfMeasureResource, appAuth) {
         var vm = this;
         vm.unitOfMeasures = [];
+        vm.uOMCategorys = [];
         appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -97,6 +98,19 @@
 
         }
 
+        GetUOMCategoryList();
+
+        //Get All Data List
+        function GetUOMCategoryList() {
+            uOMCategoryResource.query().$promise.then(function (data) {
+                vm.uOMCategorys = data;
+                toastr.success("Data Load Successful", "Form Load");
+
+            }, function (error) {
+                // error handler
+                toastr.error("Data Load Failed!");
+            });
+        }
 
         GetList();
 
@@ -119,6 +133,7 @@
                     function (data, responseHeaders) {
                         GetList();
                         vm.unitOfMeasure = null;
+                        vm.cmbUOMCategory = null;
                         toastr.success("Save Successful");
                     }, function (error) {
                         // error handler
@@ -137,6 +152,8 @@
         vm.Get = function (id) {
             unitOfMeasureResource.get({ 'ID': id }).$promise.then(function (unitOfMeasure) {
                 vm.unitOfMeasure = unitOfMeasure;
+                
+                vm.cmbUOMCategory = { UOMCategoryID: vm.unitOfMeasure.UOMCategoryID };
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
             }, function (error) {

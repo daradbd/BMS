@@ -4,23 +4,19 @@
     /**
      *  @Module Name (MainModule)
      *  @controller Name (Ctrl)
-     *  @dependence (bankLoanresource)
+     *  @dependence (uOMCategoryresource)
      *  @author  name: Md. Rejwanul Reaz
      *  @project name: BMS
-     *  @resource name: bankLoanResource
+     *  @resource name: uOMCategoryResource
      *  @date: 9/4/2015
      */
 
     angular
         .module("companyManagement")
-        .controller("bankLoanCtrl", ["accCOAResource", "unitOfMeasureResource", "bankLoanTypeResource", "bankResource", "bankBranchResource", "bankLoanResource", "appAuth", bankLoanCtrl]);
-    function bankLoanCtrl(accCOAResource, unitOfMeasureResource, bankLoanTypeResource, bankResource, bankBranchResource, bankLoanResource, appAuth) {
+        .controller("uOMCategoryCtrl", ["uOMCategoryResource", "appAuth", uOMCategoryCtrl]);
+    function uOMCategoryCtrl(uOMCategoryResource, appAuth) {
         var vm = this;
-        vm.bankLoans = [];
-        vm.banks = [];
-        vm.bankBranchs = [];
-        vm.bankLoanTypes = [];
-        vm.unitOfMeasures = [];
+        vm.uOMCategorys = [];
         // appAuth.checkPermission();
         // View Mode Control Variable // 
         vm.FromView = false;
@@ -41,7 +37,7 @@
             GetList();
             if (activeMode == 1)//Form View Mode
             {
-                vm.bankLoan = null;
+                vm.uOMCategory = null;
                 vm.FromView = true;
                 vm.ListView = false;
                 vm.DetailsView = false;
@@ -102,83 +98,13 @@
 
         }
 
-        vm.dtopen = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            vm.dtopened = !vm.dtopened;
-
-        }
-        GetUOMList();
-
-        //Get All Data List
-        function GetUOMList() {
-            unitOfMeasureResource.query({'$filter': 'UOMCategoryID eq 3'}).$promise.then(function (data) {
-                vm.unitOfMeasures = data;
-                toastr.success("Data Load Successful", "Form Load");
-
-            }, function (error) {
-                // error handler
-                toastr.error("Data Load Failed!");
-            });
-        }
-
-        GetBankLoanTypeList();
-
-        //Get All Data List
-        function GetBankLoanTypeList() {
-            bankLoanTypeResource.query().$promise.then(function (data) {
-                vm.bankLoanTypes = data;
-                toastr.success("Data Load Successful", "Form Load");
-
-            }, function (error) {
-                // error handler
-                toastr.error("Data Load Failed!");
-            });
-        }
-
-
-        GetBankList();
-        function GetBankList() {
-            bankResource.query().$promise.then(function (data) {
-                vm.banks = data;
-                toastr.success("Load banks", "Country banks");
-            }, function (error) {
-                // error handler
-                toastr.error("Data Load Failed!");
-            });
-        }
-        GetbankBranchList();
-        function GetbankBranchList() {
-            bankBranchResource.query().$promise.then(function (data) {
-                vm.bankBranchs = data;
-                toastr.success("Load BankBranch", "Country Load");
-            }, function (error) {
-                // error handler
-                toastr.error("Data Load Failed!");
-            });
-        }
-
-        GetaccCOAList();
-
-        //Get All Data List
-        function GetaccCOAList() {
-            accCOAResource.query({ '$filter': 'HasChild eq false' }).$promise.then(function (data) {
-                vm.accCOAs = data;
-                //toastr.success("Data Load Successful", "Form Load");
-
-            }, function (error) {
-                // error handler
-                toastr.error("Data Load Failed!");
-            });
-        }
 
         GetList();
 
         //Get All Data List
         function GetList() {
-            bankLoanResource.query().$promise.then(function (data) {
-                vm.bankLoans = data;
+            uOMCategoryResource.query().$promise.then(function (data) {
+                vm.uOMCategorys = data;
                 toastr.success("Data Load Successful", "Form Load");
 
             }, function (error) {
@@ -187,13 +113,13 @@
             });
         }
 
-        //Save bankLoan
+        //Save uOMCategory
         vm.Save = function (isValid) {
             if (isValid) {
-                bankLoanResource.save(vm.bankLoan).$promise.then(
+                uOMCategoryResource.save(vm.uOMCategory).$promise.then(
                     function (data, responseHeaders) {
                         GetList();
-                        vm.bankLoan = null;
+                        vm.uOMCategory = null;
                         vm.ViewMode(2);
                         toastr.success("Save Successful");
                     }, function (error) {
@@ -211,15 +137,8 @@
 
         //Get Single Record
         vm.Get = function (id) {
-            bankLoanResource.get({ 'ID': id }).$promise.then(function (bankLoan) {
-                vm.bankLoan = bankLoan;
-                vm.cmbBanks = { BankID: vm.bankLoan.BankID};
-                vm.cmbBankBranchs = { BankBranchID: vm.bankLoan.BankBranchID};
-                vm.cmbTermsUOMs = { UnitOfMeasureID: vm.bankLoan.TermsUOMID};
-                vm.cmbPaymentPeriodUOMs = { UnitOfMeasureID: vm.bankLoan.PaymentPeriodUOMID};
-                vm.cmbLiabilityCOAID = { COAID: vm.bankLoan.LiabilityCOAID};
-                vm.cmbAssetCOAID = { COAID: vm.bankLoan.AssetCOAID };
-                vm.cmbBankLoanType = { BankLoanTypeID: vm.bankLoan.BankLoanTypeID };
+            uOMCategoryResource.get({ 'ID': id }).$promise.then(function (uOMCategory) {
+                vm.uOMCategory = uOMCategory;
                 vm.ViewMode(3);
                 toastr.success("Data Load Successful", "Form Load");
             }, function (error) {
@@ -232,8 +151,8 @@
         //Data Update
         vm.Update = function (isValid) {
             if (isValid) {
-                bankLoanResource.update({ 'ID': vm.bankLoan.BankLoanID }, vm.bankLoan).$promise.then(function () {
-                    vm.bankLoans = null;
+                uOMCategoryResource.update({ 'ID': vm.uOMCategory.UOMCategoryID }, vm.uOMCategory).$promise.then(function () {
+                    vm.uOMCategorys = null;
                     vm.ViewMode(3);
                     GetList();
                     toastr.success("Data Update Successful", "Form Update");
@@ -249,8 +168,8 @@
 
         //Data Delete
         vm.Delete = function () {
-            //vm.bankLoan.$delete({ 'ID': vm.bankLoan.BankLoanIDID });
-            bankLoanResource.delete({ 'ID': vm.bankLoan.BankLoanID }).$promise.then(function (data) {
+            //vm.uOMCategory.$delete({ 'ID': vm.uOMCategory.UOMCategoryID });
+            uOMCategoryResource.delete({ 'ID': vm.uOMCategory.UOMCategoryID }).$promise.then(function (data) {
                 // success handler
                 toastr.success("Data Delete Successfully!");
                 GetList();

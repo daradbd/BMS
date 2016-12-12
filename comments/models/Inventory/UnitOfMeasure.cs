@@ -18,7 +18,7 @@
         [StringLength(250)]
         public string UnitOfMeasureName { get; set; }
 
-        public long? ParentUOMID { get; set; }
+        public long? UOMCategoryID { get; set; }
 
         public long? Sequenct { get; set; }
 
@@ -55,5 +55,7 @@
 
         [StringLength(10)]
         public string DeletePC { get; set; }
+
+        public virtual UOMCategory UOMCategory { get; set; }
     }
 }
