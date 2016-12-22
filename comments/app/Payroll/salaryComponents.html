@@ -1,0 +1,365 @@
+﻿<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Salary Components
+        <small>Form</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Payroll</a></li>
+        <li class="active">Salary Components</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <form name="salaryComponentsForm" novalidate>
+        <div class="row">
+            <div class="col-lg-12 action-botton">
+                <button type="button" ng-click="vm.ViewMode(1)" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    New
+                </button>
+                <button type="button" ng-show="vm.SaveButton" ng-click="vm.Save(salaryComponentsForm.$valid)" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    Save
+                </button>
+                <button type="button" ng-show="vm.EditButton" ng-click="vm.ViewMode(4)" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    Edit
+                </button>
+                <button type="button" class="btn btn-app btn-default" ng-show="vm.UpdateButton" ng-click="vm.Update(salaryComponentsForm.$valid)">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    Update
+                </button>
+                <button type="button" class="btn btn-app btn-default " ng-print print-element-id="printThisElement">
+                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                    Print
+                </button>
+                <button type="button" ng-show="vm.DeleteButton" ng-really-message="Are you sure ?" ng-really-click="vm.Delete()" class="btn btn-app btn-default ">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    Delete
+                </button>
+                <button type="button" ng-show="vm.CancelButton" ng-click="vm.ViewMode(2)" class="btn btn-app btn-primary">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Cancel
+                </button>
+            </div>
+        </div>
+
+
+        <div class="row ">
+            <div class="col-lg-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="entry-form" ng-show="vm.FromView">
+                        <div class="box-header with-border">
+                            <h3 class="box-title" ng-if="vm.SaveButton">Add New Salary Components</h3>
+                            <h3 class="box-title" ng-if="vm.UpdateButton">Edit Salary Components</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="col-lg-6 animated fadeInRight">
+                                <div class="form-group"
+                                     ng-class="{'has-error':salaryComponentsForm.txtSalaryComponentName.$invalid
+                                         && salaryComponentsForm.txtSalaryComponentName.$dirty}">
+
+                                    <label for="txtSalaryComponentName">
+                                        Salary Component Name
+                                    </label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="txtSalaryComponentName"
+                                           name="txtSalaryComponentName"
+                                           ng-model="vm.salaryComponents.SalaryComponentName"
+                                           placeholder="Enter SalaryComponentName"
+                                           required>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':salaryComponentsForm.txtAbbreviation.$invalid
+                                         && salaryComponentsForm.txtAbbreviation.$dirty}">
+
+                                    <label for="txtAbbreviation">
+                                        Abbreviation
+                                    </label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="txtAbbreviation"
+                                           name="txtAbbreviation"
+                                           ng-model="vm.salaryComponents.Abbreviation"
+                                           placeholder="Enter Abbreviation"
+                                           required>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtPaidComponent">
+                                        Paid Component
+                                    </label>
+                                    <input type="checkbox"
+                                           id="txtIsPaidComponent"
+                                           name="txtIsPaidComponent"
+                                           ng-model="vm.salaryComponents.IsPaidComponent">
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtIsCTCBase">
+                                        Is CTC Base Calculation
+                                    </label>
+                                    <input type="checkbox"
+                                           id="txtIsCTCBase"
+                                           name="txtIsCTCBase"
+                                           ng-model="vm.salaryComponents.IsCTCBase">
+                                </div>
+                                <div ng-if="vm.salaryComponents.IsCTCBase" class="form-group"
+                                     ng-class="{'has-error':salaryComponentsForm.txtCTCPercentage.$invalid
+                                         && salaryComponentsForm.txtCTCPercentage.$dirty}">
+
+                                    <label for="txtAbbreviation">
+                                        CTC Percentage
+                                    </label>
+                                    <div>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="txtAbbreviation"
+                                               name="txtAbbreviation"
+                                               style="max-width:150px;display:inline"
+                                               ng-model="vm.salaryComponents.CTCPercentage"
+                                               required />
+                                        <span>%</span>
+                                    </div>
+                                    
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtIsTaxAble">
+                                        Is TaxAble
+                                    </label>
+                                    <input type="checkbox"
+                                           id="txtIsTaxAble"
+                                           name="txtIsTaxAble"
+                                           ng-model="vm.salaryComponents.IsTaxAble">
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtIsFixedComponent">
+                                        Is Fixed Component
+                                    </label>
+                                    <input type="checkbox"
+                                           id="txtIsFixedComponent"
+                                           name="txtIsFixedComponent"
+                                           ng-model="vm.salaryComponents.IsFixedComponent">
+                                </div>
+
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group"
+                                     ng-class="{'has-error':salaryComponentsForm.cmbPayType.$invalid
+                                                        && salaryComponentsForm.cmbPayType.$dirty}">
+
+                                    <label for="cmbPayType">
+                                        Pay Type
+                                    </label>
+                                    <select class="form-control"
+                                            id="cmbPayType"
+                                            name="cmPayType"
+                                            ng-model="vm.cmbPayType"
+                                            ng-options="payType.PayTypeName for payType in vm.PayTypes track by payType.PayTypeID "
+                                            ng-change="vm.salaryComponents.PayTypeID=vm.cmbPayType.PayTypeID"></select>
+                                </div>
+                                <div class="form-group"
+                                     ng-class="{'has-error':salaryComponentsForm.cmbCalculationType.$invalid
+                                                        && salaryComponentsForm.cmbCalculationType.$dirty}">
+
+                                    <label for="cmbCalculationType">
+                                        Calculation Type
+                                    </label>
+                                    <select class="form-control"
+                                            id="cmbCalculationType"
+                                            name="cmbCalculationType"
+                                            ng-model="vm.cmbCalculationType"
+                                            ng-options="calculationType.CalculationTypeName for calculationType in vm.CalculationTypes track by calculationType.CalculationTypeID "
+                                            ng-change="vm.salaryComponents.CalculationTypeID=vm.cmbCalculationType.CalculationTypeID"></select>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtIsShowinPaySlip">
+                                       Show in PaySlip
+                                    </label>
+                                    <input type="checkbox"
+                                           id="txtIsShowinPaySlip"
+                                           name="txtIsShowinPaySlip"
+                                           ng-model="vm.salaryComponents.IsShowinPaySlip">
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtIsAttendanceDepandent">
+                                        Attendance Depandent
+                                    </label>
+                                    <input type="checkbox"
+                                           id="txtIsAttendanceDepandent"
+                                           name="txtIsAttendanceDepandent"
+                                           ng-model="vm.salaryComponents.IsAttendanceDepandent">
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtIsActive">
+                                        Is Active
+                                    </label>
+                                    <input type="checkbox"
+                                           id="txtIsActive"
+                                           name="txtIsActive"
+                                           ng-model="vm.salaryComponents.IsActive">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="view-form" ng-show="vm.DetailsView">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Salary Components Details</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="col-lg-6 animated fadeInRight">
+                                <div class="form-group">
+
+                                    <label for="txtSalaryComponentName">
+                                        Salary Component Name
+                                    </label>
+                                    <pre>{{vm.salaryComponents.SalaryComponentName}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtAbbreviation">
+                                        Abbreviation
+                                    </label>
+                                    <pre>{{vm.salaryComponents.Abbreviation}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtPaidComponent">
+                                        Paid Component
+                                    </label>
+                                    <pre>{{vm.salaryComponents.IsPaidComponent}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtIsTaxAble">
+                                        Is TaxAble
+                                    </label>
+                                    <pre>{{vm.salaryComponents.IsTaxAble}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtIsFixedComponent">
+                                        Is Fixed Component
+                                    </label>
+                                    <pre>{{vm.salaryComponents.IsFixedComponent}}</pre>
+                                </div>
+
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+
+                                    <label for="cmbPayType">
+                                        Pay Type
+                                    </label>
+                                   
+                                    <pre>{{ vm.salaryComponents.PayType.PayTypeName}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="cmbCalculationType">
+                                        Calculation Type
+                                    </label>
+                                    <pre>{{vm.salaryComponents.CalculationType.CalculationTypeName}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtIsShowinPaySlip">
+                                        Show in PaySlip
+                                    </label>
+                                    <pre>{{vm.salaryComponents.IsShowinPaySlip}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtIsAttendanceDepandent">
+                                        Attendance Depandent
+                                    </label>
+                                    <pre>{{ vm.salaryComponents.IsAttendanceDepandent}}</pre>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtIsActive">
+                                        Is Active
+                                    </label>
+                                    <pre>{{vm.salaryComponents.IsActive}}</pre>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 box " ng-show="vm.ListView">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Salary Components List</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="dataTables_length" id="example1_length">
+                                        <label>
+                                            Show <select ng-init="vm.num=5" ng-model="vm.num" class="form-control input-sm">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> entries
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div id="example1_filter" class="dataTables_filter">
+                                        <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="searchText"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="printThisElement">
+                                    <thead>
+                                        <tr>
+                                            <th>Component</th>
+                                            <th>Type</th>
+                                            <th>Taxable</th>
+                                            <th>Fixed</th>
+                                            <th class="noPrint">Preview</th>	
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="salaryComponents in vm.salaryComponentss|filter:searchText| itemsPerPage: vm.num">
+                                            <td>{{salaryComponents.SalaryComponentName  | uppercase}}</td>
+                                            <td>{{salaryComponents.PayType.PayTypeName}}</td>
+                                            <td>{{salaryComponents.IsTaxAble}}</td>
+                                            <td>{{salaryComponents.IsFixedComponent}}</td>
+
+                                            <td class="noPrint">
+
+                                                <button type="button" ng-click="vm.Get(salaryComponents.SalaryComponentID)" data-skin="skin-blue" class="btn btn-primary btn-xs">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/setting/common/template/dirPagination.tpl.html"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+          </div>
+    </form>
+</section><!-- /.content -->
+
